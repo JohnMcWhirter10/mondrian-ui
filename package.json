@@ -1,6 +1,6 @@
 {
   "name": "mondrian-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MondrianUI is a modern and minimalist UI library designed for simplicity and elegance. It provides a set of flexible components that enable developers to create intuitive and aesthetically pleasing user interfaces with ease.",
   "author": "John Brea McWhirter",
   "main": "dist/cjs/index.js",
