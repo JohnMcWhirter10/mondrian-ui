@@ -1,0 +1,67 @@
+/* Button Styles */
+.mondrian-button {
+    border: 2px solid; 
+    padding: var(--spacing-medium) var(--spacing-large);
+    cursor: pointer;
+    transition: background-color 0.5s;
+    font-size: var(--font-size-medium);
+    font-family: var(--font-family);
+}
+
+/* Theme Specific Styles */
+.mondrian-button.primary {
+    background-color: var(--neutral-color);
+    color: var(--primary-color);
+}
+
+.mondrian-button.primary:hover {
+    background-color: var(--primary-color);
+    color: var(--neutral-color);
+}
+
+.mondrian-button.light {
+    background-color: var(--neutral-color);
+    color: var(--light-color);
+}
+
+.mondrian-button.light:hover {
+    background-color: var(--light-color);
+    color: var(--neutral-color);
+}
+
+
+.mondrian-button.dark {
+    background-color: var(--neutral-color);
+    color: var(--dark-color);
+}
+
+.mondrian-button.dark:hover {
+    background-color: var(--dark-color);
+    color: var(--neutral-color);
+}
+
+.mondrian-button.error:hover {
+    background-color: var(--error-color);
+    color: var(--neutral-color);
+}
+
+.mondrian-button.error {
+    background-color: var(--neutral-color);
+    color: var(--error-color);
+}
+
+.mondrian-button.success {
+    background-color: var(--neutral-color);
+    color: var(--success-color);
+}
+
+.mondrian-button.success:hover {
+    background-color: var(--success-color);
+    color: var(--neutral-color);
+}
+
+.mondrian-button:disabled {
+    background-color: #ccc; /* Gray background for disabled state */
+    color: #666; /* Dimmed text color */
+    cursor: not-allowed; /* Show not-allowed cursor */
+}
