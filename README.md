@@ -1,6 +1,6 @@
 # MondrianUI
 
-**Version:** 1.0.0  
+**Version:** 0.0.0  
 **License:** MIT
 
 ## Description
@@ -26,26 +26,6 @@ or
 
 ```bash
 yarn add mondrian-ui
-```
-
-## Usage
-
-To use MondrianUI in your project, wrap your application with the `ThemeProvider` and start using the components:
-
-```javascript
-import React from 'react';
-import { ThemeProvider } from 'mondrian-ui';
-import Button from 'mondrian-ui/components/Button';
-
-const App = () => {
-  return (
-    <ThemeProvider>
-      <Button label="Primary Button" theme="primary" />
-    </ThemeProvider>
-  );
-};
-
-export default App;
 ```
 
 ## Components
