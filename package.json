@@ -1,13 +1,13 @@
 {
   "name": "mondrian-ui",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "MondrianUI is a modern and minimalist UI library designed for simplicity and elegance. It provides a set of flexible components that enable developers to create intuitive and aesthetically pleasing user interfaces with ease.",
   "author": "John Brea McWhirter",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare" :"husky install",
+    "prepare": "husky install",
     "rollup": "rollup -c --bundleConfigAsCjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
