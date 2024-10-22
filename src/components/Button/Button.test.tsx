@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Button from "./Button"; // Adjust the import path as needed
-import { ThemeProvider } from "../../themes"; // Adjust the import path as needed
+import Button from "./Button"; 
+import { ThemeProvider } from "../../themes";
 
 describe("Button Component", () => {
     const renderButton = (props = {}) => {
@@ -17,8 +17,8 @@ describe("Button Component", () => {
         renderButton({ children: "Primary Button", theme: "primary" });
 
         const button = screen.getByRole("button", { name: /primary button/i });
-        expect(button).not.toBeNull(); // Check if button is rendered
-        expect(button.className.includes("primary")).toBe(true); // Check if class includes "primary"
+        expect(button).not.toBeNull(); 
+        expect(button.className.includes("primary")).toBe(true);
     });
 
     test("renders the button with light theme", () => {

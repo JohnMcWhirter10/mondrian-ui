@@ -1,4 +1,3 @@
-/* Button Styles */
 .mondrian-button {
     border: 2px solid; 
     padding: var(--spacing-medium) var(--spacing-large);
@@ -8,7 +7,6 @@
     font-family: var(--font-family);
 }
 
-/* Theme Specific Styles */
 .mondrian-button.primary {
     background-color: var(--neutral-color);
     color: var(--primary-color);
@@ -60,8 +58,3 @@
     color: var(--neutral-color);
 }
 
-.mondrian-button:disabled {
-    background-color: #ccc; /* Gray background for disabled state */
-    color: #666; /* Dimmed text color */
-    cursor: not-allowed; /* Show not-allowed cursor */
-}

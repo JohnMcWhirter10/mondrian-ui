@@ -127,10 +127,11 @@ export const generateStyles = (primaryColor: string, darkMode: boolean) => {
             --spacing-large: 16px;
             --font-family: 'Roboto', sans-serif;
             --neutral-color: ${darkMode ? '#000' : '#fff'};
+            --text-color: ${darkMode ? '#fff' : '#000'};
         }
 
         body {
-            background-color: ${darkMode ? '#000' : '#fff'};
+            background-color: var(--neutral-color);
             font-family: var(--font-family);
         }
     `;

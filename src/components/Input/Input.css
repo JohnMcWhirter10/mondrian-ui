@@ -1,0 +1,64 @@
+.mondrian-input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mondrian-input-wrapper.primary {
+    border: 2px solid var(--primary-color);
+}
+
+.mondrian-input-wrapper.light {
+    border: 2px solid var(--light-color);
+}
+
+.mondrian-input-wrapper.dark {
+    border: 2px solid var(--dark-color);
+}
+
+.mondrian-input-wrapper.error {
+    border: 2px solid var(--error-color);
+}
+
+.mondrian-input-wrapper.success {
+    border: 2px solid var(--success-color);
+}
+
+.mondrian-input {
+    background-color: var(--neutral-color);
+    border: none;
+    color: var(--text-color);
+    padding: var(--spacing-medium) var(--spacing-large);
+    font-size: var(--font-size-medium);
+    font-family: var(--font-family);
+    outline: none; 
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.5s;
+}
+
+.mondrian-input-label {
+    margin-bottom: var(--spacing-small); 
+    font-size: var(--font-size-small);
+    font-family: var(--font-family);    
+}
+
+.mondrian-input-label.primary {
+    color: var(--primary-color);
+}
+
+.mondrian-input-label.light {
+    color: var(--light-color);
+}
+
+.mondrian-input-label.dark {
+    color: var(--dark-color);
+}
+
+.mondrian-input-label.error {
+    color: var(--error-color);
+}
+
+.mondrian-input-label.success {
+    color: var(--success-color);
+}
+

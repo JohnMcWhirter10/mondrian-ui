@@ -1,2 +1,3 @@
 // src/components/index.ts
-export * from './smartrating';
+export * from './Button';
+export * from './Input';
