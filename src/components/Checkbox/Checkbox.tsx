@@ -4,33 +4,28 @@ import './Checkbox.css';
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
-    { label, theme = 'primary', className, defaultChecked, onChange, ...props },
+    {
+      label,
+      theme = 'primary',
+      className,
+      defaultChecked,
+      onChange,
+      id,
+      ...props
+    },
     ref
   ) => {
     const [selfChecked, setSelfChecked] = useState<boolean>(
       defaultChecked || false
     );
+    const uniqueId =
+      id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
 
     const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newChecked = !selfChecked;
+      const newChecked = event.target.checked;
       setSelfChecked(newChecked);
 
       if (onChange) {
-        onChange({
-          ...event,
-          target: { ...event.target, checked: newChecked },
-        });
-      }
-    };
-
-    const handleClick = (
-      event: React.MouseEvent<HTMLInputElement | HTMLLabelElement>
-    ) => {
-      const newChecked = !selfChecked;
-      setSelfChecked(newChecked);
-
-      if (onChange) {
-        // @ts-ignore
         onChange({
           ...event,
           target: { ...event.target, checked: newChecked },
@@ -46,6 +41,18 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       }
     }, [selfChecked, onChange]);
 
+    const handleClickMark = () => {
+      setSelfChecked((prev) => {
+        const newChecked = !prev;
+        if (onChange) {
+          onChange({
+            target: { checked: newChecked },
+          } as React.ChangeEvent<HTMLInputElement>);
+        }
+        return newChecked;
+      });
+    };
+
     return (
       <div className={`mondrian-checkbox-container ${theme} ${className}`}>
         <input
@@ -54,14 +61,22 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           className="mondrian-checkbox-input"
           checked={selfChecked}
           onChange={handleToggle}
+          id={uniqueId}
           {...props}
         />
-        <span className="mondrian-checkbox-mark" onClick={handleClick} />
+        <span
+          className="mondrian-checkbox-mark"
+          onClick={handleClickMark}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') handleClickMark();
+          }}
+        />
         {label && (
           <label
             className={`mondrian-checkbox-label ${theme}`}
-            htmlFor={props.id}
-            onClick={handleClick}
+            htmlFor={uniqueId}
           >
             {label}
           </label>

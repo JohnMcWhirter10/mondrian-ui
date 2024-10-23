@@ -1,7 +1,6 @@
 import { StoryFn, Meta } from '@storybook/react';
 import Input from './Input';
-import { ThemeProvider, useTheme } from '../../themes';
-import Button from '../Button';
+import { ThemeProvider } from '../../themes';
 
 export default {
   title: 'Components/Input',
