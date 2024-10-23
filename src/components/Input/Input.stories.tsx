@@ -51,37 +51,3 @@ Success.args = {
   label: 'Success Input',
   theme: 'success',
 };
-
-export const ToggleDarkMode = () => {
-  const { theme, setDarkMode, setPrimaryColor } = useTheme();
-  const handleToggle = () => {
-    setDarkMode(!theme.darkMode);
-  };
-
-  const handleColorChange = (color: string) => {
-    setPrimaryColor(color);
-  };
-
-  return (
-    <div>
-      <Input placeholder="Input Field" label={'Input Field Label'} />
-      <br />
-      <Button onClick={handleToggle}>
-        Toggle Dark Mode (Current: {theme.darkMode ? 'On' : 'Off'})
-      </Button>
-      <br />
-      <Button onClick={() => handleColorChange('#FF5733')}>
-        Set Primary to Coral
-      </Button>
-      <br />
-      <Button onClick={() => handleColorChange('#007BFF')}>
-        Set Primary to Blue
-      </Button>
-      <br />
-      <Button onClick={() => handleColorChange('#28A745')}>
-        Set Primary to Green
-      </Button>
-      <br />
-    </div>
-  );
-};

@@ -1,6 +1,7 @@
 .mondrian-input-container {
   display: flex;
   flex-direction: column;
+  width: fit-content;
 }
 
 .mondrian-input-wrapper.primary {
