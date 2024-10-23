@@ -129,9 +129,11 @@ export const generateStyles = (primaryColor: string, darkMode: boolean) => {
             --dark-color: hsl(var(--primary-hue), var(--primary-saturation), var(--dark-lightness));
             --error-color: #FF6F61;
             --success-color: #3CB371;
+            --font-size-tiny: 0.75rem;
             --font-size-small: 0.875rem;
             --font-size-medium: 1rem;
-            --font-size-large: 1.25rem;
+            --font-size-large: 1.125rem;
+            --font-size-x-large: 1.25rem;
             --spacing-small: 4px;
             --spacing-medium: 8px;
             --spacing-large: 16px;

@@ -36,9 +36,28 @@
   transition: background-color 0.5s;
 }
 
+.mondrian-input::placeholder {
+  font-style: italic;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
 .mondrian-input-label {
+  position: relative;
+  padding: 0 2pt;
+  top: var(--font-size-tiny);
+  left: 5px;
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: var(--neutral-color);
+  width: fit-content;
   margin-bottom: var(--spacing-small);
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-tiny);
   font-family: var(--font-family);
 }
 
