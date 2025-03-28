@@ -1,0 +1,178 @@
+.mondrian-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+}
+
+.mondrian-select-trigger-sm {
+  padding: 6px 8px;
+  font-size: 0.875rem;
+}
+
+.mondrian-select-trigger-lg {
+  padding: 12px 14px;
+  font-size: 1.125rem;
+}
+
+.mondrian-select-trigger.blue:hover {
+  box-shadow: 0 0 0 2px #0d47a1;
+  transform: translateY(-1px);
+}
+
+.mondrian-select-trigger.red:hover {
+  box-shadow: 0 0 0 2px #d42029;
+  transform: translateY(-1px);
+}
+
+.mondrian-select-trigger.yellow:hover {
+  box-shadow: 0 0 0 2px #ffde03;
+  transform: translateY(-1px);
+}
+
+.mondrian-select-trigger.neutral:hover,
+.mondrian-select-trigger.contrast:hover,
+.mondrian-select-trigger.green:hover {
+  box-shadow: 0 0 0 2px #000000;
+  transform: translateY(-1px);
+}
+
+.mondrian-select-trigger.blue {
+  color: #0d47a1;
+}
+
+.mondrian-select-trigger.red {
+  color: #d42029;
+}
+
+.mondrian-select-trigger.yellow {
+  color: #ffde03;
+}
+
+.mondrian-select-trigger.green {
+  color: #3cb371;
+}
+
+.mondrian-select-trigger.neutral {
+  color: #000000;
+}
+
+.mondrian-select-trigger.contrast {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.mondrian-select-trigger[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mondrian-select-value {
+  display: block;
+  flex: 1;
+}
+
+.mondrian-select-icon {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.mondrian-select-icon-chevron {
+  height: 16px;
+  width: 16px;
+  transform: rotate(90deg);
+}
+
+.mondrian-select-content {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  overflow: hidden;
+  min-width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+  z-index: 50;
+}
+
+.mondrian-select-content.blue .mondrian-select-item[data-highlighted] {
+  background-color: #0d47a1;
+  color: #ffffff;
+}
+
+.mondrian-select-content.red .mondrian-select-item[data-highlighted] {
+  background-color: #d42029;
+  color: #ffffff;
+}
+
+.mondrian-select-content.yellow .mondrian-select-item[data-highlighted] {
+  background-color: #ffde03;
+  color: #000000;
+}
+
+.mondrian-select-content.green .mondrian-select-item[data-highlighted] {
+  background-color: #3cb371;
+  color: #ffffff;
+}
+
+.mondrian-select-content.neutral .mondrian-select-item[data-highlighted] {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.mondrian-select-content.contrast .mondrian-select-item[data-highlighted] {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.mondrian-select-viewport {
+  padding: 5px;
+}
+
+.mondrian-select-item {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.mondrian-select-item[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mondrian-select-item-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.mondrian-select-label {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #000000;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 10px;
+}
+
+.mondrian-select-separator {
+  height: 1px;
+  background-color: #000000;
+  margin: 5px 0;
+}
+
+.mondrian-select-group {
+  padding: 5px 0;
+}

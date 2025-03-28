@@ -85,5 +85,26 @@ export type {
   DialogDescriptionProps,
 } from './Dialog/Dialog.types';
 
+export {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+  SelectGroup,
+} from './Select/Select';
+export type {
+  SelectProps,
+  SelectTriggerProps,
+  SelectContentProps,
+  SelectItemProps,
+  SelectLabelProps,
+  SelectSeparatorProps,
+  SelectGroupProps,
+  SelectValueProps,
+} from './Select/Select.types';
+
 export { Check, ChevronRight, Cross, Square } from './icons';
 export type { IconProps } from './icons/icon.types';
