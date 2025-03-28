@@ -1,0 +1,291 @@
+.mondrian-accordion {
+  width: 100%;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  position: relative;
+  /* Asymmetric border - thicker on left */
+  border-left-width: calc(var(--mondrian-grid-width) * 2);
+}
+
+/* Add asymmetric decorative block to top-right */
+.mondrian-accordion:before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  right: 30px;
+  width: 25px;
+  height: 12px;
+  background-color: var(--mondrian-black);
+  z-index: 1;
+}
+
+/* Blue accent for blue theme */
+.mondrian-accordion.blue:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-blue);
+}
+
+/* Red accent for red theme */
+.mondrian-accordion.red:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-error);
+}
+
+/* Yellow accent for yellow theme */
+.mondrian-accordion.yellow:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-yellow);
+}
+
+/* Green accent for green theme */
+.mondrian-accordion.green:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-success);
+}
+
+/* Neutral accent for neutral theme */
+.mondrian-accordion.neutral:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-black);
+}
+
+/* Size variants */
+.mondrian-accordion-sm {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-accordion-lg {
+  font-size: var(--mondrian-font-size-large);
+}
+
+/* Theme variants are applied to the accordion container */
+.mondrian-accordion.blue {
+  border-color: var(--mondrian-blue);
+}
+
+.mondrian-accordion.red {
+  border-color: var(--mondrian-error);
+}
+
+.mondrian-accordion.yellow {
+  border-color: var(--mondrian-yellow);
+}
+
+.mondrian-accordion.green {
+  border-color: var(--mondrian-success);
+}
+
+.mondrian-accordion.neutral {
+  border-color: var(--mondrian-border);
+}
+
+/* Accordion item */
+.mondrian-accordion-item {
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  position: relative;
+}
+
+/* Asymmetric decoration for odd items */
+.mondrian-accordion-item:nth-child(odd) {
+  padding-left: 15px;
+}
+
+/* Asymmetric decoration for even items */
+.mondrian-accordion-item:nth-child(even) {
+  padding-right: 15px;
+}
+
+.mondrian-accordion-item:last-child {
+  border-bottom: none;
+}
+
+/* Accordion header */
+.mondrian-accordion-header {
+  width: 100%;
+  font-weight: 500;
+}
+
+/* Accordion trigger (header button) */
+.mondrian-accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
+  text-align: left;
+  background-color: var(--mondrian-background);
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Different themes for trigger buttons */
+.mondrian-accordion.blue .mondrian-accordion-trigger {
+  color: var(--mondrian-blue);
+}
+
+.mondrian-accordion.red .mondrian-accordion-trigger {
+  color: var(--mondrian-error);
+}
+
+.mondrian-accordion.yellow .mondrian-accordion-trigger {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-accordion.green .mondrian-accordion-trigger {
+  color: var(--mondrian-success);
+}
+
+.mondrian-accordion.neutral .mondrian-accordion-trigger {
+  color: var(--mondrian-text);
+}
+
+/* Hover states for the triggers - asymmetric shadow */
+.mondrian-accordion-trigger:hover {
+  box-shadow: 6px 4px 0 var(--mondrian-shadow);
+  transform: translate(-3px, -2px);
+}
+
+/* Accordion icon - move to left for asymmetry */
+.mondrian-accordion-icon {
+  height: 16px;
+  width: 16px;
+  transition: transform 300ms;
+  order: -1;
+  margin-right: 10px;
+}
+
+.mondrian-accordion-trigger[data-state='open'] .mondrian-accordion-icon {
+  transform: rotate(90deg);
+}
+
+/* Accordion content */
+.mondrian-accordion-content {
+  overflow: hidden;
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-accordion-content[data-state='open'] {
+  animation: slideDown 300ms ease-out;
+}
+
+.mondrian-accordion-content[data-state='closed'] {
+  animation: slideUp 300ms ease-out;
+}
+
+/* Content with asymmetric padding and border */
+.mondrian-accordion-content-inner {
+  padding: var(--mondrian-spacing-large);
+  padding-left: calc(var(--mondrian-spacing-large) * 2);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  position: relative;
+}
+
+/* Asymmetric Mondrian-inspired color block for content */
+.mondrian-accordion-content-inner:before {
+  content: '';
+  position: absolute;
+  top: calc(var(--mondrian-spacing-medium) * 2);
+  left: var(--mondrian-spacing-medium);
+  width: 8px;
+  height: 60%;
+  background-color: var(--mondrian-border);
+}
+
+.mondrian-accordion.blue .mondrian-accordion-content-inner:before {
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-accordion.red .mondrian-accordion-content-inner:before {
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-accordion.yellow .mondrian-accordion-content-inner:before {
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-accordion.green .mondrian-accordion-content-inner:before {
+  background-color: var(--mondrian-success);
+}
+
+/* Mondrian-inspired grid effect - black rectangular outline */
+.mondrian-accordion-trigger:after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--mondrian-border);
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+/* Focus state - asymmetric shadow */
+.mondrian-accordion-trigger:focus-visible {
+  outline: none;
+  transform: translate(-3px, -2px);
+  box-shadow: 6px 4px 0 var(--mondrian-shadow);
+}
+
+/* Additional Mondrian-inspired decorative element - asymmetric corner with L-shape */
+.mondrian-accordion-trigger:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.mondrian-accordion-trigger:hover:before {
+  opacity: 1;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
