@@ -1,58 +1,141 @@
 .mondrian-button {
-  border: 2px solid;
-  padding: var(--spacing-medium) var(--spacing-large);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
   cursor: pointer;
-  transition: background-color 0.5s;
-  font-size: var(--font-size-medium);
-  font-family: var(--font-family);
+  transition: all 0.3s;
+  font-size: var(--mondrian-font-size-medium);
+  font-family: var(--mondrian-font-family);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 0; /* Mondrian uses rectangular shapes */
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-weight: bold;
 }
 
-.mondrian-button.primary {
-  background-color: var(--neutral-color);
-  color: var(--primary-color);
+/* Size variants */
+.mondrian-button-sm {
+  padding: 8px 16px;
+  font-size: var(--mondrian-font-size-small);
 }
 
-.mondrian-button.primary:hover {
-  background-color: var(--primary-color);
-  color: var(--neutral-color);
+.mondrian-button-lg {
+  padding: 16px 32px;
+  font-size: var(--mondrian-font-size-large);
 }
 
-.mondrian-button.light {
-  background-color: var(--neutral-color);
-  color: var(--light-color);
+/* Mondrian color themes */
+.mondrian-button.blue {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
 }
 
-.mondrian-button.light:hover {
-  background-color: var(--light-color);
-  color: var(--neutral-color);
+.mondrian-button.blue:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
 }
 
-.mondrian-button.dark {
-  background-color: var(--neutral-color);
-  color: var(--dark-color);
+/* Neutral theme */
+.mondrian-button.neutral {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border-color: var(--mondrian-border);
 }
 
-.mondrian-button.dark:hover {
-  background-color: var(--dark-color);
-  color: var(--neutral-color);
+.mondrian-button.neutral:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
 }
 
-.mondrian-button.error:hover {
-  background-color: var(--error-color);
-  color: var(--neutral-color);
+/* Contrast theme */
+.mondrian-button.contrast {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
 }
 
-.mondrian-button.error {
-  background-color: var(--neutral-color);
-  color: var(--error-color);
+/* Dark mode contrast theme - make it visually distinct from neutral in dark mode */
+[data-theme='dark'] .mondrian-button.contrast {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-yellow);
 }
 
-.mondrian-button.success {
-  background-color: var(--neutral-color);
-  color: var(--success-color);
+.mondrian-button.contrast:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
 }
 
-.mondrian-button.success:hover {
-  background-color: var(--success-color);
-  color: var(--neutral-color);
+.mondrian-button.yellow {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-button.yellow:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
+}
+
+.mondrian-button.red {
+  background-color: var(--mondrian-error);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-button.red:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
+}
+
+.mondrian-button.green {
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-black);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-button.green:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
+}
+
+/* Mondrian-inspired grid effect - black rectangular outline */
+.mondrian-button:after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 0 solid var(--mondrian-border);
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+/* Focus state - standardized across components */
+.mondrian-button:focus-visible {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Additional Mondrian-inspired decorative element - asymmetric corner */
+.mondrian-button:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.mondrian-button:hover:before {
+  opacity: 1;
 }

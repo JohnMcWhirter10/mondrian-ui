@@ -1,8 +1,27 @@
 // jest.config.js
 module.exports = {
+  preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '.(css|less|scss)$': 'identity-obj-proxy',
+    // Handle CSS imports (with CSS modules)
+    '\\.css$': 'identity-obj-proxy',
   },
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'], // Adjust the path as necessary
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  transform: {
+    '^.+\\.(ts|tsx)$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.json',
+      },
+    ],
+  },
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+  },
 };

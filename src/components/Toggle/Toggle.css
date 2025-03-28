@@ -1,0 +1,222 @@
+.mondrian-toggle-container {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: var(--mondrian-spacing-medium);
+}
+
+/* Toggle track (background) */
+.mondrian-toggle-track {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  cursor: pointer;
+  transition: all 0.3s;
+  /* No border-radius to maintain Mondrian rectangular shapes */
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Toggle thumb (the moving part) */
+.mondrian-toggle-thumb {
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  background-color: var(--mondrian-border);
+  transform: translateX(0);
+  transition:
+    transform 0.3s,
+    background-color 0.3s;
+  /* No border-radius to maintain Mondrian rectangular shapes */
+}
+
+/* Checked state - move thumb to right */
+.mondrian-toggle-track[data-state='checked'] .mondrian-toggle-thumb {
+  transform: translateX(24px);
+}
+
+/* Size variants */
+.mondrian-toggle-sm {
+  width: 36px;
+  height: 18px;
+}
+
+.mondrian-toggle-sm .mondrian-toggle-thumb {
+  width: 16px;
+  height: 16px;
+}
+
+.mondrian-toggle-sm[data-state='checked'] .mondrian-toggle-thumb {
+  transform: translateX(18px);
+}
+
+.mondrian-toggle-lg {
+  width: 60px;
+  height: 30px;
+}
+
+.mondrian-toggle-lg .mondrian-toggle-thumb {
+  width: 28px;
+  height: 28px;
+}
+
+.mondrian-toggle-lg[data-state='checked'] .mondrian-toggle-thumb {
+  transform: translateX(30px);
+}
+
+/* Theme variants */
+/* Blue theme styles */
+.mondrian-toggle-track.blue {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-toggle-track.blue[data-state='checked'] {
+  background-color: var(--mondrian-blue);
+}
+
+/* Neutral theme styles */
+.mondrian-toggle-track.neutral {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-toggle-track.neutral[data-state='checked'] {
+  background-color: var(--mondrian-yellow);
+}
+
+/* Contrast theme styles */
+.mondrian-toggle-track.contrast {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-toggle-track.contrast[data-state='checked'] {
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-toggle-track.contrast .mondrian-toggle-thumb {
+  background-color: var(--mondrian-text);
+}
+
+/* Dark mode contrast theme styles */
+[data-theme='dark'] .mondrian-toggle-track.contrast {
+  border-color: var(--mondrian-yellow);
+}
+
+[data-theme='dark'] .mondrian-toggle-track.contrast[data-state='checked'] {
+  background-color: var(--mondrian-blue);
+}
+
+[data-theme='dark'] .mondrian-toggle-track.contrast .mondrian-toggle-thumb {
+  background-color: var(--mondrian-white);
+}
+
+/* Yellow theme styles */
+.mondrian-toggle-track.yellow {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-toggle-track.yellow[data-state='checked'] {
+  background-color: var(--mondrian-yellow);
+}
+
+/* Red theme styles */
+.mondrian-toggle-track.red {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-toggle-track.red[data-state='checked'] {
+  background-color: var(--mondrian-error);
+}
+
+/* Green theme styles */
+.mondrian-toggle-track.green {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-toggle-track.green[data-state='checked'] {
+  background-color: var(--mondrian-success);
+}
+
+/* Label styling */
+.mondrian-toggle-label {
+  font-size: var(--mondrian-font-size-medium);
+  font-family: var(--mondrian-font-family);
+  font-weight: normal;
+  color: var(--mondrian-text);
+}
+
+.mondrian-toggle-container.label-right .mondrian-toggle-label {
+  padding-left: var(--mondrian-spacing-medium);
+}
+
+.mondrian-toggle-container.label-left .mondrian-toggle-label {
+  padding-right: var(--mondrian-spacing-medium);
+}
+
+.mondrian-toggle-container.label-top .mondrian-toggle-label {
+  padding-bottom: var(--mondrian-spacing-small);
+}
+
+.mondrian-toggle-container.label-bottom .mondrian-toggle-label {
+  padding-top: var(--mondrian-spacing-small);
+}
+
+/* Size variants for labels */
+.mondrian-toggle-sm .mondrian-toggle-label {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-toggle-lg .mondrian-toggle-label {
+  font-size: var(--mondrian-font-size-large);
+}
+
+/* Theme variants for label */
+.mondrian-toggle-label.blue {
+  color: var(--mondrian-blue);
+}
+
+.mondrian-toggle-label.neutral {
+  color: var(--mondrian-text);
+}
+
+.mondrian-toggle-label.contrast {
+  color: var(--mondrian-white);
+}
+
+/* Dark mode contrast label style */
+[data-theme='dark'] .mondrian-toggle-label.contrast {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-toggle-label.yellow {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-toggle-label.red {
+  color: var(--mondrian-red);
+}
+
+.mondrian-toggle-label.green {
+  color: var(--mondrian-success);
+}
+
+/* Focus states */
+.mondrian-toggle-track:focus-visible {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
+  outline: none;
+}
+
+/* Hover effect - use transform and box-shadow for Mondrian-style interactions */
+.mondrian-toggle-track:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Disabled state */
+.mondrian-toggle-track[data-disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

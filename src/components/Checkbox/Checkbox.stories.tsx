@@ -1,11 +1,42 @@
 import React from 'react';
-import Checkbox from './Checkbox';
-import { Meta, StoryFn } from '@storybook/react/*';
+import type { Meta, StoryObj } from '@storybook/react';
+import { Checkbox } from './Checkbox';
+import { Label } from '../Label/Label';
 import { ThemeProvider } from '../../themes';
 
-export default {
+// Define the component metadata for Storybook
+const meta: Meta<typeof Checkbox> = {
   title: 'Components/Checkbox',
   component: Checkbox,
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: `
+          The Checkbox component follows Mondrian's neoplasticism principles with rectangular shapes and primary colors.
+          Note: To maintain single responsibility, Labels should be added separately using the Label component.
+        `,
+      },
+    },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    theme: {
+      control: 'select',
+      options: ['blue', 'neutral', 'contrast', 'red', 'green', 'yellow'],
+      description: 'The theme color for the checkbox',
+    },
+    size: {
+      control: 'select',
+      options: ['default', 'sm', 'lg'],
+      description: 'The size of the checkbox',
+    },
+    id: {
+      control: 'text',
+      description:
+        'The ID for the checkbox, used for accessibility with labels',
+    },
+  },
   decorators: [
     (Story) => (
       <ThemeProvider>
@@ -13,41 +44,79 @@ export default {
       </ThemeProvider>
     ),
   ],
-} as Meta<typeof Checkbox>;
-
-const Template: StoryFn<typeof Checkbox> = (args) => <Checkbox {...args} />;
-
-export const Primary = Template.bind({});
-Primary.args = {
-  label: 'Primary Checkbox',
-  id: 'primary-checkbox',
-  theme: 'primary',
 };
 
-export const Light = Template.bind({});
-Light.args = {
-  label: 'Light Checkbox',
-  id: 'light-checkbox',
-  theme: 'light',
+export default meta;
+type Story = StoryObj<typeof Checkbox>;
+
+// Standalone Checkbox
+export const Blue: Story = {
+  args: {
+    id: 'blue-checkbox',
+    theme: 'blue',
+  },
 };
 
-export const Dark = Template.bind({});
-Dark.args = {
-  label: 'Dark Checkbox',
-  id: 'dark-checkbox',
-  theme: 'dark',
+// Checkbox with Label example (render function needed to compose components)
+export const WithLabel: Story = {
+  render: (args) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <Checkbox {...args} id="checkbox-with-label" />
+      <Label htmlFor="checkbox-with-label" theme={args.theme}>
+        Checkbox Label
+      </Label>
+    </div>
+  ),
+  args: {
+    theme: 'blue',
+  },
 };
 
-export const Error = Template.bind({});
-Error.args = {
-  label: 'Error Checkbox',
-  id: 'error-checkbox',
-  theme: 'error',
+export const LabelBeforeCheckbox: Story = {
+  render: (args) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <Label htmlFor="checkbox-with-label-before" theme={args.theme}>
+        Label Before Checkbox
+      </Label>
+      <Checkbox {...args} id="checkbox-with-label-before" />
+    </div>
+  ),
+  args: {
+    theme: 'blue',
+  },
 };
 
-export const Success = Template.bind({});
-Success.args = {
-  label: 'Success Checkbox',
-  id: 'success-checkbox',
-  theme: 'success',
+export const Neutral: Story = {
+  args: {
+    id: 'neutral-checkbox',
+    theme: 'neutral',
+  },
+};
+
+export const Contrast: Story = {
+  args: {
+    id: 'contrast-checkbox',
+    theme: 'contrast',
+  },
+};
+
+export const Red: Story = {
+  args: {
+    id: 'red-checkbox',
+    theme: 'red',
+  },
+};
+
+export const Green: Story = {
+  args: {
+    id: 'green-checkbox',
+    theme: 'green',
+  },
+};
+
+export const Yellow: Story = {
+  args: {
+    id: 'yellow-checkbox',
+    theme: 'yellow',
+  },
 };

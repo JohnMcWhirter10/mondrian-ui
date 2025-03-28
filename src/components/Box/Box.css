@@ -1,0 +1,105 @@
+/* Box Component - Following Mondrian Neoplasticism Principles */
+
+.mondrian-box {
+  /* Core box styling */
+  display: block;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  padding: var(--mondrian-spacing-medium);
+  position: relative;
+  /* Rectangular shapes only - no rounded corners */
+  border-radius: 0;
+  /* Default background color */
+  background-color: var(--mondrian-background);
+  /* Default text color */
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  /* Apply box-shadow by default */
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Size variants */
+.mondrian-box-sm {
+  padding: var(--mondrian-spacing-small);
+}
+
+.mondrian-box-md {
+  padding: var(--mondrian-spacing-medium);
+}
+
+.mondrian-box-lg {
+  padding: var(--mondrian-spacing-large);
+}
+
+.mondrian-box-xl {
+  padding: var(--mondrian-spacing-x-large);
+}
+
+/* Full width modifier */
+.mondrian-box-full-width {
+  width: 100%;
+}
+
+/* Flex container modifier */
+.mondrian-box-flex {
+  display: flex;
+}
+
+/* No border modifier */
+.mondrian-box-no-border {
+  border: none;
+}
+
+/* Color variants */
+.mondrian-box.blue {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+}
+
+.mondrian-box.neutral {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-box.contrast {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+/* Dark mode contrast theme - make it visually distinct from neutral in dark mode */
+[data-theme='dark'] .mondrian-box.contrast {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-yellow);
+}
+
+.mondrian-box.yellow {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-box.green {
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-box.red {
+  background-color: var(--mondrian-red);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-box.transparent {
+  background-color: transparent;
+  color: inherit;
+  box-shadow: none;
+}
+
+/* Only focus effect for accessibility */
+.mondrian-box:focus-visible {
+  outline: none;
+  box-shadow: 6px 6px 0 var(--mondrian-shadow);
+}

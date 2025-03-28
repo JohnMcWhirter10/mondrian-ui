@@ -1,0 +1,190 @@
+---
+description: This document provides strict guidelines for implementing Piet Mondrian's neoplasticism style in UI components. All decisions about styling, component structure, and theme implementation MUST adhere to these rules. Always reference this guide before implementing new components or updating existing ones, and ensure rigorous cross-component consistency by reviewing at least one other component alongside any new implementation.
+globs: ["src/components/**/*.tsx", "src/components/**/*.css", "src/themes/**/*.ts", "src/themes/**/*.tsx"]
+---
+
+# Mondrian UI Styling Guide
+
+## Core Principles of Mondrian Neoplasticism
+
+1. **Limited Color Palette**
+   - Use ONLY these colors from `colorUtils.ts`: 
+     - Primary: Red (`#D42029`), Blue (`#0D47A1`), Yellow (`#FFDE03`)
+     - Structural: Black (`#000000`), White (`#FFFFFF`)
+     - Success: Medium Sea Green (`#3CB371`) - the only non-Mondrian color allowed for UI semantics
+   - No gradients, shadows, or color variations outside this palette
+
+2. **Strong Grid Structure**
+   - Use rectangular shapes exclusively - NO rounded corners
+   - Implement clear black grid lines of consistent width
+   - Maintain asymmetrical balance in layouts
+
+3. **Typographic Clarity**
+   - Use clean, sans-serif fonts (Helvetica/Arial)
+   - Maintain hierarchical sizing according to the defined typography scale
+
+## Component API Rules
+
+1. **No Styling Customization**
+   - The library is strictly a styling implementation of Mondrian principles with NO flexibility
+   - NEVER expose `className` prop in ANY component's public API
+   - ALWAYS use `Omit<ComponentProps, 'className'>` in component type definitions
+   - Styling variations should ONLY be available through strictly defined theme and size props
+   - All styling decisions must be made internally according to Mondrian principles
+   - Component functionality should be prioritized in the public API, not styling customization
+
+2. **Single Responsibility Components**
+   - Each component should focus ONLY on its core functionality
+   - NEVER include labels within user input components (checkbox, toggle, input, etc.)
+   - Labels and form layout should be the responsibility of the consumer, not the component
+   - Do not create "convenience props" like `label` that attempt to handle layout concerns
+   - Components should be as atomic as possible to allow flexible composition
+   - Keep component implementation minimal and clear - avoid unnecessary wrappers and state handling
+   - Components should be direct wrappers around their primitive elements whenever possible
+   - A well-designed component is concise and focuses solely on applying Mondrian styling
+
+3. **ID Usage**
+   - Do not generate unique IDs internally - always pass through the user-provided ID
+   - For components that require internal IDs, make the ID prop required in the public API
+   - Handle ID relationships (like form labels) carefully to maintain correct accessibility
+
+4. **Consistency Over Flexibility**
+   - When in doubt, choose the option that enforces Mondrian principles over user preference
+   - Create new component variants if necessary, rather than allowing customization
+   - Functionality differences should be handled through variants, not style props
+
+## CSS Implementation Rules
+
+1. **Variable Naming**
+   - All CSS variables MUST use the `--mondrian-*` prefix
+   - Follow the established naming pattern: `--mondrian-[category]-[property]`
+   - Example: `--mondrian-font-size-medium`, `--mondrian-spacing-large`
+
+2. **Component Class Naming**
+   - Base class must follow the pattern: `mondrian-[component-name]`
+   - Variant classes must follow: `mondrian-[component-name]-[variant]`
+   - Example: `.mondrian-button`, `.mondrian-button-sm`
+
+3. **Interactive States**
+   - Hover/focus states must maintain Mondrian aesthetics
+   - State changes should use:
+     - Transforms (slight movement is preferred)
+     - Box-shadows with BLACK only
+     - No opacity changes or blurs
+
+## ThemeProvider Implementation
+
+1. **Theme Structure**
+   - The `MondrianTheme` interface defines the complete theme structure
+   - Any new theme properties must be added to this interface in the appropriate category
+   - Categories must be maintained: colors, grid, typography, spacing
+
+2. **CSS Variable Generation**
+   - All theme properties must be exported as CSS variables
+   - Follow the established pattern in `ThemeProvider.tsx`
+   - Document each variable group with clear comments
+
+## Component Implementation Requirements
+
+1. **Visual Consistency**
+   - All components must implement proper grid lines with black borders
+   - White space must be used intentionally, not arbitrarily
+   - Components must look related to each other through consistent styling
+
+2. **Cross-Component Review**
+   - When creating a new component, review at least one existing component
+   - Ensure new components follow the same patterns and styling conventions
+   - Standardize property naming across similar components
+
+3. **Dark Mode Support**
+   - All components must support dark mode through the theme system
+   - Background and text colors must switch appropriately in dark mode
+   - Primary colors should remain consistent in both modes
+
+## Theme Clarity Checks
+
+Before implementing or updating components, verify:
+
+1. **Color Usage**
+   - Is the component using ONLY colors from the Mondrian palette?
+   - Are semantic colors being used appropriately? (Error = Red, Success = Green)
+   - Are black grid lines implemented consistently?
+
+2. **Spacing Consistency**
+   - Is the component using the defined spacing variables?
+   - Is padding/margin consistent with other components?
+   - Does the component maintain proper spacing in different sizes?
+
+3. **Typography Integrity**
+   - Is the component using the defined font family?
+   - Does text sizing follow the established scale?
+   - Is text properly aligned and contrasted against backgrounds?
+
+## Documentation Requirements
+
+1. **Component Props**
+   - Document all props with clear descriptions
+   - Indicate which props are required vs. optional
+   - Provide examples of typical usage
+
+2. **Theme Integration**
+   - Document which theme properties affect the component
+   - Explain how dark mode changes the component's appearance
+   - Document any unique theme interactions
+
+## Testing and Story Requirements
+
+1. **Jest Test Cases**
+   - All components must have comprehensive test coverage
+   - Tests must verify Mondrian-specific styling requirements:
+     - Correct color usage from the Mondrian palette
+     - Proper implementation of grid structure
+     - Appropriate class naming conventions
+   - Test different component states (default, hover, active, disabled)
+   - Verify theme integration, including dark mode behavior
+   - Test all component variants and sizes
+   - When a component is updated, tests must be updated to verify:
+     - New features maintain Mondrian styling principles
+     - No regressions in existing styling functionality
+     - Proper integration with the theme system
+
+2. **Storybook Stories**
+   - Each component must have comprehensive stories demonstrating:
+     - All variants and sizes
+     - Default and dark mode appearances
+     - All possible states (default, hover, focus, active, disabled)
+     - Integration with the Mondrian theme
+   - Stories must include documentation explaining:
+     - How the component implements Mondrian principles
+     - Correct usage patterns that maintain design integrity
+     - Any special considerations for maintaining the Neoplasticism aesthetic
+   - When components are updated, stories must be updated to:
+     - Showcase new functionality
+     - Demonstrate how new features adhere to Mondrian principles
+     - Provide clear examples of proper implementation
+
+3. **Visual Regression Testing**
+   - Implement Storybook screenshots or similar visual regression tests
+   - Compare component renders against approved Mondrian standards
+   - Document and explain any intentional visual changes
+   - Maintain a visual reference library of correct Mondrian implementations
+
+## Example Component Review Checklist
+
+When reviewing components for standardization:
+
+- [ ] Does the component use proper Mondrian class naming?
+- [ ] Are all CSS variables using the `--mondrian-*` prefix?
+- [ ] Does the component implement proper black grid lines?
+- [ ] Are primary colors used according to the Mondrian palette?
+- [ ] Does the component support different sizes consistently?
+- [ ] Is the component's behavior consistent with similar components?
+- [ ] Does the component properly implement dark mode?
+- [ ] Does the component maintain rectangular shapes with no rounded corners?
+- [ ] Are interactive states implemented using transforms and box-shadows?
+- [ ] Do Jest tests verify all Mondrian styling requirements?
+- [ ] Do tests cover all component variants and states?
+- [ ] Are Storybook stories complete with all variants and states?
+- [ ] Do stories demonstrate proper theme integration?
+- [ ] Have visual regression tests been updated?
+- [ ] Is there documentation explaining how the component adheres to Mondrian principles?

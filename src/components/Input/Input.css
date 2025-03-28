@@ -1,44 +1,18 @@
-.mondrian-input-container {
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-}
-
-.mondrian-input-wrapper.primary {
-  border: 2px solid var(--primary-color);
-}
-
-.mondrian-input-wrapper.light {
-  border: 2px solid var(--light-color);
-}
-
-.mondrian-input-wrapper.dark {
-  border: 2px solid var(--dark-color);
-}
-
-.mondrian-input-wrapper.error {
-  border: 2px solid var(--error-color);
-}
-
-.mondrian-input-wrapper.success {
-  border: 2px solid var(--success-color);
-}
-
 .mondrian-input {
-  background-color: var(--neutral-color);
-  border: none;
-  color: var(--text-color);
-  padding: var(--spacing-medium) var(--spacing-large);
-  font-size: var(--font-size-medium);
-  font-family: var(--font-family);
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  color: var(--mondrian-text);
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
+  font-size: var(--mondrian-font-size-medium);
+  font-family: var(--mondrian-font-family);
   outline: none;
   width: 100%;
   box-sizing: border-box;
-  transition: background-color 0.5s;
+  transition: all 0.3s;
+  border-radius: 0; /* Mondrian uses rectangular shapes */
 }
 
 .mondrian-input::placeholder {
-  font-style: italic;
   opacity: 0.7;
   white-space: nowrap;
   overflow: hidden;
@@ -46,38 +20,67 @@
   max-width: 90%;
 }
 
-.mondrian-input-label {
-  position: relative;
-  padding: 0 2pt;
-  top: var(--font-size-tiny);
-  left: 5px;
-  max-width: 90%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background-color: var(--neutral-color);
-  width: fit-content;
-  margin-bottom: var(--spacing-small);
-  font-size: var(--font-size-tiny);
-  font-family: var(--font-family);
+/* Size variants */
+.mondrian-input-sm {
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  font-size: var(--mondrian-font-size-small);
 }
 
-.mondrian-input-label.primary {
-  color: var(--primary-color);
+.mondrian-input-lg {
+  padding: var(--mondrian-spacing-large) var(--mondrian-spacing-large);
+  font-size: var(--mondrian-font-size-large);
 }
 
-.mondrian-input-label.light {
-  color: var(--light-color);
+/* Theme variants */
+.mondrian-input.blue {
+  border-bottom-color: var(--mondrian-blue);
+  border-right-color: var(--mondrian-blue);
 }
 
-.mondrian-input-label.dark {
-  color: var(--dark-color);
+.mondrian-input.white {
+  background-color: var(--mondrian-background);
 }
 
-.mondrian-input-label.error {
-  color: var(--error-color);
+.mondrian-input.black {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
 }
 
-.mondrian-input-label.success {
-  color: var(--success-color);
+.mondrian-input.black::placeholder {
+  color: var(--mondrian-text);
+  opacity: 0.7;
+}
+
+.mondrian-input.yellow {
+  border-bottom-color: var(--mondrian-yellow);
+  border-right-color: var(--mondrian-yellow);
+}
+
+.mondrian-input.red {
+  border-bottom-color: var(--mondrian-error);
+  border-right-color: var(--mondrian-error);
+}
+
+.mondrian-input.green {
+  border-bottom-color: var(--mondrian-success);
+  border-right-color: var(--mondrian-success);
+}
+
+/* Focus states aligned with Mondrian principles */
+.mondrian-input:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  outline: none;
+}
+
+/* Hover effect */
+.mondrian-input:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Disabled state */
+.mondrian-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

@@ -1,31 +1,36 @@
-import React from 'react';
-import { InputProps } from './Input.types';
+import * as React from 'react';
+import { InputTheme } from './Input.types';
 import './Input.css';
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, theme = 'primary', ...props }, ref) => {
-    const inputClassName = `mondrian-input ${theme}`;
+const Input = React.forwardRef<
+  HTMLInputElement,
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, 'className' | 'size'> & {
+    /**
+     * The theme color for the input
+     * @default "blue"
+     */
+    theme?: InputTheme;
 
-    return (
-      <div className="mondrian-input-container">
-        {label && (
-          <label className={`mondrian-input-label ${theme}`} htmlFor={props.id}>
-            {label}
-          </label>
-        )}
-        <div className={`mondrian-input-wrapper ${theme}`}>
-          <input
-            ref={ref}
-            className={inputClassName}
-            id={props.id}
-            {...props}
-          />
-        </div>
-      </div>
-    );
+    /**
+     * The size of the input
+     * @default "default"
+     */
+    size?: 'default' | 'sm' | 'lg';
   }
-);
+>(({ theme = 'blue', size = 'default', ...props }, ref) => {
+  // Compose class names
+  const inputClassName = [
+    'mondrian-input',
+    theme,
+    size === 'sm' ? 'mondrian-input-sm' : '',
+    size === 'lg' ? 'mondrian-input-lg' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  return <input ref={ref} className={inputClassName} {...props} />;
+});
 
 Input.displayName = 'Input';
 
-export default Input;
+export { Input };

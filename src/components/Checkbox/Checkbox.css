@@ -1,141 +1,117 @@
 .mondrian-checkbox-container {
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
-  max-width: 100%;
-  cursor: pointer;
-  width: fit-content;
-}
-
-.mondrian-checkbox-label {
-  display: flex;
-  flex: 1;
-  cursor: pointer;
-  padding-left: 0.5rem;
-  padding-right: 1rem;
+  display: inline-flex;
   align-items: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.mondrian-checkbox-input {
-  opacity: 0;
-  position: absolute;
-  z-index: -1;
-}
-
-.mondrian-checkbox-mark {
-  width: 1.5rem;
-  height: auto;
-  min-height: 1.5rem;
-  background-color: var(--neutral-color);
   position: relative;
-  transition: background-color 0.5s;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
-.mondrian-checkbox-container.primary {
-  border: 2px solid var(--primary-color);
+.mondrian-checkbox-root {
+  appearance: none;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  margin: 0;
+  cursor: pointer;
+  background-color: var(--mondrian-background);
+  vertical-align: middle;
+  transition: all 0.3s;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.mondrian-checkbox-container.light {
-  border: 2px solid var(--light-color);
+/* Checkbox Indicator - the checkmark inside */
+.mondrian-checkbox-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--mondrian-text);
 }
 
-.mondrian-checkbox-container.dark {
-  border: 2px solid var(--dark-color);
+/* Size variants for root */
+.mondrian-checkbox-root.mondrian-checkbox-sm {
+  width: 18px;
+  height: 18px;
 }
 
-.mondrian-checkbox-container.error {
-  border: 2px solid var(--error-color);
+.mondrian-checkbox-root.mondrian-checkbox-lg {
+  width: 30px;
+  height: 30px;
 }
 
-.mondrian-checkbox-container.success {
-  border: 2px solid var(--success-color);
+/* Theme variants */
+.mondrian-checkbox-root.blue {
+  border-color: var(--mondrian-border);
+  color: var(--mondrian-blue);
 }
 
-.primary .mondrian-checkbox-input:checked + .mondrian-checkbox-mark {
-  background-color: var(--primary-color);
+.mondrian-checkbox-root.neutral {
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
 }
 
-.light .mondrian-checkbox-input:checked + .mondrian-checkbox-mark {
-  background-color: var(--light-color);
+.mondrian-checkbox-root.neutral .mondrian-checkbox-indicator {
+  color: var(--mondrian-white);
 }
 
-.dark .mondrian-checkbox-input:checked + .mondrian-checkbox-mark {
-  background-color: var(--dark-color);
+.mondrian-checkbox-root.contrast {
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
 }
 
-.error .mondrian-checkbox-input:checked + .mondrian-checkbox-mark {
-  background-color: var(--error-color);
+.mondrian-checkbox-root.contrast .mondrian-checkbox-indicator {
+  color: var(--mondrian-white);
 }
 
-.success .mondrian-checkbox-input:checked + .mondrian-checkbox-mark {
-  background-color: var(--success-color);
+/* Dark mode contrast theme - make it visually distinct from neutral in dark mode */
+[data-theme='dark'] .mondrian-checkbox-root.contrast {
+  border-color: var(--mondrian-yellow);
+  background-color: var(--mondrian-blue);
 }
 
-.mondrian-checkbox-input:checked + .mondrian-checkbox-mark::after {
-  content: '';
-  position: absolute;
-  left: 0.5rem;
-  top: calc(50% - 0.707rem);
-  width: 0.3rem;
-  height: 1rem;
-  border: solid var(--neutral-color);
-  border-width: 0 0.1rem 0.1rem 0;
-  opacity: 1;
-  animation: spin-in 0.5s ease forwards;
+[data-theme='dark']
+  .mondrian-checkbox-root.contrast
+  .mondrian-checkbox-indicator {
+  color: var(--mondrian-white);
 }
 
-.mondrian-checkbox-label.primary {
-  color: var(--primary-color);
-  border-left: 2px solid var(--primary-color);
+.mondrian-checkbox-root.yellow {
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
 }
 
-.mondrian-checkbox-label.dark {
-  color: var(--dark-color);
-  border-left: 2px solid var(--dark-color);
+.mondrian-checkbox-root.yellow .mondrian-checkbox-indicator {
+  color: var(--mondrian-yellow);
 }
 
-.mondrian-checkbox-label.light {
-  color: var(--light-color);
-  border-left: 2px solid var(--light-color);
+.mondrian-checkbox-root.red .mondrian-checkbox-indicator {
+  color: var(--mondrian-error);
 }
 
-.mondrian-checkbox-label.error {
-  color: var(--error-color);
-  border-left: 2px solid var(--error-color);
+.mondrian-checkbox-root.green .mondrian-checkbox-indicator {
+  color: var(--mondrian-success);
 }
 
-.mondrian-checkbox-label.success {
-  color: var(--success-color);
-  border-left: 2px solid var(--success-color);
+/* Focus styling that fits with Mondrian principles */
+.mondrian-checkbox-root:focus-visible {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
-.mondrian-checkbox-input:not(:checked) + .mondrian-checkbox-mark::after {
-  animation: spin-out 0.5s ease forwards;
-  opacity: 0;
+/* Hover styling consistent with other components */
+.mondrian-checkbox-root:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
-@keyframes spin-in {
-  0% {
-    transform: rotate(0deg);
-    opacity: 0;
-  }
-
-  100% {
-    transform: rotate(45deg);
-    opacity: 1;
-  }
-}
-
-@keyframes spin-out {
-  0% {
-    transform: rotate(45deg);
-    opacity: 1;
-  }
-
-  100% {
-    transform: rotate(0deg);
-    opacity: 0;
-  }
+/* Disabled state */
+.mondrian-checkbox-root[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
 }

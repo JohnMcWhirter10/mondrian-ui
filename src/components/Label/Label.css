@@ -1,0 +1,109 @@
+.mondrian-label {
+  font-family: var(--mondrian-font-family);
+  font-weight: normal;
+  color: var(--mondrian-text);
+  cursor: pointer;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  padding: var(--mondrian-spacing-small);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  font-size: var(--mondrian-font-size-medium);
+  background-color: var(--mondrian-background);
+}
+
+/* Size variants */
+.mondrian-label-sm {
+  font-size: var(--mondrian-font-size-small);
+  padding: calc(var(--mondrian-spacing-small) * 0.75);
+}
+
+.mondrian-label-lg {
+  font-size: var(--mondrian-font-size-large);
+  padding: calc(var(--mondrian-spacing-small) * 1.25);
+}
+
+/* Theme variants for label */
+.mondrian-label-blue {
+  color: var(--mondrian-blue);
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-label-neutral {
+  color: var(--mondrian-text);
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-label-contrast {
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-black);
+}
+
+/* Dark mode contrast theme - make it visually distinct from neutral in dark mode */
+[data-theme='dark'] .mondrian-label-contrast {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-yellow);
+}
+
+.mondrian-label-yellow {
+  color: var(--mondrian-yellow);
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-label-red {
+  color: var(--mondrian-error);
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-label-green {
+  color: var(--mondrian-success);
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
+}
+
+/* Position variants */
+.mondrian-label-position-left {
+  margin-right: var(--mondrian-spacing-medium);
+}
+
+.mondrian-label-position-right {
+  margin-left: var(--mondrian-spacing-medium);
+}
+
+.mondrian-label-position-top {
+  margin-bottom: var(--mondrian-spacing-small);
+  display: block;
+}
+
+.mondrian-label-position-bottom {
+  margin-top: var(--mondrian-spacing-small);
+  display: block;
+}
+
+/* Floating label style */
+.mondrian-label-position-floating {
+  position: absolute;
+  padding: 0 4px;
+  top: -10px;
+  left: 8px;
+  z-index: 1;
+  background-color: var(--mondrian-background);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: none;
+}
+
+/* Focus and hover effects for better interaction feedback */
+.mondrian-label:hover {
+  opacity: 0.9;
+}

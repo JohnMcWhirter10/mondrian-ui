@@ -1,91 +1,49 @@
-import React, { useState, useEffect, forwardRef } from 'react';
-import { CheckboxProps } from './Checkbox.types';
+import * as React from 'react';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import { CheckboxTheme } from './Checkbox.types';
+import { Check } from '../icons';
 import './Checkbox.css';
 
-const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  (
-    {
-      label,
-      theme = 'primary',
-      className,
-      defaultChecked,
-      onChange,
-      id,
-      ...props
-    },
-    ref
-  ) => {
-    const [selfChecked, setSelfChecked] = useState<boolean>(
-      defaultChecked || false
-    );
-    const uniqueId =
-      id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+const Checkbox = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  Omit<
+    React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>,
+    'className'
+  > & {
+    /**
+     * The theme color for the checkbox
+     * @default "blue"
+     */
+    theme?: CheckboxTheme;
 
-    const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newChecked = event.target.checked;
-      setSelfChecked(newChecked);
-
-      if (onChange) {
-        onChange({
-          ...event,
-          target: { ...event.target, checked: newChecked },
-        });
-      }
-    };
-
-    useEffect(() => {
-      if (onChange) {
-        onChange({
-          target: { checked: selfChecked },
-        } as React.ChangeEvent<HTMLInputElement>);
-      }
-    }, [selfChecked, onChange]);
-
-    const handleClickMark = () => {
-      setSelfChecked((prev) => {
-        const newChecked = !prev;
-        if (onChange) {
-          onChange({
-            target: { checked: newChecked },
-          } as React.ChangeEvent<HTMLInputElement>);
-        }
-        return newChecked;
-      });
-    };
-
-    return (
-      <div className={`mondrian-checkbox-container ${theme} ${className}`}>
-        <input
-          ref={ref}
-          type="checkbox"
-          className="mondrian-checkbox-input"
-          checked={selfChecked}
-          onChange={handleToggle}
-          id={uniqueId}
-          {...props}
-        />
-        <span
-          className="mondrian-checkbox-mark"
-          onClick={handleClickMark}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') handleClickMark();
-          }}
-        />
-        {label && (
-          <label
-            className={`mondrian-checkbox-label ${theme}`}
-            htmlFor={uniqueId}
-          >
-            {label}
-          </label>
-        )}
-      </div>
-    );
+    /**
+     * The size of the checkbox
+     * @default "default"
+     */
+    size?: 'default' | 'sm' | 'lg';
   }
-);
+>(({ theme = 'blue', size = 'default', ...props }, ref) => {
+  // Compose class names
+  const rootClassName = [
+    'mondrian-checkbox-root',
+    theme,
+    size === 'sm' ? 'mondrian-checkbox-sm' : '',
+    size === 'lg' ? 'mondrian-checkbox-lg' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const indicatorClassName = 'mondrian-checkbox-indicator';
+
+  return (
+    <CheckboxPrimitive.Root ref={ref} className={rootClassName} {...props}>
+      <CheckboxPrimitive.Indicator className={indicatorClassName}>
+        <Check />
+      </CheckboxPrimitive.Indicator>
+    </CheckboxPrimitive.Root>
+  );
+});
 
 Checkbox.displayName = 'Checkbox';
 
-export default Checkbox;
+export { Checkbox };

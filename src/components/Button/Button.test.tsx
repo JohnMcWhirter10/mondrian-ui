@@ -1,7 +1,9 @@
+/** @jsxRuntime classic */
+/** @jsx React.createElement */
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Button from './Button';
+import { Button } from './Button';
 import { ThemeProvider } from '../../themes';
 
 describe('Button Component', () => {
@@ -13,20 +15,44 @@ describe('Button Component', () => {
     );
   };
 
-  test('renders the button with primary theme', () => {
-    renderButton({ children: 'Primary Button', theme: 'primary' });
+  test('renders the button with blue theme', () => {
+    renderButton({ children: 'Blue Button', theme: 'blue' });
 
-    const button = screen.getByRole('button', { name: /primary button/i });
+    const button = screen.getByRole('button', { name: /blue button/i });
     expect(button).not.toBeNull();
-    expect(button.className.includes('primary')).toBe(true);
+    expect(button.className.includes('blue')).toBe(true);
   });
 
-  test('renders the button with light theme', () => {
-    renderButton({ children: 'Light Button', theme: 'light' });
+  test('renders the button with neutral theme', () => {
+    renderButton({ children: 'Neutral Button', theme: 'neutral' });
 
-    const button = screen.getByRole('button', { name: /light button/i });
+    const button = screen.getByRole('button', { name: /neutral button/i });
     expect(button).not.toBeNull();
-    expect(button.className.includes('light')).toBe(true);
+    expect(button.className.includes('neutral')).toBe(true);
+  });
+
+  test('renders the button with red theme', () => {
+    renderButton({ children: 'Red Button', theme: 'red' });
+
+    const button = screen.getByRole('button', { name: /red button/i });
+    expect(button).not.toBeNull();
+    expect(button.className.includes('red')).toBe(true);
+  });
+
+  test('renders the button with green theme', () => {
+    renderButton({ children: 'Green Button', theme: 'green' });
+
+    const button = screen.getByRole('button', { name: /green button/i });
+    expect(button).not.toBeNull();
+    expect(button.className.includes('green')).toBe(true);
+  });
+
+  test('renders the button with yellow theme', () => {
+    renderButton({ children: 'Yellow Button', theme: 'yellow' });
+
+    const button = screen.getByRole('button', { name: /yellow button/i });
+    expect(button).not.toBeNull();
+    expect(button.className.includes('yellow')).toBe(true);
   });
 
   test('handles button click', async () => {
@@ -39,21 +65,5 @@ describe('Button Component', () => {
     await waitFor(() => {
       expect(handleClick).toHaveBeenCalledTimes(1);
     });
-  });
-
-  test('renders the button with error theme', () => {
-    renderButton({ children: 'Error Button', theme: 'error' });
-
-    const button = screen.getByRole('button', { name: /error button/i });
-    expect(button).not.toBeNull();
-    expect(button.className.includes('error')).toBe(true);
-  });
-
-  test('renders the button with success theme', () => {
-    renderButton({ children: 'Success Button', theme: 'success' });
-
-    const button = screen.getByRole('button', { name: /success button/i });
-    expect(button).not.toBeNull();
-    expect(button.className.includes('success')).toBe(true);
   });
 });

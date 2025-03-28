@@ -1,0 +1,118 @@
+/**
+ * Tooltip Component
+ * 
+ * Follows Piet Mondrian's neoplasticism principles with:
+ * - Rectangular shapes (no rounded corners)
+ * - Primary color palette (red, blue, yellow, black, white)
+ * - Strong black grid lines
+ * - Asymmetrical balance
+ */
+
+.mondrian-tooltip {
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  padding: var(--mondrian-spacing-medium);
+  color: var(--mondrian-text);
+  font-size: var(--mondrian-font-size-small);
+  font-family: var(--mondrian-font-family);
+  max-width: 250px;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  /* Animation */
+  transition: opacity 300ms;
+  z-index: 1000;
+}
+
+/* Theme variants */
+.mondrian-tooltip.contrast {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+}
+
+/* Dark mode contrast theme */
+[data-theme='dark'] .mondrian-tooltip.contrast {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-yellow);
+}
+
+.mondrian-tooltip.blue {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+}
+
+.mondrian-tooltip.neutral {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+}
+
+.mondrian-tooltip.red {
+  background-color: var(--mondrian-red);
+  color: var(--mondrian-white);
+}
+
+.mondrian-tooltip.green {
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-white);
+}
+
+.mondrian-tooltip.yellow {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+}
+
+.mondrian-tooltip-content {
+  display: inline-block;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  padding: var(--mondrian-spacing-small);
+  font-size: var(--mondrian-font-size-small);
+  font-family: var(--mondrian-font-family);
+  z-index: 50;
+  max-width: 300px;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+
+  /* Animation */
+  animation-duration: 0.2s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+}
+
+/* Dark mode */
+[data-theme='dark'] .mondrian-tooltip-content {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Animation states from Radix */
+.mondrian-tooltip-content[data-state='delayed-open'] {
+  animation-name: mondrian-tooltip-show;
+}
+
+@keyframes mondrian-tooltip-show {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Tooltip variants */
+.mondrian-tooltip-content.yellow {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+}
+
+.mondrian-tooltip-content.red {
+  background-color: var(--mondrian-red);
+  color: var(--mondrian-white);
+}
+
+.mondrian-tooltip-content.blue {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+}

@@ -1,0 +1,398 @@
+/**
+ * Dialog Component
+ * 
+ * Follows Piet Mondrian's neoplasticism principles with:
+ * - Rectangular shapes (no rounded corners)
+ * - Primary color palette (red, blue, yellow, black, white)
+ * - Strong black grid lines
+ * - Asymmetrical balance
+ */
+
+/* Trigger styling that matches the Button component */
+.mondrian-dialog-trigger {
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: var(--mondrian-font-size-medium);
+  font-family: var(--mondrian-font-family);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 0; /* Mondrian uses rectangular shapes */
+  background-color: var(
+    --mondrian-background,
+    var(--mondrian-white)
+  ); /* Fallback to white */
+  color: var(--mondrian-text, var(--mondrian-black)); /* Fallback to black */
+  font-weight: bold;
+}
+
+/* Trigger size variants */
+.mondrian-dialog-trigger-sm {
+  padding: 8px 16px;
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-dialog-trigger-lg {
+  padding: 16px 32px;
+  font-size: var(--mondrian-font-size-large);
+}
+
+/* Trigger theme variants */
+.mondrian-dialog-trigger.blue {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-dialog-trigger.neutral {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-dialog-trigger.contrast {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-dialog-trigger.yellow {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-dialog-trigger.red {
+  background-color: var(--mondrian-red);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-dialog-trigger.green {
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+/* Trigger hover effect */
+.mondrian-dialog-trigger:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
+}
+
+/* Trigger focus state */
+.mondrian-dialog-trigger:focus-visible {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Dark mode trigger */
+[data-theme='dark'] .mondrian-dialog-trigger {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-text);
+  border-color: var(--mondrian-border);
+}
+
+[data-theme='dark'] .mondrian-dialog-trigger:hover,
+[data-theme='dark'] .mondrian-dialog-trigger:focus-visible {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Dark mode contrast theme for trigger - make it visually distinct from neutral in dark mode */
+[data-theme='dark'] .mondrian-dialog-trigger.contrast {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-yellow);
+}
+
+/* Overlay */
+.mondrian-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--mondrian-overlay);
+  animation: mondrian-overlay-show 0.2s ease-in-out;
+  z-index: 49;
+}
+
+/* Content */
+.mondrian-dialog-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 400px;
+  max-width: min(calc(100vw - 2rem), 520px);
+  max-height: min(calc(100vh - 2rem), 85vh);
+  overflow-y: auto;
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  color: var(--mondrian-text);
+  padding: var(--mondrian-spacing-large);
+  z-index: 50;
+  box-shadow: 6px 6px 0 var(--mondrian-shadow);
+  animation: mondrian-content-show 0.2s ease-in-out;
+}
+
+/* Dark mode */
+[data-theme='dark'] .mondrian-dialog-content {
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  box-shadow: 6px 6px 0 var(--mondrian-shadow);
+}
+
+/* Size variants */
+.mondrian-dialog-content-sm {
+  max-width: min(calc(100vw - 2rem), 420px);
+  padding: var(--mondrian-spacing-medium);
+}
+
+.mondrian-dialog-content-lg {
+  max-width: min(calc(100vw - 2rem), 620px);
+  padding: var(--mondrian-spacing-large)
+    calc(var(--mondrian-spacing-large) * 1.5);
+}
+
+/* Theme variants */
+.mondrian-dialog-content.blue {
+  border-color: var(--mondrian-blue);
+}
+
+.mondrian-dialog-content.neutral {
+  border-color: var(--mondrian-border);
+}
+
+/* Dialog content contrast theme */
+.mondrian-dialog-content.contrast {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-dialog-content.yellow {
+  border-color: var(--mondrian-yellow);
+}
+
+.mondrian-dialog-content.red {
+  border-color: var(--mondrian-red);
+}
+
+.mondrian-dialog-content.green {
+  border-color: var(--mondrian-success);
+}
+
+/* Dark mode contrast theme for content - make it visually distinct from neutral in dark mode */
+[data-theme='dark'] .mondrian-dialog-content.contrast {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-yellow);
+}
+
+/* Close button */
+.mondrian-dialog-close {
+  position: absolute;
+  top: var(--mondrian-spacing-small);
+  right: var(--mondrian-spacing-small);
+  cursor: pointer;
+  background-color: transparent;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: all 0.2s ease;
+}
+
+.mondrian-dialog-close:hover {
+  background-color: var(--mondrian-error);
+  color: var(--mondrian-white);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--mondrian-shadow);
+}
+
+[data-theme='dark'] .mondrian-dialog-close {
+  border-color: var(--mondrian-border);
+  color: var(--mondrian-white);
+}
+
+[data-theme='dark'] .mondrian-dialog-close:hover {
+  background-color: var(--mondrian-error);
+  color: var(--mondrian-white);
+  box-shadow: 2px 2px 0 var(--mondrian-shadow);
+}
+
+/* Header, Footer, Title, Description */
+.mondrian-dialog-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--mondrian-spacing-large);
+  padding-bottom: var(--mondrian-spacing-medium);
+  position: relative;
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/* Mondrian-style asymmetrical color blocks for header */
+.mondrian-dialog-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 8px;
+  width: 40%;
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-dialog-header::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  right: 0;
+  height: 8px;
+  width: 25%;
+  background-color: var(--mondrian-blue);
+}
+
+/* Theme-specific header styling */
+.mondrian-dialog-content.blue .mondrian-dialog-header::after {
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-dialog-content.red .mondrian-dialog-header::after {
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-dialog-content.green .mondrian-dialog-header::after {
+  background-color: var(--mondrian-success);
+}
+
+/* Dark mode header adjustments */
+[data-theme='dark'] .mondrian-dialog-header {
+  border-bottom-color: var(--mondrian-border);
+}
+
+[data-theme='dark'] .mondrian-dialog-header::before,
+[data-theme='dark'] .mondrian-dialog-header::after,
+[data-theme='dark'] .mondrian-dialog-footer::before {
+  /* Add a subtle outline in dark mode to make color blocks pop against dark background */
+  outline: 1px solid var(--mondrian-border);
+}
+
+.mondrian-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--mondrian-spacing-medium);
+  margin-top: var(--mondrian-spacing-large);
+  padding-top: var(--mondrian-spacing-medium);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  position: relative;
+}
+
+/* Mondrian-style asymmetrical color blocks for footer */
+.mondrian-dialog-footer::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  height: 8px;
+  width: 30%;
+  background-color: var(--mondrian-red);
+}
+
+/* Theme-specific footer styling */
+.mondrian-dialog-content.red .mondrian-dialog-footer::before {
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-dialog-content.blue .mondrian-dialog-footer::before {
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-dialog-content.green .mondrian-dialog-footer::before {
+  background-color: var(--mondrian-success);
+}
+
+[data-theme='dark'] .mondrian-dialog-footer {
+  border-top-color: var(--mondrian-border);
+}
+
+.mondrian-dialog-title {
+  font-size: var(--mondrian-font-size-large);
+  font-weight: bold;
+  line-height: 1.25;
+  margin-bottom: var(--mondrian-spacing-small);
+  margin-top: calc(var(--mondrian-spacing-small) + 8px);
+}
+
+.mondrian-dialog-description {
+  font-size: var(--mondrian-font-size-medium);
+  line-height: 1.5;
+  color: var(--mondrian-text);
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Animations */
+@keyframes mondrian-overlay-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mondrian-content-show {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Dialog when it's closing - animations */
+.mondrian-dialog-overlay[data-state='closed'] {
+  animation: mondrian-overlay-hide 0.2s ease-in-out;
+}
+
+.mondrian-dialog-content[data-state='closed'] {
+  animation: mondrian-content-hide 0.2s ease-in-out;
+}
+
+@keyframes mondrian-overlay-hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes mondrian-content-hide {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+}
