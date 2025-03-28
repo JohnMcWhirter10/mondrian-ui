@@ -1,142 +1,99 @@
-/**
- * DropdownMenu Component Types
- */
-
+import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import React from 'react';
 import { ComponentTheme } from '../../themes';
 
-/**
- * Theme variants for Mondrian UI components
- */
-export type MondrianTheme = ComponentTheme;
+export type DropdownMenuTheme = ComponentTheme;
 
-/**
- * Size variants for Mondrian UI components
- */
-export type MondrianSize = 'default' | 'sm' | 'lg';
+export type DropdownMenuProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuProps,
+  'className'
+> & {
+  /**
+   * Determines the dropdown menu's visual style
+   * @default "blue"
+   */
+  theme?: DropdownMenuTheme;
+};
 
-/**
- * Base DropdownMenu props (Root component)
- */
-export type DropdownMenuProps = React.ComponentPropsWithoutRef<
-  typeof DropdownMenuPrimitive.Root
+export type DropdownMenuTriggerProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuTriggerProps,
+  'className'
 >;
 
-/**
- * DropdownMenuTrigger props (excluding className)
- */
-export type DropdownMenuTriggerProps = Omit<
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>,
-  'className'
-> & {
-  /**
-   * The theme variant for the trigger
-   * @default "primary"
-   */
-  theme?: MondrianTheme;
-
-  /**
-   * The size variant for the trigger
-   * @default "default"
-   */
-  size?: MondrianSize;
-};
-
-/**
- * DropdownMenuContent props (excluding className)
- */
 export type DropdownMenuContentProps = Omit<
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>,
+  DropdownMenuPrimitive.DropdownMenuContentProps,
   'className'
 > & {
   /**
-   * The distance in pixels from the trigger.
-   * @default 4
+   * The visual style variant to apply
+   * @default inherited from DropdownMenu
    */
-  sideOffset?: number;
-
-  /**
-   * The theme variant for the content
-   * @default "primary"
-   */
-  theme?: MondrianTheme;
-
-  /**
-   * The size variant for the content
-   * @default "default"
-   */
-  size?: MondrianSize;
+  theme?: DropdownMenuTheme;
 };
 
-/**
- * DropdownMenuItem props (excluding className)
- */
 export type DropdownMenuItemProps = Omit<
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
+  DropdownMenuPrimitive.DropdownMenuItemProps,
   'className'
-> & {
-  /**
-   * Whether the item is inset, pushing its content to the right.
-   * @default false
-   */
-  inset?: boolean;
+>;
 
-  /**
-   * The theme variant for the item
-   * @default "primary"
-   */
-  theme?: MondrianTheme;
-
-  /**
-   * The size variant for the item
-   * @default "default"
-   */
-  size?: MondrianSize;
-};
-
-/**
- * DropdownMenuCheckboxItem props (excluding className)
- */
 export type DropdownMenuCheckboxItemProps = Omit<
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>,
+  DropdownMenuPrimitive.DropdownMenuCheckboxItemProps,
   'className'
-> & {
-  /**
-   * The theme variant for the checkbox item
-   * @default "primary"
-   */
-  theme?: MondrianTheme;
+>;
 
-  /**
-   * The size variant for the checkbox item
-   * @default "default"
-   */
-  size?: MondrianSize;
-};
+export type DropdownMenuRadioGroupProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuRadioGroupProps,
+  'className'
+>;
 
-/**
- * DropdownMenuLabel props (excluding className)
- */
+export type DropdownMenuRadioItemProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuRadioItemProps,
+  'className'
+>;
+
 export type DropdownMenuLabelProps = Omit<
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label>,
+  DropdownMenuPrimitive.DropdownMenuLabelProps,
+  'className'
+>;
+
+export type DropdownMenuSeparatorProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuSeparatorProps,
+  'className'
+>;
+
+export type DropdownMenuGroupProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuGroupProps,
+  'className'
+>;
+
+export type DropdownMenuSubProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuSubProps,
+  'className'
+>;
+
+export type DropdownMenuSubTriggerProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuSubTriggerProps,
   'className'
 > & {
   /**
-   * Whether the label is inset, pushing its content to the right.
-   * @default false
+   * The visual style variant to apply
+   * @default inherited from DropdownMenu
    */
-  inset?: boolean;
-
-  /**
-   * The theme variant for the label
-   * @default "primary"
-   */
-  theme?: MondrianTheme;
-
-  /**
-   * The size variant for the label
-   * @default "default"
-   */
-  size?: MondrianSize;
+  theme?: DropdownMenuTheme;
 };
+
+export type DropdownMenuSubContentProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuSubContentProps,
+  'className'
+> & {
+  /**
+   * The visual style variant to apply
+   * @default inherited from DropdownMenu
+   */
+  theme?: DropdownMenuTheme;
+};
+
+export type DropdownMenuItemIndicatorProps = Omit<
+  DropdownMenuPrimitive.DropdownMenuItemIndicatorProps,
+  'className'
+>;

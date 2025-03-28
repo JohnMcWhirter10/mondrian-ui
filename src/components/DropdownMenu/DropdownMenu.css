@@ -1,317 +1,352 @@
-/**
- * DropdownMenu Component
- * 
- * Follows Piet Mondrian's neoplasticism principles with:
- * - Rectangular shapes (no rounded corners)
- * - Primary color palette (red, blue, yellow, black, white)
- * - Strong black grid lines
- * - Asymmetrical balance
- */
+/* Base dropdown trigger styling */
+.mondrian-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  position: relative;
+  transition: all 0.3s;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  padding: var(--mondrian-spacing-medium);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border-radius: 0; /* Mondrian uses rectangular shapes */
+}
 
-/* Base Menu Content */
-.mondrian-dropdown-menu-content,
-.mondrian-dropdown-menu-subcontent {
-  min-width: 8rem;
+.mondrian-dropdown-trigger[data-state='open'] {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+.mondrian-dropdown-trigger:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
+}
+
+.mondrian-dropdown-trigger:focus-visible {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Additional Mondrian-inspired decorative element - asymmetric corner */
+.mondrian-dropdown-trigger:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.mondrian-dropdown-trigger:hover:before {
+  opacity: 1;
+}
+
+/* Dropdown content styling */
+.mondrian-dropdown-content {
+  min-width: 200px;
   background-color: var(--mondrian-background);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  color: var(--mondrian-text);
   padding: var(--mondrian-spacing-small);
   z-index: 50;
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  /* Animation */
-  transition:
-    transform 0.2s,
-    opacity 0.2s;
+  animation: slide-in 0.2s ease-out;
   transform-origin: var(--radix-dropdown-menu-content-transform-origin);
-  animation-duration: 0.2s;
+  border-radius: 0; /* Mondrian rectangular shapes */
 }
 
-/* Dark mode */
-[data-theme='dark'] .mondrian-dropdown-menu-content,
-[data-theme='dark'] .mondrian-dropdown-menu-subcontent {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Menu Item */
-.mondrian-dropdown-menu-item {
-  position: relative;
+/* Theme variants for content */
+.mondrian-dropdown-content.blue {
+  border-top: 5px solid var(--mondrian-blue);
+}
+
+.mondrian-dropdown-content.red {
+  border-top: 5px solid var(--mondrian-error);
+}
+
+.mondrian-dropdown-content.yellow {
+  border-top: 5px solid var(--mondrian-yellow);
+}
+
+.mondrian-dropdown-content.green {
+  border-top: 5px solid var(--mondrian-success);
+}
+
+.mondrian-dropdown-content.neutral {
+  border-top: 5px solid var(--mondrian-black);
+}
+
+/* Dropdown items */
+.mondrian-dropdown-item {
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  padding: var(--mondrian-spacing-small);
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: var(--mondrian-spacing-small);
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
-  cursor: default;
+  position: relative;
+  transition: all 0.2s;
   outline: none;
-  font-size: var(--mondrian-font-size-medium);
-  font-family: var(--mondrian-font-family);
-  transition: background-color 0.2s;
+  border-left: 0 solid transparent;
 }
 
-.mondrian-dropdown-menu-item.inset {
-  padding-left: var(--mondrian-spacing-large);
+.mondrian-dropdown-item[data-highlighted] {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--mondrian-shadow);
 }
 
-.mondrian-dropdown-menu-item:hover,
-.mondrian-dropdown-menu-item:focus {
+.mondrian-dropdown-content.blue .mondrian-dropdown-item[data-highlighted] {
   background-color: var(--mondrian-blue);
   color: var(--mondrian-white);
 }
 
-.mondrian-dropdown-menu-item[data-disabled] {
+.mondrian-dropdown-content.red .mondrian-dropdown-item[data-highlighted] {
+  background-color: var(--mondrian-error);
+  color: var(--mondrian-white);
+}
+
+.mondrian-dropdown-content.yellow .mondrian-dropdown-item[data-highlighted] {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+}
+
+.mondrian-dropdown-content.green .mondrian-dropdown-item[data-highlighted] {
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-white);
+}
+
+.mondrian-dropdown-content.neutral .mondrian-dropdown-item[data-highlighted] {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+}
+
+.mondrian-dropdown-item[data-disabled] {
   opacity: 0.5;
+  cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Sub Trigger */
-.mondrian-dropdown-menu-subtrigger {
-  position: relative;
+/* Checkbox items */
+.mondrian-dropdown-checkbox-item {
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  padding: var(--mondrian-spacing-small);
+  padding-left: 36px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
-  cursor: default;
+  position: relative;
+  transition: all 0.2s;
   outline: none;
-  font-size: var(--mondrian-font-size-medium);
-  font-family: var(--mondrian-font-family);
 }
 
-.mondrian-dropdown-menu-subtrigger.inset {
-  padding-left: var(--mondrian-spacing-large);
+.mondrian-dropdown-checkbox-item[data-highlighted] {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--mondrian-shadow);
 }
 
-.mondrian-dropdown-menu-subtrigger:hover,
-.mondrian-dropdown-menu-subtrigger:focus,
-.mondrian-dropdown-menu-subtrigger[data-state='open'] {
+.mondrian-dropdown-content.blue
+  .mondrian-dropdown-checkbox-item[data-highlighted],
+.mondrian-dropdown-content.blue
+  .mondrian-dropdown-radio-item[data-highlighted] {
   background-color: var(--mondrian-blue);
   color: var(--mondrian-white);
 }
 
-.mondrian-dropdown-menu-chevron {
-  width: 16px;
-  height: 16px;
-  margin-left: auto;
-  pointer-events: none;
-}
-
-/* Checkbox & Radio Items */
-.mondrian-dropdown-menu-checkbox-item,
-.mondrian-dropdown-menu-radio-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
-  padding-left: calc(
-    var(--mondrian-spacing-large) + var(--mondrian-spacing-medium)
-  );
-  cursor: default;
-  outline: none;
-  font-size: var(--mondrian-font-size-medium);
-  font-family: var(--mondrian-font-family);
-}
-
-.mondrian-dropdown-menu-checkbox-item:hover,
-.mondrian-dropdown-menu-checkbox-item:focus,
-.mondrian-dropdown-menu-radio-item:hover,
-.mondrian-dropdown-menu-radio-item:focus {
-  background-color: var(--mondrian-blue);
+.mondrian-dropdown-content.red
+  .mondrian-dropdown-checkbox-item[data-highlighted],
+.mondrian-dropdown-content.red .mondrian-dropdown-radio-item[data-highlighted] {
+  background-color: var(--mondrian-error);
   color: var(--mondrian-white);
 }
 
-.mondrian-dropdown-menu-checkbox-indicator,
-.mondrian-dropdown-menu-radio-indicator {
+.mondrian-dropdown-content.yellow
+  .mondrian-dropdown-checkbox-item[data-highlighted],
+.mondrian-dropdown-content.yellow
+  .mondrian-dropdown-radio-item[data-highlighted] {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+}
+
+.mondrian-dropdown-content.green
+  .mondrian-dropdown-checkbox-item[data-highlighted],
+.mondrian-dropdown-content.green
+  .mondrian-dropdown-radio-item[data-highlighted] {
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-white);
+}
+
+.mondrian-dropdown-content.neutral
+  .mondrian-dropdown-checkbox-item[data-highlighted],
+.mondrian-dropdown-content.neutral
+  .mondrian-dropdown-radio-item[data-highlighted] {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+}
+
+/* Radio items */
+.mondrian-dropdown-radio-item {
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  padding: var(--mondrian-spacing-small);
+  padding-left: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.mondrian-dropdown-radio-item[data-highlighted] {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--mondrian-shadow);
+}
+
+/* Item indicators for checkbox and radio */
+.mondrian-dropdown-item-indicator {
   position: absolute;
-  left: var(--mondrian-spacing-medium);
+  left: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 16px;
   height: 16px;
-  margin-right: var(--mondrian-spacing-medium);
-}
-
-.mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-square {
-  width: 16px;
-  height: 16px;
-}
-
-/* Theme color variants for icons */
-.mondrian-dropdown-menu-checkbox-item.blue .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item.blue .mondrian-dropdown-menu-square {
-  color: var(--mondrian-blue);
-}
-
-.mondrian-dropdown-menu-checkbox-item.neutral .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item.neutral .mondrian-dropdown-menu-square {
-  color: var(--mondrian-yellow);
-}
-
-.mondrian-dropdown-menu-checkbox-item.yellow .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item.yellow .mondrian-dropdown-menu-square {
-  color: var(--mondrian-yellow);
-}
-
-.mondrian-dropdown-menu-checkbox-item.red .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item.red .mondrian-dropdown-menu-square {
-  color: var(--mondrian-error);
-}
-
-.mondrian-dropdown-menu-checkbox-item.green .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item.green .mondrian-dropdown-menu-square {
-  color: var(--mondrian-success);
 }
 
 /* Label */
-.mondrian-dropdown-menu-label {
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
-  font-size: var(--mondrian-font-size-medium);
+.mondrian-dropdown-label {
   font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-small);
   font-weight: bold;
-}
-
-.mondrian-dropdown-menu-label.inset {
-  padding-left: var(--mondrian-spacing-large);
+  padding: var(--mondrian-spacing-small);
+  color: var(--mondrian-text);
 }
 
 /* Separator */
-.mondrian-dropdown-menu-separator {
+.mondrian-dropdown-separator {
   height: var(--mondrian-grid-width);
   background-color: var(--mondrian-border);
-  margin: var(--mondrian-spacing-small) calc(var(--mondrian-spacing-small) * -1);
+  margin: var(--mondrian-spacing-small) 0;
 }
 
-[data-theme='dark'] .mondrian-dropdown-menu-separator {
-  background-color: var(--mondrian-border);
+/* Group */
+.mondrian-dropdown-group {
+  padding: var(--mondrian-spacing-small) 0;
 }
 
-/* Shortcut */
-.mondrian-dropdown-menu-shortcut {
-  margin-left: auto;
-  font-size: var(--mondrian-font-size-small);
-  letter-spacing: 0.1em;
-  opacity: 0.6;
+/* Sub menu trigger */
+.mondrian-dropdown-sub-trigger {
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  padding: var(--mondrian-spacing-small);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.2s;
+  outline: none;
 }
 
-/* Animation states from Radix */
-.mondrian-dropdown-menu-content[data-state='open'],
-.mondrian-dropdown-menu-subcontent[data-state='open'] {
-  animation-name: mondrian-dropdown-show;
+.mondrian-dropdown-sub-trigger[data-highlighted] {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--mondrian-shadow);
 }
 
-.mondrian-dropdown-menu-content[data-state='closed'],
-.mondrian-dropdown-menu-subcontent[data-state='closed'] {
-  animation-name: mondrian-dropdown-hide;
-}
-
-@keyframes mondrian-dropdown-show {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes mondrian-dropdown-hide {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-}
-
-/* Size variants for checkbox and radio items */
-.mondrian-dropdown-menu-checkbox-item-sm,
-.mondrian-dropdown-menu-radio-item-sm {
-  padding: calc(var(--mondrian-spacing-small) * 0.75)
-    var(--mondrian-spacing-small);
-  padding-left: calc(
-    var(--mondrian-spacing-large) + var(--mondrian-spacing-small)
-  );
-  font-size: var(--mondrian-font-size-small);
-}
-
-.mondrian-dropdown-menu-checkbox-item-lg,
-.mondrian-dropdown-menu-radio-item-lg {
-  padding: calc(var(--mondrian-spacing-small) * 1.25)
-    var(--mondrian-spacing-large);
-  padding-left: calc(
-    var(--mondrian-spacing-large) + var(--mondrian-spacing-large)
-  );
-  font-size: var(--mondrian-font-size-large);
-}
-
-.mondrian-dropdown-menu-checkbox-item-sm
-  .mondrian-dropdown-menu-checkbox-indicator,
-.mondrian-dropdown-menu-radio-item-sm .mondrian-dropdown-menu-radio-indicator {
-  left: var(--mondrian-spacing-small);
-  width: 14px;
-  height: 14px;
-}
-
-.mondrian-dropdown-menu-checkbox-item-lg
-  .mondrian-dropdown-menu-checkbox-indicator,
-.mondrian-dropdown-menu-radio-item-lg .mondrian-dropdown-menu-radio-indicator {
-  left: var(--mondrian-spacing-large);
-  width: 20px;
-  height: 20px;
-}
-
-.mondrian-dropdown-menu-checkbox-item-sm .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item-sm .mondrian-dropdown-menu-square {
-  width: 10px;
-  height: 10px;
-}
-
-.mondrian-dropdown-menu-checkbox-item-lg .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item-lg .mondrian-dropdown-menu-square {
-  width: 16px;
-  height: 16px;
-}
-
-/* DropdownMenu content - the dropdown itself */
-.mondrian-dropdown-content {
-  min-width: 200px;
-  background-color: var(--mondrian-background);
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  color: var(--mondrian-text);
-  padding: 0;
-  z-index: 10;
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  /* Animation */
-  animation-duration: 300ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-/* Theme variants for dropdown content */
-.mondrian-dropdown-content.yellow {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
-}
-
-.mondrian-dropdown-content.blue {
+.mondrian-dropdown-content.blue
+  .mondrian-dropdown-sub-trigger[data-highlighted] {
   background-color: var(--mondrian-blue);
   color: var(--mondrian-white);
 }
 
-.mondrian-dropdown-content.red {
-  background-color: var(--mondrian-red);
+.mondrian-dropdown-content.red
+  .mondrian-dropdown-sub-trigger[data-highlighted] {
+  background-color: var(--mondrian-error);
   color: var(--mondrian-white);
 }
 
-.mondrian-dropdown-content.green {
+.mondrian-dropdown-content.yellow
+  .mondrian-dropdown-sub-trigger[data-highlighted] {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+}
+
+.mondrian-dropdown-content.green
+  .mondrian-dropdown-sub-trigger[data-highlighted] {
   background-color: var(--mondrian-success);
   color: var(--mondrian-white);
 }
 
-[data-theme='dark'] .mondrian-dropdown-content {
+.mondrian-dropdown-content.neutral
+  .mondrian-dropdown-sub-trigger[data-highlighted] {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+}
+
+.mondrian-dropdown-sub-icon {
+  margin-left: var(--mondrian-spacing-medium);
+  display: flex;
+  align-items: center;
+}
+
+/* Sub content */
+.mondrian-dropdown-sub-content {
+  min-width: 180px;
   background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  padding: var(--mondrian-spacing-small);
+  z-index: 50;
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+  animation: slide-in 0.2s ease-out;
+  border-radius: 0; /* Mondrian rectangular shapes */
+}
+
+/* Theme variants for sub content */
+.mondrian-dropdown-sub-content.blue {
+  border-left: 5px solid var(--mondrian-blue);
+}
+
+.mondrian-dropdown-sub-content.red {
+  border-left: 5px solid var(--mondrian-error);
+}
+
+.mondrian-dropdown-sub-content.yellow {
+  border-left: 5px solid var(--mondrian-yellow);
+}
+
+.mondrian-dropdown-sub-content.green {
+  border-left: 5px solid var(--mondrian-success);
+}
+
+.mondrian-dropdown-sub-content.neutral {
+  border-left: 5px solid var(--mondrian-black);
 }

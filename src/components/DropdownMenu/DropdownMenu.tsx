@@ -1,201 +1,270 @@
-'use client';
-
 import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { Check, ChevronRight, Square } from '../icons';
-import './DropdownMenu.css';
+import { ChevronRight } from '../icons';
 import {
+  DropdownMenuProps,
   DropdownMenuTriggerProps,
-  DropdownMenuItemProps,
   DropdownMenuContentProps,
+  DropdownMenuItemProps,
   DropdownMenuCheckboxItemProps,
+  DropdownMenuRadioGroupProps,
+  DropdownMenuRadioItemProps,
   DropdownMenuLabelProps,
-  MondrianTheme,
-  MondrianSize,
+  DropdownMenuSeparatorProps,
+  DropdownMenuGroupProps,
+  DropdownMenuSubProps,
+  DropdownMenuSubTriggerProps,
+  DropdownMenuSubContentProps,
+  DropdownMenuItemIndicatorProps,
 } from './DropdownMenu.types';
+import './DropdownMenu.css';
 
-export const DropdownMenu = DropdownMenuPrimitive.Root;
+// Create context to pass theme
+const DropdownMenuContext = React.createContext<{
+  theme: DropdownMenuProps['theme'];
+}>({
+  theme: 'blue',
+});
 
-export const DropdownMenuTrigger = React.forwardRef<
+const DropdownMenu = ({
+  children,
+  theme = 'blue',
+  ...props
+}: DropdownMenuProps) => (
+  <DropdownMenuContext.Provider value={{ theme }}>
+    <DropdownMenuPrimitive.Root {...props}>
+      {children}
+    </DropdownMenuPrimitive.Root>
+  </DropdownMenuContext.Provider>
+);
+DropdownMenu.displayName = 'DropdownMenu';
+
+const DropdownMenuTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
   DropdownMenuTriggerProps
->(({ theme = 'primary', size = 'default', ...props }, ref) => {
-  const className = `mondrian-dropdown-menu-trigger ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-trigger-${size}` : ''}`;
-  return (
-    <DropdownMenuPrimitive.Trigger ref={ref} className={className} {...props} />
-  );
-});
-DropdownMenuTrigger.displayName = DropdownMenuPrimitive.Trigger.displayName;
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.Trigger
+    className="mondrian-dropdown-trigger"
+    ref={ref}
+    {...props}
+  >
+    {children}
+  </DropdownMenuPrimitive.Trigger>
+));
+DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
 
-export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
-
-export const DropdownMenuPortal = DropdownMenuPrimitive.Portal;
-
-export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
-
-export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
-
-export const DropdownMenuSubTrigger = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
-  Omit<
-    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger>,
-    'className'
-  > & {
-    inset?: boolean;
-    theme?: MondrianTheme;
-    size?: MondrianSize;
-  }
->(({ inset, theme = 'primary', size = 'default', children, ...props }, ref) => {
-  const className = `mondrian-dropdown-menu-subtrigger ${inset ? 'inset' : ''} ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-subtrigger-${size}` : ''}`;
-  return (
-    <DropdownMenuPrimitive.SubTrigger
-      ref={ref}
-      className={className}
-      {...props}
-    >
-      {children}
-      <ChevronRight className="mondrian-dropdown-menu-chevron" />
-    </DropdownMenuPrimitive.SubTrigger>
-  );
-});
-DropdownMenuSubTrigger.displayName =
-  DropdownMenuPrimitive.SubTrigger.displayName;
-
-export const DropdownMenuSubContent = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
-  Omit<
-    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>,
-    'className'
-  > & {
-    theme?: MondrianTheme;
-    size?: MondrianSize;
-  }
->(({ theme = 'primary', size = 'default', ...props }, ref) => {
-  const className = `mondrian-dropdown-menu-subcontent ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-subcontent-${size}` : ''}`;
-  return (
-    <DropdownMenuPrimitive.SubContent
-      ref={ref}
-      className={className}
-      {...props}
-    />
-  );
-});
-DropdownMenuSubContent.displayName =
-  DropdownMenuPrimitive.SubContent.displayName;
-
-export const DropdownMenuContent = React.forwardRef<
+const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   DropdownMenuContentProps
->(({ sideOffset = 4, theme = 'primary', size = 'default', ...props }, ref) => {
-  const className = `mondrian-dropdown-menu-content ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-content-${size}` : ''}`;
+>(({ children, theme: propTheme, ...props }, ref) => {
+  // Use context theme as fallback when prop is not provided
+  const { theme: contextTheme } = React.useContext(DropdownMenuContext);
+  const theme = propTheme || contextTheme;
+
+  const contentClassName = ['mondrian-dropdown-content', theme]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
+        className={contentClassName}
+        sideOffset={5}
         ref={ref}
-        sideOffset={sideOffset}
-        className={className}
         {...props}
-      />
+      >
+        {children}
+      </DropdownMenuPrimitive.Content>
     </DropdownMenuPrimitive.Portal>
   );
 });
-DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
+DropdownMenuContent.displayName = 'DropdownMenuContent';
 
-export const DropdownMenuItem = React.forwardRef<
+const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   DropdownMenuItemProps
->(({ inset, theme = 'primary', size = 'default', ...props }, ref) => {
-  const className = `mondrian-dropdown-menu-item ${inset ? 'inset' : ''} ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-item-${size}` : ''}`;
-  return (
-    <DropdownMenuPrimitive.Item ref={ref} className={className} {...props} />
-  );
-});
-DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.Item
+    className="mondrian-dropdown-item"
+    ref={ref}
+    {...props}
+  >
+    {children}
+  </DropdownMenuPrimitive.Item>
+));
+DropdownMenuItem.displayName = 'DropdownMenuItem';
 
-export const DropdownMenuCheckboxItem = React.forwardRef<
+const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
   DropdownMenuCheckboxItemProps
->(
-  (
-    { children, checked, theme = 'primary', size = 'default', ...props },
-    ref
-  ) => {
-    const className = `mondrian-dropdown-menu-checkbox-item ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-checkbox-item-${size}` : ''}`;
-    const iconSize = size === 'sm' ? 12 : size === 'lg' ? 18 : 14;
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.CheckboxItem
+    className="mondrian-dropdown-checkbox-item"
+    ref={ref}
+    {...props}
+  >
+    <DropdownMenuPrimitive.ItemIndicator className="mondrian-dropdown-item-indicator">
+      ✓
+    </DropdownMenuPrimitive.ItemIndicator>
+    {children}
+  </DropdownMenuPrimitive.CheckboxItem>
+));
+DropdownMenuCheckboxItem.displayName = 'DropdownMenuCheckboxItem';
 
-    return (
-      <DropdownMenuPrimitive.CheckboxItem
-        ref={ref}
-        className={className}
-        checked={checked}
-        {...props}
-      >
-        <span className="mondrian-dropdown-menu-checkbox-indicator">
-          <DropdownMenuPrimitive.ItemIndicator>
-            <Check className="mondrian-dropdown-menu-check" size={iconSize} />
-          </DropdownMenuPrimitive.ItemIndicator>
-        </span>
-        {children}
-      </DropdownMenuPrimitive.CheckboxItem>
-    );
-  }
-);
-DropdownMenuCheckboxItem.displayName =
-  DropdownMenuPrimitive.CheckboxItem.displayName;
+const DropdownMenuRadioGroup = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.RadioGroup>,
+  DropdownMenuRadioGroupProps
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.RadioGroup
+    className="mondrian-dropdown-radio-group"
+    ref={ref}
+    {...props}
+  >
+    {children}
+  </DropdownMenuPrimitive.RadioGroup>
+));
+DropdownMenuRadioGroup.displayName = 'DropdownMenuRadioGroup';
 
-export const DropdownMenuRadioItem = React.forwardRef<
+const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
-  Omit<
-    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>,
-    'className'
-  > & {
-    theme?: MondrianTheme;
-    size?: MondrianSize;
-  }
->(({ children, theme = 'primary', size = 'default', ...props }, ref) => {
-  const className = `mondrian-dropdown-menu-radio-item ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-radio-item-${size}` : ''}`;
-  const iconSize = size === 'sm' ? 12 : size === 'lg' ? 18 : 14;
+  DropdownMenuRadioItemProps
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.RadioItem
+    className="mondrian-dropdown-radio-item"
+    ref={ref}
+    {...props}
+  >
+    <DropdownMenuPrimitive.ItemIndicator className="mondrian-dropdown-item-indicator">
+      •
+    </DropdownMenuPrimitive.ItemIndicator>
+    {children}
+  </DropdownMenuPrimitive.RadioItem>
+));
+DropdownMenuRadioItem.displayName = 'DropdownMenuRadioItem';
 
-  return (
-    <DropdownMenuPrimitive.RadioItem ref={ref} className={className} {...props}>
-      <DropdownMenuPrimitive.ItemIndicator className="mondrian-dropdown-menu-radio-indicator">
-        <Square className="mondrian-dropdown-menu-square" size={iconSize} />
-      </DropdownMenuPrimitive.ItemIndicator>
-      {children}
-    </DropdownMenuPrimitive.RadioItem>
-  );
-});
-DropdownMenuRadioItem.displayName = DropdownMenuPrimitive.RadioItem.displayName;
-
-export const DropdownMenuLabel = React.forwardRef<
+const DropdownMenuLabel = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Label>,
   DropdownMenuLabelProps
->(({ inset, theme = 'primary', size = 'default', ...props }, ref) => {
-  const className = `mondrian-dropdown-menu-label ${inset ? 'inset' : ''} ${theme} ${size !== 'default' ? `mondrian-dropdown-menu-label-${size}` : ''}`;
-  return (
-    <DropdownMenuPrimitive.Label ref={ref} className={className} {...props} />
-  );
-});
-DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
-
-export const DropdownMenuSeparator = React.forwardRef<
-  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
-  Omit<
-    React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>,
-    'className'
-  >
->(({ ...props }, ref) => (
-  <DropdownMenuPrimitive.Separator
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.Label
+    className="mondrian-dropdown-label"
     ref={ref}
-    className="mondrian-dropdown-menu-separator"
+    {...props}
+  >
+    {children}
+  </DropdownMenuPrimitive.Label>
+));
+DropdownMenuLabel.displayName = 'DropdownMenuLabel';
+
+const DropdownMenuSeparator = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
+  DropdownMenuSeparatorProps
+>((props, ref) => (
+  <DropdownMenuPrimitive.Separator
+    className="mondrian-dropdown-separator"
+    ref={ref}
     {...props}
   />
 ));
-DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
+DropdownMenuSeparator.displayName = 'DropdownMenuSeparator';
 
-export const DropdownMenuShortcut = ({
-  ...props
-}: Omit<React.HTMLAttributes<HTMLSpanElement>, 'className'>) => {
-  return <span className="mondrian-dropdown-menu-shortcut" {...props} />;
+const DropdownMenuGroup = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Group>,
+  DropdownMenuGroupProps
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.Group
+    className="mondrian-dropdown-group"
+    ref={ref}
+    {...props}
+  >
+    {children}
+  </DropdownMenuPrimitive.Group>
+));
+DropdownMenuGroup.displayName = 'DropdownMenuGroup';
+
+const DropdownMenuSub = ({ children, ...props }: DropdownMenuSubProps) => (
+  <DropdownMenuPrimitive.Sub {...props}>{children}</DropdownMenuPrimitive.Sub>
+);
+DropdownMenuSub.displayName = 'DropdownMenuSub';
+
+const DropdownMenuSubTrigger = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
+  DropdownMenuSubTriggerProps
+>(({ children, theme: propTheme, ...props }, ref) => {
+  // Use context theme as fallback when prop is not provided
+  const { theme: contextTheme } = React.useContext(DropdownMenuContext);
+  const theme = propTheme || contextTheme;
+
+  const triggerClassName = ['mondrian-dropdown-sub-trigger', theme]
+    .filter(Boolean)
+    .join(' ');
+
+  return (
+    <DropdownMenuPrimitive.SubTrigger
+      className={triggerClassName}
+      ref={ref}
+      {...props}
+    >
+      {children}
+      <div className="mondrian-dropdown-sub-icon">
+        <ChevronRight />
+      </div>
+    </DropdownMenuPrimitive.SubTrigger>
+  );
+});
+DropdownMenuSubTrigger.displayName = 'DropdownMenuSubTrigger';
+
+const DropdownMenuSubContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
+  DropdownMenuSubContentProps
+>(({ children, theme: propTheme, ...props }, ref) => {
+  // Use context theme as fallback when prop is not provided
+  const { theme: contextTheme } = React.useContext(DropdownMenuContext);
+  const theme = propTheme || contextTheme;
+
+  const contentClassName = ['mondrian-dropdown-sub-content', theme]
+    .filter(Boolean)
+    .join(' ');
+
+  return (
+    <DropdownMenuPrimitive.SubContent
+      className={contentClassName}
+      ref={ref}
+      {...props}
+    >
+      {children}
+    </DropdownMenuPrimitive.SubContent>
+  );
+});
+DropdownMenuSubContent.displayName = 'DropdownMenuSubContent';
+
+const DropdownMenuItemIndicator = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.ItemIndicator>,
+  DropdownMenuItemIndicatorProps
+>(({ children, ...props }, ref) => (
+  <DropdownMenuPrimitive.ItemIndicator
+    className="mondrian-dropdown-item-indicator"
+    ref={ref}
+    {...props}
+  >
+    {children}
+  </DropdownMenuPrimitive.ItemIndicator>
+));
+DropdownMenuItemIndicator.displayName = 'DropdownMenuItemIndicator';
+
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuGroup,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuItemIndicator,
 };
-DropdownMenuShortcut.displayName = 'DropdownMenuShortcut';
