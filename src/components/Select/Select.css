@@ -4,13 +4,15 @@
   justify-content: space-between;
   width: 100%;
   padding: 10px;
-  background-color: #ffffff;
-  border: 2px solid #000000;
-  font-family: Helvetica, Arial, sans-serif;
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  font-family: var(--mondrian-font-family);
   font-weight: 500;
   cursor: pointer;
   text-align: left;
   outline: none;
+  position: relative;
+  transition: all 0.3s;
 }
 
 .mondrian-select-trigger-sm {
@@ -24,50 +26,57 @@
 }
 
 .mondrian-select-trigger.blue:hover {
-  box-shadow: 0 0 0 2px #0d47a1;
-  transform: translateY(-1px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
 }
 
 .mondrian-select-trigger.red:hover {
-  box-shadow: 0 0 0 2px #d42029;
-  transform: translateY(-1px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
 }
 
 .mondrian-select-trigger.yellow:hover {
-  box-shadow: 0 0 0 2px #ffde03;
-  transform: translateY(-1px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
 }
 
 .mondrian-select-trigger.neutral:hover,
 .mondrian-select-trigger.contrast:hover,
 .mondrian-select-trigger.green:hover {
-  box-shadow: 0 0 0 2px #000000;
-  transform: translateY(-1px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-2px, -2px);
 }
 
 .mondrian-select-trigger.blue {
-  color: #0d47a1;
+  color: var(--mondrian-blue);
 }
 
 .mondrian-select-trigger.red {
-  color: #d42029;
+  color: var(--mondrian-error);
 }
 
 .mondrian-select-trigger.yellow {
-  color: #ffde03;
+  color: var(--mondrian-yellow);
 }
 
 .mondrian-select-trigger.green {
-  color: #3cb371;
+  color: var(--mondrian-success);
 }
 
 .mondrian-select-trigger.neutral {
-  color: #000000;
+  color: var(--mondrian-text);
 }
 
 .mondrian-select-trigger.contrast {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+}
+
+/* Dark mode contrast theme */
+[data-theme='dark'] .mondrian-select-trigger.contrast {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  border-color: var(--mondrian-yellow);
 }
 
 .mondrian-select-trigger[data-disabled] {
@@ -93,8 +102,8 @@
 }
 
 .mondrian-select-content {
-  background-color: #ffffff;
-  border: 2px solid #000000;
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
   overflow: hidden;
   min-width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
@@ -102,33 +111,33 @@
 }
 
 .mondrian-select-content.blue .mondrian-select-item[data-highlighted] {
-  background-color: #0d47a1;
-  color: #ffffff;
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
 }
 
 .mondrian-select-content.red .mondrian-select-item[data-highlighted] {
-  background-color: #d42029;
-  color: #ffffff;
+  background-color: var(--mondrian-error);
+  color: var(--mondrian-white);
 }
 
 .mondrian-select-content.yellow .mondrian-select-item[data-highlighted] {
-  background-color: #ffde03;
-  color: #000000;
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
 }
 
 .mondrian-select-content.green .mondrian-select-item[data-highlighted] {
-  background-color: #3cb371;
-  color: #ffffff;
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-white);
 }
 
 .mondrian-select-content.neutral .mondrian-select-item[data-highlighted] {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
 }
 
 .mondrian-select-content.contrast .mondrian-select-item[data-highlighted] {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
 }
 
 .mondrian-select-viewport {
@@ -136,7 +145,7 @@
 }
 
 .mondrian-select-item {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: var(--mondrian-font-family);
   font-size: 0.875rem;
   display: flex;
   align-items: center;
@@ -160,8 +169,8 @@
 }
 
 .mondrian-select-label {
-  font-family: Helvetica, Arial, sans-serif;
-  color: #000000;
+  font-family: var(--mondrian-font-family);
+  color: var(--mondrian-text);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 5px 10px;
@@ -169,10 +178,42 @@
 
 .mondrian-select-separator {
   height: 1px;
-  background-color: #000000;
+  background-color: var(--mondrian-border);
   margin: 5px 0;
 }
 
 .mondrian-select-group {
   padding: 5px 0;
+}
+
+/* Focus styling that fits with Mondrian principles */
+.mondrian-select-trigger:focus-visible {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Additional Mondrian-inspired decorative element - asymmetric corner */
+.mondrian-select-trigger:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.mondrian-select-trigger:hover:before {
+  opacity: 1;
+}
+
+/* Replace hardcoded colors with CSS variables */
+.mondrian-select-trigger:before {
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
