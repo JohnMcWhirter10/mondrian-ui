@@ -17,6 +17,13 @@ export type { LabelProps } from './Label/Label.types';
 export { Box } from './Box/Box';
 export type { BoxProps } from './Box/Box.types';
 
+export { RadioGroup, RadioItem } from './Radio/Radio';
+export type {
+  RadioGroupProps,
+  RadioItemProps,
+  RadioIndicatorProps,
+} from './Radio/Radio.types';
+
 export {
   DropdownMenu,
   DropdownMenuTrigger,

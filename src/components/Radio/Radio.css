@@ -1,0 +1,129 @@
+/* Radio Group Styles */
+.mondrian-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mondrian-spacing-medium);
+}
+
+.mondrian-radio-group-horizontal {
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Radio Item - the outer box */
+.mondrian-radio-item {
+  appearance: none;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  margin: 0;
+  cursor: pointer;
+  background-color: var(--mondrian-background);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+/* Radio Indicator - the inner square */
+.mondrian-radio-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--mondrian-text);
+}
+
+/* Size variants for radio items */
+.mondrian-radio-item.mondrian-radio-item-sm {
+  width: 18px;
+  height: 18px;
+}
+
+.mondrian-radio-item.mondrian-radio-item-lg {
+  width: 30px;
+  height: 30px;
+}
+
+/* Theme variants */
+.mondrian-radio-item.blue {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-radio-item.blue .mondrian-radio-indicator {
+  color: var(--mondrian-blue);
+}
+
+.mondrian-radio-item.neutral {
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-radio-item.neutral .mondrian-radio-indicator {
+  color: var(--mondrian-text);
+}
+
+.mondrian-radio-item.contrast {
+  border-color: var(--mondrian-border);
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-radio-item.contrast .mondrian-radio-indicator {
+  color: var(--mondrian-black);
+}
+
+/* Dark mode contrast theme */
+[data-theme='dark'] .mondrian-radio-item.contrast {
+  border-color: var(--mondrian-yellow);
+  background-color: var(--mondrian-blue);
+}
+
+[data-theme='dark'] .mondrian-radio-item.contrast .mondrian-radio-indicator {
+  color: var(--mondrian-white);
+}
+
+.mondrian-radio-item.yellow {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-radio-item.yellow .mondrian-radio-indicator {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-radio-item.red {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-radio-item.red .mondrian-radio-indicator {
+  color: var(--mondrian-red);
+}
+
+.mondrian-radio-item.green {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-radio-item.green .mondrian-radio-indicator {
+  color: var(--mondrian-success);
+}
+
+/* Focus styling that fits with Mondrian principles */
+.mondrian-radio-item:focus-visible {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Hover styling consistent with other components */
+.mondrian-radio-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Disabled state */
+.mondrian-radio-item[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
