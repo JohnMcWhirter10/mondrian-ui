@@ -18,7 +18,6 @@ const meta: Meta<typeof Button> = {
           We use semantically meaningful names for our themes:
           - 'blue' - Primary color for primary actions
           - 'neutral' - Uses background and text colors for secondary actions
-          - 'contrast' - High contrast with inverted colors for emphasis
           - 'red' - Error/warning theme for destructive actions
           - 'green' - Success theme for confirmations
           - 'yellow' - Accent color for highlights and attention
@@ -30,7 +29,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: ['blue', 'neutral', 'contrast', 'red', 'green', 'yellow'],
+      options: ['blue', 'neutral', 'red', 'green', 'yellow'],
       description: 'The theme color for the button.',
     },
     size: {
@@ -62,13 +61,6 @@ export const Neutral: Story = {
   args: {
     children: 'Neutral Button',
     theme: 'neutral',
-  },
-};
-
-export const Contrast: Story = {
-  args: {
-    children: 'Contrast Button',
-    theme: 'contrast',
   },
 };
 

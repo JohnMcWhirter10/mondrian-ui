@@ -162,20 +162,6 @@ export const TriggerUsage: Story = {
           </Dialog>
 
           <Dialog>
-            <DialogTrigger theme="contrast">Contrast</DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Contrast Theme Trigger</DialogTitle>
-              </DialogHeader>
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button>Close</Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-
-          <Dialog>
             <DialogTrigger theme="red">Red</DialogTrigger>
             <DialogContent>
               <DialogHeader>

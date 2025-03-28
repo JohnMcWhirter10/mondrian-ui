@@ -45,7 +45,6 @@ function App() {
 ```jsx
 <Button theme="blue">Blue</Button>
 <Button theme="neutral">Neutral</Button>
-<Button theme="contrast">Contrast</Button>
 <Button theme="red">Red</Button>
 <Button theme="green">Green</Button>
 <Button theme="yellow">Yellow</Button>

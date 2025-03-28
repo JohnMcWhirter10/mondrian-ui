@@ -86,32 +86,6 @@
   background-color: var(--mondrian-yellow);
 }
 
-/* Contrast theme styles */
-.mondrian-toggle-track.contrast {
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-toggle-track.contrast[data-state='checked'] {
-  background-color: var(--mondrian-background);
-}
-
-.mondrian-toggle-track.contrast .mondrian-toggle-thumb {
-  background-color: var(--mondrian-text);
-}
-
-/* Dark mode contrast theme styles */
-[data-theme='dark'] .mondrian-toggle-track.contrast {
-  border-color: var(--mondrian-yellow);
-}
-
-[data-theme='dark'] .mondrian-toggle-track.contrast[data-state='checked'] {
-  background-color: var(--mondrian-blue);
-}
-
-[data-theme='dark'] .mondrian-toggle-track.contrast .mondrian-toggle-thumb {
-  background-color: var(--mondrian-white);
-}
-
 /* Yellow theme styles */
 .mondrian-toggle-track.yellow {
   border-color: var(--mondrian-border);
@@ -179,15 +153,6 @@
 
 .mondrian-toggle-label.neutral {
   color: var(--mondrian-text);
-}
-
-.mondrian-toggle-label.contrast {
-  color: var(--mondrian-white);
-}
-
-/* Dark mode contrast label style */
-[data-theme='dark'] .mondrian-toggle-label.contrast {
-  color: var(--mondrian-yellow);
 }
 
 .mondrian-toggle-label.yellow {

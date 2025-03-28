@@ -23,7 +23,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: ['blue', 'neutral', 'contrast', 'red', 'green', 'yellow'],
+      options: ['blue', 'neutral', 'red', 'green', 'yellow'],
       description: 'The theme color for the input',
     },
     id: {
@@ -77,14 +77,6 @@ export const Neutral: Story = {
     placeholder: 'Neutral Input',
     theme: 'neutral',
     id: 'neutral-input',
-  },
-};
-
-export const Contrast: Story = {
-  args: {
-    placeholder: 'Contrast Input',
-    theme: 'contrast',
-    id: 'contrast-input',
   },
 };
 

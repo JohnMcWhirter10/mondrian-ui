@@ -65,10 +65,6 @@ export const Themes: Story = {
         <RadioItem value="neutral" theme="neutral" />
         <span>Neutral Theme</span>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <RadioItem value="contrast" theme="contrast" />
-        <span>Contrast Theme</span>
-      </div>
     </RadioGroup>
   ),
 };

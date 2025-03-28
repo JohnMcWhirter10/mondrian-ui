@@ -115,16 +115,6 @@ export const Themes: Story = {
           <SelectItem value="option2">Option 2</SelectItem>
         </SelectContent>
       </Select>
-
-      <Select>
-        <SelectTrigger theme="contrast">
-          <SelectValue placeholder="Contrast theme" />
-        </SelectTrigger>
-        <SelectContent theme="contrast">
-          <SelectItem value="option1">Option 1</SelectItem>
-          <SelectItem value="option2">Option 2</SelectItem>
-        </SelectContent>
-      </Select>
     </div>
   ),
 };

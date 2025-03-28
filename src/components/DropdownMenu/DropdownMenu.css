@@ -146,21 +146,6 @@
   color: var(--mondrian-yellow);
 }
 
-.mondrian-dropdown-menu-checkbox-item.contrast .mondrian-dropdown-menu-check,
-.mondrian-dropdown-menu-radio-item.contrast .mondrian-dropdown-menu-square {
-  color: var(--mondrian-white);
-}
-
-/* Dark mode contrast theme for checkbox/radio items */
-[data-theme='dark']
-  .mondrian-dropdown-menu-checkbox-item.contrast
-  .mondrian-dropdown-menu-check,
-[data-theme='dark']
-  .mondrian-dropdown-menu-radio-item.contrast
-  .mondrian-dropdown-menu-square {
-  color: var(--mondrian-yellow);
-}
-
 .mondrian-dropdown-menu-checkbox-item.yellow .mondrian-dropdown-menu-check,
 .mondrian-dropdown-menu-radio-item.yellow .mondrian-dropdown-menu-square {
   color: var(--mondrian-yellow);
@@ -305,18 +290,6 @@
 }
 
 /* Theme variants for dropdown content */
-.mondrian-dropdown-content.contrast {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
-}
-
-/* Dark mode contrast theme for dropdown content */
-[data-theme='dark'] .mondrian-dropdown-content.contrast {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-yellow);
-}
-
 .mondrian-dropdown-content.yellow {
   background-color: var(--mondrian-yellow);
   color: var(--mondrian-black);

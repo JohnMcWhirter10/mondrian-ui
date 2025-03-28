@@ -52,25 +52,6 @@
   transform: translate(-2px, -2px);
 }
 
-/* Contrast theme */
-.mondrian-button.contrast {
-  background-color: var(--mondrian-black);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-border);
-}
-
-/* Dark mode contrast theme - make it visually distinct from neutral in dark mode */
-[data-theme='dark'] .mondrian-button.contrast {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-yellow);
-}
-
-.mondrian-button.contrast:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
-}
-
 .mondrian-button.yellow {
   background-color: var(--mondrian-yellow);
   color: var(--mondrian-black);

@@ -56,28 +56,7 @@
 }
 
 .mondrian-checkbox-root.neutral .mondrian-checkbox-indicator {
-  color: var(--mondrian-white);
-}
-
-.mondrian-checkbox-root.contrast {
-  border-color: var(--mondrian-border);
-  background-color: var(--mondrian-background);
-}
-
-.mondrian-checkbox-root.contrast .mondrian-checkbox-indicator {
-  color: var(--mondrian-white);
-}
-
-/* Dark mode contrast theme - make it visually distinct from neutral in dark mode */
-[data-theme='dark'] .mondrian-checkbox-root.contrast {
-  border-color: var(--mondrian-yellow);
-  background-color: var(--mondrian-blue);
-}
-
-[data-theme='dark']
-  .mondrian-checkbox-root.contrast
-  .mondrian-checkbox-indicator {
-  color: var(--mondrian-white);
+  color: var(--mondrian-text);
 }
 
 .mondrian-checkbox-root.yellow {

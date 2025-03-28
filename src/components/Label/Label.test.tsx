@@ -37,13 +37,6 @@ describe('Label Component', () => {
     expect(label).toHaveClass('mondrian-label-neutral');
   });
 
-  test('renders the label with contrast theme', () => {
-    renderLabel({ theme: 'contrast' });
-
-    const label = screen.getByText(/test label/i);
-    expect(label).toHaveClass('mondrian-label-contrast');
-  });
-
   test('renders the label with red theme', () => {
     renderLabel({ theme: 'red' });
 

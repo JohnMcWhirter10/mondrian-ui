@@ -22,7 +22,7 @@ const meta: Meta<typeof Label> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: ['blue', 'neutral', 'contrast', 'red', 'green', 'yellow'],
+      options: ['blue', 'neutral', 'red', 'green', 'yellow'],
       description: 'The theme color for the label',
     },
     size: {
@@ -60,13 +60,6 @@ export const Neutral: Story = {
   args: {
     children: 'Neutral Label',
     theme: 'neutral',
-  },
-};
-
-export const Contrast: Story = {
-  args: {
-    children: 'Contrast Label',
-    theme: 'contrast',
   },
 };
 

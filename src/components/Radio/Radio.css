@@ -66,25 +66,6 @@
   color: var(--mondrian-text);
 }
 
-.mondrian-radio-item.contrast {
-  border-color: var(--mondrian-border);
-  background-color: var(--mondrian-background);
-}
-
-.mondrian-radio-item.contrast .mondrian-radio-indicator {
-  color: var(--mondrian-black);
-}
-
-/* Dark mode contrast theme */
-[data-theme='dark'] .mondrian-radio-item.contrast {
-  border-color: var(--mondrian-yellow);
-  background-color: var(--mondrian-blue);
-}
-
-[data-theme='dark'] .mondrian-radio-item.contrast .mondrian-radio-indicator {
-  color: var(--mondrian-white);
-}
-
 .mondrian-radio-item.yellow {
   border-color: var(--mondrian-border);
 }

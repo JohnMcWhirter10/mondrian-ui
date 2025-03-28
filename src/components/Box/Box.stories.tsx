@@ -12,7 +12,7 @@ const meta: Meta<typeof Box> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['blue', 'neutral', 'contrast', 'yellow', 'green', 'red'],
+      options: ['blue', 'neutral', 'yellow', 'green', 'red'],
       description: 'The visual style variant of the box',
     },
     size: {
@@ -57,15 +57,6 @@ export const Yellow: Story = {
   args: {
     children: 'Yellow accent box',
     variant: 'yellow',
-    size: 'default',
-    style: { width: '300px', height: '200px' },
-  },
-};
-
-export const Contrast: Story = {
-  args: {
-    children: 'Contrast box',
-    variant: 'contrast',
     size: 'default',
     style: { width: '300px', height: '200px' },
   },

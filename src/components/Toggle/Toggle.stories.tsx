@@ -24,7 +24,7 @@ const meta: Meta<typeof Toggle> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: ['blue', 'neutral', 'contrast', 'red', 'green', 'yellow'],
+      options: ['blue', 'neutral', 'red', 'green', 'yellow'],
       description: 'The theme color for the toggle',
     },
     size: {
@@ -118,13 +118,6 @@ export const Neutral: Story = {
   args: {
     theme: 'neutral',
     id: 'neutral-toggle',
-  },
-};
-
-export const Contrast: Story = {
-  args: {
-    theme: 'contrast',
-    id: 'contrast-toggle',
   },
 };
 

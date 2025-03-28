@@ -50,7 +50,6 @@ function App() {
 ```jsx
 <Button theme="blue" size="default">Blue Button</Button>
 <Button theme="neutral" size="sm">Small Neutral Button</Button>
-<Button theme="contrast" size="lg">Large Contrast Button</Button>
 <Button theme="red">Red Button</Button>
 <Button theme="green">Green Button</Button>
 
@@ -66,14 +65,13 @@ Mondrian UI uses a semantic theme naming system that makes it easy to create con
 
 #### Color Theme Names
 
-| Theme Name | Description                        | Usage                          |
-| ---------- | ---------------------------------- | ------------------------------ |
-| `blue`     | Primary blue color                 | Default theme, primary actions |
-| `neutral`  | Uses background/text colors        | Secondary actions, forms       |
-| `contrast` | High contrast with inverted colors | For emphasis, headers          |
-| `red`      | Bright red                         | Warnings, destructive actions  |
-| `green`    | Success green                      | Confirmations, success states  |
-| `yellow`   | Accent yellow                      | Highlights, attention          |
+| Theme Name | Description                 | Usage                          |
+| ---------- | --------------------------- | ------------------------------ |
+| `blue`     | Primary blue color          | Default theme, primary actions |
+| `neutral`  | Uses background/text colors | Secondary actions, forms       |
+| `red`      | Bright red                  | Warnings, destructive actions  |
+| `green`    | Success green               | Confirmations, success states  |
+| `yellow`   | Accent yellow               | Highlights, attention          |
 
 ### Input
 

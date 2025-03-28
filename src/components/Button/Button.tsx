@@ -10,7 +10,7 @@ const Button = React.forwardRef<
      * Determines the button's visual style
      * @default "blue"
      *
-     * Values: 'blue', 'neutral', 'contrast', 'red', 'green', 'yellow'
+     * Values: 'blue', 'neutral', 'red', 'green', 'yellow'
      */
     theme?: ButtonTheme;
 

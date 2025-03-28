@@ -23,7 +23,7 @@ const meta: Meta<typeof Checkbox> = {
   argTypes: {
     theme: {
       control: 'select',
-      options: ['blue', 'neutral', 'contrast', 'red', 'green', 'yellow'],
+      options: ['blue', 'neutral', 'red', 'green', 'yellow'],
       description: 'The theme color for the checkbox',
     },
     size: {
@@ -90,13 +90,6 @@ export const Neutral: Story = {
   args: {
     id: 'neutral-checkbox',
     theme: 'neutral',
-  },
-};
-
-export const Contrast: Story = {
-  args: {
-    id: 'contrast-checkbox',
-    theme: 'contrast',
   },
 };
 

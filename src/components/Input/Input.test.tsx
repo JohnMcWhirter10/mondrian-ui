@@ -33,14 +33,6 @@ describe('Input Component', () => {
     expect(input.className.includes('neutral')).toBe(true);
   });
 
-  test('renders the input with contrast theme', () => {
-    renderInput({ id: 'contrast-input', theme: 'contrast' });
-
-    const input = screen.getByLabelText(/default label/i) as HTMLInputElement;
-    expect(input).not.toBeNull();
-    expect(input.className.includes('contrast')).toBe(true);
-  });
-
   test('renders the input with red theme', () => {
     renderInput({ id: 'red-input', theme: 'red' });
 

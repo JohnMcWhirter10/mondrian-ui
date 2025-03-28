@@ -64,18 +64,11 @@ export interface MondrianTheme {
  * Standard theme options for all Mondrian UI components using semantic names
  * - 'blue' - Primary color theme (for primary actions)
  * - 'neutral' - Uses background/text colors (for secondary actions)
- * - 'contrast' - High contrast with inverted colors (for emphasis)
  * - 'red' - Error/warning theme (for destructive actions)
  * - 'green' - Success theme (for confirmations)
  * - 'yellow' - Accent theme (for highlights)
  */
-export type ComponentTheme =
-  | 'blue'
-  | 'neutral'
-  | 'contrast'
-  | 'red'
-  | 'green'
-  | 'yellow';
+export type ComponentTheme = 'blue' | 'neutral' | 'red' | 'green' | 'yellow';
 
 export interface ThemeContextType {
   theme: MondrianTheme;
