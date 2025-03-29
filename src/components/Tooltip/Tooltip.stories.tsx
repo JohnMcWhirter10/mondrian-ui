@@ -34,7 +34,7 @@ const meta: Meta<typeof Tooltip> = {
 export default meta;
 type Story = StoryObj<typeof Tooltip>;
 
-export const Default: Story = {
+export const Blue: Story = {
   render: () => (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -52,7 +52,7 @@ export const WithDifferentPositions: Story = {
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button theme="blue">Top</Button>
+          <Button>Top</Button>
         </TooltipTrigger>
         <TooltipContent side="top">
           <p>This tooltip appears on top</p>
@@ -61,7 +61,7 @@ export const WithDifferentPositions: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button theme="blue">Right</Button>
+          <Button>Right</Button>
         </TooltipTrigger>
         <TooltipContent side="right">
           <p>This tooltip appears on the right</p>
@@ -70,7 +70,7 @@ export const WithDifferentPositions: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button theme="blue">Bottom</Button>
+          <Button>Bottom</Button>
         </TooltipTrigger>
         <TooltipContent side="bottom">
           <p>This tooltip appears on the bottom</p>
@@ -79,7 +79,7 @@ export const WithDifferentPositions: Story = {
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button theme="blue">Left</Button>
+          <Button>Left</Button>
         </TooltipTrigger>
         <TooltipContent side="left">
           <p>This tooltip appears on the left</p>

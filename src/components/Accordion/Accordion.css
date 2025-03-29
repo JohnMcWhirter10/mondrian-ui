@@ -7,6 +7,10 @@
   position: relative;
   /* Asymmetric border - thicker on left */
   border-left-width: calc(var(--mondrian-grid-width) * 2);
+  margin-left: 5px;
+  margin-right: 7px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 /* Add asymmetric decorative block to top-right */
@@ -108,18 +112,19 @@
 
 /* Accordion item */
 .mondrian-accordion-item {
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
   position: relative;
 }
 
 /* Asymmetric decoration for odd items */
 .mondrian-accordion-item:nth-child(odd) {
   padding-left: 15px;
+  left: 10px;
 }
 
 /* Asymmetric decoration for even items */
 .mondrian-accordion-item:nth-child(even) {
   padding-right: 15px;
+  right: 10px;
 }
 
 .mondrian-accordion-item:last-child {
@@ -130,6 +135,7 @@
 .mondrian-accordion-header {
   width: 100%;
   font-weight: 500;
+  margin-top: 0.5rem;
 }
 
 /* Accordion trigger (header button) */
@@ -206,10 +212,12 @@
   padding-left: calc(var(--mondrian-spacing-large) * 2);
   border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
   position: relative;
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
-/* Asymmetric Mondrian-inspired color block for content */
-.mondrian-accordion-content-inner:before {
+/* Asymmetric Mondrian-inspired color blocks */
+.mondrian-accordion-item:nth-child(odd)
+  .mondrian-accordion-content-inner:before {
   content: '';
   position: absolute;
   top: calc(var(--mondrian-spacing-medium) * 2);
@@ -217,6 +225,29 @@
   width: 8px;
   height: 60%;
   background-color: var(--mondrian-border);
+}
+
+.mondrian-accordion-item:nth-child(odd) .mondrian-accordion-content-inner {
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-accordion-item:nth-child(even) .mondrian-accordion-content-inner {
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-accordion-item:nth-child(even)
+  .mondrian-accordion-content-inner:before {
+  content: '';
+  position: absolute;
+  top: calc(var(--mondrian-spacing-medium) * 2);
+  right: var(--mondrian-spacing-medium);
+  width: 8px;
+  height: 60%;
+  background-color: var(--mondrian-border);
+}
+
+.mondrian-accordion-item:last-child .mondrian-accordion-content-inner {
+  margin-bottom: 10px;
 }
 
 .mondrian-accordion.blue .mondrian-accordion-content-inner:before {

@@ -83,7 +83,7 @@
 }
 
 .mondrian-toggle-track.neutral[data-state='checked'] {
-  background-color: var(--mondrian-yellow);
+  background-color: var(--mondrian-text);
 }
 
 /* Yellow theme styles */

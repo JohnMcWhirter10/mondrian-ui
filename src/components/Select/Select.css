@@ -47,22 +47,27 @@
 }
 
 .mondrian-select-trigger.blue {
-  color: var(--mondrian-blue);
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
 }
 
 .mondrian-select-trigger.red {
-  color: var(--mondrian-error);
+  background-color: var(--mondrian-error);
+  color: var(--mondrian-white);
 }
 
 .mondrian-select-trigger.yellow {
-  color: var(--mondrian-yellow);
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
 }
 
 .mondrian-select-trigger.green {
-  color: var(--mondrian-success);
+  background-color: var(--mondrian-success);
+  color: var(--mondrian-white);
 }
 
 .mondrian-select-trigger.neutral {
+  background-color: var(--mondrian-background);
   color: var(--mondrian-text);
 }
 
@@ -118,8 +123,8 @@
 }
 
 .mondrian-select-content.neutral .mondrian-select-item[data-highlighted] {
-  background-color: var(--mondrian-black);
-  color: var(--mondrian-white);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
 }
 
 .mondrian-select-viewport {
