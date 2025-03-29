@@ -126,5 +126,16 @@ export type {
   DropdownMenuItemIndicatorProps,
 } from './DropdownMenu/DropdownMenu.types';
 
+export {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from './Collapsible';
+export type {
+  CollapsibleProps,
+  CollapsibleTriggerProps,
+  CollapsibleContentProps,
+} from './Collapsible/Collapsible.types';
+
 export { Check, ChevronRight, Cross, Square } from './icons';
 export type { IconProps } from './icons/icon.types';

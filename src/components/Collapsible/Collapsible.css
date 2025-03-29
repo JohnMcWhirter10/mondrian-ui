@@ -1,0 +1,257 @@
+.mondrian-collapsible {
+  width: 100%;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  position: relative;
+  /* Asymmetric border - thicker on right */
+  border-right-width: calc(var(--mondrian-grid-width) * 2);
+  margin-left: 7px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  height: fit-content;
+}
+
+/* Add asymmetric decorative block to bottom-left */
+.mondrian-collapsible:before {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 30px;
+  width: 25px;
+  height: 12px;
+  background-color: var(--mondrian-black);
+  z-index: 1;
+}
+
+/* Blue accent for blue theme */
+.mondrian-collapsible.blue:after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-blue);
+}
+
+/* Red accent for red theme */
+.mondrian-collapsible.red:after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-error);
+}
+
+/* Yellow accent for yellow theme */
+.mondrian-collapsible.yellow:after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-yellow);
+}
+
+/* Green accent for green theme */
+.mondrian-collapsible.green:after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-success);
+}
+
+/* Neutral accent for neutral theme */
+.mondrian-collapsible.neutral:after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 60px;
+  width: 40px;
+  height: 8px;
+  background-color: var(--mondrian-black);
+}
+
+/* Size variants */
+.mondrian-collapsible-sm {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-collapsible-lg {
+  font-size: var(--mondrian-font-size-large);
+}
+
+.mondrian-collapsible.blue {
+  border-color: var(--mondrian-blue);
+}
+
+.mondrian-collapsible.red {
+  border-color: var(--mondrian-error);
+}
+
+.mondrian-collapsible.yellow {
+  border-color: var(--mondrian-yellow);
+}
+
+.mondrian-collapsible.green {
+  border-color: var(--mondrian-success);
+}
+
+.mondrian-collapsible.neutral {
+  border-color: var(--mondrian-border);
+}
+
+/* Collapsible trigger button */
+.mondrian-collapsible-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
+  text-align: left;
+  background-color: var(--mondrian-background);
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border: 2px solid var(--mondrian-border);
+}
+
+/* Different themes for trigger buttons */
+.mondrian-collapsible.blue .mondrian-collapsible-trigger {
+  color: var(--mondrian-blue);
+}
+
+.mondrian-collapsible.red .mondrian-collapsible-trigger {
+  color: var(--mondrian-error);
+}
+
+.mondrian-collapsible.yellow .mondrian-collapsible-trigger {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-collapsible.green .mondrian-collapsible-trigger {
+  color: var(--mondrian-success);
+}
+
+.mondrian-collapsible.neutral .mondrian-collapsible-trigger {
+  color: var(--mondrian-text);
+}
+
+/* Hover states for the triggers - asymmetric shadow */
+.mondrian-collapsible-trigger:hover {
+  box-shadow: -6px 4px 0 var(--mondrian-shadow);
+  transform: translate(3px, -2px);
+}
+
+/* Focus styles */
+.mondrian-collapsible-trigger:focus-visible {
+  outline: none;
+  box-shadow: -6px 4px 0 var(--mondrian-shadow);
+  transform: translate(3px, -2px);
+}
+
+/* Decorative element for the trigger */
+.mondrian-collapsible-trigger:before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 70%;
+  background-color: var(--mondrian-border);
+}
+
+/* Collapsible content */
+.mondrian-collapsible-content {
+  overflow: hidden;
+  background-color: var(--mondrian-background);
+}
+
+.mondrian-collapsible-content[data-state='open'] {
+  animation: slideDown 300ms ease-in-out;
+}
+
+.mondrian-collapsible-content[data-state='closed'] {
+  animation: slideUp 300ms ease-in-out;
+}
+
+/* Content with asymmetric padding and border */
+.mondrian-collapsible-content-inner {
+  padding: var(--mondrian-spacing-large);
+  padding-right: calc(var(--mondrian-spacing-large) * 2);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  position: relative;
+}
+
+/* Asymmetric Mondrian-inspired color block */
+.mondrian-collapsible-content-inner:before {
+  content: '';
+  position: absolute;
+  top: var(--mondrian-spacing-medium);
+  right: var(--mondrian-spacing-medium);
+  width: 8px;
+  height: 60%;
+  background-color: var(--mondrian-border);
+}
+
+/* Themed color blocks */
+.mondrian-collapsible.blue .mondrian-collapsible-content-inner:before {
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-collapsible.red .mondrian-collapsible-content-inner:before {
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-collapsible.yellow .mondrian-collapsible-content-inner:before {
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-collapsible.green .mondrian-collapsible-content-inner:before {
+  background-color: var(--mondrian-success);
+}
+
+/* Animation keyframes */
+@keyframes slideDown {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    height: var(--radix-collapsible-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.mondrian-collapsible-icon {
+  height: 16px;
+  width: 16px;
+  transition: transform 300ms;
+  margin-right: 10px;
+}
+
+.mondrian-collapsible-trigger[data-state='open'] .mondrian-collapsible-icon {
+  transform: rotate(90deg);
+}
