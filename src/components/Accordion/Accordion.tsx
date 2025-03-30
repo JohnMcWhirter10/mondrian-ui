@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { ChevronRight } from '../icons';
+import { MondrianRightArrow } from '../icons';
 import {
   AccordionProps,
   AccordionItemProps,
@@ -78,7 +78,7 @@ const AccordionTrigger = React.forwardRef<
       ref={ref}
       {...props}
     >
-      <ChevronRight className="mondrian-accordion-icon" />
+      <MondrianRightArrow className="mondrian-accordion-icon" />
       <span className="mondrian-accordion-trigger-text">{children}</span>
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>

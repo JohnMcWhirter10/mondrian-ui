@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { ComponentTheme } from '../../themes';
 
-export type CardTheme = 'blue' | 'red' | 'yellow' | 'green' | 'neutral';
+export type CardTheme = ComponentTheme;
 
 export interface CardProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> {
@@ -30,4 +31,4 @@ export interface CardDescriptionProps
   extends Omit<React.HTMLAttributes<HTMLParagraphElement>, 'className'> {}
 
 export interface CardContentProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> {} 
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> {}

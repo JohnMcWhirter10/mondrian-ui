@@ -154,5 +154,12 @@ export type {
   CardFooterProps,
 } from './Card/Card.types';
 
-export { Check, ChevronRight, Cross, Square } from './icons';
+export { Alert, AlertTitle, AlertDescription } from './Alert';
+export type {
+  AlertProps,
+  AlertTitleProps,
+  AlertDescriptionProps,
+} from './Alert/Alert.types';
+
+export * from './icons';
 export type { IconProps } from './icons/icon.types';

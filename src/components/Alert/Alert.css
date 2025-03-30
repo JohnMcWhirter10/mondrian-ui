@@ -1,0 +1,216 @@
+.mondrian-alert {
+  width: 100%;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  position: relative;
+  padding: var(--mondrian-spacing-large);
+  /* Mondrian asymmetric border styling */
+  border-left-width: calc(var(--mondrian-grid-width) * 2.5);
+  margin: 12px 8px 18px 0;
+}
+
+/* Icon handling */
+.mondrian-alert > svg {
+  position: absolute;
+  left: var(--mondrian-spacing-large);
+  top: var(--mondrian-spacing-large);
+  width: 18px;
+  height: 18px;
+}
+
+/* Apply padding when icon exists */
+.mondrian-alert > svg ~ * {
+  padding-left: 28px;
+}
+
+/* Adjust title position slightly when after icon */
+.mondrian-alert > svg + .mondrian-alert-title {
+  transform: translateY(-2px);
+}
+
+/* Size variants */
+.mondrian-alert-sm {
+  font-size: var(--mondrian-font-size-small);
+  padding: var(--mondrian-spacing-medium);
+}
+
+.mondrian-alert-sm > svg {
+  left: var(--mondrian-spacing-medium);
+  top: var(--mondrian-spacing-medium);
+  width: 16px;
+  height: 16px;
+}
+
+.mondrian-alert-sm > svg ~ * {
+  padding-left: 24px;
+}
+
+.mondrian-alert-lg {
+  font-size: var(--mondrian-font-size-large);
+  padding: var(--mondrian-spacing-large)
+    calc(var(--mondrian-spacing-large) * 1.5);
+}
+
+.mondrian-alert-lg > svg {
+  left: var(--mondrian-spacing-large);
+  top: var(--mondrian-spacing-large);
+  width: 22px;
+  height: 22px;
+}
+
+.mondrian-alert-lg > svg ~ * {
+  padding-left: 32px;
+}
+
+/* Asymmetric decorative block in top-right */
+.mondrian-alert:before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 30px;
+  width: 16px;
+  height: 8px;
+  background-color: var(--mondrian-black);
+  z-index: 1;
+}
+
+/* Alert title */
+.mondrian-alert-title {
+  margin: 0 0 8px 0;
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+/* Alert description */
+.mondrian-alert-description {
+  margin: 0;
+  font-size: var(--mondrian-font-size-small);
+  line-height: 1.5;
+}
+
+/* Theme styles using Mondrian color palette */
+
+/* Neutral theme */
+.mondrian-alert-neutral {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-alert-neutral .mondrian-alert-title {
+  color: var(--mondrian-text);
+}
+
+.mondrian-alert-neutral > svg {
+  color: var(--mondrian-text);
+}
+
+/* Blue theme (Info) */
+.mondrian-alert-blue {
+  border-color: var(--mondrian-blue);
+}
+
+.mondrian-alert-blue .mondrian-alert-title {
+  color: var(--mondrian-blue);
+}
+
+.mondrian-alert-blue > svg {
+  color: var(--mondrian-blue);
+}
+
+.mondrian-alert-blue:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 40px;
+  width: 30px;
+  height: 8px;
+  background-color: var(--mondrian-blue);
+}
+
+/* Yellow theme (Warning) */
+.mondrian-alert-yellow {
+  border-color: var(--mondrian-yellow);
+}
+
+.mondrian-alert-yellow .mondrian-alert-title {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-alert-yellow > svg {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-alert-yellow:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 40px;
+  width: 30px;
+  height: 8px;
+  background-color: var(--mondrian-yellow);
+}
+
+/* Red theme (Error) */
+.mondrian-alert-red {
+  border-color: var(--mondrian-error);
+}
+
+.mondrian-alert-red .mondrian-alert-title {
+  color: var(--mondrian-error);
+}
+
+.mondrian-alert-red > svg {
+  color: var(--mondrian-error);
+}
+
+.mondrian-alert-red:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 40px;
+  width: 30px;
+  height: 8px;
+  background-color: var(--mondrian-error);
+}
+
+/* Green theme (Success) */
+.mondrian-alert-green {
+  border-color: var(--mondrian-success);
+}
+
+.mondrian-alert-green .mondrian-alert-title {
+  color: var(--mondrian-success);
+}
+
+.mondrian-alert-green > svg {
+  color: var(--mondrian-success);
+}
+
+.mondrian-alert-green:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 40px;
+  width: 30px;
+  height: 8px;
+  background-color: var(--mondrian-success);
+}
+
+/* Mondrian-style grid accents */
+.mondrian-alert-blue:before {
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-alert-yellow:before {
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-alert-red:before {
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-alert-green:before {
+  background-color: var(--mondrian-success);
+}
