@@ -122,8 +122,7 @@
   transition: all 0.3s;
   cursor: pointer;
   position: relative;
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border: 2px solid var(--mondrian-border);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
 /* Different themes for trigger buttons */

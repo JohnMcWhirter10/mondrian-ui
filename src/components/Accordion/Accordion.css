@@ -271,7 +271,7 @@
   content: '';
   position: absolute;
   inset: -2px;
-  border: 2px solid var(--mondrian-border);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
   transition: all 0.3s;
   pointer-events: none;
 }

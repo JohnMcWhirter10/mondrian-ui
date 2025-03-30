@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { Cross } from '../icons';
+import { Dash } from '../icons';
 import './Dialog.css';
 import { DialogContentProps, DialogTriggerProps } from './Dialog.types';
 
@@ -59,7 +59,7 @@ const DialogContent = React.forwardRef<
     >
       {children}
       <DialogPrimitive.Close className="mondrian-dialog-close">
-        <Cross className="mondrian-dialog-close-icon" />
+        <Dash className="mondrian-dialog-close-icon" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>

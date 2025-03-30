@@ -8,7 +8,7 @@ import {
   CollapsibleContentProps,
 } from './Collapsible.types';
 import './Collapsible.css';
-import { ChevronRight } from '..';
+import { MondrianRightArrow } from '../icons';
 
 const Collapsible = React.forwardRef<
   React.ElementRef<typeof CollapsiblePrimitive.Root>,
@@ -45,7 +45,7 @@ const CollapsibleTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="mondrian-collapsible-icon" />
+    <MondrianRightArrow className="mondrian-collapsible-icon" />
   </CollapsiblePrimitive.Trigger>
 ));
 CollapsibleTrigger.displayName = 'CollapsibleTrigger';

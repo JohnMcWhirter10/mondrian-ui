@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { ChevronRight } from '../icons';
+import { MondrianRightArrow, Plus, Square } from '../icons';
 import {
   DropdownMenuProps,
   DropdownMenuTriggerProps,
@@ -104,7 +104,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     {...props}
   >
     <DropdownMenuPrimitive.ItemIndicator className="mondrian-dropdown-item-indicator">
-      ✓
+      <Plus size={12} />
     </DropdownMenuPrimitive.ItemIndicator>
     {children}
   </DropdownMenuPrimitive.CheckboxItem>
@@ -135,7 +135,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     {...props}
   >
     <DropdownMenuPrimitive.ItemIndicator className="mondrian-dropdown-item-indicator">
-      •
+      <Square size={12} />
     </DropdownMenuPrimitive.ItemIndicator>
     {children}
   </DropdownMenuPrimitive.RadioItem>
@@ -207,7 +207,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     >
       {children}
       <div className="mondrian-dropdown-sub-icon">
-        <ChevronRight />
+        <MondrianRightArrow />
       </div>
     </DropdownMenuPrimitive.SubTrigger>
   );

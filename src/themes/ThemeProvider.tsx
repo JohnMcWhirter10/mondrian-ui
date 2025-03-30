@@ -76,7 +76,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     },
 
     grid: {
-      lineWidth: '3px',
+      lineWidth: '2px',
     },
 
     typography: {

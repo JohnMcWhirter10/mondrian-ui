@@ -161,5 +161,8 @@ export type {
   AlertDescriptionProps,
 } from './Alert/Alert.types';
 
+export { ScrollArea } from './ScrollArea';
+export type { ScrollAreaProps } from './ScrollArea/ScrollArea.types';
+
 export * from './icons';
 export type { IconProps } from './icons/icon.types';

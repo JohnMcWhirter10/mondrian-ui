@@ -1,0 +1,98 @@
+.mondrian-scroll-area {
+  position: relative;
+  margin-right: 12px;
+  margin-bottom: 12px;
+}
+
+.mondrian-scroll-area-viewport {
+  height: 100%;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  width: 100%;
+}
+
+/* Base scrollbar styles */
+.mondrian-scrollbar {
+  display: flex;
+  touch-action: none;
+  user-select: none;
+  transition: background-color 0.3s;
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/* Vertical scrollbar */
+.mondrian-scrollbar-vertical {
+  position: absolute;
+  right: -12px !important;
+  height: 100%;
+  width: 6px;
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/* Horizontal scrollbar */
+.mondrian-scrollbar-horizontal {
+  width: 100%;
+  position: absolute;
+  bottom: -12px !important;
+  height: 6px;
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  flex-direction: column;
+}
+
+/* Base thumb styles */
+.mondrian-scrollbar-thumb {
+  position: relative;
+  flex: 1;
+  background-color: var(--mondrian-background);
+}
+
+/* Thumb theme variations */
+.mondrian-scrollbar-thumb.blue {
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-scrollbar-thumb.neutral {
+  background-color: var(--mondrian-text);
+}
+
+.mondrian-scrollbar-thumb.red {
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-scrollbar-thumb.green {
+  background-color: var(--mondrian-success);
+}
+
+.mondrian-scrollbar-thumb.yellow {
+  background-color: var(--mondrian-yellow);
+}
+
+/* Corner styles */
+.mondrian-scroll-area-corner {
+  position: absolute;
+  bottom: -12px !important;
+  right: -12px !important;
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/* Thumb hover/active state with Mondrian-style interactions */
+.mondrian-scrollbar-thumb:hover {
+  border-width: calc(var(--mondrian-grid-width) * 1.5);
+}
+
+.mondrian-scrollbar-thumb:active {
+  border-width: calc(var(--mondrian-grid-width) * 1.5);
+}
+
+/* Decorative Mondrian-style grid effect on corner */
+.mondrian-scroll-area-corner:before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  bottom: 0;
+  right: 0;
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
