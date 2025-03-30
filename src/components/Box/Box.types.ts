@@ -12,7 +12,7 @@ export type BoxProps = Omit<
 > & {
   /**
    * The visual style variant of the box
-   * @default "primary"
+   * @default "neutral"
    */
   variant?: BoxVariant;
 

@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { ComponentTheme } from '../../themes';
 
-// Export just the component props type for documentation
-export type LabelProps = React.ComponentPropsWithoutRef<'label'> & {
-  /**
-   * The content to display within the label
-   */
-  children: React.ReactNode;
-
+export type LabelProps = Omit<
+  React.ComponentPropsWithRef<'label'>,
+  'className'
+> & {
   /**
    * The theme color for the label
    * @default "blue"
@@ -21,13 +18,8 @@ export type LabelProps = React.ComponentPropsWithoutRef<'label'> & {
   size?: 'default' | 'sm' | 'lg';
 
   /**
-   * Additional class name to apply to the label
+   * When true, the component renders its children directly with props forwarded
+   * @default false
    */
-  className?: string;
-
-  /**
-   * The position styling for the label
-   * @default "left"
-   */
-  position?: 'left' | 'right' | 'top' | 'bottom' | 'floating';
+  asChild?: boolean;
 };

@@ -1,52 +1,30 @@
 import * as React from 'react';
-import './Label.css';
 import * as LabelPrimitive from '@radix-ui/react-label';
-import { ComponentTheme } from '../../themes';
+import { Slot } from '@radix-ui/react-slot';
+import { LabelProps } from './Label.types';
+import './Label.css';
 
-/**
- * Label component following Mondrian neoplasticism design principles
- */
-const Label = React.forwardRef<
-  HTMLLabelElement,
-  Omit<React.ComponentPropsWithoutRef<'label'>, 'className'> & {
-    /**
-     * The theme color for the label
-     * @default "blue"
-     */
-    theme?: ComponentTheme;
-
-    /**
-     * The size of the label
-     * @default "default"
-     */
-    size?: 'default' | 'sm' | 'lg';
-
-    /**
-     * Position of the label
-     * @default "left"
-     */
-    position?: 'left' | 'right' | 'top' | 'bottom' | 'floating';
-  }
->(
+const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
   (
-    { children, theme = 'blue', size = 'default', position = 'left', ...props },
+    { children, theme = 'blue', size = 'default', asChild = false, ...props },
     ref
   ) => {
-    // Compose class names
+    const Comp = asChild ? Slot : LabelPrimitive.Root;
+
+    // Compose the class name based on theme and size
     const labelClassName = [
       'mondrian-label',
       `mondrian-label-${theme}`,
       size === 'sm' ? 'mondrian-label-sm' : '',
       size === 'lg' ? 'mondrian-label-lg' : '',
-      `mondrian-label-position-${position}`,
     ]
       .filter(Boolean)
       .join(' ');
 
     return (
-      <LabelPrimitive.Root ref={ref} className={labelClassName} {...props}>
+      <Comp ref={ref} className={labelClassName} {...props}>
         {children}
-      </LabelPrimitive.Root>
+      </Comp>
     );
   }
 );

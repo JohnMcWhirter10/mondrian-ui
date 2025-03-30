@@ -1,104 +1,88 @@
-/** @jsxRuntime classic */
-/** @jsx React.createElement */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { Label } from './Label';
-import { ThemeProvider } from '../../themes';
-import { LabelProps } from './Label.types';
 
 describe('Label Component', () => {
-  const renderLabel = (props: Partial<LabelProps>) => {
-    render(
-      <ThemeProvider>
-        <Label {...props}>Test Label</Label>
-      </ThemeProvider>
-    );
-  };
-
-  test('renders the label with default theme', () => {
-    renderLabel({});
-
-    const label = screen.getByText(/test label/i);
-    expect(label).toBeInTheDocument();
-    expect(label).toHaveClass('mondrian-label-blue');
-  });
-
-  test('renders the label with blue theme', () => {
-    renderLabel({ theme: 'blue' });
-
-    const label = screen.getByText(/test label/i);
-    expect(label).toHaveClass('mondrian-label-blue');
-  });
-
-  test('renders the label with neutral theme', () => {
-    renderLabel({ theme: 'neutral' });
-
-    const label = screen.getByText(/test label/i);
-    expect(label).toHaveClass('mondrian-label-neutral');
-  });
-
-  test('renders the label with red theme', () => {
-    renderLabel({ theme: 'red' });
-
-    const label = screen.getByText(/test label/i);
-    expect(label).toHaveClass('mondrian-label-red');
-  });
-
-  test('renders the label with green theme', () => {
-    renderLabel({ theme: 'green' });
-
-    const label = screen.getByText(/test label/i);
-    expect(label).toHaveClass('mondrian-label-green');
-  });
-
-  test('renders the label with yellow theme', () => {
-    renderLabel({ theme: 'yellow' });
-
-    const label = screen.getByText(/test label/i);
-    expect(label).toHaveClass('mondrian-label-yellow');
-  });
-
-  test('renders different size variants', () => {
-    renderLabel({ size: 'sm' });
-    let label = screen.getByText('Test Label');
-    expect(label).toHaveClass('mondrian-label-sm');
-
-    renderLabel({ size: 'lg' });
-    label = screen.getByText('Test Label');
-    expect(label).toHaveClass('mondrian-label-lg');
-  });
-
-  test('renders different position variants', () => {
-    renderLabel({ position: 'left' });
-    let label = screen.getByText('Test Label');
-    expect(label).toHaveClass('mondrian-label-position-left');
-
-    renderLabel({ position: 'right' });
-    label = screen.getByText('Test Label');
-    expect(label).toHaveClass('mondrian-label-position-right');
-
-    renderLabel({ position: 'top' });
-    label = screen.getByText('Test Label');
-    expect(label).toHaveClass('mondrian-label-position-top');
-
-    renderLabel({ position: 'bottom' });
-    label = screen.getByText('Test Label');
-    expect(label).toHaveClass('mondrian-label-position-bottom');
-
-    renderLabel({ position: 'floating' });
-    label = screen.getByText('Test Label');
-    expect(label).toHaveClass('mondrian-label-position-floating');
-  });
-
-  test('applies htmlFor attribute correctly', () => {
-    renderLabel({ htmlFor: 'test-input' });
+  test('renders correctly with default props', () => {
+    render(<Label htmlFor="test-input">Test Label</Label>);
     const label = screen.getByText('Test Label');
+
+    expect(label).toBeInTheDocument();
+    expect(label).toHaveClass('mondrian-label');
+    expect(label).toHaveClass('mondrian-label-blue');
     expect(label).toHaveAttribute('for', 'test-input');
   });
 
-  test('applies custom className', () => {
-    renderLabel({ className: 'custom-class' });
-    const label = screen.getByText('Test Label');
-    expect(label).toHaveClass('custom-class');
+  test('renders with correct size classes', () => {
+    const { rerender } = render(
+      <Label htmlFor="test-input" size="sm">
+        Small Label
+      </Label>
+    );
+
+    let label = screen.getByText('Small Label');
+    expect(label).toHaveClass('mondrian-label-sm');
+
+    rerender(
+      <Label htmlFor="test-input" size="lg">
+        Large Label
+      </Label>
+    );
+
+    label = screen.getByText('Large Label');
+    expect(label).toHaveClass('mondrian-label-lg');
+  });
+
+  test('renders with correct theme classes', () => {
+    const themes = ['blue', 'neutral', 'red', 'green', 'yellow'] as const;
+
+    themes.forEach((theme) => {
+      const { rerender } = render(
+        <Label htmlFor="test-input" theme={theme}>
+          {`${theme} Label`}
+        </Label>
+      );
+
+      const label = screen.getByText(`${theme} Label`);
+      expect(label).toHaveClass(`mondrian-label-${theme}`);
+
+      rerender(<></>);
+    });
+  });
+
+  test('forwards ref to the underlying label element', () => {
+    const ref = React.createRef<HTMLLabelElement>();
+    render(
+      <Label ref={ref} htmlFor="test-input">
+        Ref Test
+      </Label>
+    );
+
+    expect(ref.current).not.toBeNull();
+    expect(ref.current?.tagName).toBe('LABEL');
+  });
+
+  test('passes other props to the underlying element', () => {
+    render(
+      <Label htmlFor="test-input" data-testid="test-label">
+        Props Test
+      </Label>
+    );
+
+    const label = screen.getByTestId('test-label');
+    expect(label).toBeInTheDocument();
+  });
+
+  test('renders as a slot when asChild is true', () => {
+    render(
+      <Label asChild>
+        <div data-testid="custom-element">Custom Element</div>
+      </Label>
+    );
+
+    const element = screen.getByTestId('custom-element');
+    expect(element).toHaveClass('mondrian-label');
+    expect(element).toHaveClass('mondrian-label-blue');
   });
 });

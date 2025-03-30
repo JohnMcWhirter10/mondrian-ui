@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Alert, AlertTitle, AlertDescription } from './Alert';
-import { Cross, Check, ChevronRight } from '../icons';
+import { Dash, Plus, MondrianRightArrow } from '../icons';
 
 describe('Alert', () => {
   test('renders the alert with default props', () => {
@@ -140,7 +140,7 @@ describe('Alert', () => {
   test('renders alert with icon', () => {
     render(
       <Alert data-testid="alert" theme="red">
-        <Cross data-testid="icon" />
+        <Dash data-testid="icon" />
         <AlertTitle>Alert with Icon</AlertTitle>
         <AlertDescription>Description with icon</AlertDescription>
       </Alert>
@@ -157,7 +157,7 @@ describe('Alert', () => {
   test('renders different icon types with consistent styling', () => {
     const { rerender } = render(
       <Alert data-testid="alert">
-        <Cross data-testid="icon" />
+        <Dash data-testid="icon" />
         <AlertTitle>Alert with Cross Icon</AlertTitle>
       </Alert>
     );
@@ -166,7 +166,7 @@ describe('Alert', () => {
 
     rerender(
       <Alert data-testid="alert">
-        <Check data-testid="icon" />
+        <Plus data-testid="icon" />
         <AlertTitle>Alert with Check Icon</AlertTitle>
       </Alert>
     );
@@ -175,7 +175,7 @@ describe('Alert', () => {
 
     rerender(
       <Alert data-testid="alert">
-        <ChevronRight data-testid="icon" />
+        <MondrianRightArrow data-testid="icon" />
         <AlertTitle>Alert with ChevronRight Icon</AlertTitle>
       </Alert>
     );
@@ -186,7 +186,7 @@ describe('Alert', () => {
   test('applies proper padding to content when icon is present', () => {
     render(
       <Alert data-testid="alert">
-        <Cross />
+        <Dash data-testid="icon" />
         <AlertTitle data-testid="title">Alert with Icon</AlertTitle>
         <AlertDescription data-testid="description">
           Description with icon

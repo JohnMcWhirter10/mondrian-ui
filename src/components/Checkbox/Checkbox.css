@@ -1,29 +1,21 @@
-.mondrian-checkbox-container {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
 .mondrian-checkbox-root {
+  --checkbox-size: 24px;
   appearance: none;
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
   margin: 0;
   cursor: pointer;
   background-color: var(--mondrian-background);
-  vertical-align: middle;
-  transition: all 0.3s;
-  padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
 }
 
-/* Checkbox Indicator - the checkmark inside */
+/* Checkbox Indicator */
 .mondrian-checkbox-indicator {
   display: flex;
   align-items: center;
@@ -33,46 +25,63 @@
   color: var(--mondrian-text);
 }
 
-/* Size variants for root */
-.mondrian-checkbox-root.mondrian-checkbox-sm {
+/* Size variants */
+.mondrian-checkbox-sm {
+  --checkbox-size: 18px;
+}
+
+.mondrian-checkbox-sm svg {
+  width: 12px;
+  height: 12px;
+}
+
+.mondrian-checkbox-lg {
+  --checkbox-size: 32px;
+}
+
+.mondrian-checkbox-lg svg {
   width: 18px;
   height: 18px;
 }
 
-.mondrian-checkbox-root.mondrian-checkbox-lg {
-  width: 30px;
-  height: 30px;
+/* Theme variants */
+.mondrian-checkbox-blue {
+  border-color: var(--mondrian-border);
 }
 
-/* Theme variants */
-.mondrian-checkbox-root.blue {
-  border-color: var(--mondrian-border);
+.mondrian-checkbox-blue .mondrian-checkbox-indicator {
   color: var(--mondrian-blue);
 }
 
-.mondrian-checkbox-root.neutral {
+.mondrian-checkbox-neutral {
   border-color: var(--mondrian-border);
-  background-color: var(--mondrian-background);
 }
 
-.mondrian-checkbox-root.neutral .mondrian-checkbox-indicator {
+.mondrian-checkbox-neutral .mondrian-checkbox-indicator {
   color: var(--mondrian-text);
 }
 
-.mondrian-checkbox-root.yellow {
+.mondrian-checkbox-yellow {
   border-color: var(--mondrian-border);
-  background-color: var(--mondrian-background);
 }
 
-.mondrian-checkbox-root.yellow .mondrian-checkbox-indicator {
+.mondrian-checkbox-yellow .mondrian-checkbox-indicator {
   color: var(--mondrian-yellow);
 }
 
-.mondrian-checkbox-root.red .mondrian-checkbox-indicator {
+.mondrian-checkbox-red {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-checkbox-red .mondrian-checkbox-indicator {
   color: var(--mondrian-error);
 }
 
-.mondrian-checkbox-root.green .mondrian-checkbox-indicator {
+.mondrian-checkbox-green {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-checkbox-green .mondrian-checkbox-indicator {
   color: var(--mondrian-success);
 }
 
@@ -93,4 +102,16 @@
 .mondrian-checkbox-root[data-disabled] {
   cursor: not-allowed;
   opacity: 0.6;
+}
+
+@keyframes checkbox-pop {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

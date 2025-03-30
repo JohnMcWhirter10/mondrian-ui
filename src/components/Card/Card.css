@@ -84,12 +84,6 @@
   background-color: var(--mondrian-black);
 }
 
-/* Hover effect - subtle movement and shadow */
-.mondrian-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-}
-
 /* Card header */
 .mondrian-card-header {
   padding: var(--mondrian-spacing-large);

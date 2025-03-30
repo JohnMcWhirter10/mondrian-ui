@@ -11,7 +11,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
   (
     {
       children,
-      variant = 'blue',
+      variant = 'neutral',
       size = 'default',
       asChild = false,
       fullWidth = false,

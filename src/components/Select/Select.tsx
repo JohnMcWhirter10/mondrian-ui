@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { ChevronRight } from '../icons';
+import { MondrianRightArrow } from '../icons';
 import {
   SelectProps,
   SelectTriggerProps,
@@ -43,7 +43,7 @@ const SelectTrigger = React.forwardRef<
     <SelectPrimitive.Trigger className={triggerClassName} ref={ref} {...props}>
       {children}
       <SelectPrimitive.Icon className="mondrian-select-icon">
-        <ChevronRight className="mondrian-select-icon-chevron" />
+        <MondrianRightArrow className="mondrian-select-icon-chevron" />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   );
