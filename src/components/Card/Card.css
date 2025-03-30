@@ -1,0 +1,219 @@
+.mondrian-card {
+  width: 100%;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  position: relative;
+  /* Asymmetric border - thicker on bottom */
+  border-bottom-width: calc(var(--mondrian-grid-width) * 2);
+  border-right-width: calc(var(--mondrian-grid-width) * 1.5);
+  margin: 8px 10px 15px 5px;
+  transition: all 0.3s;
+}
+
+/* Size variants */
+.mondrian-card-sm {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-card-lg {
+  font-size: var(--mondrian-font-size-large);
+}
+
+/* Asymmetric decorative block to top-right */
+.mondrian-card:before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: 25px;
+  width: 20px;
+  height: 10px;
+  background-color: var(--mondrian-black);
+  z-index: 1;
+}
+
+/* Theme color accents for card */
+.mondrian-card.blue:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+  width: 50px;
+  height: 10px;
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-card.red:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+  width: 50px;
+  height: 10px;
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-card.yellow:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+  width: 50px;
+  height: 10px;
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-card.green:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+  width: 50px;
+  height: 10px;
+  background-color: var(--mondrian-success);
+}
+
+.mondrian-card.neutral:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+  width: 50px;
+  height: 10px;
+  background-color: var(--mondrian-black);
+}
+
+/* Hover effect - subtle movement and shadow */
+.mondrian-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+/* Card header */
+.mondrian-card-header {
+  padding: var(--mondrian-spacing-large);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  position: relative;
+}
+
+/* Asymmetric color block for header */
+.mondrian-card.blue .mondrian-card-header:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background-color: var(--mondrian-blue);
+}
+
+.mondrian-card.red .mondrian-card-header:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background-color: var(--mondrian-error);
+}
+
+.mondrian-card.yellow .mondrian-card-header:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-card.green .mondrian-card-header:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background-color: var(--mondrian-success);
+}
+
+.mondrian-card.neutral .mondrian-card-header:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background-color: var(--mondrian-black);
+}
+
+/* Card title */
+.mondrian-card-title {
+  margin: 0;
+  padding-right: 20px;
+  font-size: var(--mondrian-font-size-large);
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+/* Card description */
+.mondrian-card-description {
+  margin: 10px 0 0;
+  font-size: var(--mondrian-font-size-small);
+  opacity: 0.85;
+  padding-right: 20px;
+}
+
+/* Card content */
+.mondrian-card-content {
+  padding: var(--mondrian-spacing-large);
+}
+
+/* Card footer */
+.mondrian-card-footer {
+  padding: var(--mondrian-spacing-large);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  position: relative;
+}
+
+/* Theme-specific styles */
+.mondrian-card.blue {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-card.blue .mondrian-card-title {
+  color: var(--mondrian-blue);
+}
+
+.mondrian-card.red {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-card.red .mondrian-card-title {
+  color: var(--mondrian-error);
+}
+
+.mondrian-card.yellow {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-card.yellow .mondrian-card-title {
+  color: var(--mondrian-yellow);
+}
+
+.mondrian-card.green {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-card.green .mondrian-card-title {
+  color: var(--mondrian-success);
+}
+
+.mondrian-card.neutral {
+  border-color: var(--mondrian-border);
+}
+
+.mondrian-card.neutral .mondrian-card-title {
+  color: var(--mondrian-text);
+}

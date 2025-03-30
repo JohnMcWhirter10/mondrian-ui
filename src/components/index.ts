@@ -137,5 +137,22 @@ export type {
   CollapsibleContentProps,
 } from './Collapsible/Collapsible.types';
 
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from './Card';
+export type {
+  CardProps,
+  CardHeaderProps,
+  CardTitleProps,
+  CardDescriptionProps,
+  CardContentProps,
+  CardFooterProps,
+} from './Card/Card.types';
+
 export { Check, ChevronRight, Cross, Square } from './icons';
 export type { IconProps } from './icons/icon.types';
