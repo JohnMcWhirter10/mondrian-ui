@@ -154,6 +154,9 @@ export type {
   CardFooterProps,
 } from './Card/Card.types';
 
+export { Badge } from './Badge';
+export type { BadgeProps, BadgeTheme } from './Badge/Badge.types';
+
 export { Alert, AlertTitle, AlertDescription } from './Alert';
 export type {
   AlertProps,
