@@ -1,0 +1,125 @@
+/*
+ * Table after Composition II (1930) and the 1937-42 lines.
+ * - No box. Horizontal rules cross the whole table; the heavy ones carry the
+ *   structure, the thin ones separate rows.
+ * - One vertical rule after the first column, base weight, running the full
+ *   height of the table and stopping at its edge, like the long vertical in
+ *   the painting.
+ * - One small counterweight plane (first header cell) and, when present, one
+ *   dominant plane (the footer row). Everything else stays white (black in dark).
+ * Text on a plane is fixed to the readable pairing: white on red/blue,
+ * black on yellow, background color on the neutral plane.
+ */
+.mondrian-table {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-small);
+  color: var(--mondrian-text);
+}
+
+.mondrian-table-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-table-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-table-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+
+.mondrian-table-neutral {
+  --plane: var(--mondrian-border);
+  --on-plane: var(--mondrian-background);
+}
+
+.mondrian-table-caption {
+  padding: var(--mondrian-spacing-medium) 0 0;
+  text-align: left;
+  font-weight: 700;
+  caption-side: bottom;
+}
+
+.mondrian-table-head,
+.mondrian-table-cell {
+  position: relative;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  /* Asymmetric: tight above, deeper below. */
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
+  text-align: left;
+  vertical-align: top;
+  color: var(--mondrian-text);
+  background-color: var(--mondrian-background);
+}
+
+/* The one vertical rule: after the first column, base weight. */
+.mondrian-table-head:first-child,
+.mondrian-table-cell:first-child {
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/* Header: heavy rule below. The first header cell is the small plane. */
+.mondrian-table-head {
+  font-weight: 700;
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+}
+
+.mondrian-table-header .mondrian-table-head:first-child {
+  background-color: var(--plane);
+  color: var(--on-plane);
+}
+
+/* Edges stay inside the table: rules run to the edge and stop there. */
+.mondrian-scroll-area:has(.mondrian-table) {
+  border: 0;
+  background-color: transparent;
+}
+
+/* Footer: the dominant plane, under a heavy rule. */
+.mondrian-table-footer .mondrian-table-cell {
+  font-weight: 700;
+  background-color: var(--plane);
+  color: var(--on-plane);
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+@media (forced-colors: active) {
+  .mondrian-table-head,
+  .mondrian-table-cell {
+    border-color: CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  /* Planes drop to Canvas in forced colors, so keep a visible bar instead. */
+  .mondrian-table-header .mondrian-table-head:first-child {
+    border-left: var(--mondrian-grid-width-heavy) solid Highlight;
+  }
+
+  .mondrian-table-footer .mondrian-table-cell {
+    border-top-color: Highlight;
+  }
+
+  .mondrian-table-header .mondrian-table-head::before,
+  .mondrian-table-header .mondrian-table-head::after,
+  .mondrian-table-body .mondrian-table-cell::after,
+  .mondrian-table-footer .mondrian-table-cell::after {
+    background-color: CanvasText;
+  }
+}

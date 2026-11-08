@@ -1,9 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx React.createElement */
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ThemeProvider } from '../../themes';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  renderWithTheme,
+} from '../../test-utils';
 import {
   Dialog,
   DialogTrigger,
@@ -17,24 +21,22 @@ import { Button } from '../Button/Button';
 
 describe('Dialog Component', () => {
   const renderDialog = (contentProps = {}, children?: React.ReactNode) => {
-    render(
-      <ThemeProvider>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Open Dialog</Button>
-          </DialogTrigger>
-          <DialogContent {...contentProps}>
-            <DialogHeader>
-              <DialogTitle>Test Dialog</DialogTitle>
-              <DialogDescription>Test Description</DialogDescription>
-            </DialogHeader>
-            {children}
-            <DialogFooter>
-              <Button>Confirm</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </ThemeProvider>
+    renderWithTheme(
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Open Dialog</Button>
+        </DialogTrigger>
+        <DialogContent {...contentProps}>
+          <DialogHeader>
+            <DialogTitle>Test Dialog</DialogTitle>
+            <DialogDescription>Test Description</DialogDescription>
+          </DialogHeader>
+          {children}
+          <DialogFooter>
+            <Button>Confirm</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     );
   };
 
@@ -134,5 +136,68 @@ describe('Dialog Component', () => {
     await screen.findByRole('dialog');
     expect(screen.getByTestId('custom-content')).toBeInTheDocument();
     expect(screen.getByText('Custom content here')).toBeInTheDocument();
+  });
+});
+
+describe('Dialog Mondrian a11y and themes', () => {
+  const open = async (contentProps = {}, ref?: React.Ref<HTMLDivElement>) => {
+    renderWithTheme(
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent ref={ref} {...contentProps}>
+          <DialogHeader>
+            <DialogTitle>Title</DialogTitle>
+            <DialogDescription>Description</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    );
+    userEvent.click(screen.getByRole('button', { name: 'Open' }));
+    return screen.findByRole('dialog');
+  };
+
+  test.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
+    'applies the %s theme class to content',
+    async (theme) => {
+      const dialog = await open({ theme });
+      expect(dialog).toHaveClass('mondrian-dialog-content');
+      expect(dialog).toHaveClass(theme);
+    }
+  );
+
+  test('defaults to the blue theme', async () => {
+    const dialog = await open();
+    expect(dialog).toHaveClass('blue');
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    render: (theme) => (
+      <Dialog>
+        <DialogTrigger theme={theme}>Open</DialogTrigger>
+      </Dialog>
+    ),
+    classFor: (theme) => theme,
+    target: () => screen.getByRole('button', { name: 'Open' }),
+  });
+
+  test('forwards the content ref', async () => {
+    const ref = React.createRef<HTMLDivElement>();
+    const dialog = await open({}, ref);
+    expect(ref.current).toBe(dialog);
+  });
+
+  test('keeps aria labelling and an accessibly named close button', async () => {
+    const dialog = await open();
+    expect(dialog).toHaveAttribute('aria-labelledby');
+    expect(dialog).toHaveAttribute('aria-describedby');
+    const close = screen.getByRole('button', { name: 'Close' });
+    expect(close.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  test('overlay is a plain element without fade classes', async () => {
+    await open();
+    const overlay = document.querySelector('.mondrian-dialog-overlay');
+    expect(overlay).toBeInTheDocument();
   });
 });

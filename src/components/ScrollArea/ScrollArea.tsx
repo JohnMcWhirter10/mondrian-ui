@@ -33,29 +33,74 @@ ScrollBar.displayName = 'ScrollBar';
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   ScrollAreaProps
->(({ children, theme = 'blue', height, width, ...props }, ref) => {
-  // Create root style object based on height and width props
-  const rootStyle: React.CSSProperties = {
-    ...(height ? { height } : {}),
-    ...(width ? { width } : {}),
-  };
+>(
+  (
+    { children, theme = 'blue', height, width, label, type = 'auto', ...props },
+    ref
+  ) => {
+    const viewportRef = React.useRef<HTMLDivElement>(null);
+    const [scrollable, setScrollable] = React.useState(false);
 
-  return (
-    <ScrollAreaPrimitive.Root
-      ref={ref}
-      className="mondrian-scroll-area"
-      style={rootStyle}
-      {...props}
-    >
-      <ScrollAreaPrimitive.Viewport className="mondrian-scroll-area-viewport">
-        {children}
-      </ScrollAreaPrimitive.Viewport>
-      <ScrollBar theme={theme} orientation="vertical" />
-      <ScrollBar theme={theme} orientation="horizontal" />
-      <ScrollAreaPrimitive.Corner className="mondrian-scroll-area-corner" />
-    </ScrollAreaPrimitive.Root>
-  );
-});
+    // The viewport only joins the tab order when there is something to scroll,
+    // so keyboard users can reach and scroll it.
+    React.useEffect(() => {
+      const viewport = viewportRef.current;
+      if (!viewport) return undefined;
+
+      const measure = () => {
+        setScrollable(
+          viewport.scrollHeight > viewport.clientHeight ||
+            viewport.scrollWidth > viewport.clientWidth
+        );
+      };
+      measure();
+
+      if (typeof ResizeObserver === 'undefined') {
+        window.addEventListener('resize', measure);
+        return () => window.removeEventListener('resize', measure);
+      }
+
+      const observer = new ResizeObserver(measure);
+      observer.observe(viewport);
+      Array.from(viewport.children).forEach((child) => observer.observe(child));
+      return () => observer.disconnect();
+    }, [children]);
+
+    // Create root style object based on height and width props
+    const rootStyle: React.CSSProperties = {
+      ...(height ? { height } : {}),
+      ...(width ? { width } : {}),
+    };
+
+    const rootClassName = [
+      'mondrian-scroll-area',
+      `mondrian-scroll-area-${theme}`,
+    ].join(' ');
+
+    return (
+      <ScrollAreaPrimitive.Root
+        ref={ref}
+        type={type}
+        className={rootClassName}
+        style={rootStyle}
+        {...props}
+      >
+        <ScrollAreaPrimitive.Viewport
+          ref={viewportRef}
+          className="mondrian-scroll-area-viewport"
+          tabIndex={scrollable ? 0 : undefined}
+          role={scrollable && label ? 'region' : undefined}
+          aria-label={scrollable && label ? label : undefined}
+        >
+          {children}
+        </ScrollAreaPrimitive.Viewport>
+        <ScrollBar theme={theme} orientation="vertical" />
+        <ScrollBar theme={theme} orientation="horizontal" />
+        <ScrollAreaPrimitive.Corner className="mondrian-scroll-area-corner" />
+      </ScrollAreaPrimitive.Root>
+    );
+  }
+);
 
 ScrollArea.displayName = 'ScrollArea';
 

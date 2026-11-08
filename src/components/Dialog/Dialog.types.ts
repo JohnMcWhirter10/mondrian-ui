@@ -32,7 +32,7 @@ export type DialogContentProps = Omit<
 > & {
   /**
    * The theme variant for the dialog content
-   * @default "primary"
+   * @default "blue"
    */
   theme?: MondrianTheme;
 
@@ -58,7 +58,7 @@ export type DialogTriggerProps = Omit<
 
   /**
    * The theme variant for the trigger button
-   * @default "primary"
+   * @default "blue"
    */
   theme?: MondrianTheme;
 

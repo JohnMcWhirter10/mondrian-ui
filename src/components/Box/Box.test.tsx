@@ -1,4 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Box } from './Box';
 
 describe('Box', () => {
@@ -8,7 +14,8 @@ describe('Box', () => {
 
     expect(box).toBeInTheDocument();
     expect(box).toHaveClass('mondrian-box');
-    expect(box).toHaveClass('blue');
+    expect(box).toHaveClass('neutral');
+    expect(box).toHaveClass('mondrian-box-theme-neutral');
     expect(box.tagName).toBe('DIV');
   });
 
@@ -81,14 +88,20 @@ describe('Box', () => {
     expect(box.tagName).toBe('ARTICLE');
   });
 
-  it('passes additional props to the element', () => {
-    render(
-      <Box data-testid="test-box" aria-label="Box Label">
-        Content
-      </Box>
-    );
-    const box = screen.getByTestId('test-box');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <Box ref={ref}>Content</Box>,
+    tagName: 'DIV',
+    className: 'mondrian-box',
+  });
 
-    expect(box).toHaveAttribute('aria-label', 'Box Label');
+  itPassesThroughAttributes({
+    render: (props) => <Box {...props}>Content</Box>,
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Box theme={theme}>Content</Box>,
+    classFor: (theme) => `mondrian-box-theme-${theme}`,
   });
 });

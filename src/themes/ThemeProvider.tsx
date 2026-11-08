@@ -25,19 +25,41 @@ import {
  * - 'green' - Success theme (for confirmations)
  * - 'yellow' - Accent theme (for highlights)
  */
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+export interface ThemeProviderProps {
+  children: React.ReactNode;
+  /**
+   * Color mode.
+   * - 'system' follows the OS preference and updates when it changes.
+   * - 'light' and 'dark' are fixed and ignore the OS preference.
+   * Changing this prop switches the mode at runtime.
+   * @default "system"
+   */
+  mode?: 'light' | 'dark' | 'system';
+}
+
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
+  mode = 'system',
 }) => {
-  // Initialize dark mode based on system preference
-  const prefersDarkMode =
+  const systemPrefersDark = () =>
     typeof window !== 'undefined'
       ? window.matchMedia('(prefers-color-scheme: dark)').matches
       : false;
 
+  // Initialize from the explicit mode, falling back to the system preference
+  const prefersDarkMode =
+    mode === 'system' ? systemPrefersDark() : mode === 'dark';
+
   const [isDarkMode, setDarkMode] = useState<boolean>(prefersDarkMode);
 
-  // Listen for changes in system color scheme preference
+  // An explicit mode always wins, and follows the prop when it changes
   useEffect(() => {
+    setDarkMode(mode === 'system' ? systemPrefersDark() : mode === 'dark');
+  }, [mode]);
+
+  // Listen for changes in system color scheme preference (system mode only)
+  useEffect(() => {
+    if (mode !== 'system') return;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = (e: MediaQueryListEvent) => {
@@ -49,7 +71,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
     };
-  }, []);
+  }, [mode]);
 
   // Create the standardized theme object
   const [theme, setTheme] = useState<MondrianTheme>({
@@ -64,10 +86,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       white: MONDRIAN_WHITE,
 
       // Functional colors
-      background: MONDRIAN_WHITE,
-      text: MONDRIAN_BLACK,
-      border: MONDRIAN_BLACK,
-      shadow: MONDRIAN_BLACK,
+      // Start from the resolved mode so dark mode never flashes light on mount
+      background: prefersDarkMode ? MONDRIAN_BLACK : MONDRIAN_WHITE,
+      text: prefersDarkMode ? MONDRIAN_WHITE : MONDRIAN_BLACK,
+      border: prefersDarkMode ? MONDRIAN_WHITE : MONDRIAN_BLACK,
+      shadow: prefersDarkMode ? MONDRIAN_WHITE : MONDRIAN_BLACK,
       overlay: 'rgba(0, 0, 0, 0.7)',
 
       // Semantic colors
@@ -77,6 +100,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
     grid: {
       lineWidth: '2px',
+      lineWidthHeavy: '5px',
     },
 
     typography: {
@@ -124,7 +148,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   // Generate CSS variables from theme
   useEffect(() => {
     const styleSheet = document.createElement('style');
-    styleSheet.innerText = `
+    styleSheet.textContent = `
       /* Mondrian Theme Variables */
       :root {
         /* Colors - Primary Mondrian Palette */
@@ -147,7 +171,19 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         
         /* Grid System */
         --mondrian-grid-width: ${theme.grid.lineWidth};
+        --mondrian-grid-width-heavy: ${theme.grid.lineWidthHeavy};
+
+        /* Focus ring: 3px, blue on light (8.6:1 on white), yellow on dark (>15:1 on black) */
+        --mondrian-focus: ${theme.isDarkMode ? theme.colors.yellow : theme.colors.blue};
+        --mondrian-focus-width: 3px;
+        --mondrian-focus-offset: 2px;
         
+        /* Motion. One vocabulary, no easing curves: change is stepped, like a
+           cut from one plane to the next. Reduced-motion rules still apply. */
+        --mondrian-motion-state: 120ms steps(2, end);
+        --mondrian-motion-reveal: 200ms steps(4, end);
+        --mondrian-motion-loop: 1.2s steps(8, end) infinite;
+
         /* Typography */
         --mondrian-font-family: ${theme.typography.fontFamily};
         --mondrian-font-size-tiny: ${theme.typography.fontSize.tiny};
@@ -162,12 +198,31 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         --mondrian-spacing-large: ${theme.spacing.large};
       }
       
+      /* Scoped overrides so any subtree can opt into a mode via data-theme */
+      [data-theme='dark'] {
+        --mondrian-background: ${theme.colors.black};
+        --mondrian-text: ${theme.colors.white};
+        --mondrian-border: ${theme.colors.white};
+        --mondrian-shadow: ${theme.colors.white};
+        --mondrian-focus: ${theme.colors.yellow};
+        background-color: var(--mondrian-background);
+        color: var(--mondrian-text);
+      }
+      [data-theme='light'] {
+        --mondrian-background: ${theme.colors.white};
+        --mondrian-text: ${theme.colors.black};
+        --mondrian-border: ${theme.colors.black};
+        --mondrian-shadow: ${theme.colors.black};
+        --mondrian-focus: ${theme.colors.blue};
+        background-color: var(--mondrian-background);
+        color: var(--mondrian-text);
+      }
+
       /* Global defaults */
       body {
         background-color: var(--mondrian-background);
         color: var(--mondrian-text);
         font-family: var(--mondrian-font-family);
-        transition: background-color 0.3s, color 0.3s;
       }
       
       /* Base component styles */

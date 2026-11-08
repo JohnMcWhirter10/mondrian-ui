@@ -1,9 +1,10 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Label } from './Label';
+import { Input } from '../Input/Input';
 
 const meta: Meta<typeof Label> = {
-  title: 'Components/Label',
+  title: 'Forms/Label',
   component: Label,
   parameters: {
     layout: 'centered',
@@ -57,15 +58,7 @@ export const WithInput: Story = {
       <Label {...args} htmlFor="storybook-input">
         Email Address
       </Label>
-      <input
-        id="storybook-input"
-        style={{
-          padding: '8px',
-          border: '2px solid black',
-          fontFamily: 'Arial, sans-serif',
-        }}
-        placeholder="Enter your email"
-      />
+      <Input id="storybook-input" placeholder="Enter your email" />
     </div>
   ),
   args: {

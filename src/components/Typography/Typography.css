@@ -1,0 +1,106 @@
+.mondrian-heading,
+.mondrian-text {
+  margin: 0;
+  padding: 0;
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+}
+
+.mondrian-heading {
+  --plane: var(--mondrian-border);
+  position: relative;
+  /* Room below the bar so it never touches the text. */
+  padding-top: calc(
+    var(--mondrian-grid-width-heavy) + var(--mondrian-spacing-small)
+  );
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.mondrian-heading-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-heading-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-heading-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-heading-neutral {
+  --plane: var(--mondrian-border);
+}
+
+/* Decorative heavy bar, flush with the left edge. CSS only. */
+.mondrian-heading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--plane);
+  pointer-events: none;
+}
+
+/* Colored bars need a black line under them to hold a 3:1 edge on white. */
+.mondrian-heading-red::before,
+.mondrian-heading-blue::before,
+.mondrian-heading-yellow::before {
+  box-shadow: 0 var(--mondrian-grid-width) 0 var(--mondrian-border);
+}
+
+.mondrian-heading-1 {
+  font-size: calc(var(--mondrian-font-size-x-large) * 1.5);
+}
+
+.mondrian-heading-2 {
+  font-size: var(--mondrian-font-size-x-large);
+}
+
+.mondrian-heading-3 {
+  font-size: var(--mondrian-font-size-large);
+}
+
+.mondrian-heading-4 {
+  font-size: var(--mondrian-font-size-medium);
+}
+
+.mondrian-heading-5 {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-heading-6 {
+  font-size: var(--mondrian-font-size-tiny);
+}
+
+.mondrian-text {
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.mondrian-text-tiny {
+  font-size: var(--mondrian-font-size-tiny);
+}
+
+.mondrian-text-small {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-text-medium {
+  font-size: var(--mondrian-font-size-medium);
+}
+
+.mondrian-text-large {
+  font-size: var(--mondrian-font-size-large);
+}
+
+@media (forced-colors: active) {
+  .mondrian-heading::before {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+    box-shadow: none;
+  }
+}

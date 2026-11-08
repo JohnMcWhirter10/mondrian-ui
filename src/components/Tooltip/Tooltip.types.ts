@@ -4,6 +4,7 @@
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import React from 'react';
+import type { PlaneTheme } from '../../themes/Theme.types';
 
 /**
  * Base Tooltip props (Root component)
@@ -40,10 +41,17 @@ export type TooltipContentProps = Omit<
   sideOffset?: number;
 
   /**
-   * The theme color for the tooltip
-   * @default "black"
+   * The accent plane pinned to the tooltip's left edge. Text always stays
+   * on the white (or black, in dark mode) plane for contrast.
+   * @default "neutral"
    */
-  theme?: 'blue' | 'white' | 'black' | 'red' | 'green' | 'yellow';
+  theme?: PlaneTheme;
+
+  /**
+   * @deprecated Use `theme`. `default` maps to `neutral`.
+   * @default "default"
+   */
+  variant?: 'default' | PlaneTheme;
 };
 
 /**

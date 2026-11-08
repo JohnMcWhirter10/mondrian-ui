@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import {
   Tooltip,
@@ -67,5 +68,50 @@ describe('Tooltip', () => {
 
     const tooltipContent = document.querySelector('.mondrian-tooltip-content');
     expect(tooltipContent).toHaveAttribute('data-side', 'bottom');
+  });
+
+  it.each(['neutral', 'blue', 'red', 'yellow'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(
+        <TooltipProvider>
+          <Tooltip defaultOpen>
+            <TooltipTrigger>Hover Me</TooltipTrigger>
+            <TooltipContent theme={theme}>Text</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+      const el = document.querySelector('.mondrian-tooltip-content');
+      expect(el).toHaveClass(theme);
+    }
+  );
+
+  it('defaults to the neutral theme', () => {
+    render(
+      <TooltipProvider>
+        <Tooltip defaultOpen>
+          <TooltipTrigger>Hover Me</TooltipTrigger>
+          <TooltipContent>Text</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+    expect(document.querySelector('.mondrian-tooltip-content')).toHaveClass(
+      'neutral'
+    );
+  });
+
+  it('forwards ref and exposes an accessible tooltip role', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    render(
+      <TooltipProvider>
+        <Tooltip defaultOpen>
+          <TooltipTrigger>Hover Me</TooltipTrigger>
+          <TooltipContent ref={ref}>Text</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+    expect(ref.current).toHaveClass('mondrian-tooltip-content');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Text');
+    expect(screen.getByText('Hover Me')).toHaveAttribute('aria-describedby');
   });
 });

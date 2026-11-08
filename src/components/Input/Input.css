@@ -1,15 +1,44 @@
-.mondrian-input {
-  background-color: var(--mondrian-background);
+/*
+ * DateField and TimeField share this grid, the size scale, the theme plane,
+ * and the focus outline. One border width, so a change to the line lands on
+ * all three fields. The calendar and clock glyphs live in DateField.css and
+ * TimeField.css.
+ *
+ * The field is white (black in dark mode) inside a black grid. Verticals are
+ * the base weight and the bottom horizontal is the heavy weight. A small
+ * flat swatch of the theme plane sits on the bottom bar at the left edge,
+ * under the text, so it never covers the value. Hover leaves the field where
+ * it is (issue #58). Focus draws the standard outline and moves nothing.
+ */
+.mondrian-input,
+.mondrian-date-field,
+.mondrian-time-field {
+  /* Asymmetric: tight above, deep below where the swatch sits. */
+  --field-pad-top: var(--mondrian-spacing-small);
+  --field-pad-bottom: var(--mondrian-spacing-large);
+  --field-pad-left: var(--mondrian-spacing-large);
+  --field-swatch: var(--mondrian-spacing-medium);
+  --plane: var(--mondrian-border);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0; /* Mondrian uses rectangular shapes */
+  padding: var(--field-pad-top)
+    var(--field-pad-right, var(--mondrian-spacing-medium))
+    var(--field-pad-bottom) var(--field-pad-left);
+  background-color: var(--mondrian-background);
+  background-image: linear-gradient(var(--plane), var(--plane));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 28% var(--field-swatch);
   color: var(--mondrian-text);
-  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
   font-size: var(--mondrian-font-size-medium);
   font-family: var(--mondrian-font-family);
+  line-height: 1.2;
   outline: none;
-  width: 100%;
-  box-sizing: border-box;
-  transition: all 0.3s;
-  border-radius: 0; /* Mondrian uses rectangular shapes */
 }
 
 .mondrian-input::placeholder {
@@ -21,66 +50,117 @@
 }
 
 /* Size variants */
-.mondrian-input-sm {
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+.mondrian-input-sm,
+.mondrian-date-field-sm,
+.mondrian-time-field-sm {
+  --field-pad-bottom: var(--mondrian-spacing-medium);
+  --field-pad-left: var(--mondrian-spacing-medium);
+  --field-swatch: var(--mondrian-spacing-small);
+  min-height: 32px;
   font-size: var(--mondrian-font-size-small);
 }
 
-.mondrian-input-lg {
-  padding: var(--mondrian-spacing-large) var(--mondrian-spacing-large);
+.mondrian-input-lg,
+.mondrian-date-field-lg,
+.mondrian-time-field-lg {
+  --field-pad-top: var(--mondrian-spacing-medium);
+  --field-pad-bottom: calc(
+    var(--mondrian-spacing-large) + var(--mondrian-spacing-medium)
+  );
+  min-height: 52px;
   font-size: var(--mondrian-font-size-large);
 }
 
-/* Theme variants */
-.mondrian-input.blue {
-  border-bottom-color: var(--mondrian-blue);
-  border-right-color: var(--mondrian-blue);
+/*
+ * Theme planes. The plane is the swatch only. Blue and red are white-text
+ * planes and yellow is a black-text plane, but no text sits on the swatch.
+ */
+.mondrian-input-blue,
+.mondrian-date-field-blue,
+.mondrian-time-field-blue {
+  --plane: var(--mondrian-blue);
 }
 
-.mondrian-input.white {
-  background-color: var(--mondrian-background);
+.mondrian-input-red,
+.mondrian-date-field-red,
+.mondrian-time-field-red {
+  --plane: var(--mondrian-red);
 }
 
-.mondrian-input.black {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
+.mondrian-input-yellow,
+.mondrian-date-field-yellow,
+.mondrian-time-field-yellow {
+  --plane: var(--mondrian-yellow);
 }
 
-.mondrian-input.black::placeholder {
-  color: var(--mondrian-text);
-  opacity: 0.7;
+.mondrian-input-green {
+  --plane: var(--mondrian-success);
 }
 
-.mondrian-input.yellow {
-  border-bottom-color: var(--mondrian-yellow);
-  border-right-color: var(--mondrian-yellow);
+/* Neutral is the black (white in dark mode) grid with a black swatch. */
+.mondrian-input-neutral,
+.mondrian-date-field-neutral,
+.mondrian-time-field-neutral {
+  --plane: var(--mondrian-border);
 }
 
-.mondrian-input.red {
-  border-bottom-color: var(--mondrian-error);
-  border-right-color: var(--mondrian-error);
+/*
+ * Invalid. Color is never the only cue: the left vertical doubles to a
+ * heavy bar, the swatch runs the full length of the bottom bar, and the
+ * state is exposed as aria-invalid. Pair it with an error message via
+ * aria-describedby.
+ */
+.mondrian-input[aria-invalid='true'],
+.mondrian-date-field[aria-invalid='true'],
+.mondrian-time-field[aria-invalid='true'] {
+  --plane: var(--mondrian-error);
+  border-left-width: calc(var(--mondrian-grid-width-heavy) * 2);
+  padding-left: calc(
+    var(--field-pad-left) -
+      (var(--mondrian-grid-width-heavy) * 2 - var(--mondrian-grid-width))
+  );
+  background-size: 100% var(--field-swatch);
 }
 
-.mondrian-input.green {
-  border-bottom-color: var(--mondrian-success);
-  border-right-color: var(--mondrian-success);
+/* Focus: the standard outline. Nothing moves, nothing shadows. */
+.mondrian-input:focus-visible,
+.mondrian-date-field:focus-visible,
+.mondrian-time-field:focus-visible,
+.mondrian-date-field:focus-within,
+.mondrian-time-field:focus-within {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
 }
 
-/* Focus states aligned with Mondrian principles */
-.mondrian-input:focus-visible {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  outline: none;
-}
-
-/* Hover effect */
-.mondrian-input:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-}
-
-/* Disabled state */
-.mondrian-input:disabled {
+/* Disabled: a real disabled state, dashed lines, and a not-allowed cursor. */
+.mondrian-input:disabled,
+.mondrian-date-field:disabled,
+.mondrian-time-field:disabled {
+  border-style: dashed;
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  .mondrian-input,
+  .mondrian-date-field,
+  .mondrian-time-field {
+    border-color: ButtonText;
+  }
+
+  .mondrian-input:disabled,
+  .mondrian-date-field:disabled,
+  .mondrian-time-field:disabled {
+    border-color: GrayText;
+    color: GrayText;
+    opacity: 1;
+  }
+
+  .mondrian-input:focus-visible,
+  .mondrian-date-field:focus-visible,
+  .mondrian-time-field:focus-visible,
+  .mondrian-date-field:focus-within,
+  .mondrian-time-field:focus-within {
+    outline-color: Highlight;
+  }
 }

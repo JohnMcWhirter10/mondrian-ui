@@ -1,0 +1,115 @@
+.mondrian-loader {
+  --mondrian-loader-unit: var(--mondrian-spacing-large);
+  --plane: var(--mondrian-blue);
+  --marker: var(--mondrian-white);
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  gap: var(--mondrian-grid-width);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-border);
+  height: calc(var(--mondrian-loader-unit) * 1.5);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.mondrian-loader-blue {
+  --plane: var(--mondrian-blue);
+  --marker: var(--mondrian-white);
+}
+
+.mondrian-loader-red {
+  --plane: var(--mondrian-red);
+  --marker: var(--mondrian-white);
+}
+
+.mondrian-loader-yellow {
+  --plane: var(--mondrian-yellow);
+  --marker: var(--mondrian-black);
+}
+
+.mondrian-loader-neutral {
+  --plane: var(--mondrian-border);
+  --marker: var(--mondrian-background);
+}
+
+.mondrian-loader-sm {
+  --mondrian-loader-unit: var(--mondrian-spacing-medium);
+}
+
+.mondrian-loader-lg {
+  --mondrian-loader-unit: calc(var(--mondrian-spacing-large) * 1.5);
+}
+
+/* Blocks differ in width so the motion reads as unequal. */
+.mondrian-loader-block {
+  display: block;
+  box-sizing: border-box;
+  background-color: var(--mondrian-background);
+  border-radius: 0;
+}
+
+.mondrian-loader-block-narrow {
+  width: var(--mondrian-loader-unit);
+}
+
+.mondrian-loader-block-medium {
+  width: calc(var(--mondrian-loader-unit) * 2);
+}
+
+.mondrian-loader-block-wide {
+  width: calc(var(--mondrian-loader-unit) * 3);
+}
+
+/* The plane moves by transform only. A heavy bar on its right edge
+   keeps its position readable without color. */
+.mondrian-loader-mover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--mondrian-loader-unit);
+  border-radius: 0;
+  background-color: var(--plane);
+  /* The frame is the line color, so the marker must not be. It takes the
+     readable color for its plane. */
+  border-right: var(--mondrian-grid-width-heavy) solid var(--marker);
+  box-sizing: border-box;
+  animation: mondrian-loader-slide var(--mondrian-motion-loop);
+}
+
+@keyframes mondrian-loader-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(500%);
+  }
+}
+
+/* Static fallback: the plane rests on the first block, no motion. */
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-loader-mover {
+    animation: none;
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-loader {
+    border-color: CanvasText;
+    background-color: CanvasText;
+  }
+
+  .mondrian-loader-block {
+    background-color: Canvas;
+  }
+
+  .mondrian-loader-mover {
+    background-color: Highlight;
+    border-right-color: CanvasText;
+  }
+}

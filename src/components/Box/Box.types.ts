@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ComponentTheme } from '../../themes';
+import type { PlaneTheme } from '../../themes/Theme.types';
 
 // Reuse the common theme type
 export type BoxVariant = ComponentTheme;
@@ -15,6 +16,13 @@ export type BoxProps = Omit<
    * @default "neutral"
    */
   variant?: BoxVariant;
+
+  /**
+   * Color of the cap at the end of the heavy top bar. Neutral is black
+   * (white in dark mode).
+   * @default "neutral"
+   */
+  theme?: PlaneTheme;
 
   /**
    * The size of the box which affects padding

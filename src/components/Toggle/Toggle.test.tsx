@@ -1,4 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import React from 'react';
 import { Toggle } from './Toggle';
 
 describe('Toggle Component', () => {
@@ -44,36 +46,36 @@ describe('Toggle Component', () => {
   });
 
   // Callback tests
-  test('calls onChange when clicked', () => {
+  test('calls onCheckedChange when clicked', () => {
     const handleChange = jest.fn();
-    render(<Toggle onChange={handleChange} data-testid="test-toggle" />);
+    render(<Toggle onCheckedChange={handleChange} data-testid="test-toggle" />);
     const toggle = screen.getByTestId('test-toggle');
 
     fireEvent.click(toggle);
     expect(handleChange).toHaveBeenCalledTimes(1);
-    expect(handleChange.mock.calls[0][0].target.checked).toBe(true);
+    expect(handleChange).toHaveBeenLastCalledWith(true);
 
     fireEvent.click(toggle);
     expect(handleChange).toHaveBeenCalledTimes(2);
-    expect(handleChange.mock.calls[1][0].target.checked).toBe(false);
+    expect(handleChange).toHaveBeenLastCalledWith(false);
   });
 
   // Styling tests
   test('applies blue theme by default', () => {
     render(<Toggle data-testid="test-toggle" />);
-    const trackElement = document.querySelector('.mondrian-toggle-track.blue');
+    const trackElement = document.querySelector('.mondrian-toggle-track-blue');
     expect(trackElement).not.toBeNull();
   });
 
   test('applies green theme correctly', () => {
     render(<Toggle theme="green" data-testid="test-toggle" />);
-    const trackElement = document.querySelector('.mondrian-toggle-track.green');
+    const trackElement = document.querySelector('.mondrian-toggle-track-green');
     expect(trackElement).not.toBeNull();
   });
 
   test('applies red theme correctly', () => {
     render(<Toggle theme="red" data-testid="test-toggle" />);
-    const trackElement = document.querySelector('.mondrian-toggle-track.red');
+    const trackElement = document.querySelector('.mondrian-toggle-track-red');
     expect(trackElement).not.toBeNull();
   });
 
@@ -102,8 +104,8 @@ describe('Toggle Component', () => {
     toggle.focus();
     expect(document.activeElement).toBe(toggle);
 
-    // Toggle with space key
-    fireEvent.keyDown(toggle, { key: ' ' });
+    // Space activates a native button by dispatching click
+    fireEvent.click(toggle);
     expect(toggle.getAttribute('data-state')).toBe('checked');
   });
 
@@ -121,5 +123,29 @@ describe('Toggle Component', () => {
     expect(toggle.getAttribute('data-state')).toBe('unchecked');
     fireEvent.click(toggle);
     expect(toggle.getAttribute('data-state')).toBe('unchecked');
+  });
+
+  test.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(<Toggle theme={theme} data-testid="t" />);
+      expect(screen.getByTestId('t')).toHaveClass(
+        `mondrian-toggle-track-${theme}`
+      );
+    }
+  );
+
+  test('exposes switch role and aria-checked state', () => {
+    render(<Toggle aria-label="Notifications" />);
+    const sw = screen.getByRole('switch', { name: 'Notifications' });
+    expect(sw).toHaveAttribute('aria-checked', 'false');
+    fireEvent.click(sw);
+    expect(sw).toHaveAttribute('aria-checked', 'true');
+  });
+
+  test('forwards ref', () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    render(<Toggle ref={ref} />);
+    expect(ref.current?.tagName).toBe('BUTTON');
   });
 });

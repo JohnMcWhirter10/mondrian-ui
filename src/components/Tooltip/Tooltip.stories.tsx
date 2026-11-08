@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import {
   Tooltip,
@@ -9,7 +9,7 @@ import {
 import { Button } from '../Button/Button';
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Components/Tooltip',
+  title: 'Overlays/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',
@@ -20,6 +20,7 @@ const meta: Meta<typeof Tooltip> = {
       },
     },
   },
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <TooltipProvider>
@@ -142,4 +143,25 @@ export const WithColorVariants: Story = {
       </Tooltip>
     </div>
   ),
+};
+
+const planeThemes = ['neutral', 'blue', 'red', 'yellow'] as const;
+
+const ThemeTooltips = () => (
+  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+    {planeThemes.map((theme) => (
+      <Tooltip key={theme} defaultOpen={false}>
+        <TooltipTrigger asChild>
+          <Button theme="neutral">{theme}</Button>
+        </TooltipTrigger>
+        <TooltipContent theme={theme}>
+          <p>{`Tooltip (${theme}): text stays on white or black`}</p>
+        </TooltipContent>
+      </Tooltip>
+    ))}
+  </div>
+);
+
+export const Themes: Story = {
+  render: () => <ThemeTooltips />,
 };

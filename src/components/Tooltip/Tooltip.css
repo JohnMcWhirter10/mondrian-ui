@@ -1,106 +1,86 @@
 /**
  * Tooltip Component
- * 
- * Follows Piet Mondrian's neoplasticism principles with:
- * - Rectangular shapes (no rounded corners)
- * - Primary color palette (red, blue, yellow, black, white)
- * - Strong black grid lines
- * - Asymmetrical balance
+ *
+ * A small white plane in a black frame. A colour swatch is pinned to the
+ * left edge and a heavy rule runs to the right edge while stopping short
+ * on the left. Text never sits on the colour: it stays black on white
+ * (white on black in dark mode). Appears with a hard cut, no motion.
  */
 
-.mondrian-tooltip {
-  background-color: var(--mondrian-background);
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  padding: var(--mondrian-spacing-medium);
-  color: var(--mondrian-text);
-  font-size: var(--mondrian-font-size-small);
-  font-family: var(--mondrian-font-family);
-  max-width: 250px;
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  /* Animation */
-  transition: opacity 300ms;
-  z-index: 1000;
-}
-
-/* Theme variants */
-.mondrian-tooltip.blue {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-}
-
-.mondrian-tooltip.neutral {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
-}
-
-.mondrian-tooltip.red {
-  background-color: var(--mondrian-red);
-  color: var(--mondrian-white);
-}
-
-.mondrian-tooltip.green {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-white);
-}
-
-.mondrian-tooltip.yellow {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
-}
-
 .mondrian-tooltip-content {
+  position: relative;
   display: inline-block;
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  box-sizing: border-box;
+  max-width: min(300px, calc(100vw - 2rem));
+  /* Asymmetric: wide on the swatch side, tighter on the right */
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-small)
+    var(--mondrian-spacing-medium) calc(var(--mondrian-spacing-large) + 4px);
   background-color: var(--mondrian-background);
   color: var(--mondrian-text);
-  padding: var(--mondrian-spacing-small);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
   font-size: var(--mondrian-font-size-small);
   font-family: var(--mondrian-font-family);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
   z-index: 50;
-  max-width: 300px;
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-
-  /* Animation */
-  animation-duration: 0.2s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: var(--radix-tooltip-content-transform-origin);
 }
 
-/* Dark mode */
-[data-theme='dark'] .mondrian-tooltip-content {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+/* Swatch pinned to the left edge */
+.mondrian-tooltip-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--mondrian-spacing-medium);
+  background-color: var(--plane);
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  pointer-events: none;
 }
 
-/* Animation states from Radix */
-.mondrian-tooltip-content[data-state='delayed-open'] {
-  animation-name: mondrian-tooltip-show;
-}
-
-@keyframes mondrian-tooltip-show {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Tooltip variants */
-.mondrian-tooltip-content.yellow {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
-}
-
-.mondrian-tooltip-content.red {
-  background-color: var(--mondrian-red);
-  color: var(--mondrian-white);
+/* Heavy rule along the bottom: runs to the right edge, stops short on the left */
+.mondrian-tooltip-content::after {
+  content: '';
+  position: absolute;
+  bottom: calc(
+    var(--mondrian-grid-width-heavy) * -1 - var(--mondrian-grid-width)
+  );
+  left: 40%;
+  right: 0;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
 }
 
 .mondrian-tooltip-content.blue {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-tooltip-content.red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-tooltip-content.yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-tooltip-content.neutral {
+  --plane: var(--mondrian-border);
+}
+
+@media (forced-colors: active) {
+  .mondrian-tooltip-content {
+    border-color: CanvasText;
+  }
+  .mondrian-tooltip-content::before {
+    background-color: CanvasText;
+    border-right-color: CanvasText;
+    forced-color-adjust: none;
+  }
+  .mondrian-tooltip-content::after {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
 }

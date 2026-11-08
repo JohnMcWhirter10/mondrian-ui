@@ -1,5 +1,4 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Select,
   SelectTrigger,
@@ -12,11 +11,17 @@ import {
 } from './Select';
 
 const meta: Meta<typeof Select> = {
-  title: 'Components/Select',
+  title: 'Forms/Select',
   component: Select,
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component:
+          'A white plane inside a black grid: heavy bottom bar, a flat swatch of the theme plane on that bar, and one line running past the bottom edge. Hover does not move it; focus draws the standard outline. Pass theme to SelectTrigger and SelectContent. The highlighted item gets the theme plane plus a heavy left bar, and the selected item is bold with a filled square. Set aria-invalid on the trigger for an error: the left bar doubles and the swatch runs the full length of the bottom bar.',
+      },
+    },
   },
 };
 
@@ -166,5 +171,23 @@ export const Disabled: Story = {
         <SelectItem value="option2">Option 2</SelectItem>
       </SelectContent>
     </Select>
+  ),
+};
+
+export const Invalid: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <Select>
+        <SelectTrigger aria-invalid="true" aria-describedby="select-error">
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="option1">Option 1</SelectItem>
+        </SelectContent>
+      </Select>
+      <span id="select-error" role="alert">
+        Error: choose an option.
+      </span>
+    </div>
   ),
 };

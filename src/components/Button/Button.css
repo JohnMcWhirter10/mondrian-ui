@@ -1,122 +1,138 @@
+/* Planes: each theme sets the plane and the text color that is readable on it. */
+.mondrian-button-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-button-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-button-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+
+.mondrian-button-green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-black);
+}
+
+.mondrian-button-neutral {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+}
+
 .mondrian-button {
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: var(--mondrian-font-size-medium);
-  font-family: var(--mondrian-font-family);
   position: relative;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  /* Verticals carry the base line, the horizontal base carries the heavy line. */
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  /* Asymmetric: more room below and to the right of the label. */
+  padding: var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) * 1.5)
+    calc(var(--mondrian-spacing-medium) + var(--mondrian-spacing-small))
+    var(--mondrian-spacing-large);
+  background-color: var(--plane);
+  color: var(--on-plane);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: 700;
+  line-height: 1.2;
   text-decoration: none;
-  border-radius: 0; /* Mondrian uses rectangular shapes */
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
-  font-weight: bold;
+  cursor: pointer;
+  transition: box-shadow var(--mondrian-motion-state);
+}
+
+/* A heavy bar rests on the top edge and starts at the left side. Decorative only. */
+.mondrian-button::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--mondrian-grid-width) * -1);
+  left: 0;
+  width: 40%;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
 }
 
 /* Size variants */
 .mondrian-button-sm {
-  padding: 8px 16px;
+  min-height: 32px;
+  padding: var(--mondrian-spacing-small)
+    calc(var(--mondrian-spacing-medium) * 1.5) var(--mondrian-spacing-medium)
+    var(--mondrian-spacing-medium);
   font-size: var(--mondrian-font-size-small);
 }
 
 .mondrian-button-lg {
-  padding: 16px 32px;
+  min-height: 52px;
+  padding: var(--mondrian-spacing-large) calc(var(--mondrian-spacing-large) * 2)
+    calc(var(--mondrian-spacing-large) + var(--mondrian-spacing-small))
+    calc(var(--mondrian-spacing-large) + var(--mondrian-spacing-small));
   font-size: var(--mondrian-font-size-large);
 }
 
-/* Mondrian color themes */
-.mondrian-button.blue {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-button.blue:hover {
+/* Hard offset shadow only. No movement. */
+.mondrian-button:hover:not(:disabled, [aria-disabled='true']) {
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
 }
 
-/* Neutral theme */
-.mondrian-button.neutral {
+.mondrian-button:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+/* Pressed: an inner frame in the text color plus an underline, not only plane color. */
+.mondrian-button[aria-pressed='true'] {
+  box-shadow: inset 0 0 0 var(--mondrian-grid-width-heavy) currentColor;
+  text-decoration: underline;
+  text-decoration-thickness: var(--mondrian-grid-width);
+  text-underline-offset: 4px;
+}
+
+/* Disabled: plane removed and line dashed, so it is not only a color change. */
+.mondrian-button:disabled,
+.mondrian-button[aria-disabled='true'] {
   background-color: var(--mondrian-background);
   color: var(--mondrian-text);
-  border-color: var(--mondrian-border);
+  border-style: dashed;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-.mondrian-button.neutral:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
+.mondrian-button:disabled::before,
+.mondrian-button[aria-disabled='true']::before {
+  display: none;
 }
 
-.mondrian-button.yellow {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
-  border-color: var(--mondrian-border);
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-button {
+    transition: none;
+  }
 }
 
-.mondrian-button.yellow:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
-}
+@media (forced-colors: active) {
+  .mondrian-button {
+    border-color: ButtonText;
+    forced-color-adjust: auto;
+  }
 
-.mondrian-button.red {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-border);
-}
+  .mondrian-button::before {
+    background-color: ButtonText;
+  }
 
-.mondrian-button.red:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
-}
-
-.mondrian-button.green {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-black);
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-button.green:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
-}
-
-/* Mondrian-inspired grid effect - black rectangular outline */
-.mondrian-button:after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border: 0 solid var(--mondrian-border);
-  transition: all 0.3s;
-  pointer-events: none;
-}
-
-/* Focus state - standardized across components */
-.mondrian-button:focus-visible {
-  outline: none;
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-}
-
-/* Additional Mondrian-inspired decorative element - asymmetric corner */
-.mondrian-button:before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 15px;
-  height: 15px;
-  background-color: transparent;
-  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.mondrian-button:hover:before {
-  opacity: 1;
+  .mondrian-button:disabled,
+  .mondrian-button[aria-disabled='true'] {
+    border-color: GrayText;
+    color: GrayText;
+  }
 }

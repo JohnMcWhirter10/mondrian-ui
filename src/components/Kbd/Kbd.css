@@ -1,0 +1,61 @@
+.mondrian-kbd {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  min-width: calc(var(--mondrian-spacing-large) * 2);
+  /* Horizontals heavy, verticals base. */
+  border-style: solid;
+  border-color: var(--mondrian-border);
+  border-width: var(--mondrian-grid-width) var(--mondrian-grid-width)
+    var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  /* Asymmetric: label rests in the upper left, more room below. */
+  padding: 0 var(--mondrian-spacing-medium) var(--mondrian-spacing-small)
+    var(--mondrian-spacing-small);
+  background-color: var(--plane);
+  color: var(--on-plane);
+  box-shadow: var(--mondrian-spacing-small) var(--mondrian-spacing-small) 0
+    var(--mondrian-border);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-small);
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.mondrian-kbd-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-kbd-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-kbd-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+
+.mondrian-kbd-neutral {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+}
+
+/* Keys in a row sit apart by a spacing step, leaving room for the shadow. */
+.mondrian-kbd + .mondrian-kbd {
+  margin-left: var(--mondrian-spacing-medium);
+}
+
+@media (forced-colors: active) {
+  .mondrian-kbd {
+    border-color: CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+}

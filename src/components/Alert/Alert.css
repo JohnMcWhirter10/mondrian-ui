@@ -1,44 +1,91 @@
+/*
+ * Alert: a white field under a heavy horizontal bar that runs past the right
+ * edge, with one small plane (the severity label) pinned to the top-left corner.
+ * Severity is carried by the label text, the glyph, and the heavy bar, so color
+ * is never the only signal.
+ */
 .mondrian-alert {
-  width: 100%;
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+  --bar-overshoot: 16px;
+
+  position: relative;
+  box-sizing: border-box;
+  width: calc(100% - var(--bar-overshoot));
+  margin: var(--mondrian-spacing-medium) var(--bar-overshoot)
+    var(--mondrian-spacing-large) 0;
+  /* More room on the right and bottom than on the left and top. */
+  padding: 0 calc(var(--mondrian-spacing-large) * 2)
+    calc(var(--mondrian-spacing-large) * 1.5) var(--mondrian-spacing-large);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  border-radius: 0;
   background-color: var(--mondrian-background);
   color: var(--mondrian-text);
   font-family: var(--mondrian-font-family);
-  position: relative;
-  padding: var(--mondrian-spacing-large);
-  /* Mondrian asymmetric border styling */
-  border-left-width: calc(var(--mondrian-grid-width) * 2.5);
-  margin: 12px 8px 18px 0;
+  overflow-wrap: anywhere;
 }
 
-/* Icon handling */
+/* The heavy bar continues past the right edge. */
+.mondrian-alert:before {
+  content: '';
+  position: absolute;
+  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: 40%;
+  right: calc(var(--bar-overshoot) * -1 - var(--mondrian-grid-width));
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
+}
+
+/* Severity label: the small plane pinned to the top-left corner. */
+.mondrian-alert-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mondrian-spacing-small);
+  box-sizing: border-box;
+  min-height: 28px;
+  margin: 0 0 var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) * -1);
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  background-color: var(--plane);
+  color: var(--on-plane);
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  font-size: var(--mondrian-font-size-small);
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mondrian-alert-label-icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+/* Caller-supplied icons sit under the label, left of the text. */
 .mondrian-alert > svg {
   position: absolute;
   left: var(--mondrian-spacing-large);
-  top: var(--mondrian-spacing-large);
+  top: calc(var(--mondrian-spacing-medium) + 28px + 4px);
   width: 18px;
   height: 18px;
+  color: var(--mondrian-text);
 }
 
-/* Apply padding when icon exists */
 .mondrian-alert > svg ~ * {
   padding-left: 28px;
-}
-
-/* Adjust title position slightly when after icon */
-.mondrian-alert > svg + .mondrian-alert-title {
-  transform: translateY(-2px);
 }
 
 /* Size variants */
 .mondrian-alert-sm {
   font-size: var(--mondrian-font-size-small);
-  padding: var(--mondrian-spacing-medium);
+  padding-right: calc(var(--mondrian-spacing-medium) * 2);
 }
 
 .mondrian-alert-sm > svg {
-  left: var(--mondrian-spacing-medium);
-  top: var(--mondrian-spacing-medium);
   width: 16px;
   height: 16px;
 }
@@ -49,13 +96,9 @@
 
 .mondrian-alert-lg {
   font-size: var(--mondrian-font-size-large);
-  padding: var(--mondrian-spacing-large)
-    calc(var(--mondrian-spacing-large) * 1.5);
 }
 
 .mondrian-alert-lg > svg {
-  left: var(--mondrian-spacing-large);
-  top: var(--mondrian-spacing-large);
   width: 22px;
   height: 22px;
 }
@@ -64,153 +107,58 @@
   padding-left: 32px;
 }
 
-/* Asymmetric decorative block in top-right */
-.mondrian-alert:before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  right: 30px;
-  width: 16px;
-  height: 8px;
-  background-color: var(--mondrian-black);
-  z-index: 1;
-}
-
-/* Alert title */
 .mondrian-alert-title {
-  margin: 0 0 8px 0;
+  margin: 0 0 var(--mondrian-spacing-small) 0;
   font-size: var(--mondrian-font-size-medium);
   font-weight: bold;
   line-height: 1.2;
+  color: inherit;
 }
 
-/* Alert description */
 .mondrian-alert-description {
   margin: 0;
   font-size: var(--mondrian-font-size-small);
   line-height: 1.5;
 }
 
-/* Theme styles using Mondrian color palette */
-
-/* Neutral theme */
-.mondrian-alert-neutral {
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-alert-neutral .mondrian-alert-title {
-  color: var(--mondrian-text);
-}
-
-.mondrian-alert-neutral > svg {
-  color: var(--mondrian-text);
-}
-
-/* Blue theme (Info) */
+/* Plane themes. Text stays on the readable side of each plane. */
 .mondrian-alert-blue {
-  border-color: var(--mondrian-blue);
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
 }
 
-.mondrian-alert-blue .mondrian-alert-title {
-  color: var(--mondrian-blue);
-}
-
-.mondrian-alert-blue > svg {
-  color: var(--mondrian-blue);
-}
-
-.mondrian-alert-blue:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 40px;
-  width: 30px;
-  height: 8px;
-  background-color: var(--mondrian-blue);
-}
-
-/* Yellow theme (Warning) */
-.mondrian-alert-yellow {
-  border-color: var(--mondrian-yellow);
-}
-
-.mondrian-alert-yellow .mondrian-alert-title {
-  color: var(--mondrian-yellow);
-}
-
-.mondrian-alert-yellow > svg {
-  color: var(--mondrian-yellow);
-}
-
-.mondrian-alert-yellow:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 40px;
-  width: 30px;
-  height: 8px;
-  background-color: var(--mondrian-yellow);
-}
-
-/* Red theme (Error) */
 .mondrian-alert-red {
-  border-color: var(--mondrian-error);
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
 }
 
-.mondrian-alert-red .mondrian-alert-title {
-  color: var(--mondrian-error);
+.mondrian-alert-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
 }
 
-.mondrian-alert-red > svg {
-  color: var(--mondrian-error);
-}
-
-.mondrian-alert-red:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 40px;
-  width: 30px;
-  height: 8px;
-  background-color: var(--mondrian-error);
-}
-
-/* Green theme (Success) */
 .mondrian-alert-green {
-  border-color: var(--mondrian-success);
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-black);
 }
 
-.mondrian-alert-green .mondrian-alert-title {
-  color: var(--mondrian-success);
+.mondrian-alert-neutral {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
 }
 
-.mondrian-alert-green > svg {
-  color: var(--mondrian-success);
-}
+@media (forced-colors: active) {
+  .mondrian-alert {
+    border-color: CanvasText;
+  }
 
-.mondrian-alert-green:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 40px;
-  width: 30px;
-  height: 8px;
-  background-color: var(--mondrian-success);
-}
+  .mondrian-alert:before {
+    background-color: CanvasText;
+  }
 
-/* Mondrian-style grid accents */
-.mondrian-alert-blue:before {
-  background-color: var(--mondrian-blue);
-}
-
-.mondrian-alert-yellow:before {
-  background-color: var(--mondrian-yellow);
-}
-
-.mondrian-alert-red:before {
-  background-color: var(--mondrian-error);
-}
-
-.mondrian-alert-green:before {
-  background-color: var(--mondrian-success);
+  .mondrian-alert-label {
+    background-color: Canvas;
+    color: CanvasText;
+    border-color: CanvasText;
+  }
 }

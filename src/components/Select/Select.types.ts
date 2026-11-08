@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { ComponentTheme } from '../../themes';
 
@@ -6,7 +5,9 @@ export type SelectTheme = ComponentTheme;
 
 export type SelectProps = Omit<SelectPrimitive.SelectProps, 'className'> & {
   /**
-   * Determines the select's visual style
+   * The plane color of the swatch on the trigger and of the highlighted item.
+   * Pass it to SelectTrigger and SelectContent (the Radix root renders no
+   * element, so it cannot carry the theme to them).
    * @default "blue"
    */
   theme?: SelectTheme;

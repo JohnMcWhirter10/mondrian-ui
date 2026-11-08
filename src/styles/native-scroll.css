@@ -1,0 +1,28 @@
+/*
+ * Native scrollbars (Dialog body, Select list, Dropdown menu) drawn like the
+ * ScrollArea bar: a black thumb on the page color, split from the content by
+ * a grid line. The thumb is black, so it holds 3:1 on both light and dark.
+ * The bar lives inside the scrolling box, never outside it.
+ */
+.mondrian-native-scroll,
+.mondrian-native-scroll[data-radix-select-viewport] {
+  scrollbar-width: auto;
+  scrollbar-color: var(--mondrian-border) var(--mondrian-background);
+  -ms-overflow-style: auto;
+}
+
+/* WebKit fallback (Safari). Chromium and Firefox use scrollbar-color. */
+.mondrian-native-scroll::-webkit-scrollbar,
+.mondrian-native-scroll[data-radix-select-viewport]::-webkit-scrollbar {
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-color: var(--mondrian-background);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-native-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--mondrian-border);
+  border: var(--mondrian-grid-width) solid var(--mondrian-background);
+  border-radius: 0;
+}

@@ -18,6 +18,9 @@ const RadioGroup = React.forwardRef<
     // Compose class names
     const groupClassName = [
       'mondrian-radio-group',
+      `mondrian-radio-group-${theme}`,
+      size === 'sm' ? 'mondrian-radio-group-sm' : '',
+      size === 'lg' ? 'mondrian-radio-group-lg' : '',
       orientation === 'horizontal' ? 'mondrian-radio-group-horizontal' : '',
     ]
       .filter(Boolean)
@@ -41,11 +44,11 @@ RadioGroup.displayName = 'RadioGroup';
 const RadioItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
   RadioItemProps
->(({ theme = 'blue', size = 'default', ...props }, ref) => {
+>(({ theme, size, ...props }, ref) => {
   // Compose class names for the root
   const rootClassName = [
     'mondrian-radio-item',
-    theme,
+    theme ? `mondrian-radio-item-${theme}` : '',
     size === 'sm' ? 'mondrian-radio-item-sm' : '',
     size === 'lg' ? 'mondrian-radio-item-lg' : '',
   ]

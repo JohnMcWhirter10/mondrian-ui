@@ -2,6 +2,12 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import path from 'path';
+import pkg from './package.json';
+
+const externals = [
+  ...Object.keys(pkg.dependencies ?? {}),
+  ...Object.keys(pkg.peerDependencies ?? {}),
+];
 
 export default defineConfig({
   plugins: [
@@ -18,22 +24,14 @@ export default defineConfig({
       fileName: (format) => `mondrian-ui.${format}.js`,
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        '@radix-ui/react-slot',
-        '@radix-ui/react-checkbox',
-      ],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          '@radix-ui/react-slot': 'RadixSlot',
-          '@radix-ui/react-checkbox': 'RadixCheckbox',
-        },
-      },
+      // Consumers install dependencies themselves, so none are bundled. Match
+      // subpaths too (react/jsx-runtime, @radix-ui/react-slot/...).
+      external: (id) =>
+        externals.some((dep) => id === dep || id.startsWith(`${dep}/`)),
     },
     sourcemap: true,
-    minify: 'terser',
+    // Libraries ship readable code; the app that installs them minifies it.
+    minify: false,
+    cssMinify: true,
   },
 });

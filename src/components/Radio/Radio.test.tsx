@@ -1,5 +1,10 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { RadioGroup, RadioItem } from './Radio';
 
 describe('Radio Component', () => {
@@ -13,21 +18,6 @@ describe('Radio Component', () => {
 
     const radioItems = screen.getAllByRole('radio');
     expect(radioItems).toHaveLength(2);
-  });
-
-  test('applies correct theme class to RadioItem', () => {
-    render(
-      <RadioGroup>
-        <RadioItem value="option1" data-testid="radio-blue" theme="blue" />
-        <RadioItem value="option2" data-testid="radio-red" theme="red" />
-      </RadioGroup>
-    );
-
-    const blueRadio = screen.getByTestId('radio-blue');
-    const redRadio = screen.getByTestId('radio-red');
-
-    expect(blueRadio).toHaveClass('blue');
-    expect(redRadio).toHaveClass('red');
   });
 
   test('applies correct size class to RadioItem', () => {
@@ -89,5 +79,93 @@ describe('Radio Component', () => {
 
     expect(enabledRadio).not.toBeDisabled();
     expect(disabledRadio).toBeDisabled();
+  });
+
+  describe('group', () => {
+    itAppliesThemeClasses({
+      themes: PLANE_THEMES_WITH_GREEN,
+      render: (theme) => (
+        <RadioGroup theme={theme}>
+          <RadioItem value="a" />
+        </RadioGroup>
+      ),
+      classFor: (theme) => `mondrian-radio-group-${theme}`,
+      defaultTheme: 'blue',
+    });
+
+    itForwardsRef<HTMLDivElement>({
+      render: (ref) => (
+        <RadioGroup ref={ref}>
+          <RadioItem value="a" />
+        </RadioGroup>
+      ),
+      tagName: 'DIV',
+    });
+
+    itPassesThroughAttributes({
+      render: (props) => (
+        <RadioGroup {...props}>
+          <RadioItem value="a" />
+        </RadioGroup>
+      ),
+    });
+  });
+
+  describe('item', () => {
+    itAppliesThemeClasses({
+      themes: PLANE_THEMES_WITH_GREEN,
+      render: (theme) => (
+        <RadioGroup>
+          <RadioItem value="a" theme={theme} />
+        </RadioGroup>
+      ),
+      classFor: (theme) => `mondrian-radio-item-${theme}`,
+      target: () => screen.getByRole('radio'),
+    });
+
+    itForwardsRef<HTMLButtonElement>({
+      render: (ref) => (
+        <RadioGroup>
+          <RadioItem ref={ref} value="a" />
+        </RadioGroup>
+      ),
+      tagName: 'BUTTON',
+    });
+
+    itPassesThroughAttributes({
+      render: (props) => (
+        <RadioGroup>
+          <RadioItem value="a" {...props} />
+        </RadioGroup>
+      ),
+      target: () => screen.getByRole('radio'),
+    });
+  });
+
+  test('group defaults to blue and items inherit it', () => {
+    render(
+      <RadioGroup data-testid="g">
+        <RadioItem value="a" data-testid="i" />
+      </RadioGroup>
+    );
+    expect(screen.getByTestId('g')).toHaveClass('mondrian-radio-group-blue');
+    expect(screen.getByTestId('i').className).not.toMatch(
+      /mondrian-radio-item-(blue|red|yellow|green|neutral)/
+    );
+  });
+
+  test('exposes radiogroup/radio roles and aria-checked', () => {
+    render(
+      <RadioGroup defaultValue="a" aria-label="Choices">
+        <RadioItem value="a" aria-label="A" />
+        <RadioItem value="b" aria-label="B" />
+      </RadioGroup>
+    );
+    expect(screen.getByRole('radiogroup')).toBeInTheDocument();
+    expect(screen.getByLabelText('A')).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByLabelText('B')).toHaveAttribute('aria-checked', 'false');
+    // The selected item also shows a glyph, not just a plane color.
+    expect(screen.getByLabelText('A').querySelector('svg')).not.toBeNull();
+    expect(screen.getByLabelText('B').querySelector('svg')).toBeNull();
   });
 });

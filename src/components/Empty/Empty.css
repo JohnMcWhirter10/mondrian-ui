@@ -1,0 +1,97 @@
+.mondrian-empty {
+  --plane: var(--mondrian-blue);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  /* Base weight vertical on the left; heavy horizontal at the bottom. */
+  border: 0;
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  /* Asymmetric: tight top and right, deep left and bottom. */
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) * 2)
+    calc(var(--mondrian-spacing-large) * 2);
+  font-family: var(--mondrian-font-family);
+  text-align: left;
+}
+
+.mondrian-empty-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-empty-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-empty-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-empty-neutral {
+  --plane: var(--mondrian-border);
+}
+
+/* Small swatch pinned to the top left corner. Decorative only. */
+.mondrian-empty::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--mondrian-spacing-large);
+  height: var(--mondrian-spacing-large);
+  background-color: var(--plane);
+  pointer-events: none;
+}
+
+/* Heavy rule starts at the left edge at the bottom. Decorative only. */
+.mondrian-empty::after {
+  content: '';
+  position: absolute;
+  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: 0;
+  width: var(--mondrian-spacing-small);
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
+}
+
+.mondrian-empty-title {
+  margin: 0;
+  font-size: var(--mondrian-font-size-large);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mondrian-empty-description {
+  margin: var(--mondrian-spacing-small) 0 0;
+  max-width: 40ch;
+  font-size: var(--mondrian-font-size-small);
+  line-height: 1.5;
+}
+
+.mondrian-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--mondrian-spacing-medium);
+  margin-top: var(--mondrian-spacing-large);
+}
+
+@media (forced-colors: active) {
+  .mondrian-empty {
+    border-color: CanvasText;
+  }
+
+  .mondrian-empty::before {
+    background-color: Highlight;
+  }
+
+  .mondrian-empty::after {
+    background-color: CanvasText;
+  }
+}

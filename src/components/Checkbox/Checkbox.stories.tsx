@@ -1,12 +1,12 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from './Checkbox';
 import { Label } from '../Label/Label';
 import { Box } from '../Box/Box';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Checkbox> = {
-  title: 'Components/Checkbox',
+  title: 'Forms/Checkbox',
   component: Checkbox,
   parameters: {
     layout: 'centered',
@@ -105,48 +105,29 @@ export const Sizes: Story = {
   ),
 };
 
-// Theme variants
-export const Themes: Story = {
-  render: () => (
-    <Box style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Checkbox id="checkbox-blue" theme="blue" defaultChecked />
-        <Label htmlFor="checkbox-blue" theme="blue">
-          Blue Theme
-        </Label>
-      </Box>
-      <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Checkbox id="checkbox-neutral" theme="neutral" defaultChecked />
-        <Label htmlFor="checkbox-neutral" theme="neutral">
-          Neutral Theme
-        </Label>
-      </Box>
-      <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Checkbox id="checkbox-red" theme="red" defaultChecked />
-        <Label htmlFor="checkbox-red" theme="red">
-          Red Theme
-        </Label>
-      </Box>
-      <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Checkbox id="checkbox-green" theme="green" defaultChecked />
-        <Label htmlFor="checkbox-green" theme="green">
-          Green Theme
-        </Label>
-      </Box>
-      <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <Checkbox id="checkbox-yellow" theme="yellow" defaultChecked />
-        <Label htmlFor="checkbox-yellow" theme="yellow">
-          Yellow Theme
-        </Label>
-      </Box>
-    </Box>
-  ),
-};
-
 // Disabled state
 export const Disabled: Story = {
   args: {
     id: 'disabled-checkbox',
     disabled: true,
   },
+};
+
+const allThemes = ['blue', 'neutral', 'red', 'yellow', 'green'] as const;
+
+export const Themes: StoryObj<typeof Checkbox> = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+      {allThemes.map((theme) => (
+        <div key={theme} style={{ display: 'flex', gap: '12px' }}>
+          <Checkbox theme={theme} aria-label={`${theme} unchecked`} />
+          <Checkbox
+            theme={theme}
+            defaultChecked
+            aria-label={`${theme} checked`}
+          />
+        </div>
+      ))}
+    </div>
+  ),
 };

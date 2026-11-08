@@ -1,8 +1,12 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
-import { Textarea, type TextareaTheme } from './index';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
+import { Textarea } from './index';
 
 describe('Textarea', () => {
   test('renders a textarea on the default noncolor plane', () => {
@@ -16,22 +20,11 @@ describe('Textarea', () => {
     expect(textarea).not.toHaveClass('mondrian-textarea-lg');
   });
 
-  test('applies each theme class without a colored plane', () => {
-    const themes: TextareaTheme[] = [
-      'blue',
-      'neutral',
-      'red',
-      'green',
-      'yellow',
-    ];
-    const { rerender } = render(<Textarea theme="blue" />);
-
-    themes.forEach((theme) => {
-      rerender(<Textarea theme={theme} aria-label="Message" />);
-      expect(screen.getByLabelText('Message')).toHaveClass(
-        `mondrian-textarea-${theme}`
-      );
-    });
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => <Textarea theme={theme} aria-label="Message" />,
+    classFor: (theme) => `mondrian-textarea-${theme}`,
   });
 
   test('applies the library size scale', () => {
@@ -58,13 +51,19 @@ describe('Textarea', () => {
     expect(screen.getByLabelText('Message')).toHaveAttribute('rows', '6');
   });
 
-  test('forwards a ref to the textarea', () => {
-    const ref = React.createRef<HTMLTextAreaElement>();
-    render(<Textarea ref={ref} aria-label="Message" />);
+  itForwardsRef<HTMLTextAreaElement>({
+    render: (ref) => <Textarea ref={ref} aria-label="Message" />,
+    tagName: 'TEXTAREA',
+    className: 'mondrian-textarea',
+  });
 
-    expect(ref.current).not.toBeNull();
-    expect(ref.current?.tagName).toBe('TEXTAREA');
-    expect(ref.current).toHaveClass('mondrian-textarea');
+  itPassesThroughAttributes({
+    render: (props) => <Textarea {...props} />,
+    attributes: {
+      id: 'contract-id',
+      'aria-label': 'contract label',
+      'aria-invalid': 'true',
+    },
   });
 
   test('passes through id, name, and disabled', () => {
@@ -85,5 +84,16 @@ describe('Textarea', () => {
     await userEvent.type(textarea, 'A paragraph');
 
     expect(textarea).toHaveValue('A paragraph');
+  });
+
+  test('does not expose className', () => {
+    render(
+      <Textarea
+        aria-label="Message"
+        {...({ className: 'x' } as Record<string, string>)}
+      />
+    );
+
+    expect(screen.getByLabelText('Message')).not.toHaveClass('x');
   });
 });

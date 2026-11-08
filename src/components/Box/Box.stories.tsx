@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Box } from './Box';
 
 const meta: Meta<typeof Box> = {
@@ -108,13 +108,31 @@ export const FlexContainer: Story = {
   args: {
     children: (
       <>
-        <div style={{ padding: '10px', backgroundColor: '#D42029' }}>
+        <div
+          style={{
+            padding: '10px',
+            backgroundColor: 'var(--mondrian-red)',
+            color: 'var(--mondrian-white)',
+          }}
+        >
           Item 1
         </div>
-        <div style={{ padding: '10px', backgroundColor: '#0D47A1' }}>
+        <div
+          style={{
+            padding: '10px',
+            backgroundColor: 'var(--mondrian-blue)',
+            color: 'var(--mondrian-white)',
+          }}
+        >
           Item 2
         </div>
-        <div style={{ padding: '10px', backgroundColor: '#FFDE03' }}>
+        <div
+          style={{
+            padding: '10px',
+            backgroundColor: 'var(--mondrian-yellow)',
+            color: 'var(--mondrian-black)',
+          }}
+        >
           Item 3
         </div>
       </>
@@ -129,4 +147,18 @@ export const FullWidth: Story = {
     children: 'This box takes up the full width of its container',
     fullWidth: true,
   },
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{ display: 'grid', gap: '28px', padding: '16px 24px 24px 8px' }}
+    >
+      {(['neutral', 'blue', 'red', 'yellow'] as const).map((theme) => (
+        <Box key={theme} theme={theme} style={{ width: '280px' }}>
+          Cap theme: {theme}
+        </Box>
+      ))}
+    </div>
+  ),
 };

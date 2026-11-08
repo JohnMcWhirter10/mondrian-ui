@@ -10,8 +10,9 @@ export type InputProps = Omit<
   'className' | 'size'
 > & {
   /**
-   * The theme color for the input
-   * @default "primary"
+   * The plane color of the swatch on the bottom bar. The field stays white
+   * (black in dark mode) inside a black grid.
+   * @default "blue"
    */
   theme?: InputTheme;
 

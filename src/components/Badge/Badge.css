@@ -3,7 +3,9 @@
   align-items: flex-start;
   justify-content: flex-start;
   box-sizing: border-box;
-  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  /* Heavy base line, as on the other components. */
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
   border-radius: 0;
   padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
     var(--mondrian-spacing-large) var(--mondrian-spacing-medium);
@@ -55,8 +57,23 @@
   color: var(--mondrian-black);
 }
 
-/* Noncolor plane stays black on white. The grid line stays black in both modes. */
+/* Noncolor plane follows the mode: black on white, white on black. */
 .mondrian-badge-neutral {
-  background-color: var(--mondrian-white);
-  color: var(--mondrian-black);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+}
+
+@media (forced-colors: active) {
+  .mondrian-badge {
+    border-color: CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  /* Planes drop out in forced colors; keep the theme visible as a heavy bar. */
+  .mondrian-badge-red,
+  .mondrian-badge-blue,
+  .mondrian-badge-yellow {
+    border-left: var(--mondrian-grid-width-heavy) solid Highlight;
+  }
 }

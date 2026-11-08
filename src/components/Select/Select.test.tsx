@@ -1,7 +1,9 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+} from '../../test-utils';
 import {
   Select,
   SelectTrigger,
@@ -27,20 +29,7 @@ describe('Select Component', () => {
     const selectTrigger = screen.getByRole('combobox');
     expect(selectTrigger).toBeInTheDocument();
     expect(selectTrigger).toHaveClass('mondrian-select-trigger');
-    expect(selectTrigger).toHaveClass('blue');
-  });
-
-  it('applies different themes to the Select component', () => {
-    render(
-      <Select>
-        <SelectTrigger theme="red">
-          <SelectValue placeholder="Select an option" />
-        </SelectTrigger>
-      </Select>
-    );
-
-    const selectTrigger = screen.getByRole('combobox');
-    expect(selectTrigger).toHaveClass('red');
+    expect(selectTrigger).toHaveClass('mondrian-select-trigger-blue');
   });
 
   it('applies different sizes to the Select component', () => {
@@ -67,5 +56,62 @@ describe('Select Component', () => {
 
     const selectTrigger = screen.getByRole('combobox');
     expect(selectTrigger).toBeDisabled();
+  });
+
+  it('applies the theme class to the content', async () => {
+    render(
+      <Select defaultOpen>
+        <SelectTrigger>
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+        <SelectContent theme="yellow">
+          <SelectItem value="option1">Option 1</SelectItem>
+        </SelectContent>
+      </Select>
+    );
+
+    expect(await screen.findByRole('listbox')).toHaveClass(
+      'mondrian-select-content-yellow'
+    );
+  });
+
+  it('exposes aria-invalid and combobox semantics on the trigger', () => {
+    render(
+      <Select>
+        <SelectTrigger aria-invalid="true" aria-label="Fruit">
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+      </Select>
+    );
+
+    const trigger = screen.getByRole('combobox', { name: 'Fruit' });
+    expect(trigger).toHaveAttribute('aria-invalid', 'true');
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  itForwardsRef<HTMLButtonElement>({
+    render: (ref) => (
+      <Select>
+        <SelectTrigger ref={ref}>
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+      </Select>
+    ),
+    tagName: 'BUTTON',
+    className: 'mondrian-select-trigger',
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => (
+      <Select>
+        <SelectTrigger theme={theme}>
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+      </Select>
+    ),
+    classFor: (theme) => `mondrian-select-trigger-${theme}`,
+    target: () => screen.getByRole('combobox'),
   });
 });

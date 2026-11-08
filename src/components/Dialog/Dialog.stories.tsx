@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ThemeProvider } from '../../themes';
 import { Button } from '../Button/Button';
 import {
@@ -15,14 +15,14 @@ import {
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Dialog> = {
-  title: 'Components/Dialog',
+  title: 'Overlays/Dialog',
   component: Dialog,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component: `
-          The Dialog component follows Mondrian's neoplasticism principles with rectangular shapes,
+          The Dialog component follows Mondrian&apos;s neoplasticism principles with rectangular shapes,
           strong grid lines, and primary colors. It provides a modal interface for displaying content
           that requires user attention or interaction.
           
@@ -381,17 +381,17 @@ export const MondrianStyled: Story = {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Mondrian's Neoplasticism</DialogTitle>
+          <DialogTitle>Mondrian&apos;s Neoplasticism</DialogTitle>
           <DialogDescription>
-            This dialog showcases Piet Mondrian's neoplasticism style with its
-            distinctive primary colors, black grid lines, and asymmetrical
+            This dialog showcases Piet Mondrian&apos;s neoplasticism style with
+            its distinctive primary colors, black grid lines, and asymmetrical
             balance.
           </DialogDescription>
         </DialogHeader>
         <div style={{ marginBottom: '20px' }}>
           <p style={{ marginBottom: '12px' }}>
-            Notice the colored accents in the header and footer, inspired by
-            Mondrian's signature style using:
+            Notice the colored swatch and heavy rules, inspired by
+            Mondrian&apos;s signature style using:
           </p>
           <ul style={{ paddingLeft: '20px' }}>
             <li>Primary colors: red, blue, yellow</li>
@@ -464,5 +464,36 @@ export const WithForm: Story = {
         </form>
       </DialogContent>
     </Dialog>
+  ),
+};
+
+const planeThemes = ['blue', 'neutral', 'red', 'yellow'] as const;
+
+const ThemedDialog = ({ theme }: { theme: (typeof planeThemes)[number] }) => (
+  <Dialog>
+    <DialogTrigger theme={theme}>{theme}</DialogTrigger>
+    <DialogContent theme={theme}>
+      <DialogHeader>
+        <DialogTitle>{`Dialog (${theme})`}</DialogTitle>
+        <DialogDescription>
+          One white plane, one small colour swatch pinned to the corner.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <DialogClose asChild>
+          <Button theme="neutral">Close</Button>
+        </DialogClose>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      {planeThemes.map((theme) => (
+        <ThemedDialog key={theme} theme={theme} />
+      ))}
+    </div>
   ),
 };

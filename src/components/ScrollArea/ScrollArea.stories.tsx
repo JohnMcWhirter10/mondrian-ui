@@ -2,11 +2,12 @@ import React from 'react';
 import { ScrollArea } from './ScrollArea';
 
 export default {
-  title: 'Components/ScrollArea',
+  title: 'Layout/ScrollArea',
   component: ScrollArea,
   parameters: {
     layout: 'centered',
   },
+  tags: ['autodocs'],
   argTypes: {
     theme: {
       control: 'select',
@@ -138,5 +139,27 @@ export const HorizontalScroll = {
           ))}
       </div>
     </ScrollArea>
+  ),
+};
+
+const themes = ['blue', 'neutral', 'red', 'yellow', 'green'] as const;
+
+export const Themes = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px' }}>
+      {themes.map((theme) => (
+        <ScrollArea
+          key={theme}
+          theme={theme}
+          height={160}
+          width={220}
+          label={`${theme} scroll area`}
+        >
+          <pre style={{ whiteSpace: 'pre-wrap', margin: 0, padding: 8 }}>
+            {longText}
+          </pre>
+        </ScrollArea>
+      ))}
+    </div>
   ),
 };

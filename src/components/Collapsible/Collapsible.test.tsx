@@ -1,5 +1,10 @@
-import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -16,7 +21,7 @@ describe('Collapsible', () => {
     );
 
     expect(screen.getByText('Trigger')).toBeInTheDocument();
-    expect(screen.queryByText('Content')).not.toBeVisible();
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
   });
 
   it('opens when trigger is clicked', () => {
@@ -45,7 +50,7 @@ describe('Collapsible', () => {
 
     // Second click to close
     fireEvent.click(screen.getByText('Trigger'));
-    expect(screen.queryByText('Content')).not.toBeVisible();
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
   });
 
   it('respects the open prop', () => {
@@ -57,18 +62,6 @@ describe('Collapsible', () => {
     );
 
     expect(screen.getByText('Content')).toBeVisible();
-  });
-
-  it('applies theme class correctly', () => {
-    const { container } = render(
-      <Collapsible theme="red">
-        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
-        <CollapsibleContent>Content</CollapsibleContent>
-      </Collapsible>
-    );
-
-    const collapsibleElement = container.querySelector('.mondrian-collapsible');
-    expect(collapsibleElement).toHaveClass('red');
   });
 
   it('applies size class correctly', () => {
@@ -93,5 +86,53 @@ describe('Collapsible', () => {
 
     const triggerElement = screen.getByText('Trigger');
     expect(triggerElement).toBeDisabled();
+  });
+
+  it('exposes aria-expanded and a decorative glyph', () => {
+    render(
+      <Collapsible>
+        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
+        <CollapsibleContent>Content</CollapsibleContent>
+      </Collapsible>
+    );
+    const trigger = screen.getByRole('button', { name: 'Trigger' });
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    fireEvent.click(trigger);
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    expect(trigger.querySelector('.mondrian-collapsible-icon')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
+  });
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => (
+      <Collapsible ref={ref}>
+        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
+        <CollapsibleContent>Content</CollapsibleContent>
+      </Collapsible>
+    ),
+    tagName: 'DIV',
+    className: 'mondrian-collapsible',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => (
+      <Collapsible {...props}>
+        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
+        <CollapsibleContent>Content</CollapsibleContent>
+      </Collapsible>
+    ),
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => (
+      <Collapsible theme={theme}>
+        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
+        <CollapsibleContent>Content</CollapsibleContent>
+      </Collapsible>
+    ),
+    classFor: (theme) => theme,
   });
 });

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DateField } from './DateField';
 import { Label } from '../Label/Label';
 
@@ -8,22 +8,28 @@ const frame = {
 };
 
 const meta: Meta<typeof DateField> = {
-  title: 'Components/DateField',
+  title: 'Forms/DateField',
   component: DateField,
   parameters: {
     layout: 'padded',
     docs: {
       description: {
         component: `
-A native date field drawn as one white plane inside a black grid of a single weight.
+A native date field that reuses the Input grid: a white plane inside a black line, a heavy bottom bar, and a flat swatch of the theme plane on that bar.
 
-The border stays black in light and dark. Text stays black on white until the field takes keyboard focus, when the plane fills with blue and the text turns white. The value is the browser's \`YYYY-MM-DD\` string. The calendar button stays inside the rectangle and opens the browser picker. Hover leaves the plane where it is. Place a Label beside it; this component has no label of its own.
+The value is the browser's string and the glyph opens the browser picker (24px hit box). Hover does not move it. Focus draws the standard outline. An invalid field (aria-invalid) doubles its left bar and runs the swatch the full length of the bottom bar. Place a Label beside it; this component has no label of its own.
         `,
       },
     },
   },
   tags: ['autodocs'],
   argTypes: {
+    theme: {
+      control: 'select',
+      options: ['blue', 'neutral', 'red', 'yellow'],
+      description: 'Plane color of the swatch on the bottom bar',
+      table: { defaultValue: { summary: 'blue' } },
+    },
     size: {
       control: 'select',
       options: ['default', 'sm', 'lg'],
@@ -102,4 +108,53 @@ export const Disabled: Story = {
     disabled: true,
     defaultValue: '2026-11-07',
   },
+};
+
+const planes = ['blue', 'neutral', 'red', 'yellow'] as const;
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        width: '280px',
+      }}
+    >
+      {planes.map((theme) => (
+        <DateField
+          key={theme}
+          theme={theme}
+          aria-label={`${theme} date`}
+          defaultValue="2026-11-07"
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const Invalid: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        width: '280px',
+      }}
+    >
+      <Label htmlFor="invalid-date" theme="red">
+        Date
+      </Label>
+      <DateField
+        id="invalid-date"
+        aria-invalid="true"
+        aria-describedby="invalid-date-error"
+      />
+      <span id="invalid-date-error" role="alert">
+        Error: enter a date.
+      </span>
+    </div>
+  ),
 };

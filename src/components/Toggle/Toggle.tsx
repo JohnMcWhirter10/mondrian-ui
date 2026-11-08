@@ -25,7 +25,7 @@ const Toggle = React.forwardRef<
   // Compose class names
   const trackClassName = [
     'mondrian-toggle-track',
-    theme,
+    `mondrian-toggle-track-${theme}`,
     size === 'sm' ? 'mondrian-toggle-sm' : '',
     size === 'lg' ? 'mondrian-toggle-lg' : '',
   ]

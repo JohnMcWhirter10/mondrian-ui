@@ -176,5 +176,93 @@ export type {
 export { ScrollArea } from './ScrollArea';
 export type { ScrollAreaProps } from './ScrollArea/ScrollArea.types';
 
+export { Separator } from './Separator';
+export type {
+  SeparatorProps,
+  SeparatorOrientation,
+} from './Separator/Separator.types';
+
+export { AspectRatio } from './AspectRatio';
+export type { AspectRatioProps } from './AspectRatio/AspectRatio.types';
+
+export { Avatar, AvatarImage, AvatarFallback } from './Avatar';
+export type {
+  AvatarProps,
+  AvatarImageProps,
+  AvatarFallbackProps,
+  AvatarSize,
+} from './Avatar/Avatar.types';
+
+export { Skeleton } from './Skeleton';
+export type { SkeletonProps } from './Skeleton/Skeleton.types';
+
+export { Kbd } from './Kbd';
+export type { KbdProps } from './Kbd/Kbd.types';
+
+export { Heading, Text } from './Typography';
+export type {
+  HeadingProps,
+  HeadingLevel,
+  HeadingElement,
+  TextProps,
+  TextElement,
+  TextSize,
+} from './Typography/Typography.types';
+
+export { Loader } from './Loader';
+export type { LoaderProps, LoaderSize } from './Loader/Loader.types';
+
+export { Progress } from './Progress';
+export type { ProgressProps, ProgressSize } from './Progress/Progress.types';
+
+export { Empty, EmptyTitle, EmptyDescription, EmptyActions } from './Empty';
+export type {
+  EmptyProps,
+  EmptyTitleProps,
+  EmptyDescriptionProps,
+  EmptyActionsProps,
+} from './Empty/Empty.types';
+
+export { Grid, GridItem } from './Grid';
+export type { GridProps, GridItemProps, GridGap } from './Grid/Grid.types';
+
+export {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from './Breadcrumb';
+export type {
+  BreadcrumbProps,
+  BreadcrumbListProps,
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+  BreadcrumbPageProps,
+  BreadcrumbSeparatorProps,
+} from './Breadcrumb/Breadcrumb.types';
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from './Table';
+export type {
+  TableProps,
+  TableHeaderProps,
+  TableBodyProps,
+  TableFooterProps,
+  TableRowProps,
+  TableHeadProps,
+  TableCellProps,
+  TableCaptionProps,
+} from './Table/Table.types';
+
 export * from './icons';
 export type { IconProps } from './icons/icon.types';

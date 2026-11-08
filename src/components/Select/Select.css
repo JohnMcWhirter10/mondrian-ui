@@ -1,90 +1,140 @@
+/*
+ * The trigger is a white (black in dark mode) plane inside a black grid:
+ * base-weight verticals, a heavy bottom bar, and a flat swatch of the theme
+ * plane on the bar at the left edge. One hairline rises from the bottom bar,
+ * inside the box. Hover leaves the
+ * trigger where it is (issue #58). Focus draws the standard outline.
+ */
 .mondrian-select-trigger {
+  --field-pad-top: var(--mondrian-spacing-small);
+  --field-pad-bottom: var(--mondrian-spacing-large);
+  --field-pad-left: var(--mondrian-spacing-large);
+  --field-swatch: var(--mondrian-spacing-medium);
+  --plane: var(--mondrian-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
   width: 100%;
-  padding: 10px;
-  background-color: var(--mondrian-background);
+  min-height: 44px;
+  margin: 0;
+  padding: var(--field-pad-top) var(--mondrian-spacing-medium)
+    var(--field-pad-bottom) var(--field-pad-left);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  background-image: linear-gradient(var(--plane), var(--plane));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 28% var(--field-swatch);
+  color: var(--mondrian-text);
   font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
   font-weight: 500;
+  line-height: 1.2;
   cursor: pointer;
   text-align: left;
   outline: none;
-  position: relative;
-  transition: all 0.3s;
 }
 
 .mondrian-select-trigger-sm {
-  padding: 6px 8px;
-  font-size: 0.875rem;
+  --field-pad-bottom: var(--mondrian-spacing-medium);
+  --field-pad-left: var(--mondrian-spacing-medium);
+  --field-swatch: var(--mondrian-spacing-small);
+  min-height: 32px;
+  font-size: var(--mondrian-font-size-small);
 }
 
 .mondrian-select-trigger-lg {
-  padding: 12px 14px;
-  font-size: 1.125rem;
+  --field-pad-top: var(--mondrian-spacing-medium);
+  --field-pad-bottom: calc(
+    var(--mondrian-spacing-large) + var(--mondrian-spacing-medium)
+  );
+  min-height: 52px;
+  font-size: var(--mondrian-font-size-large);
 }
 
-.mondrian-select-trigger.blue:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
+/* The theme names the swatch plane. The trigger itself stays black on white. */
+.mondrian-select-trigger-blue {
+  --plane: var(--mondrian-blue);
 }
 
-.mondrian-select-trigger.red:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
+.mondrian-select-trigger-red {
+  --plane: var(--mondrian-red);
 }
 
-.mondrian-select-trigger.yellow:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
+.mondrian-select-trigger-yellow {
+  --plane: var(--mondrian-yellow);
 }
 
-.mondrian-select-trigger.neutral:hover,
-.mondrian-select-trigger.green:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
+.mondrian-select-trigger-green {
+  --plane: var(--mondrian-success);
 }
 
-.mondrian-select-trigger.blue {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
+.mondrian-select-trigger-neutral {
+  --plane: var(--mondrian-border);
 }
 
-.mondrian-select-trigger.red {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
+/*
+ * Decorative hairline rising from the bottom bar, inside the box. CSS only, never in the
+ * accessibility tree, and it adds no horizontal overflow.
+ */
+.mondrian-select-trigger::after {
+  content: '';
+  position: absolute;
+  right: calc(var(--mondrian-spacing-large) * 2);
+  bottom: 0;
+  width: var(--mondrian-grid-width);
+  height: var(--mondrian-spacing-medium);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
 }
 
-.mondrian-select-trigger.yellow {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
+/*
+ * Invalid. Color is never the only cue: the left vertical doubles to a
+ * heavy bar, the swatch runs the full length of the bottom bar, and the
+ * state is exposed as aria-invalid.
+ */
+.mondrian-select-trigger[aria-invalid='true'] {
+  --plane: var(--mondrian-error);
+  border-left-width: calc(var(--mondrian-grid-width-heavy) * 2);
+  padding-left: calc(
+    var(--field-pad-left) -
+      (var(--mondrian-grid-width-heavy) * 2 - var(--mondrian-grid-width))
+  );
+  background-size: 100% var(--field-swatch);
 }
 
-.mondrian-select-trigger.green {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-white);
-}
-
-.mondrian-select-trigger.neutral {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
+.mondrian-select-trigger:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
 }
 
 .mondrian-select-trigger[data-disabled] {
-  opacity: 0.5;
+  border-style: dashed;
+  opacity: 0.6;
   cursor: not-allowed;
+}
+
+.mondrian-select-trigger[data-disabled]::after {
+  display: none;
 }
 
 .mondrian-select-value {
   display: block;
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mondrian-select-icon {
   display: flex;
   align-items: center;
-  margin-left: 10px;
+  margin-left: var(--mondrian-spacing-medium);
 }
 
 .mondrian-select-icon-chevron {
@@ -93,57 +143,85 @@
   transform: rotate(90deg);
 }
 
+/* The list is the same grid, with a hard offset shadow. */
 .mondrian-select-content {
+  --plane: var(--mondrian-border);
+  --on-plane: var(--mondrian-background);
+  box-sizing: border-box;
   background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
   overflow: hidden;
   min-width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
   z-index: 50;
 }
 
-.mondrian-select-content.blue .mondrian-select-item[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
+/* White text on red, blue, and success planes. Black text on yellow. */
+.mondrian-select-content-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
 }
 
-.mondrian-select-content.red .mondrian-select-item[data-highlighted] {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
+.mondrian-select-content-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
 }
 
-.mondrian-select-content.yellow .mondrian-select-item[data-highlighted] {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
+.mondrian-select-content-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
 }
 
-.mondrian-select-content.green .mondrian-select-item[data-highlighted] {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-white);
+.mondrian-select-content-green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-white);
 }
 
-.mondrian-select-content.neutral .mondrian-select-item[data-highlighted] {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
+/* Neutral inverts: black on white becomes white on black. */
+.mondrian-select-content-neutral {
+  --plane: var(--mondrian-text);
+  --on-plane: var(--mondrian-background);
 }
 
 .mondrian-select-viewport {
-  padding: 5px;
+  /* Room for focus rings and the scrollbar edge. */
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-small)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
 }
 
 .mondrian-select-item {
+  box-sizing: border-box;
+  min-height: 32px;
   font-family: var(--mondrian-font-family);
-  font-size: 0.875rem;
+  font-size: var(--mondrian-font-size-small);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  border-left: var(--mondrian-grid-width-heavy) solid transparent;
   cursor: pointer;
   outline: none;
 }
 
+/* Highlight is a plane plus a heavy left bar, so it is not color alone. */
+.mondrian-select-item[data-highlighted] {
+  background-color: var(--plane);
+  color: var(--on-plane);
+  border-left-color: var(--mondrian-border);
+}
+
+/* Selected: bold text and a filled square, as well as the highlight. */
+.mondrian-select-item[data-state='checked'] {
+  font-weight: 700;
+}
+
 .mondrian-select-item[data-disabled] {
-  opacity: 0.5;
+  opacity: 0.6;
+  text-decoration: line-through;
   cursor: not-allowed;
 }
 
@@ -155,52 +233,55 @@
   height: 16px;
 }
 
+.mondrian-select-item-indicator::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-color: currentColor;
+}
+
 .mondrian-select-label {
   font-family: var(--mondrian-font-family);
   color: var(--mondrian-text);
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 5px 10px;
+  font-size: var(--mondrian-font-size-tiny);
+  font-weight: 700;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
 }
 
 .mondrian-select-separator {
-  height: 1px;
+  height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);
-  margin: 5px 0;
+  margin: var(--mondrian-spacing-small) 0;
 }
 
 .mondrian-select-group {
-  padding: 5px 0;
+  padding: var(--mondrian-spacing-small) 0;
 }
 
-/* Focus styling that fits with Mondrian principles */
-.mondrian-select-trigger:focus-visible {
-  outline: none;
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-}
+@media (forced-colors: active) {
+  .mondrian-select-trigger,
+  .mondrian-select-content {
+    border-color: ButtonText;
+  }
 
-/* Additional Mondrian-inspired decorative element - asymmetric corner */
-.mondrian-select-trigger:before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 15px;
-  height: 15px;
-  background-color: transparent;
-  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+  .mondrian-select-trigger::after,
+  .mondrian-select-separator {
+    background-color: ButtonText;
+  }
 
-.mondrian-select-trigger:hover:before {
-  opacity: 1;
-}
+  .mondrian-select-trigger[data-disabled] {
+    border-color: GrayText;
+    color: GrayText;
+    opacity: 1;
+  }
 
-/* Replace hardcoded colors with CSS variables */
-.mondrian-select-trigger:before {
-  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  .mondrian-select-trigger:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .mondrian-select-item[data-highlighted] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
 }

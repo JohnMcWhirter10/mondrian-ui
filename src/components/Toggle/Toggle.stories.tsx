@@ -1,12 +1,12 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Toggle } from './Toggle';
 import { Label } from '../Label/Label';
 import { ThemeProvider } from '../../themes';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Toggle> = {
-  title: 'Components/Toggle',
+  title: 'Forms/Toggle',
   component: Toggle,
   parameters: {
     layout: 'centered',
@@ -163,4 +163,19 @@ export const Disabled: Story = {
     disabled: true,
     id: 'disabled-toggle',
   },
+};
+
+const allThemes = ['blue', 'neutral', 'red', 'yellow', 'green'] as const;
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+      {allThemes.map((theme) => (
+        <div key={theme} style={{ display: 'flex', gap: '12px' }}>
+          <Toggle theme={theme} aria-label={`${theme} off`} />
+          <Toggle theme={theme} defaultChecked aria-label={`${theme} on`} />
+        </div>
+      ))}
+    </div>
+  ),
 };

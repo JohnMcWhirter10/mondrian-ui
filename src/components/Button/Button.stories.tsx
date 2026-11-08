@@ -1,11 +1,11 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './Button';
 import { ThemeProvider } from '../../themes';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Forms/Button',
   component: Button,
   parameters: {
     layout: 'centered',
@@ -83,4 +83,30 @@ export const Yellow: Story = {
     children: 'Yellow Button',
     theme: 'yellow',
   },
+};
+
+const allThemes = ['blue', 'neutral', 'red', 'yellow', 'green'] as const;
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+      {allThemes.map((theme) => (
+        <Button key={theme} theme={theme}>
+          {theme}
+        </Button>
+      ))}
+    </div>
+  ),
+};
+
+export const Pressed: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+      {allThemes.map((theme) => (
+        <Button key={theme} theme={theme} aria-pressed="true">
+          {theme} pressed
+        </Button>
+      ))}
+    </div>
+  ),
 };

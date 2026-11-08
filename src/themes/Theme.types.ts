@@ -35,6 +35,8 @@ export interface MondrianTheme {
   // Grid system
   grid: {
     lineWidth: string;
+    /** Heavier line used for horizontals and accent bars, as in the paintings. */
+    lineWidthHeavy: string;
   };
 
   // Typography
@@ -68,6 +70,12 @@ export interface MondrianTheme {
  * - 'green' - Success theme (for confirmations)
  * - 'yellow' - Accent theme (for highlights)
  */
+/**
+ * Plane themes: the three primary planes plus the noncolor plane.
+ * Text on each plane meets WCAG AA contrast (white on red/blue, black on yellow/neutral).
+ */
+export type PlaneTheme = 'blue' | 'neutral' | 'red' | 'yellow';
+
 export type ComponentTheme = 'blue' | 'neutral' | 'red' | 'green' | 'yellow';
 
 export interface ThemeContextType {

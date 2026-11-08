@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { IconProps } from './icon.types';
+import { getIconA11y } from './iconA11y';
 
-export const Square: React.FC<IconProps> = ({ size = 16, ...props }) => {
+export const Square: React.FC<IconProps> = ({ size = 16, title, ...props }) => {
+  const { svgProps, titleNode } = getIconA11y(title, props);
   return (
     <svg
       width={size}
@@ -9,8 +11,9 @@ export const Square: React.FC<IconProps> = ({ size = 16, ...props }) => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...svgProps}
     >
+      {titleNode}
       <rect
         x="2"
         y="2"

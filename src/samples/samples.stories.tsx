@@ -1,9 +1,7 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { LoginSample } from './Login';
-import { BlogSample } from './Blog';
 import { ContactFormSample } from './ContactForm';
-import { Box } from '../components';
 
 const meta = {
   title: 'Examples/Samples',
@@ -21,19 +19,6 @@ export const Login: StoryObj = {
       description: {
         story:
           'A login form example using Mondrian UI components. Demonstrates form inputs, validation, and alerts.',
-      },
-    },
-  },
-};
-
-export const Blog: StoryObj = {
-  render: () => <BlogSample />,
-  parameters: {
-    layout: 'fullscreen',
-    docs: {
-      description: {
-        story:
-          'A blog listing page example using Mondrian UI components. Demonstrates responsive layout, cards, and interactive content.',
       },
     },
   },

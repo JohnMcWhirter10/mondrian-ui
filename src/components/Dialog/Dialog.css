@@ -1,313 +1,233 @@
 /**
  * Dialog Component
- * 
- * Follows Piet Mondrian's neoplasticism principles with:
- * - Rectangular shapes (no rounded corners)
- * - Primary color palette (red, blue, yellow, black, white)
- * - Strong black grid lines
- * - Asymmetrical balance
+ *
+ * A white plane held by a black frame. Verticals use the base line weight,
+ * horizontals the heavy one. The top rule starts at the left edge and stops
+ * short of the close cell; one colour swatch is pinned to the bottom-left
+ * corner. Hard cut in and out: no fades, no motion.
  */
 
-/* Trigger styling that matches the Button component */
+/* Plane theme tokens (inherited by trigger, content and close cell) */
+.mondrian-dialog-trigger.blue,
+.mondrian-dialog-content.blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dialog-trigger.red,
+.mondrian-dialog-content.red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dialog-trigger.yellow,
+.mondrian-dialog-content.yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-dialog-trigger.green,
+.mondrian-dialog-content.green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dialog-trigger.neutral,
+.mondrian-dialog-content.neutral {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+}
+
+/* Trigger */
 .mondrian-dialog-trigger {
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: var(--mondrian-font-size-medium);
-  font-family: var(--mondrian-font-family);
   position: relative;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  border-radius: 0; /* Mondrian uses rectangular shapes */
-  background-color: var(
-    --mondrian-background,
-    var(--mondrian-white)
-  ); /* Fallback to white */
-  color: var(--mondrian-text, var(--mondrian-black)); /* Fallback to black */
+  min-height: 44px;
+  min-width: 44px;
+  box-sizing: border-box;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--plane);
+  color: var(--on-plane);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
   font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-/* Trigger size variants */
 .mondrian-dialog-trigger-sm {
-  padding: 8px 16px;
+  padding: 4px 12px 8px 8px;
   font-size: var(--mondrian-font-size-small);
 }
 
 .mondrian-dialog-trigger-lg {
-  padding: 16px 32px;
+  padding: 12px 32px 20px 20px;
   font-size: var(--mondrian-font-size-large);
 }
 
-/* Trigger theme variants */
-.mondrian-dialog-trigger.blue {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-dialog-trigger.neutral {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-dialog-trigger.yellow {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-dialog-trigger.red {
-  background-color: var(--mondrian-red);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-border);
-}
-
-.mondrian-dialog-trigger.green {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-white);
-  border-color: var(--mondrian-border);
-}
-
-/* Trigger hover effect */
 .mondrian-dialog-trigger:hover {
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
 }
 
-/* Trigger focus state */
-.mondrian-dialog-trigger:focus-visible {
-  outline: none;
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+.mondrian-dialog-trigger[data-state='open'] {
+  text-decoration: underline;
 }
 
-/* Dark mode trigger */
-[data-theme='dark'] .mondrian-dialog-trigger {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-text);
-  border-color: var(--mondrian-border);
+.mondrian-dialog-trigger:focus-visible,
+.mondrian-dialog-close:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
 }
 
-[data-theme='dark'] .mondrian-dialog-trigger:hover,
-[data-theme='dark'] .mondrian-dialog-trigger:focus-visible {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-}
-
-/* Overlay */
+/* Overlay: a flat solid rgba plane, no fade */
 .mondrian-dialog-overlay {
   position: fixed;
   inset: 0;
   background-color: var(--mondrian-overlay);
-  animation: mondrian-overlay-show 0.2s ease-in-out;
   z-index: 49;
 }
 
 /* Content */
 .mondrian-dialog-content {
   position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 400px;
-  max-width: min(calc(100vw - 2rem), 520px);
-  max-height: min(calc(100vh - 2rem), 85vh);
-  overflow-y: auto;
+  inset: 0;
+  margin: auto;
+  box-sizing: border-box;
+  width: min(calc(100vw - 2rem), 520px);
+  height: fit-content;
+  max-height: calc(100vh - 2rem);
   background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  color: var(--mondrian-text);
-  padding: var(--mondrian-spacing-large);
+  border-top-width: var(--mondrian-grid-width-heavy);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  /* Asymmetric: more room below (for the swatch) and to the left of the close cell */
+  padding: var(--mondrian-spacing-large) var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) + 28px) var(--mondrian-spacing-large);
+  box-shadow: 6px 6px 0 var(--mondrian-shadow);
   z-index: 50;
-  box-shadow: 6px 6px 0 var(--mondrian-shadow);
-  animation: mondrian-content-show 0.2s ease-in-out;
 }
 
-/* Dark mode */
-[data-theme='dark'] .mondrian-dialog-content {
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
-  box-shadow: 6px 6px 0 var(--mondrian-shadow);
-}
-
-/* Size variants */
 .mondrian-dialog-content-sm {
-  max-width: min(calc(100vw - 2rem), 420px);
-  padding: var(--mondrian-spacing-medium);
+  width: min(calc(100vw - 2rem), 420px);
 }
 
 .mondrian-dialog-content-lg {
-  max-width: min(calc(100vw - 2rem), 620px);
-  padding: var(--mondrian-spacing-large)
-    calc(var(--mondrian-spacing-large) * 1.5);
+  width: min(calc(100vw - 2rem), 620px);
 }
 
-/* Theme variants */
-.mondrian-dialog-content.blue {
-  border-color: var(--mondrian-blue);
+/* Scrolling lives inside the frame so the decorative rules are never clipped */
+.mondrian-dialog-body {
+  max-height: calc(100vh - 2rem - 8rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Room for focus rings and hover shadows of the controls inside, so the
+     scroll edge never clips them. The margin gives the space back. */
+  --scroll-room: calc(
+    var(--mondrian-focus-width) + var(--mondrian-focus-offset)
+  );
+  margin: calc(var(--scroll-room) * -1);
+  padding: var(--scroll-room)
+    calc(var(--scroll-room) + var(--mondrian-spacing-medium)) var(--scroll-room)
+    var(--scroll-room);
 }
 
-.mondrian-dialog-content.neutral {
-  border-color: var(--mondrian-border);
+/* Top rule: starts at the left edge, stops short of the close cell */
+.mondrian-dialog-content::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: 0;
+  right: 72px;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
 }
 
-.mondrian-dialog-content.yellow {
-  border-color: var(--mondrian-yellow);
+/* Colour swatch pinned to the bottom-left corner */
+.mondrian-dialog-content::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72px;
+  height: 20px;
+  background-color: var(--plane);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  pointer-events: none;
 }
 
-.mondrian-dialog-content.red {
-  border-color: var(--mondrian-red);
-}
-
-.mondrian-dialog-content.green {
-  border-color: var(--mondrian-success);
-}
-
-/* Close button */
+/* Close: a 44px grid cell in the top-right corner */
 .mondrian-dialog-close {
   position: absolute;
-  top: var(--mondrian-spacing-small);
-  right: var(--mondrian-spacing-small);
-  cursor: pointer;
-  background-color: transparent;
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  top: 0;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  transition: all 0.2s ease;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border: 0;
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
 }
 
 .mondrian-dialog-close:hover {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
-  transform: translate(-2px, -2px);
-  box-shadow: 2px 2px 0 var(--mondrian-shadow);
+  background-color: var(--plane);
+  color: var(--on-plane);
 }
 
-[data-theme='dark'] .mondrian-dialog-close {
-  border-color: var(--mondrian-border);
-  color: var(--mondrian-white);
+/* Neutral plane has no hue, so invert instead */
+.mondrian-dialog-content.neutral .mondrian-dialog-close:hover {
+  background-color: var(--mondrian-text);
+  color: var(--mondrian-background);
 }
 
-[data-theme='dark'] .mondrian-dialog-close:hover {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
-  box-shadow: 2px 2px 0 var(--mondrian-shadow);
-}
-
-/* Header, Footer, Title, Description */
+/* Header, footer, title, description */
 .mondrian-dialog-header {
   display: flex;
   flex-direction: column;
   margin-bottom: var(--mondrian-spacing-large);
   padding-bottom: var(--mondrian-spacing-medium);
-  position: relative;
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
-}
-
-/* Mondrian-style asymmetrical color blocks for header */
-.mondrian-dialog-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 8px;
-  width: 40%;
-  background-color: var(--mondrian-yellow);
-}
-
-.mondrian-dialog-header::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  right: 0;
-  height: 8px;
-  width: 25%;
-  background-color: var(--mondrian-blue);
-}
-
-/* Theme-specific header styling */
-.mondrian-dialog-content.blue .mondrian-dialog-header::after {
-  background-color: var(--mondrian-blue);
-}
-
-.mondrian-dialog-content.red .mondrian-dialog-header::after {
-  background-color: var(--mondrian-error);
-}
-
-.mondrian-dialog-content.green .mondrian-dialog-header::after {
-  background-color: var(--mondrian-success);
-}
-
-/* Dark mode header adjustments */
-[data-theme='dark'] .mondrian-dialog-header {
-  border-bottom-color: var(--mondrian-border);
-}
-
-[data-theme='dark'] .mondrian-dialog-header::before,
-[data-theme='dark'] .mondrian-dialog-header::after,
-[data-theme='dark'] .mondrian-dialog-footer::before {
-  /* Add a subtle outline in dark mode to make color blocks pop against dark background */
-  outline: 1px solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
 .mondrian-dialog-footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: var(--mondrian-spacing-medium);
   margin-top: var(--mondrian-spacing-large);
   padding-top: var(--mondrian-spacing-medium);
   border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
-  position: relative;
-}
-
-/* Mondrian-style asymmetrical color blocks for footer */
-.mondrian-dialog-footer::before {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: 0;
-  height: 8px;
-  width: 30%;
-  background-color: var(--mondrian-red);
-}
-
-/* Theme-specific footer styling */
-.mondrian-dialog-content.red .mondrian-dialog-footer::before {
-  background-color: var(--mondrian-error);
-}
-
-.mondrian-dialog-content.blue .mondrian-dialog-footer::before {
-  background-color: var(--mondrian-blue);
-}
-
-.mondrian-dialog-content.green .mondrian-dialog-footer::before {
-  background-color: var(--mondrian-success);
-}
-
-[data-theme='dark'] .mondrian-dialog-footer {
-  border-top-color: var(--mondrian-border);
 }
 
 .mondrian-dialog-title {
+  margin: 0 0 var(--mondrian-spacing-small);
+  /* keep clear of the close cell */
+  padding-right: 36px;
   font-size: var(--mondrian-font-size-large);
   font-weight: bold;
   line-height: 1.25;
-  margin-bottom: var(--mondrian-spacing-small);
-  margin-top: calc(var(--mondrian-spacing-small) + 8px);
 }
 
 .mondrian-dialog-description {
+  margin: 0;
   font-size: var(--mondrian-font-size-medium);
   line-height: 1.5;
   color: var(--mondrian-text);
 }
 
-/* Accessibility */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -320,52 +240,20 @@
   border-width: 0;
 }
 
-/* Animations */
-@keyframes mondrian-overlay-show {
-  from {
-    opacity: 0;
+@media (forced-colors: active) {
+  .mondrian-dialog-trigger,
+  .mondrian-dialog-content,
+  .mondrian-dialog-close,
+  .mondrian-dialog-header,
+  .mondrian-dialog-footer {
+    border-color: CanvasText;
   }
-  to {
-    opacity: 1;
+  .mondrian-dialog-content::before,
+  .mondrian-dialog-content::after {
+    background-color: CanvasText;
+    forced-color-adjust: none;
   }
-}
-
-@keyframes mondrian-content-show {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -45%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-/* Dialog when it's closing - animations */
-.mondrian-dialog-overlay[data-state='closed'] {
-  animation: mondrian-overlay-hide 0.2s ease-in-out;
-}
-
-.mondrian-dialog-content[data-state='closed'] {
-  animation: mondrian-content-hide 0.2s ease-in-out;
-}
-
-@keyframes mondrian-overlay-hide {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes mondrian-content-hide {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-  to {
-    opacity: 0;
-    transform: translate(-50%, -45%);
+  .mondrian-dialog-trigger[data-state='open'] {
+    text-decoration: underline;
   }
 }
