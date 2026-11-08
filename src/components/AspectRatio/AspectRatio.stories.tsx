@@ -52,7 +52,8 @@ export const Ratios: Story = {
         display: 'flex',
         gap: '24px',
         alignItems: 'flex-start',
-        width: '640px',
+        width: '100%',
+        maxWidth: '640px',
       }}
     >
       <div style={{ width: '200px' }}>
