@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -20,6 +20,7 @@ import { Button } from '../Button/Button';
 const meta: Meta<typeof DropdownMenu> = {
   title: 'Components/DropdownMenu',
   component: DropdownMenu,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
@@ -31,7 +32,7 @@ type Story = StoryObj<typeof DropdownMenu>;
 export const Basic: Story = {
   render: (args) => (
     <DropdownMenu {...args}>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button>Open Menu</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -47,7 +48,7 @@ export const Basic: Story = {
 export const WithLabelsAndGroups: Story = {
   render: (args) => (
     <DropdownMenu {...args}>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button>Menu with Groups</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -74,7 +75,7 @@ export const WithLabelsAndGroups: Story = {
 export const WithSubMenu: Story = {
   render: (args) => (
     <DropdownMenu {...args}>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button>Menu with Submenu</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -95,13 +96,13 @@ export const WithSubMenu: Story = {
 };
 
 export const WithCheckboxItems: Story = {
-  render: () => {
+  render: function Render() {
     const [bookmarksChecked, setBookmarksChecked] = React.useState(true);
     const [urlsChecked, setUrlsChecked] = React.useState(false);
 
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button>Checkbox Menu</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -128,12 +129,12 @@ export const WithCheckboxItems: Story = {
 };
 
 export const WithRadioItems: Story = {
-  render: () => {
+  render: function Render() {
     const [position, setPosition] = React.useState('top');
 
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button>Radio Menu</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -156,7 +157,7 @@ export const ThemeVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem' }}>
       <DropdownMenu theme="blue">
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button theme="blue">Blue</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -166,7 +167,7 @@ export const ThemeVariants: Story = {
       </DropdownMenu>
 
       <DropdownMenu theme="red">
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button theme="red">Red</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -176,7 +177,7 @@ export const ThemeVariants: Story = {
       </DropdownMenu>
 
       <DropdownMenu theme="yellow">
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button theme="yellow">Yellow</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -186,7 +187,7 @@ export const ThemeVariants: Story = {
       </DropdownMenu>
 
       <DropdownMenu theme="green">
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button theme="green">Green</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -196,7 +197,7 @@ export const ThemeVariants: Story = {
       </DropdownMenu>
 
       <DropdownMenu theme="neutral">
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button theme="neutral">Neutral</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -204,6 +205,41 @@ export const ThemeVariants: Story = {
           <DropdownMenuItem>Item 2</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+    </div>
+  ),
+};
+
+const planeThemes = ['blue', 'neutral', 'red', 'yellow'] as const;
+
+const ThemedMenus = () => (
+  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+    {planeThemes.map((theme) => (
+      <DropdownMenu key={theme} theme={theme}>
+        <DropdownMenuTrigger>{theme}</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>{`Menu (${theme})`}</DropdownMenuLabel>
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuCheckboxItem checked>Checked</DropdownMenuCheckboxItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuRadioGroup value="a">
+            <DropdownMenuRadioItem value="a">Option A</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="b">Option B</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ))}
+  </div>
+);
+
+export const Themes: Story = {
+  render: () => <ThemedMenus />,
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div data-theme="dark" style={{ padding: 24 }}>
+      <ThemedMenus />
     </div>
   ),
 };

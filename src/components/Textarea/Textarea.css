@@ -1,14 +1,35 @@
+/*
+ * A white (black in dark mode) plane inside a black grid. Verticals are the
+ * base weight and the bottom horizontal is the heavy weight. A flat swatch
+ * of the theme plane sits on the bottom bar at the left edge. It scrolls
+ * with the content (background-attachment: local), so it always rests in the
+ * bottom padding, below the last line, and never covers text.
+ * Hover leaves the field where it is (issue #58). Focus draws the standard
+ * outline and moves nothing.
+ */
 .mondrian-textarea {
+  --field-pad-top: var(--mondrian-spacing-small);
+  --field-pad-bottom: var(--mondrian-spacing-large);
+  --field-pad-left: var(--mondrian-spacing-medium);
+  --field-pad-right: var(--mondrian-spacing-large);
+  --field-swatch: var(--mondrian-spacing-medium);
+  --plane: var(--mondrian-border);
   display: block;
   width: 100%;
   box-sizing: border-box;
   margin: 0;
-  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
   border-radius: 0;
-  background-color: var(--mondrian-white);
-  color: var(--mondrian-black);
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
-    var(--mondrian-spacing-large) var(--mondrian-spacing-medium);
+  background-color: var(--mondrian-background);
+  background-image: linear-gradient(var(--plane), var(--plane));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 28% var(--field-swatch);
+  background-attachment: local;
+  color: var(--mondrian-text);
+  padding: var(--field-pad-top) var(--field-pad-right) var(--field-pad-bottom)
+    var(--field-pad-left);
   min-height: calc(var(--mondrian-spacing-large) * 6);
   font-family: var(--mondrian-font-family);
   font-size: var(--mondrian-font-size-medium);
@@ -18,50 +39,89 @@
 }
 
 .mondrian-textarea::placeholder {
-  color: var(--mondrian-black);
+  color: var(--mondrian-text);
+  opacity: 0.7;
 }
 
 /* Size sets the plane. Writing starts in the upper left. */
 .mondrian-textarea-sm {
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
-    var(--mondrian-spacing-medium) var(--mondrian-spacing-small);
+  --field-pad-bottom: var(--mondrian-spacing-medium);
+  --field-pad-right: var(--mondrian-spacing-medium);
+  --field-pad-left: var(--mondrian-spacing-small);
+  --field-swatch: var(--mondrian-spacing-small);
   min-height: calc(var(--mondrian-spacing-large) * 4);
   font-size: var(--mondrian-font-size-small);
 }
 
 .mondrian-textarea-lg {
-  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large)
-    calc(var(--mondrian-spacing-large) + var(--mondrian-spacing-medium))
-    var(--mondrian-spacing-medium);
+  --field-pad-top: var(--mondrian-spacing-medium);
+  --field-pad-bottom: calc(
+    var(--mondrian-spacing-large) + var(--mondrian-spacing-medium)
+  );
+  --field-pad-left: var(--mondrian-spacing-medium);
   min-height: calc(var(--mondrian-spacing-large) * 8);
   font-size: var(--mondrian-font-size-large);
 }
 
-/*
- * Every theme is the noncolor plane. The prop matches Input so a field
- * and its Label share one name, and the grid stays one black weight.
- */
-.mondrian-textarea-blue,
-.mondrian-textarea-neutral,
-.mondrian-textarea-red,
-.mondrian-textarea-green,
+/* The theme names the swatch plane. The field itself stays black on white. */
+.mondrian-textarea-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-textarea-red {
+  --plane: var(--mondrian-red);
+}
+
 .mondrian-textarea-yellow {
-  background-color: var(--mondrian-white);
-  color: var(--mondrian-black);
-  border-color: var(--mondrian-black);
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-textarea-green {
+  --plane: var(--mondrian-success);
+}
+
+.mondrian-textarea-neutral {
+  --plane: var(--mondrian-border);
+}
+
+/*
+ * Invalid. Color is never the only cue: the left vertical doubles to a
+ * heavy bar, the swatch runs the full length of the bottom bar, and the
+ * state is exposed as aria-invalid.
+ */
+.mondrian-textarea[aria-invalid='true'] {
+  --plane: var(--mondrian-error);
+  border-left-width: calc(var(--mondrian-grid-width-heavy) * 2);
+  padding-left: calc(
+    var(--field-pad-left) -
+      (var(--mondrian-grid-width-heavy) * 2 - var(--mondrian-grid-width))
+  );
+  background-size: 100% var(--field-swatch);
 }
 
 .mondrian-textarea:focus-visible {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-black);
-  outline: none;
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
 }
 
 .mondrian-textarea:disabled {
+  border-style: dashed;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-.mondrian-textarea:disabled:focus-visible {
-  transform: none;
-  box-shadow: none;
+@media (forced-colors: active) {
+  .mondrian-textarea {
+    border-color: ButtonText;
+  }
+
+  .mondrian-textarea:disabled {
+    border-color: GrayText;
+    color: GrayText;
+    opacity: 1;
+  }
+
+  .mondrian-textarea:focus-visible {
+    outline-color: Highlight;
+  }
 }

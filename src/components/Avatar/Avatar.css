@@ -1,15 +1,21 @@
 .mondrian-avatar {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
   position: relative;
   display: inline-flex;
   flex-shrink: 0;
   box-sizing: border-box;
   width: calc(var(--mondrian-spacing-large) * 4);
   height: calc(var(--mondrian-spacing-large) * 4);
-  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-style: solid;
+  border-color: var(--mondrian-border);
+  /* Horizontals heavy, verticals base. */
+  border-width: var(--mondrian-grid-width) var(--mondrian-grid-width)
+    var(--mondrian-grid-width-heavy);
   border-radius: 0;
   overflow: hidden;
   vertical-align: middle;
-  background-color: var(--mondrian-white);
+  background-color: var(--mondrian-background);
   font-family: var(--mondrian-font-family);
 }
 
@@ -31,7 +37,27 @@
   object-fit: cover;
 }
 
-/* One flat plane. Black text stays readable on yellow in both modes. */
+.mondrian-avatar-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-avatar-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+
+.mondrian-avatar-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+
+.mondrian-avatar-neutral {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+}
+
+/* One flat plane. Text stays on the readable side of each plane. */
 .mondrian-avatar-fallback {
   display: flex;
   align-items: center;
@@ -39,8 +65,8 @@
   width: 100%;
   height: 100%;
   border-radius: 0;
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
+  background-color: var(--plane);
+  color: var(--on-plane);
   font-size: var(--mondrian-font-size-small);
   font-weight: 700;
   text-transform: uppercase;
@@ -52,4 +78,15 @@
 
 .mondrian-avatar-lg .mondrian-avatar-fallback {
   font-size: var(--mondrian-font-size-medium);
+}
+
+@media (forced-colors: active) {
+  .mondrian-avatar {
+    border-color: CanvasText;
+  }
+
+  .mondrian-avatar-fallback {
+    background-color: Canvas;
+    color: CanvasText;
+  }
 }

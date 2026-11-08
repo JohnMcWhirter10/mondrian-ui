@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { DateFieldProps } from './DateField.types';
+import '../Input/Input.css';
 import './DateField.css';
 
 const DateField = React.forwardRef<HTMLInputElement, DateFieldProps>(
-  ({ size = 'default', ...props }, ref) => {
+  ({ theme = 'blue', size = 'default', ...props }, ref) => {
     const dateFieldClassName = [
       'mondrian-date-field',
+      `mondrian-date-field-${theme}`,
       size === 'sm' ? 'mondrian-date-field-sm' : '',
       size === 'lg' ? 'mondrian-date-field-lg' : '',
     ]

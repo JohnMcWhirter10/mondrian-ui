@@ -12,6 +12,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
     {
       children,
       variant = 'neutral',
+      theme = 'neutral',
       size = 'default',
       asChild = false,
       fullWidth = false,
@@ -27,6 +28,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
     const boxClassName = [
       'mondrian-box',
       variant,
+      `mondrian-box-theme-${theme}`,
       size === 'sm' ? 'mondrian-box-sm' : '',
       size === 'md' ? 'mondrian-box-md' : '',
       size === 'lg' ? 'mondrian-box-lg' : '',

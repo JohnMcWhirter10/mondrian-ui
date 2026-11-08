@@ -6,7 +6,8 @@ const Input = React.forwardRef<
   HTMLInputElement,
   Omit<React.InputHTMLAttributes<HTMLInputElement>, 'className' | 'size'> & {
     /**
-     * The theme color for the input
+     * The plane color of the swatch on the bottom bar. The field stays white
+     * (black in dark mode) inside a black grid.
      * @default "blue"
      */
     theme?: InputTheme;
@@ -21,14 +22,14 @@ const Input = React.forwardRef<
   // Compose class names
   const inputClassName = [
     'mondrian-input',
-    theme,
+    `mondrian-input-${theme}`,
     size === 'sm' ? 'mondrian-input-sm' : '',
     size === 'lg' ? 'mondrian-input-lg' : '',
   ]
     .filter(Boolean)
     .join(' ');
 
-  return <input ref={ref} className={inputClassName} {...props} />;
+  return <input ref={ref} {...props} className={inputClassName} />;
 });
 
 Input.displayName = 'Input';

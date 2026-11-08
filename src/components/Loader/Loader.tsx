@@ -3,9 +3,10 @@ import { LoaderProps } from './Loader.types';
 import './Loader.css';
 
 const Loader = React.forwardRef<HTMLSpanElement, LoaderProps>(
-  ({ label = 'Loading', size = 'default', ...props }, ref) => {
+  ({ label = 'Loading', size = 'default', theme = 'blue', ...props }, ref) => {
     const loaderClassName = [
       'mondrian-loader',
+      `mondrian-loader-${theme}`,
       size === 'sm' ? 'mondrian-loader-sm' : '',
       size === 'lg' ? 'mondrian-loader-lg' : '',
     ]

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Loader } from './Loader';
 
 const meta: Meta<typeof Loader> = {
@@ -19,6 +19,12 @@ A red plane moves across the blocks by transform only, with no fades. The frame 
   },
   tags: ['autodocs'],
   argTypes: {
+    theme: {
+      control: 'select',
+      options: ['blue', 'neutral', 'red', 'yellow'],
+      description: 'Plane color',
+      table: { defaultValue: { summary: 'blue' } },
+    },
     label: {
       control: 'text',
       description: 'Accessible name announced by assistive technology',
@@ -55,6 +61,25 @@ export const Sizes: Story = {
       <Loader size="sm" label="Loading small" />
       <Loader label="Loading default" />
       <Loader size="lg" label="Loading large" />
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <Loader key={theme} theme={theme} label={`Loading ${theme}`} />
+      ))}
+    </div>
+  ),
+};
+
+export const DarkMode: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div data-theme="dark">
+      <Loader />
     </div>
   ),
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 
 const meta: Meta<typeof Avatar> = {
@@ -52,6 +52,45 @@ export const Sizes: Story = {
       </Avatar>
       <Avatar size="lg">
         <AvatarFallback>LG</AvatarFallback>
+      </Avatar>
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        padding: '0 24px 24px',
+      }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <div key={theme}>
+          <Avatar theme={theme}>
+            <AvatarFallback>PM</AvatarFallback>
+          </Avatar>
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        padding: '24px',
+        background: 'var(--mondrian-background)',
+        color: 'var(--mondrian-text)',
+      }}
+    >
+      <Avatar theme="neutral">
+        <AvatarFallback>PM</AvatarFallback>
       </Avatar>
     </div>
   ),

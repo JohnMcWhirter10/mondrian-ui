@@ -86,4 +86,24 @@ describe('Textarea', () => {
 
     expect(textarea).toHaveValue('A paragraph');
   });
+
+  test('exposes aria-invalid', () => {
+    render(<Textarea aria-label="Message" aria-invalid="true" />);
+
+    expect(screen.getByLabelText('Message')).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    );
+  });
+
+  test('does not expose className', () => {
+    render(
+      <Textarea
+        aria-label="Message"
+        {...({ className: 'x' } as Record<string, string>)}
+      />
+    );
+
+    expect(screen.getByLabelText('Message')).not.toHaveClass('x');
+  });
 });

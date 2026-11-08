@@ -3,9 +3,13 @@ import { KbdProps } from './Kbd.types';
 import './Kbd.css';
 
 const Kbd = React.forwardRef<HTMLElement, KbdProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, theme = 'neutral', ...props }, ref) => {
     return (
-      <kbd ref={ref} className="mondrian-kbd" {...props}>
+      <kbd
+        ref={ref}
+        className={`mondrian-kbd mondrian-kbd-${theme}`}
+        {...props}
+      >
         {children}
       </kbd>
     );

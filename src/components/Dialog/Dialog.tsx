@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { Dash } from '../icons';
 import './Dialog.css';
 import { DialogContentProps, DialogTriggerProps } from './Dialog.types';
 
@@ -13,10 +12,16 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Trigger>,
   DialogTriggerProps
->(({ asChild = false, theme = 'primary', size = 'default', ...props }, ref) => (
+>(({ asChild = false, theme = 'blue', size = 'default', ...props }, ref) => (
   <DialogPrimitive.Trigger
     ref={ref}
-    className={`mondrian-dialog-trigger ${theme} ${size !== 'default' ? `mondrian-dialog-trigger-${size}` : ''}`}
+    className={[
+      'mondrian-dialog-trigger',
+      theme,
+      size !== 'default' ? `mondrian-dialog-trigger-${size}` : '',
+    ]
+      .filter(Boolean)
+      .join(' ')}
     asChild={asChild}
     {...props}
   />
@@ -49,17 +54,38 @@ const DialogClose = DialogPrimitive.Close;
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ theme = 'primary', size = 'default', children, ...props }, ref) => (
+>(({ theme = 'blue', size = 'default', children, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
-      className={`mondrian-dialog-content ${theme} ${size !== 'default' ? `mondrian-dialog-content-${size}` : ''}`}
+      className={[
+        'mondrian-dialog-content',
+        theme,
+        size !== 'default' ? `mondrian-dialog-content-${size}` : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       {...props}
     >
-      {children}
+      <div className="mondrian-dialog-body">{children}</div>
       <DialogPrimitive.Close className="mondrian-dialog-close">
-        <Dash className="mondrian-dialog-close-icon" />
+        <svg
+          className="mondrian-dialog-close-icon"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M2 2L14 14M14 2L2 14"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="square"
+            fill="none"
+          />
+        </svg>
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
@@ -68,21 +94,15 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 // Dialog header
-const DialogHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className="mondrian-dialog-header" {...props} />
-);
+const DialogHeader = (
+  props: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>
+) => <div className="mondrian-dialog-header" {...props} />;
 DialogHeader.displayName = 'DialogHeader';
 
 // Dialog footer
-const DialogFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className="mondrian-dialog-footer" {...props} />
-);
+const DialogFooter = (
+  props: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>
+) => <div className="mondrian-dialog-footer" {...props} />;
 DialogFooter.displayName = 'DialogFooter';
 
 // Dialog title

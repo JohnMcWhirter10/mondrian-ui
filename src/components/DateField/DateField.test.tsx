@@ -78,4 +78,27 @@ describe('DateField', () => {
     expect(field).toBeDisabled();
     expect(field).toHaveAttribute('type', 'date');
   });
+
+  test('defaults to the blue theme and applies each plane theme class', () => {
+    const { rerender } = render(<DateField aria-label="Field" />);
+    expect(screen.getByLabelText('Field')).toHaveClass(
+      'mondrian-date-field-blue'
+    );
+
+    (['blue', 'neutral', 'red', 'yellow'] as const).forEach((theme) => {
+      rerender(<DateField theme={theme} aria-label="Field" />);
+      expect(screen.getByLabelText('Field')).toHaveClass(
+        `mondrian-date-field-${theme}`
+      );
+    });
+  });
+
+  test('exposes aria-invalid', () => {
+    render(<DateField aria-label="Field" aria-invalid="true" />);
+
+    expect(screen.getByLabelText('Field')).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    );
+  });
 });

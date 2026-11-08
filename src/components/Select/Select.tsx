@@ -13,14 +13,13 @@ import {
 } from './Select.types';
 import './Select.css';
 
-const Select = ({
-  children,
-  theme = 'blue',
-  size = 'default',
-  ...props
-}: SelectProps) => (
+/* theme and size belong to SelectTrigger and SelectContent. The Radix root
+   renders no element, so they are removed here and never reach it. */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const Select = ({ children, theme, size, ...props }: SelectProps) => (
   <SelectPrimitive.Root {...props}>{children}</SelectPrimitive.Root>
 );
+/* eslint-enable @typescript-eslint/no-unused-vars */
 Select.displayName = 'Select';
 
 const SelectTrigger = React.forwardRef<
@@ -32,7 +31,7 @@ const SelectTrigger = React.forwardRef<
 >(({ children, theme = 'blue', size = 'default', ...props }, ref) => {
   const triggerClassName = [
     'mondrian-select-trigger',
-    theme,
+    `mondrian-select-trigger-${theme}`,
     size === 'sm' ? 'mondrian-select-trigger-sm' : '',
     size === 'lg' ? 'mondrian-select-trigger-lg' : '',
   ]
@@ -66,7 +65,10 @@ const SelectContent = React.forwardRef<
     theme?: SelectProps['theme'];
   }
 >(({ children, theme = 'blue', ...props }, ref) => {
-  const contentClassName = ['mondrian-select-content', theme]
+  const contentClassName = [
+    'mondrian-select-content',
+    `mondrian-select-content-${theme}`,
+  ]
     .filter(Boolean)
     .join(' ');
 
@@ -93,7 +95,10 @@ const SelectItem = React.forwardRef<
 >(({ children, ...props }, ref) => (
   <SelectPrimitive.Item className="mondrian-select-item" ref={ref} {...props}>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-    <SelectPrimitive.ItemIndicator className="mondrian-select-item-indicator" />
+    <SelectPrimitive.ItemIndicator
+      className="mondrian-select-item-indicator"
+      aria-hidden="true"
+    />
   </SelectPrimitive.Item>
 ));
 SelectItem.displayName = 'SelectItem';

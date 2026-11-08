@@ -51,4 +51,17 @@ describe('AspectRatio', () => {
     const el = screen.getByLabelText('Image frame');
     expect(el).toHaveAttribute('id', 'frame');
   });
+
+  test('defaults to neutral and applies each theme class', () => {
+    const { container, rerender } = render(<AspectRatio>x</AspectRatio>);
+    expect(container.firstElementChild).toHaveClass(
+      'mondrian-aspect-ratio-neutral'
+    );
+    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
+      rerender(<AspectRatio theme={theme}>x</AspectRatio>);
+      expect(container.firstElementChild).toHaveClass(
+        `mondrian-aspect-ratio-${theme}`
+      );
+    }
+  });
 });

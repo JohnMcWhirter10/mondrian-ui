@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Table,
   TableBody,
@@ -26,6 +26,12 @@ Native table primitives. Every cell is bounded by a black grid line of one weigh
   },
   tags: ['autodocs'],
   argTypes: {
+    theme: {
+      control: 'select',
+      options: ['blue', 'neutral', 'red', 'yellow'],
+      description: 'Corner swatch color',
+      table: { defaultValue: { summary: 'blue' } },
+    },
     scrollTheme: {
       control: 'select',
       options: ['blue', 'red', 'yellow'],
@@ -78,6 +84,16 @@ export const Dark: Story = {
   render: (args) => (
     <div data-theme="dark">
       <Example {...args} />
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 24 }}>
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <Example key={theme} theme={theme} />
+      ))}
     </div>
   ),
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Accordion,
   AccordionContent,
@@ -65,9 +65,9 @@ export const Default: Story = {
       <AccordionItem value="item-1">
         <AccordionTrigger>What is mondrian-ui?</AccordionTrigger>
         <AccordionContent>
-          mondrian-ui is a React component library inspired by Piet Mondrian's
-          neoplasticism style, featuring clean rectangular shapes, primary
-          colors, and strong grid lines.
+          mondrian-ui is a React component library inspired by Piet
+          Mondrian&apos;s neoplasticism style, featuring clean rectangular
+          shapes, primary colors, and strong grid lines.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
@@ -175,5 +175,37 @@ export const Multiple: Story = {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
+  ),
+};
+
+const planeThemes = ['blue', 'neutral', 'red', 'yellow'] as const;
+
+const ThemedAccordions = () => (
+  <div style={{ display: 'grid', gap: '24px' }}>
+    {planeThemes.map((theme) => (
+      <Accordion key={theme} type="single" theme={theme} defaultValue="a">
+        <AccordionItem value="a">
+          <AccordionTrigger>{`Open item (${theme})`}</AccordionTrigger>
+          <AccordionContent>The glyph shows the open state.</AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="b">
+          <AccordionTrigger>Closed item</AccordionTrigger>
+          <AccordionContent>Hidden content.</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    ))}
+  </div>
+);
+
+export const Themes: Story = {
+  render: () => <ThemedAccordions />,
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div data-theme="dark" style={{ padding: 24 }}>
+      <ThemedAccordions />
+    </div>
   ),
 };

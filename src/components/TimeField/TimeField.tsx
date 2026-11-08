@@ -4,9 +4,10 @@ import '../Input/Input.css';
 import './TimeField.css';
 
 const TimeField = React.forwardRef<HTMLInputElement, TimeFieldProps>(
-  ({ size = 'default', ...props }, ref) => {
+  ({ theme = 'blue', size = 'default', ...props }, ref) => {
     const timeFieldClassName = [
       'mondrian-time-field',
+      `mondrian-time-field-${theme}`,
       size === 'sm' ? 'mondrian-time-field-sm' : '',
       size === 'lg' ? 'mondrian-time-field-lg' : '',
     ]

@@ -16,7 +16,42 @@ describe('Alert', () => {
     expect(alert).toBeInTheDocument();
     expect(alert).toHaveClass('mondrian-alert');
     expect(alert).toHaveClass('mondrian-alert-blue');
-    expect(alert).toHaveAttribute('role', 'alert');
+    expect(alert).toHaveAttribute('role', 'status');
+    expect(alert).toHaveTextContent('Information');
+  });
+
+  test.each([
+    ['blue', 'status', 'Information'],
+    ['neutral', 'status', 'Note'],
+    ['green', 'status', 'Success'],
+    ['yellow', 'alert', 'Warning'],
+    ['red', 'alert', 'Error'],
+  ] as const)(
+    '%s theme uses role=%s and a visible "%s" label',
+    (theme, role, label) => {
+      render(
+        <Alert data-testid="alert" theme={theme}>
+          <AlertDescription>Body</AlertDescription>
+        </Alert>
+      );
+      const alert = screen.getByTestId('alert');
+      expect(alert).toHaveClass(`mondrian-alert-${theme}`);
+      expect(alert).toHaveAttribute('role', role);
+      expect(alert).toHaveTextContent(label);
+      // Glyph is decorative: label text carries the meaning.
+      expect(alert.querySelector('svg')).toHaveAttribute('aria-hidden', 'true');
+    }
+  );
+
+  test('allows overriding the label and role', () => {
+    render(
+      <Alert data-testid="alert" theme="red" label="Fehler" role="status">
+        <AlertDescription>Body</AlertDescription>
+      </Alert>
+    );
+    const alert = screen.getByTestId('alert');
+    expect(alert).toHaveTextContent('Fehler');
+    expect(alert).toHaveAttribute('role', 'status');
   });
 
   test('applies the correct theme class', () => {

@@ -13,9 +13,13 @@ import {
 import './Table.css';
 
 const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ scrollTheme = 'blue', ...props }, ref) => (
+  ({ scrollTheme = 'blue', theme = 'blue', ...props }, ref) => (
     <ScrollArea theme={scrollTheme}>
-      <table ref={ref} className="mondrian-table" {...props} />
+      <table
+        ref={ref}
+        className={`mondrian-table mondrian-table-${theme}`}
+        {...props}
+      />
     </ScrollArea>
   )
 );

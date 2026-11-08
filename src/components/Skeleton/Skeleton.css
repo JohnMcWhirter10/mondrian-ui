@@ -1,14 +1,35 @@
 .mondrian-skeleton {
+  --plane: var(--mondrian-border);
   position: relative;
   display: block;
   box-sizing: border-box;
   overflow: hidden;
-  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  /* Horizontals heavy, verticals base. */
+  border-style: solid;
+  border-color: var(--mondrian-border);
+  border-width: var(--mondrian-grid-width) var(--mondrian-grid-width)
+    var(--mondrian-grid-width-heavy);
   border-radius: 0;
-  background-color: var(--mondrian-white);
+  background-color: var(--mondrian-background);
 }
 
-/* A black sweep plane travels across by transform only. */
+.mondrian-skeleton-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-skeleton-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-skeleton-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-skeleton-neutral {
+  --plane: var(--mondrian-border);
+}
+
+/* A plane sweeps across by transform only, hard-stop two-color. */
 .mondrian-skeleton::after {
   content: '';
   position: absolute;
@@ -19,7 +40,7 @@
   background-image: linear-gradient(
     90deg,
     transparent 0 75%,
-    var(--mondrian-black) 75% 100%
+    var(--plane) 75% 100%
   );
   transform: translateX(-100%);
   animation: mondrian-skeleton-sweep 1.6s linear infinite;
@@ -34,9 +55,35 @@
   }
 }
 
+/* No motion: a still swatch pinned to the left edge. */
 @media (prefers-reduced-motion: reduce) {
   .mondrian-skeleton::after {
     animation: none;
-    transform: translateX(-100%);
+    transform: none;
+    width: 25%;
+    background-image: none;
+    background-color: var(--plane);
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-skeleton {
+    border-color: CanvasText;
+  }
+
+  .mondrian-skeleton::after {
+    forced-color-adjust: none;
+    background-image: linear-gradient(
+      90deg,
+      transparent 0 75%,
+      CanvasText 75% 100%
+    );
+  }
+}
+
+@media (forced-colors: active) and (prefers-reduced-motion: reduce) {
+  .mondrian-skeleton::after {
+    background-image: none;
+    background-color: CanvasText;
   }
 }

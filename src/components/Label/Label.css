@@ -1,16 +1,55 @@
-.mondrian-label {
-  font-family: var(--mondrian-font-family);
-  font-weight: 500;
-  display: inline-block;
-  cursor: pointer;
-  font-size: var(--mondrian-font-size-medium);
-  position: relative;
-  border-left: var(--mondrian-grid-width) solid transparent;
-  margin-bottom: var(--mondrian-spacing-small);
-  line-height: 1.2;
+.mondrian-label-blue {
+  --accent: var(--mondrian-blue);
 }
 
-/* Size variants */
+.mondrian-label-red {
+  --accent: var(--mondrian-red);
+}
+
+.mondrian-label-yellow {
+  --accent: var(--mondrian-yellow);
+}
+
+.mondrian-label-green {
+  --accent: var(--mondrian-success);
+}
+
+.mondrian-label-neutral {
+  --accent: var(--mondrian-border);
+}
+
+/* Text is always the readable text color. The theme colors only the accent bar. */
+.mondrian-label {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  min-height: 24px;
+  /* Asymmetric: more room below and to the right. */
+  padding: 0 var(--mondrian-spacing-medium) var(--mondrian-spacing-small) 0;
+  /* Room for the accent bar that runs past the right edge. */
+  margin: 0 12px var(--mondrian-spacing-small) 0;
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--mondrian-text);
+  cursor: pointer;
+}
+
+/* The accent: a small plane pinned to the base line, running past the right edge. */
+.mondrian-label::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
+  width: 20px;
+  height: calc(var(--mondrian-grid-width-heavy) * 2);
+  background-color: var(--accent);
+  pointer-events: none;
+}
+
 .mondrian-label-sm {
   font-size: var(--mondrian-font-size-small);
 }
@@ -19,34 +58,17 @@
   font-size: var(--mondrian-font-size-large);
 }
 
-/* Theme variants - only affect text color, maintain Mondrian's limited palette */
-.mondrian-label-blue {
-  color: var(--mondrian-blue);
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-blue);
-}
-
-.mondrian-label-neutral {
-  color: var(--mondrian-text);
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-black);
-}
-
-.mondrian-label-yellow {
-  color: var(--mondrian-yellow);
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-yellow);
-}
-
-.mondrian-label-red {
-  color: var(--mondrian-error);
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-error);
-}
-
-.mondrian-label-green {
-  color: var(--mondrian-success);
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-success);
-}
-
-/* Focus state - ensure proper accessibility */
 .mondrian-label:focus-visible {
-  outline: none;
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+@media (forced-colors: active) {
+  .mondrian-label {
+    border-bottom-color: CanvasText;
+  }
+
+  .mondrian-label::after {
+    background-color: CanvasText;
+  }
 }

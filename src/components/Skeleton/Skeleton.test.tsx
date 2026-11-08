@@ -37,4 +37,17 @@ describe('Skeleton', () => {
     expect(ref.current?.tagName).toBe('DIV');
     expect(ref.current).toHaveClass('mondrian-skeleton');
   });
+
+  test('defaults to neutral, applies each theme, stays aria-hidden', () => {
+    const { container, rerender } = render(<Skeleton />);
+    expect(container.firstElementChild).toHaveClass(
+      'mondrian-skeleton-neutral'
+    );
+    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
+      rerender(<Skeleton theme={theme} />);
+      const el = container.firstElementChild as HTMLElement;
+      expect(el).toHaveClass(`mondrian-skeleton-${theme}`);
+      expect(el).toHaveAttribute('aria-hidden', 'true');
+    }
+  });
 });

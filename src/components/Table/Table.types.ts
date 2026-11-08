@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { PlaneTheme } from '../../themes/Theme.types';
 import { ScrollAreaProps } from '../ScrollArea/ScrollArea.types';
 
 export interface TableProps
@@ -8,6 +9,12 @@ export interface TableProps
    * @default "blue"
    */
   scrollTheme?: ScrollAreaProps['theme'];
+
+  /**
+   * Color of the small corner swatch on the first header cell.
+   * @default "blue"
+   */
+  theme?: PlaneTheme;
 }
 
 export interface TableHeaderProps

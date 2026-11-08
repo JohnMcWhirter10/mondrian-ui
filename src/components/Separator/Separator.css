@@ -1,19 +1,77 @@
 .mondrian-separator {
+  --plane: var(--mondrian-border);
+  position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
   border: 0;
   border-radius: 0;
-  background-color: var(--mondrian-black);
+  background-color: var(--mondrian-border);
 }
 
+.mondrian-separator-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-separator-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-separator-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-separator-neutral {
+  --plane: var(--mondrian-border);
+}
+
+/* Horizontals are heavy. */
 .mondrian-separator-horizontal {
   width: 100%;
-  height: var(--mondrian-grid-width);
+  height: var(--mondrian-grid-width-heavy);
 }
 
+/* Verticals are the base weight. */
 .mondrian-separator-vertical {
   align-self: stretch;
   width: var(--mondrian-grid-width);
   height: auto;
   min-height: 100%;
+}
+
+/* Decorative cap pinned to the start of the line, thicker than the line. */
+.mondrian-separator::before {
+  content: '';
+  position: absolute;
+  background-color: var(--plane);
+  pointer-events: none;
+}
+
+.mondrian-separator-horizontal::before {
+  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: 0;
+  width: calc(var(--mondrian-spacing-large) * 3);
+  height: calc(var(--mondrian-grid-width-heavy) * 3);
+}
+
+.mondrian-separator-vertical::before {
+  top: 0;
+  left: calc(var(--mondrian-grid-width) * -1);
+  width: calc(var(--mondrian-grid-width) * 3);
+  height: calc(var(--mondrian-spacing-large) * 3);
+}
+
+/* Colored caps need a line behind them to hold a 3:1 edge on white. */
+.mondrian-separator-red::before,
+.mondrian-separator-blue::before,
+.mondrian-separator-yellow::before {
+  box-shadow: 0 0 0 var(--mondrian-grid-width) var(--mondrian-border);
+}
+
+@media (forced-colors: active) {
+  .mondrian-separator,
+  .mondrian-separator::before {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+    box-shadow: none;
+  }
 }

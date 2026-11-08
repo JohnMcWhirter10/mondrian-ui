@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TimeField } from './TimeField';
 import { Label } from '../Label/Label';
 
@@ -15,15 +15,21 @@ const meta: Meta<typeof TimeField> = {
     docs: {
       description: {
         component: `
-A native time field drawn as one white plane inside a black grid of a single weight.
+A native time field that reuses the Input grid: a white plane inside a black line, a heavy bottom bar, and a flat swatch of the theme plane on that bar.
 
-The border, size scale, and focus shift are the same rules as Input, so the grid line stays one weight. The border stays black in light and dark. Text stays black on white until the field is focused, when the plane fills with blue and the text turns white. The value is the browser's time string. \`step\` passes through in seconds. The clock stays inside the rectangle and opens the browser picker. Hover leaves the plane where it is. Place a Label beside it; this component has no label of its own.
+The value is the browser's string and the glyph opens the browser picker (24px hit box). Hover does not move it. Focus draws the standard outline. An invalid field (aria-invalid) doubles its left bar and runs the swatch the full length of the bottom bar. Place a Label beside it; this component has no label of its own.
         `,
       },
     },
   },
   tags: ['autodocs'],
   argTypes: {
+    theme: {
+      control: 'select',
+      options: ['blue', 'neutral', 'red', 'yellow'],
+      description: 'Plane color of the swatch on the bottom bar',
+      table: { defaultValue: { summary: 'blue' } },
+    },
     size: {
       control: 'select',
       options: ['default', 'sm', 'lg'],
@@ -113,4 +119,79 @@ export const Disabled: Story = {
     disabled: true,
     defaultValue: '09:30',
   },
+};
+
+const planes = ['blue', 'neutral', 'red', 'yellow'] as const;
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        width: '280px',
+      }}
+    >
+      {planes.map((theme) => (
+        <TimeField
+          key={theme}
+          theme={theme}
+          aria-label={`${theme} time`}
+          defaultValue="09:30"
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const Invalid: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        width: '280px',
+      }}
+    >
+      <Label htmlFor="invalid-time" theme="red">
+        Time
+      </Label>
+      <TimeField
+        id="invalid-time"
+        aria-invalid="true"
+        aria-describedby="invalid-time-error"
+      />
+      <span id="invalid-time-error" role="alert">
+        Error: enter a time.
+      </span>
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        padding: '16px',
+        width: '280px',
+      }}
+    >
+      {planes.map((theme) => (
+        <TimeField
+          key={theme}
+          theme={theme}
+          aria-label={`${theme} time`}
+          defaultValue="09:30"
+        />
+      ))}
+      <TimeField aria-label="Invalid time" aria-invalid="true" />
+    </div>
+  ),
 };

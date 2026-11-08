@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { PlaneTheme } from '../../themes/Theme.types';
 
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -36,6 +37,13 @@ export interface HeadingProps
    * Element to render, keeping visual level apart from the document outline.
    */
   as?: HeadingElement;
+
+  /**
+   * Color of the heavy accent bar above the heading. The text itself is
+   * always black (white in dark mode). Neutral draws a black bar.
+   * @default "neutral"
+   */
+  theme?: PlaneTheme;
 }
 
 export interface TextProps

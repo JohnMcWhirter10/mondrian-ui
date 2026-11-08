@@ -85,4 +85,25 @@ describe('Label Component', () => {
     expect(element).toHaveClass('mondrian-label');
     expect(element).toHaveClass('mondrian-label-blue');
   });
+
+  test('defaults to blue and applies every theme class', () => {
+    const themes = ['blue', 'neutral', 'red', 'yellow', 'green'] as const;
+    themes.forEach((theme) => {
+      const { unmount } = render(<Label theme={theme}>{theme}</Label>);
+      expect(screen.getByText(theme)).toHaveClass(`mondrian-label-${theme}`);
+      unmount();
+    });
+  });
+
+  test('associates with a form control', () => {
+    render(
+      <>
+        <Label htmlFor="field">Name</Label>
+        <input id="field" />
+      </>
+    );
+    expect(screen.getByLabelText('Name')).toBe(
+      document.getElementById('field')
+    );
+  });
 });

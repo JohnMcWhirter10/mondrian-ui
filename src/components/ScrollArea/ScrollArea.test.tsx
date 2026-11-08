@@ -3,6 +3,16 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ScrollArea } from './ScrollArea';
 
+beforeAll(() => {
+  // jsdom has no ResizeObserver, which Radix ScrollArea requires.
+  (globalThis as unknown as { ResizeObserver: unknown }).ResizeObserver =
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    };
+});
+
 describe('ScrollArea Component', () => {
   it('renders correctly with children', () => {
     const testContent = 'Test content for scroll area';
@@ -38,7 +48,9 @@ describe('ScrollArea Component', () => {
   });
 
   it('renders both vertical and horizontal scrollbars', () => {
-    const { container } = render(<ScrollArea>Test content</ScrollArea>);
+    const { container } = render(
+      <ScrollArea type="always">Test content</ScrollArea>
+    );
 
     const verticalScrollbar = container.querySelector(
       '.mondrian-scrollbar-vertical'
@@ -59,6 +71,77 @@ describe('ScrollArea Component', () => {
     );
     thumbElements.forEach((thumb) => {
       expect(thumb).toHaveClass('blue');
+    });
+  });
+
+  it.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
+    'applies the %s theme to the root and thumbs',
+    (theme) => {
+      const { container } = render(
+        <ScrollArea theme={theme}>Content</ScrollArea>
+      );
+      expect(container.querySelector('.mondrian-scroll-area')).toHaveClass(
+        `mondrian-scroll-area-${theme}`
+      );
+    }
+  );
+
+  it('forwards a ref to the root', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    render(<ScrollArea ref={ref}>Content</ScrollArea>);
+    expect(ref.current).toHaveClass('mondrian-scroll-area');
+  });
+
+  describe('keyboard access', () => {
+    const original = {
+      scrollHeight: Object.getOwnPropertyDescriptor(
+        HTMLElement.prototype,
+        'scrollHeight'
+      ),
+      clientHeight: Object.getOwnPropertyDescriptor(
+        HTMLElement.prototype,
+        'clientHeight'
+      ),
+    };
+
+    afterEach(() => {
+      Object.entries(original).forEach(([key, descriptor]) => {
+        if (descriptor) {
+          Object.defineProperty(HTMLElement.prototype, key, descriptor);
+        } else {
+          delete (HTMLElement.prototype as unknown as Record<string, unknown>)[
+            key
+          ];
+        }
+      });
+    });
+
+    it('does not focus the viewport when nothing overflows', () => {
+      const { container } = render(<ScrollArea>Short</ScrollArea>);
+      expect(
+        container.querySelector('.mondrian-scroll-area-viewport')
+      ).not.toHaveAttribute('tabindex');
+    });
+
+    it('makes an overflowing viewport focusable and labelled', () => {
+      Object.defineProperty(HTMLElement.prototype, 'scrollHeight', {
+        configurable: true,
+        get: () => 500,
+      });
+      Object.defineProperty(HTMLElement.prototype, 'clientHeight', {
+        configurable: true,
+        get: () => 100,
+      });
+
+      const { container } = render(
+        <ScrollArea label="Release notes">Long content</ScrollArea>
+      );
+      const viewport = container.querySelector(
+        '.mondrian-scroll-area-viewport'
+      );
+      expect(viewport).toHaveAttribute('tabindex', '0');
+      expect(viewport).toHaveAttribute('role', 'region');
+      expect(viewport).toHaveAttribute('aria-label', 'Release notes');
     });
   });
 });

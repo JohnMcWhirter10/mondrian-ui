@@ -64,4 +64,21 @@ describe('Avatar', () => {
     expect(AvatarImage.displayName).toBe('AvatarImage');
     expect(AvatarFallback.displayName).toBe('AvatarFallback');
   });
+
+  test('defaults to blue and applies each theme class', () => {
+    const { rerender } = render(
+      <Avatar data-testid="a">
+        <AvatarFallback>A</AvatarFallback>
+      </Avatar>
+    );
+    expect(screen.getByTestId('a')).toHaveClass('mondrian-avatar-blue');
+    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
+      rerender(
+        <Avatar theme={theme} data-testid="a">
+          <AvatarFallback>A</AvatarFallback>
+        </Avatar>
+      );
+      expect(screen.getByTestId('a')).toHaveClass(`mondrian-avatar-${theme}`);
+    }
+  });
 });

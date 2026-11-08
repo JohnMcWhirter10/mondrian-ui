@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Kbd } from './Kbd';
 
 const meta: Meta<typeof Kbd> = {
@@ -37,6 +37,41 @@ export const Shortcut: Story = {
       <Kbd>Ctrl</Kbd>
       <Kbd>Shift</Kbd>
       <Kbd>P</Kbd>
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        padding: '0 24px 24px',
+      }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <div key={theme}>
+          <Kbd theme={theme}>Ctrl</Kbd>
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        padding: '24px',
+        background: 'var(--mondrian-background)',
+        color: 'var(--mondrian-text)',
+      }}
+    >
+      <Kbd theme="neutral">Ctrl</Kbd>
     </div>
   ),
 };

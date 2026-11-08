@@ -69,4 +69,24 @@ describe('Grid', () => {
     render(<Grid id="g" aria-label="Layout" />);
     expect(screen.getByLabelText('Layout')).toHaveAttribute('id', 'g');
   });
+
+  test('lines are off by default and theme defaults to neutral', () => {
+    render(<Grid data-testid="grid" />);
+    const grid = screen.getByTestId('grid');
+    expect(grid).not.toHaveClass('mondrian-grid-lines');
+    expect(grid).toHaveClass('mondrian-grid-neutral');
+  });
+
+  test('lines prop adds the lines class', () => {
+    render(<Grid data-testid="grid" lines />);
+    expect(screen.getByTestId('grid')).toHaveClass('mondrian-grid-lines');
+  });
+
+  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(<Grid data-testid="grid" theme={theme} />);
+      expect(screen.getByTestId('grid')).toHaveClass(`mondrian-grid-${theme}`);
+    }
+  );
 });

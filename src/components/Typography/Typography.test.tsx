@@ -65,4 +65,21 @@ describe('Text', () => {
     expect(ref.current).toHaveAttribute('id', 't');
     expect(screen.getByLabelText('Copy')).toBeInTheDocument();
   });
+
+  test('Heading defaults to neutral bar and applies each theme class', () => {
+    const { rerender } = render(<Heading>Title</Heading>);
+    expect(screen.getByRole('heading')).toHaveClass('mondrian-heading-neutral');
+    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
+      rerender(<Heading theme={theme}>Title</Heading>);
+      expect(screen.getByRole('heading')).toHaveClass(
+        `mondrian-heading-${theme}`
+      );
+    }
+  });
+
+  test('Heading accent bar adds no content to the accessibility tree', () => {
+    render(<Heading theme="red">Title</Heading>);
+    expect(screen.getByRole('heading')).toHaveTextContent(/^Title$/);
+    expect(screen.getByRole('heading').children).toHaveLength(0);
+  });
 });

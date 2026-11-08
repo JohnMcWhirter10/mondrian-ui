@@ -36,4 +36,13 @@ describe('Kbd', () => {
     const key = screen.getByLabelText('Escape key');
     expect(key).toHaveAttribute('id', 'k');
   });
+
+  test('defaults to neutral and applies each theme class', () => {
+    const { rerender } = render(<Kbd>K</Kbd>);
+    expect(screen.getByText('K')).toHaveClass('mondrian-kbd-neutral');
+    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
+      rerender(<Kbd theme={theme}>K</Kbd>);
+      expect(screen.getByText('K')).toHaveClass(`mondrian-kbd-${theme}`);
+    }
+  });
 });

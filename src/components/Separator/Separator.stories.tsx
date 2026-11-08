@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Separator } from './Separator';
 
 const meta: Meta<typeof Separator> = {
@@ -72,6 +72,57 @@ export const Vertical: Story = {
       <span>Left</span>
       <Separator orientation="vertical" />
       <span>Right</span>
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        padding: '0 24px 24px',
+      }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <div key={theme}>
+          <div style={{ width: '240px' }}>
+            <Separator theme={theme} />
+          </div>
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        padding: '24px',
+        background: 'var(--mondrian-background)',
+        color: 'var(--mondrian-text)',
+      }}
+    >
+      <div style={{ width: '240px' }}>
+        <Separator theme="red" />
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          height: '48px',
+          gap: '12px',
+          marginTop: '24px',
+        }}
+      >
+        <span>L</span>
+        <Separator orientation="vertical" theme="yellow" />
+        <span>R</span>
+      </div>
     </div>
   ),
 };

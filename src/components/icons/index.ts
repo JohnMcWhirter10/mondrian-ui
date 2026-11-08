@@ -6,3 +6,5 @@ export * from './MondrianUpArrow';
 export * from './MondrianDownArrow';
 export * from './Plus';
 export * from './Dash';
+export * from './Check';
+export * from './Cross';

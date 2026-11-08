@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Skeleton } from './Skeleton';
 
 const meta: Meta<typeof Skeleton> = {
@@ -55,6 +55,41 @@ export const CardPlaceholder: Story = {
       <Skeleton width="60%" height={18} />
       <Skeleton height={12} />
       <Skeleton width="80%" height={12} />
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        padding: '0 24px 24px',
+      }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <div key={theme}>
+          <Skeleton theme={theme} width={240} height={24} />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        padding: '24px',
+        background: 'var(--mondrian-background)',
+        color: 'var(--mondrian-text)',
+      }}
+    >
+      <Skeleton theme="yellow" width={240} height={24} />
     </div>
   ),
 };

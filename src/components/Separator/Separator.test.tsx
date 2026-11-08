@@ -49,4 +49,17 @@ describe('Separator', () => {
     render(<Separator id="rule" data-testid="rule" />);
     expect(screen.getByTestId('rule')).toHaveAttribute('id', 'rule');
   });
+
+  test('defaults to neutral and applies each theme class', () => {
+    const { container, rerender } = render(<Separator />);
+    expect(container.firstElementChild).toHaveClass(
+      'mondrian-separator-neutral'
+    );
+    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
+      rerender(<Separator theme={theme} />);
+      expect(container.firstElementChild).toHaveClass(
+        `mondrian-separator-${theme}`
+      );
+    }
+  });
 });

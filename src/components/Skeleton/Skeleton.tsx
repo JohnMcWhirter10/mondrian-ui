@@ -3,12 +3,15 @@ import { SkeletonProps } from './Skeleton.types';
 import './Skeleton.css';
 
 const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
-  ({ width = '100%', height = 16, style, ...props }, ref) => {
+  (
+    { width = '100%', height = 16, theme = 'neutral', style, ...props },
+    ref
+  ) => {
     return (
       <div
         ref={ref}
         aria-hidden="true"
-        className="mondrian-skeleton"
+        className={`mondrian-skeleton mondrian-skeleton-${theme}`}
         style={{ width, height, ...style }}
         {...props}
       />

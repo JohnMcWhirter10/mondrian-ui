@@ -35,14 +35,12 @@ export type RadioItemProps = Omit<
   'className'
 > & {
   /**
-   * The theme color for the radio button
-   * @default "blue"
+   * The theme color for the radio button. Inherits the group theme when omitted.
    */
   theme?: RadioTheme;
 
   /**
-   * The size of the radio button
-   * @default "default"
+   * The size of the radio button. Inherits the group size when omitted.
    */
   size?: 'default' | 'sm' | 'lg';
 };

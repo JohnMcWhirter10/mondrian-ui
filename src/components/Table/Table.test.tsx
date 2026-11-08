@@ -12,6 +12,17 @@ import {
   TableRow,
 } from './index';
 
+beforeAll(() => {
+  if (!('ResizeObserver' in globalThis)) {
+    (globalThis as unknown as { ResizeObserver: unknown }).ResizeObserver =
+      class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      };
+  }
+});
+
 const renderTable = () =>
   render(
     <Table aria-label="Totals">
@@ -95,5 +106,37 @@ describe('Table', () => {
     const cell = screen.getByRole('cell');
     expect(cell).toHaveAttribute('colspan', '2');
     expect(cell).toHaveAttribute('id', 'c');
+  });
+
+  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(
+        <Table theme={theme} aria-label="T">
+          <TableBody>
+            <TableRow>
+              <TableCell>x</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      );
+      expect(screen.getByRole('table')).toHaveClass(`mondrian-table-${theme}`);
+    }
+  );
+
+  test('defaults to blue and keeps th scope and caption', () => {
+    render(
+      <Table>
+        <TableCaption>Cap</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead scope="col">Name</TableHead>
+          </TableRow>
+        </TableHeader>
+      </Table>
+    );
+    expect(screen.getByRole('table')).toHaveClass('mondrian-table-blue');
+    expect(screen.getByRole('columnheader')).toHaveAttribute('scope', 'col');
+    expect(screen.getByText('Cap').tagName).toBe('CAPTION');
   });
 });

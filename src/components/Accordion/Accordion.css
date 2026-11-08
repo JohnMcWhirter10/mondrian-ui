@@ -1,86 +1,65 @@
+/**
+ * Accordion Component
+ *
+ * Not a closed box: a base-weight vertical rule on the left, heavy
+ * horizontal rules between items. The top rule runs past the left edge and
+ * stops short on the right, where one colour swatch is pinned to the corner.
+ * Open state is the glyph (+ becomes -) and aria-expanded, never motion.
+ */
+
 .mondrian-accordion {
-  width: 100%;
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+  position: relative;
+  box-sizing: border-box;
+  width: calc(100% - 12px);
+  margin: calc(var(--mondrian-grid-width-heavy) + 8px) 0 16px 12px;
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
   background-color: var(--mondrian-background);
   color: var(--mondrian-text);
   font-family: var(--mondrian-font-family);
-  position: relative;
-  /* Asymmetric border - thicker on left */
-  border-left-width: calc(var(--mondrian-grid-width) * 2);
-  margin-left: 5px;
-  margin-right: 7px;
-  margin-top: 10px;
-  margin-bottom: 5px;
 }
 
-/* Add asymmetric decorative block to top-right */
-.mondrian-accordion:before {
+.mondrian-accordion.blue {
+  --plane: var(--mondrian-blue);
+}
+.mondrian-accordion.red {
+  --plane: var(--mondrian-red);
+}
+.mondrian-accordion.yellow {
+  --plane: var(--mondrian-yellow);
+}
+.mondrian-accordion.green {
+  --plane: var(--mondrian-success);
+}
+.mondrian-accordion.neutral {
+  --plane: var(--mondrian-border);
+}
+
+/* Top rule: runs 12px past the left edge, stops short of the swatch */
+.mondrian-accordion::before {
   content: '';
   position: absolute;
-  top: -12px;
-  right: 30px;
-  width: 25px;
-  height: 12px;
-  background-color: var(--mondrian-black);
-  z-index: 1;
+  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: -12px;
+  right: 48px;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
 }
 
-/* Blue accent for blue theme */
-.mondrian-accordion.blue:after {
+/* Swatch pinned to the top-right corner */
+.mondrian-accordion::after {
   content: '';
   position: absolute;
-  bottom: -8px;
-  right: 60px;
-  width: 40px;
-  height: 8px;
-  background-color: var(--mondrian-blue);
+  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  right: 0;
+  width: 48px;
+  height: calc(var(--mondrian-grid-width-heavy) * 3);
+  background-color: var(--plane);
+  pointer-events: none;
 }
 
-/* Red accent for red theme */
-.mondrian-accordion.red:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  right: 60px;
-  width: 40px;
-  height: 8px;
-  background-color: var(--mondrian-error);
-}
-
-/* Yellow accent for yellow theme */
-.mondrian-accordion.yellow:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  right: 60px;
-  width: 40px;
-  height: 8px;
-  background-color: var(--mondrian-yellow);
-}
-
-/* Green accent for green theme */
-.mondrian-accordion.green:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  right: 60px;
-  width: 40px;
-  height: 8px;
-  background-color: var(--mondrian-success);
-}
-
-/* Neutral accent for neutral theme */
-.mondrian-accordion.neutral:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  right: 60px;
-  width: 40px;
-  height: 8px;
-  background-color: var(--mondrian-black);
-}
-
-/* Size variants */
 .mondrian-accordion-sm {
   font-size: var(--mondrian-font-size-small);
 }
@@ -89,221 +68,104 @@
   font-size: var(--mondrian-font-size-large);
 }
 
-/* Theme variants are applied to the accordion container */
-.mondrian-accordion.blue {
-  border-color: var(--mondrian-blue);
-}
-
-.mondrian-accordion.red {
-  border-color: var(--mondrian-error);
-}
-
-.mondrian-accordion.yellow {
-  border-color: var(--mondrian-yellow);
-}
-
-.mondrian-accordion.green {
-  border-color: var(--mondrian-success);
-}
-
-.mondrian-accordion.neutral {
-  border-color: var(--mondrian-border);
-}
-
-/* Accordion item */
 .mondrian-accordion-item {
   position: relative;
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
-/* Asymmetric decoration for odd items */
-.mondrian-accordion-item:nth-child(odd) {
-  padding-left: 15px;
-  left: 10px;
-}
-
-/* Asymmetric decoration for even items */
-.mondrian-accordion-item:nth-child(even) {
-  padding-right: 15px;
-  right: 10px;
-}
-
-.mondrian-accordion-item:last-child {
-  border-bottom: none;
-}
-
-/* Accordion header */
 .mondrian-accordion-header {
+  margin: 0;
   width: 100%;
   font-weight: 500;
-  margin-top: 0.5rem;
 }
 
-/* Accordion trigger (header button) */
 .mondrian-accordion-trigger {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--mondrian-spacing-medium);
+  box-sizing: border-box;
   width: 100%;
-  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
-  text-align: left;
+  min-height: 44px;
+  /* Asymmetric: tight left, generous right and bottom */
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
+  border: 0;
+  border-radius: 0;
   background-color: var(--mondrian-background);
-  transition: all 0.3s;
-  cursor: pointer;
-  position: relative;
-}
-
-/* Different themes for trigger buttons */
-.mondrian-accordion.blue .mondrian-accordion-trigger {
-  color: var(--mondrian-blue);
-}
-
-.mondrian-accordion.red .mondrian-accordion-trigger {
-  color: var(--mondrian-error);
-}
-
-.mondrian-accordion.yellow .mondrian-accordion-trigger {
-  color: var(--mondrian-yellow);
-}
-
-.mondrian-accordion.green .mondrian-accordion-trigger {
-  color: var(--mondrian-success);
-}
-
-.mondrian-accordion.neutral .mondrian-accordion-trigger {
   color: var(--mondrian-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-/* Hover states for the triggers - asymmetric shadow */
 .mondrian-accordion-trigger:hover {
-  box-shadow: 6px 4px 0 var(--mondrian-shadow);
-  transform: translate(-3px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
-/* Accordion icon - move to left for asymmetry */
+.mondrian-accordion-trigger:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+.mondrian-accordion-trigger[data-disabled] {
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.mondrian-accordion-trigger[data-state='open'] {
+  font-weight: bold;
+  box-shadow: inset calc(var(--mondrian-grid-width-heavy) * 2) 0 0 var(--plane);
+  padding-left: calc(
+    var(--mondrian-spacing-medium) + var(--mondrian-grid-width-heavy) * 2
+  );
+}
+
+/* Glyph: + closed, - open. No rotation. */
 .mondrian-accordion-icon {
-  height: 16px;
-  width: 16px;
-  transition: transform 300ms;
-  order: -1;
-  margin-right: 10px;
+  flex: 0 0 auto;
+  width: 1.25em;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1;
 }
 
-.mondrian-accordion-trigger[data-state='open'] .mondrian-accordion-icon {
-  transform: rotate(90deg);
+.mondrian-accordion-icon::before {
+  content: '+';
 }
 
-/* Accordion content */
+.mondrian-accordion-trigger[data-state='open']
+  .mondrian-accordion-icon::before {
+  content: '\2212';
+}
+
+.mondrian-accordion-trigger-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .mondrian-accordion-content {
   overflow: hidden;
   background-color: var(--mondrian-background);
 }
 
-.mondrian-accordion-content[data-state='open'] {
-  animation: slideDown 300ms ease-out;
-}
-
-.mondrian-accordion-content[data-state='closed'] {
-  animation: slideUp 300ms ease-out;
-}
-
-/* Content with asymmetric padding and border */
+/* Asymmetric inner padding: deep on the left, deeper at the bottom */
 .mondrian-accordion-content-inner {
-  padding: var(--mondrian-spacing-large);
-  padding-left: calc(var(--mondrian-spacing-large) * 2);
-  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
-  position: relative;
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  padding: 0 var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) * 1.5)
+    calc(var(--mondrian-spacing-large) * 2);
+  overflow-wrap: anywhere;
 }
 
-/* Asymmetric Mondrian-inspired color blocks */
-.mondrian-accordion-item:nth-child(odd)
-  .mondrian-accordion-content-inner:before {
-  content: '';
-  position: absolute;
-  top: calc(var(--mondrian-spacing-medium) * 2);
-  left: var(--mondrian-spacing-medium);
-  width: 8px;
-  height: 60%;
-  background-color: var(--mondrian-border);
+@media (prefers-reduced-motion: no-preference) {
+  .mondrian-accordion-content[data-state='open'] {
+    animation: mondrian-accordion-down 200ms steps(4, end);
+  }
+  .mondrian-accordion-content[data-state='closed'] {
+    animation: mondrian-accordion-up 200ms steps(4, end);
+  }
 }
 
-.mondrian-accordion-item:nth-child(odd) .mondrian-accordion-content-inner {
-  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
-}
-
-.mondrian-accordion-item:nth-child(even) .mondrian-accordion-content-inner {
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
-}
-
-.mondrian-accordion-item:nth-child(even)
-  .mondrian-accordion-content-inner:before {
-  content: '';
-  position: absolute;
-  top: calc(var(--mondrian-spacing-medium) * 2);
-  right: var(--mondrian-spacing-medium);
-  width: 8px;
-  height: 60%;
-  background-color: var(--mondrian-border);
-}
-
-.mondrian-accordion-item:last-child .mondrian-accordion-content-inner {
-  margin-bottom: 10px;
-}
-
-.mondrian-accordion.blue .mondrian-accordion-content-inner:before {
-  background-color: var(--mondrian-blue);
-}
-
-.mondrian-accordion.red .mondrian-accordion-content-inner:before {
-  background-color: var(--mondrian-error);
-}
-
-.mondrian-accordion.yellow .mondrian-accordion-content-inner:before {
-  background-color: var(--mondrian-yellow);
-}
-
-.mondrian-accordion.green .mondrian-accordion-content-inner:before {
-  background-color: var(--mondrian-success);
-}
-
-/* Mondrian-inspired grid effect - black rectangular outline */
-.mondrian-accordion-trigger:after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  transition: all 0.3s;
-  pointer-events: none;
-}
-
-/* Focus state - asymmetric shadow */
-.mondrian-accordion-trigger:focus-visible {
-  outline: none;
-  transform: translate(-3px, -2px);
-  box-shadow: 6px 4px 0 var(--mondrian-shadow);
-}
-
-/* Additional Mondrian-inspired decorative element - asymmetric corner with L-shape */
-.mondrian-accordion-trigger:before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 15px;
-  height: 15px;
-  background-color: transparent;
-  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.mondrian-accordion-trigger:hover:before {
-  opacity: 1;
-}
-
-/* Animations */
-@keyframes slideDown {
+@keyframes mondrian-accordion-down {
   from {
     height: 0;
   }
@@ -312,11 +174,27 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes mondrian-accordion-up {
   from {
     height: var(--radix-accordion-content-height);
   }
   to {
     height: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-accordion,
+  .mondrian-accordion-item {
+    border-color: CanvasText;
+  }
+  .mondrian-accordion::before,
+  .mondrian-accordion::after {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+  .mondrian-accordion-trigger[data-state='open'] {
+    box-shadow: none;
+    border-left: 6px solid CanvasText;
   }
 }

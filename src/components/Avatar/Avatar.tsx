@@ -8,9 +8,10 @@ import {
 import './Avatar.css';
 
 const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(
-  ({ size = 'default', ...props }, ref) => {
+  ({ size = 'default', theme = 'blue', ...props }, ref) => {
     const avatarClassName = [
       'mondrian-avatar',
+      `mondrian-avatar-${theme}`,
       size === 'sm' ? 'mondrian-avatar-sm' : '',
       size === 'lg' ? 'mondrian-avatar-lg' : '',
     ]

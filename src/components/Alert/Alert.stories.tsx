@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Alert, AlertTitle, AlertDescription } from './Alert';
 import { SquareAlert, Plus, Dash, MondrianRightArrow } from '../icons';
@@ -326,5 +326,39 @@ export const WithCustomContent: Story = {
         <p>All while maintaining the Mondrian design principles.</p>
       </AlertDescription>
     </Alert>
+  ),
+};
+
+const themeList = ['blue', 'neutral', 'green', 'yellow', 'red'] as const;
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ width: '450px', padding: '16px 24px 16px 0' }}>
+      {themeList.map((theme) => (
+        <Alert key={theme} theme={theme}>
+          <AlertTitle>{theme} alert</AlertTitle>
+          <AlertDescription>
+            Severity is carried by the label, glyph, and heavy bar.
+          </AlertDescription>
+        </Alert>
+      ))}
+    </div>
+  ),
+};
+
+export const DarkMode: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{ width: '450px', padding: '16px 24px 16px 0' }}
+    >
+      {themeList.map((theme) => (
+        <Alert key={theme} theme={theme}>
+          <AlertTitle>{theme} alert</AlertTitle>
+          <AlertDescription>Lines invert; planes stay.</AlertDescription>
+        </Alert>
+      ))}
+    </div>
   ),
 };

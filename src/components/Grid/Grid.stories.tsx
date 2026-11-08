@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Grid, GridItem } from './Grid';
 
 const meta: Meta<typeof Grid> = {
@@ -17,6 +17,17 @@ A layout primitive for placing planes on a rectangular grid. Unlike Box, it is n
   },
   tags: ['autodocs'],
   argTypes: {
+    lines: {
+      control: 'boolean',
+      description: 'Draw base weight verticals and heavy horizontals',
+      table: { defaultValue: { summary: 'false' } },
+    },
+    theme: {
+      control: 'select',
+      options: ['blue', 'neutral', 'red', 'yellow'],
+      description: 'Plane color',
+      table: { defaultValue: { summary: 'neutral' } },
+    },
     columns: {
       control: 'text',
       description: 'Column count, or a grid-template-columns value',
@@ -87,6 +98,41 @@ export const Dark: Story = {
           <div style={cell}>One</div>
         </GridItem>
       </Grid>
+    </div>
+  ),
+};
+
+export const Lines: Story = {
+  render: () => (
+    <div style={{ padding: '8px 8px 8px 16px' }}>
+      <Grid columns={3} lines>
+        <GridItem span={2}>
+          <div style={cell}>Two</div>
+        </GridItem>
+        <GridItem>
+          <div style={cell}>One</div>
+        </GridItem>
+        <GridItem span={3}>
+          <div style={cell}>Three</div>
+        </GridItem>
+      </Grid>
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 24, padding: '8px 8px 8px 16px' }}>
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <Grid key={theme} columns={2} lines theme={theme}>
+          <GridItem>
+            <div style={cell}>{theme}</div>
+          </GridItem>
+          <GridItem>
+            <div style={cell}>Cap</div>
+          </GridItem>
+        </Grid>
+      ))}
     </div>
   ),
 };

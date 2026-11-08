@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react-vite';
 import { ThemeProvider } from '../src/themes';
 
 const preview: Preview = {
@@ -12,6 +12,7 @@ const preview: Preview = {
     },
     actions: { argTypesRegex: '^on[A-Z].*' },
   },
+
   decorators: [
     (Story) => (
       <ThemeProvider>
@@ -19,6 +20,8 @@ const preview: Preview = {
       </ThemeProvider>
     ),
   ],
+
+  tags: ['autodocs']
 };
 
 export default preview;

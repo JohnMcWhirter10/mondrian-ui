@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Textarea } from './Textarea';
 import { Label } from '../Label/Label';
 
@@ -15,9 +15,9 @@ const meta: Meta<typeof Textarea> = {
     docs: {
       description: {
         component: `
-A multiline field drawn as one white plane inside a black grid of a single weight.
+A multiline field: a white plane inside a black grid, with a heavy bottom bar and a flat swatch of the theme plane on that bar.
 
-The border stays black in light and dark. Text stays black on white. Theme uses the same names as Input and Label, and none of them recolor this plane. Rows pass through to the native element. The field resizes vertically only. Hover leaves the plane where it is. Keyboard focus shifts it and leaves a black offset shadow. Place a Label beside it; this component has no label of its own.
+Hover does not move it. Focus draws the standard outline. An invalid field (aria-invalid) doubles its left bar and runs the swatch the full length of the bottom bar. Rows pass through to the native element, and the field resizes vertically only. Place a Label beside it; this component has no label of its own.
         `,
       },
     },
@@ -27,8 +27,7 @@ The border stays black in light and dark. Text stays black on white. Theme uses 
     theme: {
       control: 'select',
       options: ['blue', 'neutral', 'red', 'green', 'yellow'],
-      description:
-        'Shared theme name. The plane stays black on white for every value.',
+      description: 'Plane color of the swatch on the bottom bar.',
       table: {
         defaultValue: { summary: 'blue' },
       },
@@ -115,4 +114,68 @@ export const Disabled: Story = {
     defaultValue: 'This plane does not move.',
     placeholder: undefined,
   },
+};
+
+const planes = ['blue', 'neutral', 'red', 'yellow'] as const;
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {planes.map((theme) => (
+        <Textarea
+          key={theme}
+          theme={theme}
+          rows={3}
+          aria-label={`${theme} textarea`}
+          placeholder={theme}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const Invalid: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <Label htmlFor="invalid-message" theme="red" position="top">
+        Message
+      </Label>
+      <Textarea
+        id="invalid-message"
+        rows={4}
+        aria-invalid="true"
+        aria-describedby="invalid-message-error"
+        defaultValue="Hi"
+      />
+      <span id="invalid-message-error" role="alert">
+        Error: write at least 20 characters.
+      </span>
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        padding: '16px',
+      }}
+    >
+      {planes.map((theme) => (
+        <Textarea
+          key={theme}
+          theme={theme}
+          rows={3}
+          aria-label={`${theme} textarea`}
+          placeholder={theme}
+        />
+      ))}
+      <Textarea rows={3} aria-label="Invalid" aria-invalid="true" />
+    </div>
+  ),
 };

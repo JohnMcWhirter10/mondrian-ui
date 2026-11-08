@@ -1,8 +1,9 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Input } from './Input';
 import { Label } from '../Label/Label';
 import { ThemeProvider } from '../../themes';
+
+const plane = ['blue', 'neutral', 'red', 'yellow'] as const;
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Input> = {
@@ -13,7 +14,8 @@ const meta: Meta<typeof Input> = {
     docs: {
       description: {
         component: `
-          The Input component follows Mondrian's neoplasticism principles with rectangular shapes and primary colors.
+          A white plane inside a black grid: base-weight verticals, a heavy bottom bar, and a flat swatch of the theme plane on that bar.
+          Hover does not move it. Focus draws the standard outline. An invalid field (aria-invalid) doubles its left bar and runs the swatch the full length of the bottom bar.
           Note: To maintain single responsibility, Labels should be added separately using the Label component.
         `,
       },
@@ -102,4 +104,71 @@ export const Yellow: Story = {
     theme: 'yellow',
     id: 'yellow-input',
   },
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {plane.map((theme) => (
+        <Input
+          key={theme}
+          theme={theme}
+          aria-label={`${theme} input`}
+          placeholder={`${theme} input`}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const Invalid: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <Label htmlFor="invalid-input" theme="red" position="top">
+        Email
+      </Label>
+      <Input
+        id="invalid-input"
+        aria-invalid="true"
+        aria-describedby="invalid-input-error"
+        defaultValue="not-an-email"
+      />
+      <span id="invalid-input-error" role="alert">
+        Error: enter an email address like name@example.com.
+      </span>
+    </div>
+  ),
+};
+
+export const Disabled: Story = {
+  args: { disabled: true, placeholder: 'Disabled input' },
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        padding: '16px',
+      }}
+    >
+      {plane.map((theme) => (
+        <Input
+          key={theme}
+          theme={theme}
+          aria-label={`${theme} input`}
+          placeholder={`${theme} input`}
+        />
+      ))}
+      <Input
+        aria-label="Invalid input"
+        aria-invalid="true"
+        defaultValue="Bad"
+      />
+    </div>
+  ),
 };

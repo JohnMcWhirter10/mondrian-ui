@@ -169,6 +169,26 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         --mondrian-spacing-large: ${theme.spacing.large};
       }
       
+      /* Scoped overrides so any subtree can opt into a mode via data-theme */
+      [data-theme='dark'] {
+        --mondrian-background: ${theme.colors.black};
+        --mondrian-text: ${theme.colors.white};
+        --mondrian-border: ${theme.colors.white};
+        --mondrian-shadow: ${theme.colors.white};
+        --mondrian-focus: ${theme.colors.yellow};
+        background-color: var(--mondrian-background);
+        color: var(--mondrian-text);
+      }
+      [data-theme='light'] {
+        --mondrian-background: ${theme.colors.white};
+        --mondrian-text: ${theme.colors.black};
+        --mondrian-border: ${theme.colors.black};
+        --mondrian-shadow: ${theme.colors.black};
+        --mondrian-focus: ${theme.colors.blue};
+        background-color: var(--mondrian-background);
+        color: var(--mondrian-text);
+      }
+
       /* Global defaults */
       body {
         background-color: var(--mondrian-background);

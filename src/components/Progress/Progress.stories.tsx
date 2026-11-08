@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Progress } from './Progress';
 
 const meta: Meta<typeof Progress> = {
@@ -19,6 +19,12 @@ A black frame of one weight holds a blue plane that grows left to right by trans
   },
   tags: ['autodocs'],
   argTypes: {
+    theme: {
+      control: 'select',
+      options: ['blue', 'neutral', 'red', 'yellow'],
+      description: 'Plane color',
+      table: { defaultValue: { summary: 'blue' } },
+    },
     value: {
       control: { type: 'range', min: 0, max: 100, step: 1 },
       description: 'Current value. Omit for indeterminate',
@@ -65,6 +71,30 @@ export const Sizes: Story = {
       <Progress size="sm" value={25} aria-label="Small" />
       <Progress value={50} aria-label="Default" />
       <Progress size="lg" value={75} aria-label="Large" />
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <Progress
+          key={theme}
+          theme={theme}
+          value={60}
+          aria-label={`${theme} progress`}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const DarkMode: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div data-theme="dark">
+      <Progress value={60} aria-label="Dark progress" />
     </div>
   ),
 };

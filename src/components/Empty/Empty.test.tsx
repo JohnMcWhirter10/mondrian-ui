@@ -61,4 +61,17 @@ describe('Empty', () => {
     expect(EmptyDescription.displayName).toBe('EmptyDescription');
     expect(EmptyActions.displayName).toBe('EmptyActions');
   });
+
+  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(<Empty theme={theme} data-testid="e" />);
+      expect(screen.getByTestId('e')).toHaveClass(`mondrian-empty-${theme}`);
+    }
+  );
+
+  test('defaults to the blue theme', () => {
+    render(<Empty data-testid="e" />);
+    expect(screen.getByTestId('e')).toHaveClass('mondrian-empty-blue');
+  });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Box } from './Box';
 
 const meta: Meta<typeof Box> = {
@@ -129,4 +129,34 @@ export const FullWidth: Story = {
     children: 'This box takes up the full width of its container',
     fullWidth: true,
   },
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{ display: 'grid', gap: '28px', padding: '16px 24px 24px 8px' }}
+    >
+      {(['neutral', 'blue', 'red', 'yellow'] as const).map((theme) => (
+        <Box key={theme} theme={theme} style={{ width: '280px' }}>
+          Cap theme: {theme}
+        </Box>
+      ))}
+    </div>
+  ),
+};
+
+export const DarkMode: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{ display: 'grid', gap: '28px', padding: '16px 24px 24px 8px' }}
+    >
+      {(['neutral', 'blue', 'red', 'yellow'] as const).map((theme) => (
+        <Box key={theme} theme={theme} style={{ width: '280px' }}>
+          Cap theme: {theme}
+        </Box>
+      ))}
+    </div>
+  ),
 };

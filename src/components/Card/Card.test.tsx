@@ -118,4 +118,34 @@ describe('Card', () => {
     expect(ref.current).not.toBeNull();
     expect(ref.current).toHaveClass('mondrian-card');
   });
+
+  test.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
+    'applies the %s theme class and keeps only one theme',
+    (theme) => {
+      render(
+        <Card data-testid="card" theme={theme}>
+          <CardContent>Test Content</CardContent>
+        </Card>
+      );
+      const card = screen.getByTestId('card');
+      expect(card).toHaveClass(theme);
+      ['blue', 'neutral', 'red', 'yellow', 'green']
+        .filter((t) => t !== theme)
+        .forEach((t) => expect(card).not.toHaveClass(t));
+    }
+  );
+
+  test('does not expose className and keeps decoration out of the DOM', () => {
+    render(
+      <Card data-testid="card">
+        <CardHeader>
+          <CardTitle>Title</CardTitle>
+        </CardHeader>
+      </Card>
+    );
+    const card = screen.getByTestId('card');
+    // Swatch and bar are CSS pseudo-elements, so only the header exists as a child.
+    expect(card.children).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: 'Title' })).toBeInTheDocument();
+  });
 });

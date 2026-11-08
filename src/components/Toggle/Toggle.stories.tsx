@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Toggle } from './Toggle';
 import { Label } from '../Label/Label';
 import { ThemeProvider } from '../../themes';
@@ -163,4 +163,43 @@ export const Disabled: Story = {
     disabled: true,
     id: 'disabled-toggle',
   },
+};
+
+const allThemes = ['blue', 'neutral', 'red', 'yellow', 'green'] as const;
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+      {allThemes.map((theme) => (
+        <div key={theme} style={{ display: 'flex', gap: '12px' }}>
+          <Toggle theme={theme} aria-label={`${theme} off`} />
+          <Toggle theme={theme} defaultChecked aria-label={`${theme} on`} />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        display: 'flex',
+        gap: '24px',
+        flexWrap: 'wrap',
+        padding: '24px',
+      }}
+    >
+      {allThemes.map((theme) => (
+        <Toggle
+          key={theme}
+          theme={theme}
+          defaultChecked
+          aria-label={`${theme} on`}
+        />
+      ))}
+    </div>
+  ),
 };

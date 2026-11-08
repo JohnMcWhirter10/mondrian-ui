@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { RadioGroup, RadioItem } from './Radio';
 import React from 'react';
 
@@ -132,5 +132,17 @@ export const Disabled: Story = {
         <span>Disabled</span>
       </div>
     </RadioGroup>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div data-theme="dark" style={{ padding: '24px' }}>
+      <RadioGroup defaultValue="red" theme="red" aria-label="Dark options">
+        <RadioItem value="red" aria-label="Selected" />
+        <RadioItem value="blue" aria-label="Not selected" />
+      </RadioGroup>
+    </div>
   ),
 };

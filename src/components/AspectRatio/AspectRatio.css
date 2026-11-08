@@ -1,10 +1,49 @@
 .mondrian-aspect-ratio {
+  --plane: var(--mondrian-border);
+  position: relative;
   box-sizing: border-box;
   width: 100%;
-  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  /* Horizontals heavy, verticals base. */
+  border-style: solid;
+  border-color: var(--mondrian-border);
+  border-width: var(--mondrian-grid-width-heavy) var(--mondrian-grid-width);
   border-radius: 0;
-  background-color: var(--mondrian-white);
+  background-color: var(--mondrian-background);
+  /* Room for the swatch that hangs below the frame. */
+  margin-bottom: var(--mondrian-spacing-medium);
+}
+
+.mondrian-aspect-ratio-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-aspect-ratio-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-aspect-ratio-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-aspect-ratio-neutral {
+  --plane: var(--mondrian-border);
+}
+
+/* The frame clips its content; the swatch is outside this clip. */
+.mondrian-aspect-ratio > * {
   overflow: hidden;
+}
+
+/* Swatch pinned to the lower right edge, hanging past the bottom line. */
+.mondrian-aspect-ratio::after {
+  content: '';
+  position: absolute;
+  right: var(--mondrian-spacing-large);
+  bottom: calc(var(--mondrian-grid-width-heavy) * -2.5);
+  width: calc(var(--mondrian-spacing-large) * 2);
+  height: calc(var(--mondrian-grid-width-heavy) * 2.5);
+  background-color: var(--plane);
+  pointer-events: none;
 }
 
 /* Children fill the frame. */
@@ -14,4 +53,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media (forced-colors: active) {
+  .mondrian-aspect-ratio {
+    border-color: CanvasText;
+  }
+
+  .mondrian-aspect-ratio::after {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
 }

@@ -1,10 +1,29 @@
 .mondrian-table {
-  width: 100%;
+  --plane: var(--mondrian-blue);
+  /* Room on the left so the header rule can run past the first column. */
+  width: calc(100% - var(--mondrian-spacing-small));
+  margin-left: var(--mondrian-spacing-small);
   border-collapse: collapse;
   border-spacing: 0;
   font-family: var(--mondrian-font-family);
   font-size: var(--mondrian-font-size-small);
-  color: var(--mondrian-black);
+  color: var(--mondrian-text);
+}
+
+.mondrian-table-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-table-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-table-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-table-neutral {
+  --plane: var(--mondrian-border);
 }
 
 .mondrian-table-caption {
@@ -14,31 +33,78 @@
   caption-side: bottom;
 }
 
-/* Header row is a filled yellow plane. Rows are not striped. */
-.mondrian-table-header .mondrian-table-row {
-  background-color: var(--mondrian-yellow);
-}
-
 .mondrian-table-head,
 .mondrian-table-cell {
+  position: relative;
   box-sizing: border-box;
-  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
   border-radius: 0;
   padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
   text-align: left;
   vertical-align: top;
-  color: var(--mondrian-black);
+  color: var(--mondrian-text);
+  background-color: var(--mondrian-background);
 }
 
+/* Header: white plane on a heavy bottom rule. No filled row. */
 .mondrian-table-head {
   font-weight: 700;
-  background-color: var(--mondrian-yellow);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
-.mondrian-table-cell {
-  background-color: var(--mondrian-white);
+/* Small swatch pinned to the first header cell's corner. Decorative only. */
+.mondrian-table-header .mondrian-table-head:first-child::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--mondrian-spacing-medium);
+  height: var(--mondrian-spacing-medium);
+  background-color: var(--plane);
+  pointer-events: none;
+}
+
+/* First column rule runs slightly past the table's left edge. */
+.mondrian-table-header .mondrian-table-head:first-child::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--mondrian-spacing-small) * -1);
+  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
+  width: var(--mondrian-spacing-small);
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
+}
+
+.mondrian-table-body .mondrian-table-cell:first-child::after,
+.mondrian-table-footer .mondrian-table-cell:first-child::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--mondrian-spacing-small) * -1);
+  top: calc(var(--mondrian-grid-width) * -1);
+  width: var(--mondrian-spacing-small);
+  height: var(--mondrian-grid-width);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
 }
 
 .mondrian-table-footer .mondrian-table-cell {
   font-weight: 700;
+}
+
+@media (forced-colors: active) {
+  .mondrian-table-head,
+  .mondrian-table-cell {
+    border-color: CanvasText;
+  }
+
+  .mondrian-table-header .mondrian-table-head:first-child::before {
+    background-color: Highlight;
+  }
+
+  .mondrian-table-header .mondrian-table-head:first-child::after,
+  .mondrian-table-body .mondrian-table-cell:first-child::after,
+  .mondrian-table-footer .mondrian-table-cell:first-child::after {
+    background-color: CanvasText;
+  }
 }

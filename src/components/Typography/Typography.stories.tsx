@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Heading } from './Typography';
 import { Text } from './Typography';
 
@@ -84,5 +84,41 @@ export const VisualLevelApartFromOutline: Story = {
     <Heading level={4} as="h2">
       Level 4 look, h2 in the outline
     </Heading>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        padding: '0 24px 24px',
+      }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <div key={theme}>
+          <Heading theme={theme}>Composition ({theme})</Heading>
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        padding: '24px',
+        background: 'var(--mondrian-background)',
+        color: 'var(--mondrian-text)',
+      }}
+    >
+      <Heading theme="neutral">Composition</Heading>
+      <Heading theme="yellow">Composition</Heading>
+    </div>
   ),
 };

@@ -24,6 +24,12 @@ export interface ScrollAreaProps
    * The width of the scroll area
    */
   width?: React.CSSProperties['width'];
+
+  /**
+   * Accessible name for the scrollable region. When set and the content
+   * overflows, the viewport is exposed as a labelled region.
+   */
+  label?: string;
 }
 
 export interface ScrollBarProps

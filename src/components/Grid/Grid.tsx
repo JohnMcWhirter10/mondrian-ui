@@ -3,10 +3,26 @@ import { GridItemProps, GridProps } from './Grid.types';
 import './Grid.css';
 
 const Grid = React.forwardRef<HTMLDivElement, GridProps>(
-  ({ children, columns = 12, gap = 'none', style, ...props }, ref) => {
-    const gridClassName = ['mondrian-grid', `mondrian-grid-gap-${gap}`].join(
-      ' '
-    );
+  (
+    {
+      children,
+      columns = 12,
+      gap = 'none',
+      lines = false,
+      theme = 'neutral',
+      style,
+      ...props
+    },
+    ref
+  ) => {
+    const gridClassName = [
+      'mondrian-grid',
+      `mondrian-grid-gap-${gap}`,
+      `mondrian-grid-${theme}`,
+      lines ? 'mondrian-grid-lines' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     const gridStyle: React.CSSProperties = {
       gridTemplateColumns:

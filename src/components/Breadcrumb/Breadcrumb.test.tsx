@@ -91,4 +91,12 @@ describe('Breadcrumb', () => {
     expect(navRef.current?.tagName).toBe('NAV');
     expect(linkRef.current?.tagName).toBe('A');
   });
+
+  test('current page is a non-link with aria-current and its own class', () => {
+    renderTrail();
+    const page = screen.getByText('Current');
+    expect(page).toHaveClass('mondrian-breadcrumb-page');
+    expect(page.tagName).toBe('SPAN');
+    expect(screen.queryByRole('link', { name: 'Current' })).toBeNull();
+  });
 });

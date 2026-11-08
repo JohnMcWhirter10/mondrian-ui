@@ -49,4 +49,19 @@ describe('Loader', () => {
     expect(ref.current).toHaveClass('mondrian-loader');
     expect(ref.current).toHaveAttribute('id', 'loader');
   });
+
+  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(<Loader theme={theme} />);
+      expect(screen.getByRole('status')).toHaveClass(
+        `mondrian-loader-${theme}`
+      );
+    }
+  );
+
+  test('defaults to the blue theme', () => {
+    render(<Loader />);
+    expect(screen.getByRole('status')).toHaveClass('mondrian-loader-blue');
+  });
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { RadioGroup, RadioItem } from './Radio';
 
 describe('Radio Component', () => {
@@ -26,8 +27,8 @@ describe('Radio Component', () => {
     const blueRadio = screen.getByTestId('radio-blue');
     const redRadio = screen.getByTestId('radio-red');
 
-    expect(blueRadio).toHaveClass('blue');
-    expect(redRadio).toHaveClass('red');
+    expect(blueRadio).toHaveClass('mondrian-radio-item-blue');
+    expect(redRadio).toHaveClass('mondrian-radio-item-red');
   });
 
   test('applies correct size class to RadioItem', () => {
@@ -89,5 +90,61 @@ describe('Radio Component', () => {
 
     expect(enabledRadio).not.toBeDisabled();
     expect(disabledRadio).toBeDisabled();
+  });
+
+  test.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
+    'applies the %s theme class to the group and item',
+    (theme) => {
+      render(
+        <RadioGroup theme={theme} data-testid="g">
+          <RadioItem value="a" theme={theme} data-testid="i" />
+        </RadioGroup>
+      );
+      expect(screen.getByTestId('g')).toHaveClass(
+        `mondrian-radio-group-${theme}`
+      );
+      expect(screen.getByTestId('i')).toHaveClass(
+        `mondrian-radio-item-${theme}`
+      );
+    }
+  );
+
+  test('group defaults to blue and items inherit it', () => {
+    render(
+      <RadioGroup data-testid="g">
+        <RadioItem value="a" data-testid="i" />
+      </RadioGroup>
+    );
+    expect(screen.getByTestId('g')).toHaveClass('mondrian-radio-group-blue');
+    expect(screen.getByTestId('i').className).not.toMatch(
+      /mondrian-radio-item-(blue|red|yellow|green|neutral)/
+    );
+  });
+
+  test('exposes radiogroup/radio roles and aria-checked', () => {
+    render(
+      <RadioGroup defaultValue="a" aria-label="Choices">
+        <RadioItem value="a" aria-label="A" />
+        <RadioItem value="b" aria-label="B" />
+      </RadioGroup>
+    );
+    expect(screen.getByRole('radiogroup')).toBeInTheDocument();
+    expect(screen.getByLabelText('A')).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByLabelText('B')).toHaveAttribute('aria-checked', 'false');
+    // The selected item also shows a glyph, not just a plane color.
+    expect(screen.getByLabelText('A').querySelector('svg')).not.toBeNull();
+    expect(screen.getByLabelText('B').querySelector('svg')).toBeNull();
+  });
+
+  test('forwards refs', () => {
+    const gRef = React.createRef<HTMLDivElement>();
+    const iRef = React.createRef<HTMLButtonElement>();
+    render(
+      <RadioGroup ref={gRef}>
+        <RadioItem ref={iRef} value="a" />
+      </RadioGroup>
+    );
+    expect(gRef.current?.tagName).toBe('DIV');
+    expect(iRef.current?.tagName).toBe('BUTTON');
   });
 });

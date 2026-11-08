@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -10,6 +10,7 @@ import { ComponentTheme } from '../../themes';
 const meta: Meta<typeof Collapsible> = {
   title: 'Components/Collapsible',
   component: Collapsible,
+  tags: ['autodocs'],
   argTypes: {
     theme: {
       control: 'select',
@@ -165,4 +166,30 @@ export const Disabled: Story = {
     size: 'default',
     disabled: true,
   },
+};
+
+const planeThemes = ['blue', 'neutral', 'red', 'yellow'] as const;
+
+const ThemedCollapsibles = () => (
+  <div style={{ display: 'grid', gap: '32px', maxWidth: 480 }}>
+    {planeThemes.map((theme) => (
+      <Collapsible key={theme} theme={theme} defaultOpen>
+        <CollapsibleTrigger>{`Collapsible (${theme})`}</CollapsibleTrigger>
+        <CollapsibleContent>The glyph shows the open state.</CollapsibleContent>
+      </Collapsible>
+    ))}
+  </div>
+);
+
+export const Themes: Story = {
+  render: () => <ThemedCollapsibles />,
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div data-theme="dark" style={{ padding: 24 }}>
+      <ThemedCollapsibles />
+    </div>
+  ),
 };

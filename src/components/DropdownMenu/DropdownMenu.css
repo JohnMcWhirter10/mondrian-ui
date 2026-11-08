@@ -1,352 +1,255 @@
-/* Base dropdown trigger styling */
+/**
+ * DropdownMenu Component
+ *
+ * A white plane held by base-weight verticals and heavy horizontals. A colour
+ * swatch is pinned over the top-left of the frame and the bottom rule runs
+ * past the right edge. A highlighted row inverts to the plane colour AND
+ * gains a heavy left bar and an underline, so it is never colour alone.
+ * Checked rows carry a glyph. No fades, no motion.
+ */
+
+/* Plane theme tokens */
+.mondrian-dropdown-trigger,
+.mondrian-dropdown-content,
+.mondrian-dropdown-sub-content {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dropdown-trigger.blue,
+.mondrian-dropdown-content.blue,
+.mondrian-dropdown-sub-content.blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dropdown-trigger.red,
+.mondrian-dropdown-content.red,
+.mondrian-dropdown-sub-content.red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dropdown-trigger.yellow,
+.mondrian-dropdown-content.yellow,
+.mondrian-dropdown-sub-content.yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-dropdown-trigger.green,
+.mondrian-dropdown-content.green,
+.mondrian-dropdown-sub-content.green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dropdown-trigger.neutral,
+.mondrian-dropdown-content.neutral,
+.mondrian-dropdown-sub-content.neutral {
+  /* black plane in light mode, white plane in dark mode */
+  --plane: var(--mondrian-text);
+  --on-plane: var(--mondrian-background);
+}
+
+/* Trigger */
 .mondrian-dropdown-trigger {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  font-family: var(--mondrian-font-family);
-  font-size: var(--mondrian-font-size-medium);
-  position: relative;
-  transition: all 0.3s;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  /* Asymmetric: more room to the right and below */
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  padding: var(--mondrian-spacing-medium);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
   background-color: var(--mondrian-background);
   color: var(--mondrian-text);
-  border-radius: 0; /* Mondrian uses rectangular shapes */
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  cursor: pointer;
+}
+
+.mondrian-dropdown-trigger:hover,
+.mondrian-dropdown-trigger[data-state='open'] {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
 .mondrian-dropdown-trigger[data-state='open'] {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-}
-
-.mondrian-dropdown-trigger:hover {
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform: translate(-2px, -2px);
+  text-decoration: underline;
 }
 
 .mondrian-dropdown-trigger:focus-visible {
-  outline: none;
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
 }
 
-/* Additional Mondrian-inspired decorative element - asymmetric corner */
-.mondrian-dropdown-trigger:before {
+/* Content and sub content */
+.mondrian-dropdown-content,
+.mondrian-dropdown-sub-content {
+  position: relative;
+  box-sizing: border-box;
+  min-width: min(200px, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top-width: var(--mondrian-grid-width-heavy);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  /* Asymmetric: roomier at the bottom */
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-small)
+    var(--mondrian-spacing-medium);
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  z-index: 50;
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+}
+
+.mondrian-dropdown-sub-content {
+  min-width: min(180px, calc(100vw - 2rem));
+}
+
+/* Colour swatch pinned over the top-left of the frame */
+.mondrian-dropdown-content::before,
+.mondrian-dropdown-sub-content::before {
   content: '';
   position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 15px;
-  height: 15px;
-  background-color: transparent;
-  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
-  opacity: 0;
-  transition: opacity 0.3s;
+  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: calc(var(--mondrian-grid-width) * -1);
+  width: 40px;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--plane);
+  pointer-events: none;
 }
 
-.mondrian-dropdown-trigger:hover:before {
-  opacity: 1;
+/* Bottom rule runs past the right edge */
+.mondrian-dropdown-content::after {
+  content: '';
+  position: absolute;
+  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: 35%;
+  right: -10px;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
 }
 
-/* Dropdown content styling */
-.mondrian-dropdown-content {
-  min-width: 200px;
-  background-color: var(--mondrian-background);
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  padding: var(--mondrian-spacing-small);
-  z-index: 50;
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  animation: slide-in 0.2s ease-out;
-  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
-  border-radius: 0; /* Mondrian rectangular shapes */
-}
-
-@keyframes slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Theme variants for content */
-.mondrian-dropdown-content.blue {
-  border-top: 5px solid var(--mondrian-blue);
-}
-
-.mondrian-dropdown-content.red {
-  border-top: 5px solid var(--mondrian-error);
-}
-
-.mondrian-dropdown-content.yellow {
-  border-top: 5px solid var(--mondrian-yellow);
-}
-
-.mondrian-dropdown-content.green {
-  border-top: 5px solid var(--mondrian-success);
-}
-
-.mondrian-dropdown-content.neutral {
-  border-top: 5px solid var(--mondrian-black);
-}
-
-/* Dropdown items */
-.mondrian-dropdown-item {
-  font-family: var(--mondrian-font-family);
-  font-size: var(--mondrian-font-size-medium);
-  padding: var(--mondrian-spacing-small);
-  cursor: pointer;
+/* Rows */
+.mondrian-dropdown-item,
+.mondrian-dropdown-checkbox-item,
+.mondrian-dropdown-radio-item,
+.mondrian-dropdown-sub-trigger {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
-  transition: all 0.2s;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
+    var(--mondrian-spacing-small) var(--mondrian-spacing-small);
+  border-left: var(--mondrian-grid-width-heavy) solid transparent;
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  color: var(--mondrian-text);
+  cursor: pointer;
   outline: none;
-  border-left: 0 solid transparent;
+  user-select: none;
 }
 
-.mondrian-dropdown-item[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  transform: translate(-2px, -2px);
-  box-shadow: 2px 2px 0 var(--mondrian-shadow);
+.mondrian-dropdown-checkbox-item,
+.mondrian-dropdown-radio-item {
+  padding-left: 32px;
 }
 
-.mondrian-dropdown-content.blue .mondrian-dropdown-item[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
+.mondrian-dropdown-sub-trigger {
+  justify-content: space-between;
 }
 
-.mondrian-dropdown-content.red .mondrian-dropdown-item[data-highlighted] {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
+/*
+ * Highlighted / focused row: plane fill with on-plane text (>= 4.5:1),
+ * plus a heavy left bar and underline as non-colour cues.
+ */
+.mondrian-dropdown-item[data-highlighted],
+.mondrian-dropdown-checkbox-item[data-highlighted],
+.mondrian-dropdown-radio-item[data-highlighted],
+.mondrian-dropdown-sub-trigger[data-highlighted],
+.mondrian-dropdown-sub-trigger[data-state='open'] {
+  background-color: var(--plane);
+  color: var(--on-plane);
+  border-left-color: var(--mondrian-border);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.mondrian-dropdown-content.yellow .mondrian-dropdown-item[data-highlighted] {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
+/* Checked rows are also bold, on top of the glyph */
+.mondrian-dropdown-checkbox-item[data-state='checked'],
+.mondrian-dropdown-radio-item[data-state='checked'] {
+  font-weight: bold;
 }
 
-.mondrian-dropdown-content.green .mondrian-dropdown-item[data-highlighted] {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-content.neutral .mondrian-dropdown-item[data-highlighted] {
-  background-color: var(--mondrian-black);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-item[data-disabled] {
+.mondrian-dropdown-item[data-disabled],
+.mondrian-dropdown-checkbox-item[data-disabled],
+.mondrian-dropdown-radio-item[data-disabled],
+.mondrian-dropdown-sub-trigger[data-disabled] {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Checkbox items */
-.mondrian-dropdown-checkbox-item {
-  font-family: var(--mondrian-font-family);
-  font-size: var(--mondrian-font-size-medium);
-  padding: var(--mondrian-spacing-small);
-  padding-left: 28px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  position: relative;
-  transition: all 0.2s;
-  outline: none;
-}
-
-.mondrian-dropdown-checkbox-item[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  transform: translate(-2px, -2px);
-  box-shadow: 2px 2px 0 var(--mondrian-shadow);
-}
-
-.mondrian-dropdown-content.blue
-  .mondrian-dropdown-checkbox-item[data-highlighted],
-.mondrian-dropdown-content.blue
-  .mondrian-dropdown-radio-item[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-content.red
-  .mondrian-dropdown-checkbox-item[data-highlighted],
-.mondrian-dropdown-content.red .mondrian-dropdown-radio-item[data-highlighted] {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-content.yellow
-  .mondrian-dropdown-checkbox-item[data-highlighted],
-.mondrian-dropdown-content.yellow
-  .mondrian-dropdown-radio-item[data-highlighted] {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
-}
-
-.mondrian-dropdown-content.green
-  .mondrian-dropdown-checkbox-item[data-highlighted],
-.mondrian-dropdown-content.green
-  .mondrian-dropdown-radio-item[data-highlighted] {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-content.neutral
-  .mondrian-dropdown-checkbox-item[data-highlighted],
-.mondrian-dropdown-content.neutral
-  .mondrian-dropdown-radio-item[data-highlighted] {
-  background-color: var(--mondrian-black);
-  color: var(--mondrian-white);
-}
-
-/* Radio items */
-.mondrian-dropdown-radio-item {
-  font-family: var(--mondrian-font-family);
-  font-size: var(--mondrian-font-size-medium);
-  padding: var(--mondrian-spacing-small);
-  padding-left: 28px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  position: relative;
-  transition: all 0.2s;
-  outline: none;
-}
-
-.mondrian-dropdown-radio-item[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  transform: translate(-2px, -2px);
-  box-shadow: 2px 2px 0 var(--mondrian-shadow);
-}
-
-/* Item indicators for checkbox and radio */
+/* Check / radio glyph */
 .mondrian-dropdown-item-indicator {
   position: absolute;
-  left: 10px;
-  display: flex;
-  align-items: start;
-  justify-content: start;
-  width: 12px;
-  height: 12px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
 }
 
-/* Label */
+.mondrian-dropdown-sub-icon {
+  display: flex;
+  align-items: center;
+  margin-left: var(--mondrian-spacing-medium);
+}
+
 .mondrian-dropdown-label {
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-small)
+    var(--mondrian-spacing-small) calc(var(--mondrian-spacing-small) + 4px);
   font-family: var(--mondrian-font-family);
   font-size: var(--mondrian-font-size-small);
   font-weight: bold;
-  padding: var(--mondrian-spacing-small);
   color: var(--mondrian-text);
 }
 
-/* Separator */
+/* Separator: heavy horizontal line (border so it survives forced colors) */
 .mondrian-dropdown-separator {
-  height: var(--mondrian-grid-width);
-  background-color: var(--mondrian-border);
+  height: 0;
   margin: var(--mondrian-spacing-small) 0;
+  border: 0;
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
-/* Group */
 .mondrian-dropdown-group {
   padding: var(--mondrian-spacing-small) 0;
 }
 
-/* Sub menu trigger */
-.mondrian-dropdown-sub-trigger {
-  font-family: var(--mondrian-font-family);
-  font-size: var(--mondrian-font-size-medium);
-  padding: var(--mondrian-spacing-small);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  transition: all 0.2s;
-  outline: none;
-}
-
-.mondrian-dropdown-sub-trigger[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-  transform: translate(-2px, -2px);
-  box-shadow: 2px 2px 0 var(--mondrian-shadow);
-}
-
-.mondrian-dropdown-content.blue
+@media (forced-colors: active) {
+  .mondrian-dropdown-trigger,
+  .mondrian-dropdown-content,
+  .mondrian-dropdown-sub-content,
+  .mondrian-dropdown-separator {
+    border-color: CanvasText;
+  }
+  .mondrian-dropdown-content::before,
+  .mondrian-dropdown-content::after,
+  .mondrian-dropdown-sub-content::before {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+  .mondrian-dropdown-item[data-highlighted],
+  .mondrian-dropdown-checkbox-item[data-highlighted],
+  .mondrian-dropdown-radio-item[data-highlighted],
   .mondrian-dropdown-sub-trigger[data-highlighted] {
-  background-color: var(--mondrian-blue);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-content.red
-  .mondrian-dropdown-sub-trigger[data-highlighted] {
-  background-color: var(--mondrian-error);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-content.yellow
-  .mondrian-dropdown-sub-trigger[data-highlighted] {
-  background-color: var(--mondrian-yellow);
-  color: var(--mondrian-black);
-}
-
-.mondrian-dropdown-content.green
-  .mondrian-dropdown-sub-trigger[data-highlighted] {
-  background-color: var(--mondrian-success);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-content.neutral
-  .mondrian-dropdown-sub-trigger[data-highlighted] {
-  background-color: var(--mondrian-black);
-  color: var(--mondrian-white);
-}
-
-.mondrian-dropdown-sub-icon {
-  margin-left: var(--mondrian-spacing-medium);
-  display: flex;
-  align-items: center;
-}
-
-/* Sub content */
-.mondrian-dropdown-sub-content {
-  min-width: 180px;
-  background-color: var(--mondrian-background);
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  padding: var(--mondrian-spacing-small);
-  z-index: 50;
-  box-shadow: 4px 4px 0 var(--mondrian-shadow);
-  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
-  animation: slide-in 0.2s ease-out;
-  border-radius: 0; /* Mondrian rectangular shapes */
-}
-
-/* Theme variants for sub content */
-.mondrian-dropdown-sub-content.blue {
-  border-left: 5px solid var(--mondrian-blue);
-}
-
-.mondrian-dropdown-sub-content.red {
-  border-left: 5px solid var(--mondrian-error);
-}
-
-.mondrian-dropdown-sub-content.yellow {
-  border-left: 5px solid var(--mondrian-yellow);
-}
-
-.mondrian-dropdown-sub-content.green {
-  border-left: 5px solid var(--mondrian-success);
-}
-
-.mondrian-dropdown-sub-content.neutral {
-  border-left: 5px solid var(--mondrian-black);
+    outline: 2px solid Highlight;
+    border-left-color: Highlight;
+  }
 }

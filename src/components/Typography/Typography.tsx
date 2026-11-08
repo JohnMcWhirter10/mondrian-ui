@@ -3,11 +3,12 @@ import { HeadingProps, TextProps } from './Typography.types';
 import './Typography.css';
 
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
-  ({ level = 2, as, children, ...props }, ref) => {
+  ({ level = 2, as, theme = 'neutral', children, ...props }, ref) => {
     const tag: string = as ?? `h${level}`;
     const headingClassName = [
       'mondrian-heading',
       `mondrian-heading-${level}`,
+      `mondrian-heading-${theme}`,
     ].join(' ');
 
     return React.createElement(

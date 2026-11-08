@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import {
   Select,
@@ -11,6 +10,10 @@ import {
 } from './Select';
 
 describe('Select Component', () => {
+  beforeAll(() => {
+    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  });
+
   it('renders the Select component with default props', () => {
     render(
       <Select>
@@ -27,7 +30,7 @@ describe('Select Component', () => {
     const selectTrigger = screen.getByRole('combobox');
     expect(selectTrigger).toBeInTheDocument();
     expect(selectTrigger).toHaveClass('mondrian-select-trigger');
-    expect(selectTrigger).toHaveClass('blue');
+    expect(selectTrigger).toHaveClass('mondrian-select-trigger-blue');
   });
 
   it('applies different themes to the Select component', () => {
@@ -40,7 +43,7 @@ describe('Select Component', () => {
     );
 
     const selectTrigger = screen.getByRole('combobox');
-    expect(selectTrigger).toHaveClass('red');
+    expect(selectTrigger).toHaveClass('mondrian-select-trigger-red');
   });
 
   it('applies different sizes to the Select component', () => {
@@ -67,5 +70,66 @@ describe('Select Component', () => {
 
     const selectTrigger = screen.getByRole('combobox');
     expect(selectTrigger).toBeDisabled();
+  });
+
+  it.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
+    'applies the %s theme class to the trigger',
+    (theme) => {
+      render(
+        <Select>
+          <SelectTrigger theme={theme}>
+            <SelectValue placeholder="Select an option" />
+          </SelectTrigger>
+        </Select>
+      );
+
+      expect(screen.getByRole('combobox')).toHaveClass(
+        `mondrian-select-trigger-${theme}`
+      );
+    }
+  );
+
+  it('applies the theme class to the content', async () => {
+    render(
+      <Select defaultOpen>
+        <SelectTrigger>
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+        <SelectContent theme="yellow">
+          <SelectItem value="option1">Option 1</SelectItem>
+        </SelectContent>
+      </Select>
+    );
+
+    expect(await screen.findByRole('listbox')).toHaveClass(
+      'mondrian-select-content-yellow'
+    );
+  });
+
+  it('exposes aria-invalid and combobox semantics on the trigger', () => {
+    render(
+      <Select>
+        <SelectTrigger aria-invalid="true" aria-label="Fruit">
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+      </Select>
+    );
+
+    const trigger = screen.getByRole('combobox', { name: 'Fruit' });
+    expect(trigger).toHaveAttribute('aria-invalid', 'true');
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('forwards a ref to the trigger', () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    render(
+      <Select>
+        <SelectTrigger ref={ref}>
+          <SelectValue placeholder="Select an option" />
+        </SelectTrigger>
+      </Select>
+    );
+
+    expect(ref.current).toBe(screen.getByRole('combobox'));
   });
 });

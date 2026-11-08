@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { PlaneTheme } from '../../themes/Theme.types';
 
 export type LoaderSize = 'default' | 'sm' | 'lg';
 
@@ -15,4 +16,10 @@ export interface LoaderProps
    * @default "default"
    */
   size?: LoaderSize;
+
+  /**
+   * The plane that moves across the white blocks.
+   * @default "blue"
+   */
+  theme?: PlaneTheme;
 }

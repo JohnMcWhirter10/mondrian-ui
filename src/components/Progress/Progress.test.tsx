@@ -54,4 +54,32 @@ describe('Progress', () => {
 
     expect(ref.current).toHaveClass('mondrian-progress');
   });
+
+  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(<Progress theme={theme} value={1} aria-label="P" />);
+      expect(screen.getByRole('progressbar')).toHaveClass(
+        `mondrian-progress-${theme}`
+      );
+    }
+  );
+
+  test('shows percent text so progress is not color only', () => {
+    render(<Progress value={40} max={80} aria-label="Upload" />);
+    expect(screen.getByText('50%')).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getByRole('progressbar')).toHaveAttribute(
+      'aria-valuenow',
+      '40'
+    );
+  });
+
+  test('can hide the text and omits it when indeterminate', () => {
+    const { rerender } = render(
+      <Progress value={40} showValue={false} aria-label="U" />
+    );
+    expect(screen.queryByText('40%')).toBeNull();
+    rerender(<Progress aria-label="U" />);
+    expect(screen.queryByText(/%/)).toBeNull();
+  });
 });

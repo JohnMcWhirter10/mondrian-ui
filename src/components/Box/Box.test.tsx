@@ -1,4 +1,6 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { Box } from './Box';
 
 describe('Box', () => {
@@ -8,7 +10,8 @@ describe('Box', () => {
 
     expect(box).toBeInTheDocument();
     expect(box).toHaveClass('mondrian-box');
-    expect(box).toHaveClass('blue');
+    expect(box).toHaveClass('neutral');
+    expect(box).toHaveClass('mondrian-box-theme-neutral');
     expect(box.tagName).toBe('DIV');
   });
 
@@ -90,5 +93,25 @@ describe('Box', () => {
     const box = screen.getByTestId('test-box');
 
     expect(box).toHaveAttribute('aria-label', 'Box Label');
+  });
+
+  it.each(['neutral', 'blue', 'red', 'yellow'] as const)(
+    'applies the %s theme class',
+    (theme) => {
+      render(
+        <Box data-testid="test-box" theme={theme}>
+          Content
+        </Box>
+      );
+      expect(screen.getByTestId('test-box')).toHaveClass(
+        `mondrian-box-theme-${theme}`
+      );
+    }
+  );
+
+  it('forwards a ref', () => {
+    const ref = React.createRef<HTMLDivElement>();
+    render(<Box ref={ref}>Content</Box>);
+    expect(ref.current).toHaveClass('mondrian-box');
   });
 });

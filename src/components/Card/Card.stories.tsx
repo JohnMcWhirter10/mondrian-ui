@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   Card,
   CardHeader,
@@ -236,8 +236,8 @@ export const NoFooter: Story = {
       </CardHeader>
       <CardContent>
         <p>
-          Cards without footers are useful when you don't need action buttons or
-          additional information at the bottom.
+          Cards without footers are useful when you don&apos;t need action
+          buttons or additional information at the bottom.
         </p>
       </CardContent>
     </Card>
@@ -436,5 +436,43 @@ export const NestedLayout: Story = {
         <Button size="sm">View All Sections</Button>
       </CardFooter>
     </Card>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: '24px', padding: '8px 24px 24px 8px' }}>
+      {(['blue', 'neutral', 'red', 'yellow', 'green'] as const).map((theme) => (
+        <Card key={theme} theme={theme} style={{ width: '350px' }}>
+          <CardHeader>
+            <CardTitle>{theme} card</CardTitle>
+            <CardDescription>One plane, one swatch, one bar.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            Content sits on white, away from the swatch.
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  ),
+};
+
+export const DarkMode: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{ display: 'grid', gap: '24px', padding: '16px 24px 24px 16px' }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <Card key={theme} theme={theme} style={{ width: '350px' }}>
+          <CardHeader>
+            <CardTitle>{theme} card</CardTitle>
+            <CardDescription>Lines invert; planes stay.</CardDescription>
+          </CardHeader>
+          <CardContent>Content on black.</CardContent>
+        </Card>
+      ))}
+    </div>
   ),
 };

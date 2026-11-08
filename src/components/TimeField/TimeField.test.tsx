@@ -192,4 +192,27 @@ describe('TimeField', () => {
     expect(field).toBeDisabled();
     expect(field).toHaveAttribute('type', 'time');
   });
+
+  test('defaults to the blue theme and applies each plane theme class', () => {
+    const { rerender } = render(<TimeField aria-label="Field" />);
+    expect(screen.getByLabelText('Field')).toHaveClass(
+      'mondrian-time-field-blue'
+    );
+
+    (['blue', 'neutral', 'red', 'yellow'] as const).forEach((theme) => {
+      rerender(<TimeField theme={theme} aria-label="Field" />);
+      expect(screen.getByLabelText('Field')).toHaveClass(
+        `mondrian-time-field-${theme}`
+      );
+    });
+  });
+
+  test('exposes aria-invalid', () => {
+    render(<TimeField aria-label="Field" aria-invalid="true" />);
+
+    expect(screen.getByLabelText('Field')).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    );
+  });
 });

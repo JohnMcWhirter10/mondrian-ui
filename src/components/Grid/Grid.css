@@ -1,9 +1,27 @@
 .mondrian-grid {
+  --plane: var(--mondrian-border);
+  position: relative;
   display: grid;
   box-sizing: border-box;
   border-radius: 0;
   font-family: var(--mondrian-font-family);
-  color: var(--mondrian-black);
+  color: var(--mondrian-text);
+}
+
+.mondrian-grid-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-grid-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-grid-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-grid-neutral {
+  --plane: var(--mondrian-border);
 }
 
 .mondrian-grid-gap-none {
@@ -22,12 +40,49 @@
   gap: var(--mondrian-spacing-large);
 }
 
-/* Each item is a plane bounded by the black grid line of one weight. */
+/* Items are bare planes unless the grid draws its lines. */
 .mondrian-grid-item {
   box-sizing: border-box;
   min-width: 0;
-  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border: 0;
   border-radius: 0;
-  background-color: var(--mondrian-white);
-  color: var(--mondrian-black);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+}
+
+/* Lines: verticals at base weight, horizontals heavy, as in the paintings. */
+.mondrian-grid-lines {
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+}
+
+.mondrian-grid-lines > .mondrian-grid-item {
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+}
+
+/* Heavy cap bar runs past the top left edge. Decorative only. */
+.mondrian-grid-lines::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  left: calc(var(--mondrian-spacing-small) * -1);
+  width: 40%;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--plane);
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .mondrian-grid-lines {
+    border-color: CanvasText;
+  }
+
+  .mondrian-grid-lines > .mondrian-grid-item {
+    border-color: CanvasText;
+  }
+
+  .mondrian-grid-lines::before {
+    background-color: CanvasText;
+  }
 }

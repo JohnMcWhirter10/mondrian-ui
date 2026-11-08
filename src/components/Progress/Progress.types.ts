@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ProgressPrimitive from '@radix-ui/react-progress';
+import type { PlaneTheme } from '../../themes/Theme.types';
 
 export type ProgressSize = 'default' | 'sm' | 'lg';
 
@@ -24,4 +25,18 @@ export interface ProgressProps
    * @default "default"
    */
   size?: ProgressSize;
+
+  /**
+   * The plane that fills the bar.
+   * @default "blue"
+   */
+  theme?: PlaneTheme;
+
+  /**
+   * Show the percentage as text beside the bar (determinate only).
+   * A black notch at the edge of the fill is always drawn, so progress
+   * never relies on color alone.
+   * @default true
+   */
+  showValue?: boolean;
 }

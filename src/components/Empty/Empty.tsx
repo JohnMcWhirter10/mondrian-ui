@@ -8,8 +8,12 @@ import {
 import './Empty.css';
 
 const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
-  ({ children, ...props }, ref) => (
-    <div ref={ref} className="mondrian-empty" {...props}>
+  ({ children, theme = 'blue', ...props }, ref) => (
+    <div
+      ref={ref}
+      className={`mondrian-empty mondrian-empty-${theme}`}
+      {...props}
+    >
       {children}
     </div>
   )

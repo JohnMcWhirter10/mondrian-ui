@@ -1,62 +1,98 @@
+/*
+ * ScrollArea: a framed viewport under a heavy top bar. The scrollbar is always
+ * drawn while content overflows: a black-framed track with a themed thumb that
+ * is also framed in black, so the thumb never depends on color for contrast
+ * (>= 3:1 against the track). The corner is the small swatch in the theme color.
+ */
 .mondrian-scroll-area {
+  --track: 14px;
+  --plane: var(--mondrian-blue);
+
   position: relative;
-  margin-right: 12px;
-  margin-bottom: 12px;
+  margin-right: var(--track);
+  margin-bottom: var(--track);
+}
+
+.mondrian-scroll-area-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-scroll-area-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-scroll-area-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-scroll-area-green {
+  --plane: var(--mondrian-success);
+}
+
+.mondrian-scroll-area-neutral {
+  --plane: var(--mondrian-text);
 }
 
 .mondrian-scroll-area-viewport {
+  box-sizing: border-box;
   height: 100%;
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
   width: 100%;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
 }
 
-/* Base scrollbar styles */
+.mondrian-scroll-area-viewport:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+/* Track */
 .mondrian-scrollbar {
   display: flex;
+  box-sizing: border-box;
   touch-action: none;
   user-select: none;
-  transition: background-color 0.3s;
   background-color: var(--mondrian-background);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
-/* Vertical scrollbar */
 .mondrian-scrollbar-vertical {
   position: absolute;
-  right: -12px !important;
-  height: 100%;
-  width: 6px;
-  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
-}
-
-/* Horizontal scrollbar */
-.mondrian-scrollbar-horizontal {
-  width: 100%;
-  position: absolute;
-  bottom: -12px !important;
-  height: 6px;
-  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  right: calc(var(--track) * -1) !important;
+  width: var(--track);
   flex-direction: column;
 }
 
-/* Base thumb styles */
+.mondrian-scrollbar-horizontal {
+  position: absolute;
+  bottom: calc(var(--track) * -1) !important;
+  height: var(--track);
+  flex-direction: column;
+}
+
+/* Thumb: themed plane held by a black line of the same weight as the grid. */
 .mondrian-scrollbar-thumb {
   position: relative;
+  box-sizing: border-box;
   flex: 1;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
   background-color: var(--mondrian-background);
 }
 
-/* Thumb theme variations */
 .mondrian-scrollbar-thumb.blue {
   background-color: var(--mondrian-blue);
 }
 
 .mondrian-scrollbar-thumb.neutral {
   background-color: var(--mondrian-text);
+  border-color: var(--mondrian-border);
 }
 
 .mondrian-scrollbar-thumb.red {
-  background-color: var(--mondrian-error);
+  background-color: var(--mondrian-red);
 }
 
 .mondrian-scrollbar-thumb.green {
@@ -67,32 +103,24 @@
   background-color: var(--mondrian-yellow);
 }
 
-/* Corner styles */
+/* Corner: the small swatch pinned to the bottom-right. */
 .mondrian-scroll-area-corner {
-  position: absolute;
-  bottom: -12px !important;
-  right: -12px !important;
-  background-color: var(--mondrian-background);
+  box-sizing: border-box;
+  bottom: calc(var(--track) * -1) !important;
+  right: calc(var(--track) * -1) !important;
+  background-color: var(--plane);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
-/* Thumb hover/active state with Mondrian-style interactions */
-.mondrian-scrollbar-thumb:hover {
-  border-width: calc(var(--mondrian-grid-width) * 1.5);
-}
+@media (forced-colors: active) {
+  .mondrian-scroll-area-viewport,
+  .mondrian-scrollbar,
+  .mondrian-scrollbar-thumb,
+  .mondrian-scroll-area-corner {
+    border-color: CanvasText;
+  }
 
-.mondrian-scrollbar-thumb:active {
-  border-width: calc(var(--mondrian-grid-width) * 1.5);
-}
-
-/* Decorative Mondrian-style grid effect on corner */
-.mondrian-scroll-area-corner:before {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  bottom: 0;
-  right: 0;
-  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  .mondrian-scrollbar-thumb {
+    background-color: CanvasText;
+  }
 }

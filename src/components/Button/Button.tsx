@@ -36,7 +36,7 @@ const Button = React.forwardRef<
     // Compose the class name based on theme and size
     const buttonClassName = [
       'mondrian-button',
-      theme,
+      `mondrian-button-${theme}`,
       size === 'sm' ? 'mondrian-button-sm' : '',
       size === 'lg' ? 'mondrian-button-lg' : '',
     ]

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Label } from './Label';
 
 const meta: Meta<typeof Label> = {
@@ -124,5 +124,26 @@ export const AsChild: Story = {
         Custom Element with Label Styling
       </button>
     </Label>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        padding: '24px',
+      }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow', 'green'] as const).map((theme) => (
+        <Label key={theme} theme={theme} htmlFor={`${theme}-dark`}>
+          {theme} label
+        </Label>
+      ))}
+    </div>
   ),
 };

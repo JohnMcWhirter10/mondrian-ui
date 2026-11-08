@@ -42,15 +42,19 @@ DropdownMenu.displayName = 'DropdownMenu';
 const DropdownMenuTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
   DropdownMenuTriggerProps
->(({ children, ...props }, ref) => (
-  <DropdownMenuPrimitive.Trigger
-    className="mondrian-dropdown-trigger"
-    ref={ref}
-    {...props}
-  >
-    {children}
-  </DropdownMenuPrimitive.Trigger>
-));
+>(({ children, ...props }, ref) => {
+  const { theme } = React.useContext(DropdownMenuContext);
+
+  return (
+    <DropdownMenuPrimitive.Trigger
+      className={['mondrian-dropdown-trigger', theme].filter(Boolean).join(' ')}
+      ref={ref}
+      {...props}
+    >
+      {children}
+    </DropdownMenuPrimitive.Trigger>
+  );
+});
 DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
 
 const DropdownMenuContent = React.forwardRef<
@@ -104,7 +108,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     {...props}
   >
     <DropdownMenuPrimitive.ItemIndicator className="mondrian-dropdown-item-indicator">
-      <Plus size={12} />
+      <Plus size={16} aria-hidden="true" focusable="false" />
     </DropdownMenuPrimitive.ItemIndicator>
     {children}
   </DropdownMenuPrimitive.CheckboxItem>
@@ -135,7 +139,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     {...props}
   >
     <DropdownMenuPrimitive.ItemIndicator className="mondrian-dropdown-item-indicator">
-      <Square size={12} />
+      <Square size={12} aria-hidden="true" focusable="false" />
     </DropdownMenuPrimitive.ItemIndicator>
     {children}
   </DropdownMenuPrimitive.RadioItem>
@@ -206,7 +210,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      <div className="mondrian-dropdown-sub-icon">
+      <div className="mondrian-dropdown-sub-icon" aria-hidden="true">
         <MondrianRightArrow />
       </div>
     </DropdownMenuPrimitive.SubTrigger>

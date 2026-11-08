@@ -1,7 +1,7 @@
 .mondrian-breadcrumb {
   font-family: var(--mondrian-font-family);
   font-size: var(--mondrian-font-size-small);
-  color: var(--mondrian-black);
+  color: var(--mondrian-text);
 }
 
 .mondrian-breadcrumb-list {
@@ -20,25 +20,34 @@
 }
 
 .mondrian-breadcrumb-link {
-  color: var(--mondrian-black);
+  color: var(--mondrian-text);
   text-decoration: underline;
   text-decoration-thickness: var(--mondrian-grid-width);
   text-underline-offset: var(--mondrian-spacing-small);
   border-radius: 0;
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
 }
 
 .mondrian-breadcrumb-link:hover {
   background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
 }
 
 .mondrian-breadcrumb-link:focus-visible {
-  outline: var(--mondrian-grid-width) solid var(--mondrian-black);
-  outline-offset: var(--mondrian-grid-width);
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
 }
 
+/* Current page: bold with a heavy bar beneath, not color alone. */
 .mondrian-breadcrumb-page {
+  display: inline-block;
   font-weight: 700;
-  color: var(--mondrian-black);
+  color: var(--mondrian-text);
+  line-height: 24px;
+  padding-bottom: var(--mondrian-spacing-small);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
 /* Separator is a short black rectangle, not a glyph. */
@@ -48,7 +57,23 @@
   width: var(--mondrian-spacing-medium);
   height: var(--mondrian-grid-width);
   min-height: var(--mondrian-grid-width);
-  background-color: var(--mondrian-black);
+  background-color: var(--mondrian-border);
   border-radius: 0;
   list-style: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-breadcrumb-link {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-breadcrumb-page {
+    border-bottom-color: CanvasText;
+  }
+
+  .mondrian-breadcrumb-separator {
+    background-color: CanvasText;
+  }
 }
