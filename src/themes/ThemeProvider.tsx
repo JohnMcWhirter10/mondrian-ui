@@ -58,6 +58,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   // An explicit mode always wins, and follows the prop when it changes
   useEffect(() => {
     setDarkMode(mode === 'system' ? resolveSystem() : mode === 'dark');
+  // The resolver only reads window state, so `mode` is the one real input.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
   // Listen for changes in system color scheme preference (system mode only)
