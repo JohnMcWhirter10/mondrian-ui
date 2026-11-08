@@ -133,7 +133,6 @@ export const Themes: StoryObj<typeof Checkbox> = {
 };
 
 export const Dark: StoryObj<typeof Checkbox> = {
-  parameters: { backgrounds: { default: 'dark' } },
   render: () => (
     <div
       data-theme="dark"

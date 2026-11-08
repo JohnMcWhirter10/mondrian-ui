@@ -13,15 +13,37 @@ const preview: Preview = {
     actions: { argTypesRegex: '^on[A-Z].*' },
   },
 
+  // Stories start in light mode regardless of the OS setting, so "light" is
+  // always light. Use the toolbar to preview dark or follow the system.
+  initialGlobals: {
+    mode: 'light',
+  },
+
+  globalTypes: {
+    mode: {
+      description: 'Color mode',
+      toolbar: {
+        title: 'Mode',
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+          { value: 'system', title: 'System', icon: 'browser' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+
   decorators: [
-    (Story) => (
-      <ThemeProvider>
+    (Story, context) => (
+      <ThemeProvider mode={context.globals.mode ?? 'light'}>
         <Story />
       </ThemeProvider>
     ),
   ],
 
-  tags: ['autodocs']
+  tags: ['autodocs'],
 };
 
 export default preview;

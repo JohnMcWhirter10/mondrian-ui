@@ -80,7 +80,6 @@ export const Default: Story = {
 };
 
 export const Dark: Story = {
-  parameters: { backgrounds: { default: 'dark' } },
   render: (args) => (
     <div data-theme="dark">
       <Example {...args} />

@@ -25,19 +25,41 @@ import {
  * - 'green' - Success theme (for confirmations)
  * - 'yellow' - Accent theme (for highlights)
  */
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+export interface ThemeProviderProps {
+  children: React.ReactNode;
+  /**
+   * Color mode.
+   * - 'system' follows the OS preference and updates when it changes.
+   * - 'light' and 'dark' are fixed and ignore the OS preference.
+   * Changing this prop switches the mode at runtime.
+   * @default "system"
+   */
+  mode?: 'light' | 'dark' | 'system';
+}
+
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
+  mode = 'system',
 }) => {
-  // Initialize dark mode based on system preference
-  const prefersDarkMode =
+  const systemPrefersDark = () =>
     typeof window !== 'undefined'
       ? window.matchMedia('(prefers-color-scheme: dark)').matches
       : false;
 
+  // Initialize from the explicit mode, falling back to the system preference
+  const prefersDarkMode =
+    mode === 'system' ? systemPrefersDark() : mode === 'dark';
+
   const [isDarkMode, setDarkMode] = useState<boolean>(prefersDarkMode);
 
-  // Listen for changes in system color scheme preference
+  // An explicit mode always wins, and follows the prop when it changes
   useEffect(() => {
+    setDarkMode(mode === 'system' ? systemPrefersDark() : mode === 'dark');
+  }, [mode]);
+
+  // Listen for changes in system color scheme preference (system mode only)
+  useEffect(() => {
+    if (mode !== 'system') return;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = (e: MediaQueryListEvent) => {
@@ -49,7 +71,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     return () => {
       mediaQuery.removeEventListener('change', handleChange);
     };
-  }, []);
+  }, [mode]);
 
   // Create the standardized theme object
   const [theme, setTheme] = useState<MondrianTheme>({
@@ -125,7 +147,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   // Generate CSS variables from theme
   useEffect(() => {
     const styleSheet = document.createElement('style');
-    styleSheet.innerText = `
+    styleSheet.textContent = `
       /* Mondrian Theme Variables */
       :root {
         /* Colors - Primary Mondrian Palette */

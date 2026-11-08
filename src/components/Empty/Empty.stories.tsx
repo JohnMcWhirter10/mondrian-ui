@@ -73,7 +73,6 @@ export const Themes: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: { backgrounds: { default: 'dark' } },
   render: () => (
     <div data-theme="dark">
       <Empty>

@@ -98,7 +98,6 @@ export const Themes: Story = {
 };
 
 export const Dark: Story = {
-  parameters: { backgrounds: { default: 'dark' } },
   render: () => (
     <div
       data-theme="dark"

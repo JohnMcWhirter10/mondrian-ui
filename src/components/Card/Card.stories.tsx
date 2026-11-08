@@ -449,7 +449,7 @@ export const Themes: Story = {
             <CardDescription>One plane, one swatch, one bar.</CardDescription>
           </CardHeader>
           <CardContent>
-            Content sits on white, away from the swatch.
+            Content sits on the ground, away from the swatch.
           </CardContent>
         </Card>
       ))}
@@ -458,7 +458,6 @@ export const Themes: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: { backgrounds: { default: 'dark' } },
   render: () => (
     <div
       data-theme="dark"
@@ -470,7 +469,7 @@ export const DarkMode: Story = {
             <CardTitle>{theme} card</CardTitle>
             <CardDescription>Lines invert; planes stay.</CardDescription>
           </CardHeader>
-          <CardContent>Content on black.</CardContent>
+          <CardContent>Content on the ground.</CardContent>
         </Card>
       ))}
     </div>

@@ -165,7 +165,6 @@ export const Themes = {
 };
 
 export const DarkMode = {
-  parameters: { backgrounds: { default: 'dark' } },
   render: () => (
     <div
       data-theme="dark"
