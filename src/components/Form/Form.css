@@ -1,0 +1,13 @@
+/*
+ * Form: layout only. Fields stack in one column. The gap is a spacing
+ * variable, and there is no border, so the surrounding plane carries the grid.
+ */
+.mondrian-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mondrian-spacing-large);
+  box-sizing: border-box;
+  margin: 0;
+  font-family: var(--mondrian-font-family);
+  color: var(--mondrian-text);
+}

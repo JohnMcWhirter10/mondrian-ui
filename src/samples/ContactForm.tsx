@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box,
+  Form,
   Button,
   Input,
   Textarea,
@@ -93,10 +94,7 @@ export const ContactFormSample = () => {
             </Alert>
           )}
 
-          <form
-            onSubmit={handleSubmit}
-            style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-          >
+          <Form id="contact-form" onSubmit={handleSubmit}>
             <div>
               <Label htmlFor="name">Name *</Label>
               <Input
@@ -157,10 +155,10 @@ export const ContactFormSample = () => {
               />
               <Label htmlFor="subscribe">Subscribe to our newsletter</Label>
             </div>
-          </form>
+          </Form>
         </CardContent>
         <CardFooter>
-          <Button theme="blue" onClick={handleSubmit}>
+          <Button theme="blue" type="submit" form="contact-form">
             Send Message
           </Button>
           <Button

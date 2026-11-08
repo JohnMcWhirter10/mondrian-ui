@@ -8,9 +8,10 @@ Mondrian UI is a React component library styled after Piet Mondrian's neoplastic
 npm install mondrian-ui react react-dom
 ```
 
-Wrap your app in `ThemeProvider`:
+Import the stylesheet once and wrap your app in `ThemeProvider`:
 
 ```jsx
+import 'mondrian-ui/style.css';
 import { ThemeProvider } from 'mondrian-ui';
 
 <ThemeProvider mode="system">

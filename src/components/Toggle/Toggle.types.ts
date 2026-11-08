@@ -11,13 +11,8 @@ export type ToggleProps = Omit<
   'className'
 > & {
   /**
-   * The label text for the toggle
-   */
-  label?: string;
-
-  /**
    * The theme color for the toggle
-   * @default "primary"
+   * @default "blue"
    */
   theme?: ToggleTheme;
 
@@ -26,10 +21,4 @@ export type ToggleProps = Omit<
    * @default "default"
    */
   size?: 'default' | 'sm' | 'lg';
-
-  /**
-   * Position of the label relative to the toggle
-   * @default "right"
-   */
-  labelPosition?: 'left' | 'right' | 'top' | 'bottom';
 };

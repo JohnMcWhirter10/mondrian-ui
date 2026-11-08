@@ -8,6 +8,9 @@ import {
   MondrianDownArrow,
   Plus,
   Dash,
+  Check,
+  Cross,
+  Menu,
 } from './index';
 
 const icons = {
@@ -19,6 +22,9 @@ const icons = {
   MondrianDownArrow,
   Plus,
   Dash,
+  Check,
+  Cross,
+  Menu,
 };
 
 describe.each(Object.entries(icons))('%s icon', (_name, Icon) => {

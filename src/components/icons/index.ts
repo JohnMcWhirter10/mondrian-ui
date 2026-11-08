@@ -8,3 +8,4 @@ export * from './Plus';
 export * from './Dash';
 export * from './Check';
 export * from './Cross';
+export * from './Menu';

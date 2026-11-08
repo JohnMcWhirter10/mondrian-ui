@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { ThemeContext } from './ThemeContext';
 import { MondrianTheme } from './Theme.types';
+import { readStoredDarkMode } from './darkModeStorage';
 import {
   MONDRIAN_RED,
   MONDRIAN_BLUE,
@@ -46,15 +47,17 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       ? window.matchMedia('(prefers-color-scheme: dark)').matches
       : false;
 
+  // In system mode, a choice saved by DarkModeToggle wins over the OS.
+  const resolveSystem = () => readStoredDarkMode() ?? systemPrefersDark();
+
   // Initialize from the explicit mode, falling back to the system preference
-  const prefersDarkMode =
-    mode === 'system' ? systemPrefersDark() : mode === 'dark';
+  const prefersDarkMode = mode === 'system' ? resolveSystem() : mode === 'dark';
 
   const [isDarkMode, setDarkMode] = useState<boolean>(prefersDarkMode);
 
   // An explicit mode always wins, and follows the prop when it changes
   useEffect(() => {
-    setDarkMode(mode === 'system' ? systemPrefersDark() : mode === 'dark');
+    setDarkMode(mode === 'system' ? resolveSystem() : mode === 'dark');
   }, [mode]);
 
   // Listen for changes in system color scheme preference (system mode only)
@@ -63,6 +66,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = (e: MediaQueryListEvent) => {
+      if (readStoredDarkMode() !== null) return;
       setDarkMode(e.matches);
     };
 

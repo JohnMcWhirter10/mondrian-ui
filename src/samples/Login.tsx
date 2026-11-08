@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
+  Form,
   Input,
   Label,
   Card,
@@ -60,7 +61,7 @@ export const LoginSample = () => {
             </Alert>
           )}
 
-          <form onSubmit={handleSubmit}>
+          <Form id="login-form" onSubmit={handleSubmit}>
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -78,10 +79,10 @@ export const LoginSample = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
             />
-          </form>
+          </Form>
         </CardContent>
         <CardFooter>
-          <Button theme="blue" onClick={handleSubmit}>
+          <Button theme="blue" type="submit" form="login-form">
             Login
           </Button>
         </CardFooter>
