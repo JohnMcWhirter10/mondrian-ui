@@ -108,13 +108,31 @@ export const FlexContainer: Story = {
   args: {
     children: (
       <>
-        <div style={{ padding: '10px', backgroundColor: '#D42029' }}>
+        <div
+          style={{
+            padding: '10px',
+            backgroundColor: 'var(--mondrian-red)',
+            color: 'var(--mondrian-white)',
+          }}
+        >
           Item 1
         </div>
-        <div style={{ padding: '10px', backgroundColor: '#0D47A1' }}>
+        <div
+          style={{
+            padding: '10px',
+            backgroundColor: 'var(--mondrian-blue)',
+            color: 'var(--mondrian-white)',
+          }}
+        >
           Item 2
         </div>
-        <div style={{ padding: '10px', backgroundColor: '#FFDE03' }}>
+        <div
+          style={{
+            padding: '10px',
+            backgroundColor: 'var(--mondrian-yellow)',
+            color: 'var(--mondrian-black)',
+          }}
+        >
           Item 3
         </div>
       </>

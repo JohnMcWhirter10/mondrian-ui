@@ -409,7 +409,7 @@ export const NestedLayout: Story = {
           style={{
             padding: '12px',
             marginBottom: '12px',
-            border: '2px solid var(--mondrian-black)',
+            border: '2px solid var(--mondrian-border)',
           }}
         >
           <h4 style={{ margin: '0 0 8px 0' }}>Section One</h4>
@@ -420,13 +420,11 @@ export const NestedLayout: Story = {
         <Box
           style={{
             padding: '12px',
-            border: '2px solid var(--mondrian-yellow)',
-            backgroundColor: 'rgba(255, 222, 3, 0.05)',
+            borderTop: '5px solid var(--mondrian-border)',
+            borderLeft: '2px solid var(--mondrian-border)',
           }}
         >
-          <h4 style={{ margin: '0 0 8px 0', color: 'var(--mondrian-yellow)' }}>
-            Section Two
-          </h4>
+          <h4 style={{ margin: '0 0 8px 0' }}>Section Two</h4>
           <p style={{ margin: '0' }}>
             This is the second content section with different styling.
           </p>

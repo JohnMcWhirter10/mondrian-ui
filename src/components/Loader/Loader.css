@@ -1,6 +1,7 @@
 .mondrian-loader {
   --mondrian-loader-unit: var(--mondrian-spacing-large);
   --plane: var(--mondrian-blue);
+  --marker: var(--mondrian-white);
   position: relative;
   display: inline-flex;
   align-items: stretch;
@@ -17,18 +18,22 @@
 
 .mondrian-loader-blue {
   --plane: var(--mondrian-blue);
+  --marker: var(--mondrian-white);
 }
 
 .mondrian-loader-red {
   --plane: var(--mondrian-red);
+  --marker: var(--mondrian-white);
 }
 
 .mondrian-loader-yellow {
   --plane: var(--mondrian-yellow);
+  --marker: var(--mondrian-black);
 }
 
 .mondrian-loader-neutral {
   --plane: var(--mondrian-border);
+  --marker: var(--mondrian-background);
 }
 
 .mondrian-loader-sm {
@@ -59,7 +64,7 @@
   width: calc(var(--mondrian-loader-unit) * 3);
 }
 
-/* The plane moves by transform only. A heavy black bar on its right edge
+/* The plane moves by transform only. A heavy bar on its right edge
    keeps its position readable without color. */
 .mondrian-loader-mover {
   position: absolute;
@@ -69,13 +74,11 @@
   width: var(--mondrian-loader-unit);
   border-radius: 0;
   background-color: var(--plane);
-  border-right: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  /* The frame is the line color, so the marker must not be. It takes the
+     readable color for its plane. */
+  border-right: var(--mondrian-grid-width-heavy) solid var(--marker);
   box-sizing: border-box;
   animation: mondrian-loader-slide 1.2s steps(6, end) infinite alternate;
-}
-
-.mondrian-loader-neutral .mondrian-loader-mover {
-  border-right-color: var(--mondrian-background);
 }
 
 @keyframes mondrian-loader-slide {

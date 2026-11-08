@@ -10,7 +10,7 @@ const meta: Meta<typeof Separator> = {
     docs: {
       description: {
         component: `
-A solid black line of one grid weight, horizontal or vertical.
+A solid line in the line color, horizontal (heavy weight) or vertical (base weight).
 
 The line is black and the same weight in light and dark. A decorative separator is purely visual and drops its role; set \`decorative={false}\` to expose it to assistive technology.
         `,

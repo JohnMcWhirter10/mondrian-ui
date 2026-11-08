@@ -86,10 +86,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       white: MONDRIAN_WHITE,
 
       // Functional colors
-      background: MONDRIAN_WHITE,
-      text: MONDRIAN_BLACK,
-      border: MONDRIAN_BLACK,
-      shadow: MONDRIAN_BLACK,
+      // Start from the resolved mode so dark mode never flashes light on mount
+      background: prefersDarkMode ? MONDRIAN_BLACK : MONDRIAN_WHITE,
+      text: prefersDarkMode ? MONDRIAN_WHITE : MONDRIAN_BLACK,
+      border: prefersDarkMode ? MONDRIAN_WHITE : MONDRIAN_BLACK,
+      shadow: prefersDarkMode ? MONDRIAN_WHITE : MONDRIAN_BLACK,
       overlay: 'rgba(0, 0, 0, 0.7)',
 
       // Semantic colors
@@ -216,7 +217,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         background-color: var(--mondrian-background);
         color: var(--mondrian-text);
         font-family: var(--mondrian-font-family);
-        transition: background-color 0.3s, color 0.3s;
       }
       
       /* Base component styles */
