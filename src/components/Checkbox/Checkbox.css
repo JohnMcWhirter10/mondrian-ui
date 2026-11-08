@@ -51,13 +51,13 @@
   inset: -10px;
 }
 
-/* A heavy rule runs past the right edge at the base. Decorative only. */
+/* A heavy rule spans the box at the base. Decorative only. */
 .mondrian-checkbox-root::after {
   content: '';
   position: absolute;
   left: calc(var(--mondrian-grid-width) * -1);
   bottom: calc(var(--mondrian-grid-width-heavy) * -1);
-  width: calc(100% + 6px + var(--mondrian-grid-width) * 2);
+  width: calc(100% + var(--mondrian-grid-width) * 2);
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);
   pointer-events: none;

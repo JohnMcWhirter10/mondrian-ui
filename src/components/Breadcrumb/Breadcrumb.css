@@ -72,10 +72,10 @@
 .mondrian-breadcrumb-page::before {
   content: '';
   position: absolute;
-  top: calc(var(--mondrian-spacing-small) * -1);
+  top: 0;
   left: 0;
   width: var(--mondrian-spacing-medium);
-  height: var(--mondrian-spacing-medium);
+  height: var(--mondrian-grid-width-heavy);
   background-color: var(--plane);
   pointer-events: none;
 }

@@ -61,12 +61,12 @@
   border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
-/* Heavy cap bar runs past the top left edge. Decorative only. */
+/* Heavy cap bar sits on the top left edge. Decorative only. */
 .mondrian-grid-lines::before {
   content: '';
   position: absolute;
   top: calc(var(--mondrian-grid-width-heavy) * -1);
-  left: calc(var(--mondrian-spacing-small) * -1);
+  left: 0;
   width: 40%;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--plane);

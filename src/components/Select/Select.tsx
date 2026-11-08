@@ -11,6 +11,7 @@ import {
   SelectGroupProps,
   SelectValueProps,
 } from './Select.types';
+import '../../styles/native-scroll.css';
 import './Select.css';
 
 /* theme and size belong to SelectTrigger and SelectContent. The Radix root
@@ -80,7 +81,7 @@ const SelectContent = React.forwardRef<
         ref={ref}
         {...props}
       >
-        <SelectPrimitive.Viewport className="mondrian-select-viewport">
+        <SelectPrimitive.Viewport className="mondrian-select-viewport mondrian-native-scroll">
           {children}
         </SelectPrimitive.Viewport>
       </SelectPrimitive.Content>

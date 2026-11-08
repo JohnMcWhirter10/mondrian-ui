@@ -2,8 +2,9 @@
  * Table after Composition II (1930) and the 1937-42 lines.
  * - No box. Horizontal rules cross the whole table; the heavy ones carry the
  *   structure, the thin ones separate rows.
- * - One vertical rule after the first column, base weight, running past the
- *   top and bottom of the table like the long vertical in the painting.
+ * - One vertical rule after the first column, base weight, running the full
+ *   height of the table and stopping at its edge, like the long vertical in
+ *   the painting.
  * - One small counterweight plane (first header cell) and, when present, one
  *   dominant plane (the footer row). Everything else stays white (black in dark).
  * Text on a plane is fixed to the readable pairing: white on red/blue,
@@ -12,12 +13,9 @@
 .mondrian-table {
   --plane: var(--mondrian-blue);
   --on-plane: var(--mondrian-white);
-  --table-overshoot: var(--mondrian-spacing-medium);
 
-  /* Room so the rules can run past the table without being clipped by the
-     scroll area. */
-  width: calc(100% - var(--table-overshoot) * 2);
-  margin: var(--table-overshoot);
+  width: 100%;
+  margin: 0;
   border-collapse: collapse;
   border-spacing: 0;
   font-family: var(--mondrian-font-family);
@@ -85,59 +83,8 @@
   color: var(--on-plane);
 }
 
-/* Heavy rule runs past the left and right edges of the table. */
-.mondrian-table-header .mondrian-table-head:first-child::before,
-.mondrian-table-header .mondrian-table-head:last-child::before {
-  content: '';
-  position: absolute;
-  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
-  width: var(--table-overshoot);
-  height: var(--mondrian-grid-width-heavy);
-  background-color: var(--mondrian-border);
-  pointer-events: none;
-}
-
-.mondrian-table-header .mondrian-table-head:first-child::before {
-  left: calc(var(--table-overshoot) * -1);
-}
-
-.mondrian-table-header .mondrian-table-head:last-child::before {
-  right: calc(var(--table-overshoot) * -1);
-}
-
-/* The vertical rule overshoots the top of the table... */
-.mondrian-table-header .mondrian-table-head:first-child::after {
-  content: '';
-  position: absolute;
-  top: calc(var(--table-overshoot) * -1);
-  right: calc(var(--mondrian-grid-width) * -1);
-  width: var(--mondrian-grid-width);
-  height: var(--table-overshoot);
-  background-color: var(--mondrian-border);
-  pointer-events: none;
-}
-
-/* ...and the bottom, from the last row (the footer when there is one). */
-.mondrian-table:not(:has(.mondrian-table-footer))
-  .mondrian-table-body
-  .mondrian-table-row:last-child
-  .mondrian-table-cell:first-child::after,
-.mondrian-table-footer
-  .mondrian-table-row:last-child
-  .mondrian-table-cell:first-child:not([colspan])::after {
-  content: '';
-  position: absolute;
-  bottom: calc(var(--table-overshoot) * -1);
-  right: calc(var(--mondrian-grid-width) * -1);
-  width: var(--mondrian-grid-width);
-  height: var(--table-overshoot);
-  background-color: var(--mondrian-border);
-  pointer-events: none;
-}
-
-/* The scroll viewport's box would close the composition. Drop it for tables;
-   the scrollbar keeps its own frame. */
-.mondrian-scroll-area-viewport:has(.mondrian-table) {
+/* Edges stay inside the table: rules run to the edge and stop there. */
+.mondrian-scroll-area:has(.mondrian-table) {
   border: 0;
   background-color: transparent;
 }

@@ -2,7 +2,7 @@
  * Collapsible Component
  *
  * Mirror of the accordion: a base-weight vertical rule on the right and a
- * heavy rule underneath. The bottom rule runs past the right edge and stops
+ * heavy rule underneath. The bottom rule runs to the right edge and stops
  * short on the left, where one colour swatch is pinned to the corner. Open
  * state is the glyph (+ becomes -) and aria-expanded, never motion.
  */
@@ -37,13 +37,13 @@
   --plane: var(--mondrian-border);
 }
 
-/* Bottom rule: extends 12px past the right edge, stops short on the left */
+/* Bottom rule: runs to the right edge, stops short on the left */
 .mondrian-collapsible::before {
   content: '';
   position: absolute;
   bottom: calc(var(--mondrian-grid-width-heavy) * -2);
   left: 48px;
-  right: -12px;
+  right: 0;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);
   pointer-events: none;

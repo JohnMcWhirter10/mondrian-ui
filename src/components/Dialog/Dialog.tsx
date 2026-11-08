@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import '../../styles/native-scroll.css';
 import './Dialog.css';
 import { DialogContentProps, DialogTriggerProps } from './Dialog.types';
 
@@ -68,7 +69,9 @@ const DialogContent = React.forwardRef<
         .join(' ')}
       {...props}
     >
-      <div className="mondrian-dialog-body">{children}</div>
+      <div className="mondrian-dialog-body mondrian-native-scroll">
+        {children}
+      </div>
       <DialogPrimitive.Close className="mondrian-dialog-close">
         <svg
           className="mondrian-dialog-close-icon"

@@ -33,13 +33,13 @@
   --plane: var(--mondrian-border);
 }
 
-/* Decorative heavy bar, overshooting the left edge. CSS only. */
+/* Decorative heavy bar, flush with the left edge. CSS only. */
 .mondrian-heading::before {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
-  left: calc(var(--mondrian-spacing-medium) * -1);
+  left: 0;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--plane);
   pointer-events: none;

@@ -38,11 +38,11 @@
   cursor: pointer;
 }
 
-/* The accent: a small plane pinned to the base line, running past the right edge. */
+/* The accent: a small plane pinned to the base line, ending at the right edge. */
 .mondrian-label::after {
   content: '';
   position: absolute;
-  right: -12px;
+  right: 0;
   bottom: calc(var(--mondrian-grid-width-heavy) * -1);
   width: 20px;
   height: calc(var(--mondrian-grid-width-heavy) * 2);

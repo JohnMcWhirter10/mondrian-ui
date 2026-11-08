@@ -52,12 +52,12 @@
   transition: box-shadow var(--mondrian-motion-state);
 }
 
-/* A heavy bar rests on the top edge and runs past the left side. Decorative only. */
+/* A heavy bar rests on the top edge and starts at the left side. Decorative only. */
 .mondrian-button::before {
   content: '';
   position: absolute;
   top: calc(var(--mondrian-grid-width) * -1);
-  left: -8px;
+  left: 0;
   width: 40%;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);

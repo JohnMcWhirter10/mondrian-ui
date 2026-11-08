@@ -3,7 +3,7 @@
  *
  * A white plane held by base-weight verticals and heavy horizontals. A colour
  * swatch is pinned over the top-left of the frame and the bottom rule runs
- * past the right edge. A highlighted row inverts to the plane colour AND
+ * to the right edge. A highlighted row inverts to the plane colour AND
  * gains a heavy left bar and an underline, so it is never colour alone.
  * Checked rows carry a glyph. No fades, no motion.
  */
@@ -121,16 +121,26 @@
   pointer-events: none;
 }
 
-/* Bottom rule runs past the right edge */
+/* Bottom rule runs to the right edge */
 .mondrian-dropdown-content::after {
   content: '';
   position: absolute;
   bottom: calc(var(--mondrian-grid-width-heavy) * -1);
   left: 35%;
-  right: -10px;
+  right: 0;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);
   pointer-events: none;
+}
+
+/* Tall menus scroll inside the frame, so the swatch and rules on the frame
+   itself are never clipped and the menu never leaves the screen. */
+.mondrian-dropdown-scroll {
+  max-height: calc(
+    var(--radix-dropdown-menu-content-available-height, 100vh) - 3rem
+  );
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Rows */

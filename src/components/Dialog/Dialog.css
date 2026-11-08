@@ -2,7 +2,7 @@
  * Dialog Component
  *
  * A white plane held by a black frame. Verticals use the base line weight,
- * horizontals the heavy one. The top rule runs past the left edge and stops
+ * horizontals the heavy one. The top rule starts at the left edge and stops
  * short of the close cell; one colour swatch is pinned to the bottom-left
  * corner. Hard cut in and out: no fades, no motion.
  */
@@ -119,19 +119,28 @@
   width: min(calc(100vw - 2rem), 620px);
 }
 
-/* Scrolling lives inside the frame so the decorative rules can run past it */
+/* Scrolling lives inside the frame so the decorative rules are never clipped */
 .mondrian-dialog-body {
   max-height: calc(100vh - 2rem - 8rem);
+  overflow-x: hidden;
   overflow-y: auto;
-  padding-right: var(--mondrian-spacing-medium);
+  /* Room for focus rings and hover shadows of the controls inside, so the
+     scroll edge never clips them. The margin gives the space back. */
+  --scroll-room: calc(
+    var(--mondrian-focus-width) + var(--mondrian-focus-offset)
+  );
+  margin: calc(var(--scroll-room) * -1);
+  padding: var(--scroll-room)
+    calc(var(--scroll-room) + var(--mondrian-spacing-medium)) var(--scroll-room)
+    var(--scroll-room);
 }
 
-/* Top rule: runs past the left edge, stops short of the close cell */
+/* Top rule: starts at the left edge, stops short of the close cell */
 .mondrian-dialog-content::before {
   content: '';
   position: absolute;
   top: calc(var(--mondrian-grid-width-heavy) * -1);
-  left: -12px;
+  left: 0;
   right: 72px;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);

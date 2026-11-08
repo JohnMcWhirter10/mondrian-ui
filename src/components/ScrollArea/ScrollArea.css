@@ -1,16 +1,31 @@
 /*
- * ScrollArea: a framed viewport under a heavy top bar. The scrollbar is always
- * drawn while content overflows: a black-framed track with a themed thumb that
- * is also framed in black, so the thumb never depends on color for contrast
- * (>= 3:1 against the track). The corner is the small swatch in the theme color.
+ * ScrollArea: a framed viewport under a heavy top bar. While content overflows
+ * the scrollbar is a narrow cell inside that frame, split off by a grid line:
+ * a themed thumb framed in black, so it never depends on color for contrast.
+ * The corner is the small swatch in the theme color. Nothing is drawn outside
+ * the component's box.
  */
 .mondrian-scroll-area {
   --track: 14px;
   --plane: var(--mondrian-blue);
 
   position: relative;
-  margin-right: var(--track);
-  margin-bottom: var(--track);
+  box-sizing: border-box;
+  /* The frame belongs to the root, so the scrollbar can sit inside it. */
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+}
+
+/* Each bar is a narrow cell inside the frame. The viewport gives up that
+   strip, so nothing is drawn outside the component's box. */
+.mondrian-scroll-area:has(> .mondrian-scrollbar-vertical) {
+  padding-right: var(--track);
+}
+
+.mondrian-scroll-area:has(> .mondrian-scrollbar-horizontal) {
+  padding-bottom: var(--track);
 }
 
 .mondrian-scroll-area-blue {
@@ -33,50 +48,53 @@
   --plane: var(--mondrian-text);
 }
 
+/* No border of its own: the root draws the frame. */
 .mondrian-scroll-area-viewport {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
-  background-color: var(--mondrian-background);
-  color: var(--mondrian-text);
 }
 
+/* Room inside the viewport so focus rings and hover shadows of children are
+   never clipped by the scroll edge. Tables draw their own edges. */
+.mondrian-scroll-area-viewport > div:not(:has(.mondrian-table)) {
+  box-sizing: border-box;
+  padding: calc(var(--mondrian-focus-width) + var(--mondrian-focus-offset));
+}
+
+/* Ring drawn inside the viewport, so it stays within the frame. */
 .mondrian-scroll-area-viewport:focus-visible {
   outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
-  outline-offset: var(--mondrian-focus-offset);
+  outline-offset: calc(var(--mondrian-focus-width) * -1);
 }
 
-/* Track */
+/* Track. Radix pins each bar to its edge and leaves the corner gap. */
 .mondrian-scrollbar {
   display: flex;
   box-sizing: border-box;
   touch-action: none;
   user-select: none;
   background-color: var(--mondrian-background);
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
 .mondrian-scrollbar-vertical {
-  position: absolute;
-  right: calc(var(--track) * -1) !important;
   width: var(--track);
   flex-direction: column;
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
 .mondrian-scrollbar-horizontal {
-  position: absolute;
-  bottom: calc(var(--track) * -1) !important;
   height: var(--track);
-  flex-direction: column;
+  flex-direction: row;
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
 /* Thumb: themed plane held by a black line of the same weight as the grid. */
 .mondrian-scrollbar-thumb {
   position: relative;
   box-sizing: border-box;
-  flex: 1;
+  /* Radix sizes the thumb to the content; flex must not stretch it. */
+  flex: none;
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
   border-radius: 0;
   background-color: var(--mondrian-background);
@@ -103,17 +121,16 @@
   background-color: var(--mondrian-yellow);
 }
 
-/* Corner: the small swatch pinned to the bottom-right. */
+/* Corner: the small swatch where the two bars meet, inside the frame. */
 .mondrian-scroll-area-corner {
   box-sizing: border-box;
-  bottom: calc(var(--track) * -1) !important;
-  right: calc(var(--track) * -1) !important;
   background-color: var(--plane);
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
 @media (forced-colors: active) {
-  .mondrian-scroll-area-viewport,
+  .mondrian-scroll-area,
   .mondrian-scrollbar,
   .mondrian-scrollbar-thumb,
   .mondrian-scroll-area-corner {

@@ -48,12 +48,12 @@
   pointer-events: none;
 }
 
-/* Heavy rule runs past the left edge at the bottom. Decorative only. */
+/* Heavy rule starts at the left edge at the bottom. Decorative only. */
 .mondrian-empty::after {
   content: '';
   position: absolute;
   bottom: calc(var(--mondrian-grid-width-heavy) * -1);
-  left: calc(var(--mondrian-spacing-small) * -1);
+  left: 0;
   width: var(--mondrian-spacing-small);
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);

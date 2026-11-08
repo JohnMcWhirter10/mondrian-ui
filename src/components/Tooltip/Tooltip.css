@@ -2,7 +2,7 @@
  * Tooltip Component
  *
  * A small white plane in a black frame. A colour swatch is pinned to the
- * left edge and a heavy rule runs past the right edge while stopping short
+ * left edge and a heavy rule runs to the right edge while stopping short
  * on the left. Text never sits on the colour: it stays black on white
  * (white on black in dark mode). Appears with a hard cut, no motion.
  */
@@ -40,7 +40,7 @@
   pointer-events: none;
 }
 
-/* Heavy rule along the bottom: runs past the right edge, stops short on the left */
+/* Heavy rule along the bottom: runs to the right edge, stops short on the left */
 .mondrian-tooltip-content::after {
   content: '';
   position: absolute;
@@ -48,7 +48,7 @@
     var(--mondrian-grid-width-heavy) * -1 - var(--mondrian-grid-width)
   );
   left: 40%;
-  right: -8px;
+  right: 0;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);
   pointer-events: none;

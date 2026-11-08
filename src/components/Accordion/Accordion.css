@@ -2,7 +2,7 @@
  * Accordion Component
  *
  * Not a closed box: a base-weight vertical rule on the left, heavy
- * horizontal rules between items. The top rule runs past the left edge and
+ * horizontal rules between items. The top rule starts at the left edge and
  * stops short on the right, where one colour swatch is pinned to the corner.
  * Open state is the glyph (+ becomes -) and aria-expanded, never motion.
  */
@@ -36,12 +36,12 @@
   --plane: var(--mondrian-border);
 }
 
-/* Top rule: runs 12px past the left edge, stops short of the swatch */
+/* Top rule: starts at the left edge, stops short of the swatch */
 .mondrian-accordion::before {
   content: '';
   position: absolute;
   top: calc(var(--mondrian-grid-width-heavy) * -1);
-  left: -12px;
+  left: 0;
   right: 48px;
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);

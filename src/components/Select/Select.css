@@ -1,8 +1,8 @@
 /*
  * The trigger is a white (black in dark mode) plane inside a black grid:
  * base-weight verticals, a heavy bottom bar, and a flat swatch of the theme
- * plane on the bar at the left edge. One hairline runs down past the bottom
- * edge, like a line that continues beyond the canvas. Hover leaves the
+ * plane on the bar at the left edge. One hairline rises from the bottom bar,
+ * inside the box. Hover leaves the
  * trigger where it is (issue #58). Focus draws the standard outline.
  */
 .mondrian-select-trigger {
@@ -78,14 +78,14 @@
 }
 
 /*
- * Decorative line that runs past the bottom edge. CSS only, never in the
+ * Decorative hairline rising from the bottom bar, inside the box. CSS only, never in the
  * accessibility tree, and it adds no horizontal overflow.
  */
 .mondrian-select-trigger::after {
   content: '';
   position: absolute;
   right: calc(var(--mondrian-spacing-large) * 2);
-  top: 100%;
+  bottom: 0;
   width: var(--mondrian-grid-width);
   height: var(--mondrian-spacing-medium);
   background-color: var(--mondrian-border);
@@ -188,6 +188,7 @@
 }
 
 .mondrian-select-viewport {
+  /* Room for focus rings and the scrollbar edge. */
   padding: var(--mondrian-spacing-small) var(--mondrian-spacing-small)
     var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
 }

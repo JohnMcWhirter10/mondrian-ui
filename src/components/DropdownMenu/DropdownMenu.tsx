@@ -17,6 +17,7 @@ import {
   DropdownMenuSubContentProps,
   DropdownMenuItemIndicatorProps,
 } from './DropdownMenu.types';
+import '../../styles/native-scroll.css';
 import './DropdownMenu.css';
 
 // Create context to pass theme
@@ -77,7 +78,9 @@ const DropdownMenuContent = React.forwardRef<
         ref={ref}
         {...props}
       >
-        {children}
+        <div className="mondrian-dropdown-scroll mondrian-native-scroll">
+          {children}
+        </div>
       </DropdownMenuPrimitive.Content>
     </DropdownMenuPrimitive.Portal>
   );
@@ -236,7 +239,9 @@ const DropdownMenuSubContent = React.forwardRef<
       ref={ref}
       {...props}
     >
-      {children}
+      <div className="mondrian-dropdown-scroll mondrian-native-scroll">
+        {children}
+      </div>
     </DropdownMenuPrimitive.SubContent>
   );
 });
