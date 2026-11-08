@@ -71,6 +71,11 @@
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
+.mondrian-dialog-trigger:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--mondrian-shadow);
+}
+
 .mondrian-dialog-trigger[data-state='open'] {
   text-decoration: underline;
 }
@@ -243,5 +248,11 @@
   }
   .mondrian-dialog-trigger[data-state='open'] {
     text-decoration: underline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-dialog-trigger:active:not(:disabled) {
+    transform: none;
   }
 }
