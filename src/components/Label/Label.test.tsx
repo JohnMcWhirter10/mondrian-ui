@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Label } from './Label';
 
 describe('Label Component', () => {
@@ -34,44 +38,22 @@ describe('Label Component', () => {
     expect(label).toHaveClass('mondrian-label-lg');
   });
 
-  test('renders with correct theme classes', () => {
-    const themes = ['blue', 'neutral', 'red', 'green', 'yellow'] as const;
-
-    themes.forEach((theme) => {
-      const { rerender } = render(
-        <Label htmlFor="test-input" theme={theme}>
-          {`${theme} Label`}
-        </Label>
-      );
-
-      const label = screen.getByText(`${theme} Label`);
-      expect(label).toHaveClass(`mondrian-label-${theme}`);
-
-      rerender(<></>);
-    });
-  });
-
-  test('forwards ref to the underlying label element', () => {
-    const ref = React.createRef<HTMLLabelElement>();
-    render(
+  itForwardsRef<HTMLLabelElement>({
+    render: (ref) => (
       <Label ref={ref} htmlFor="test-input">
         Ref Test
       </Label>
-    );
-
-    expect(ref.current).not.toBeNull();
-    expect(ref.current?.tagName).toBe('LABEL');
+    ),
+    tagName: 'LABEL',
+    className: 'mondrian-label',
   });
 
-  test('passes other props to the underlying element', () => {
-    render(
-      <Label htmlFor="test-input" data-testid="test-label">
+  itPassesThroughAttributes({
+    render: (props) => (
+      <Label htmlFor="test-input" {...props}>
         Props Test
       </Label>
-    );
-
-    const label = screen.getByTestId('test-label');
-    expect(label).toBeInTheDocument();
+    ),
   });
 
   test('renders as a slot when asChild is true', () => {
@@ -86,13 +68,11 @@ describe('Label Component', () => {
     expect(element).toHaveClass('mondrian-label-blue');
   });
 
-  test('defaults to blue and applies every theme class', () => {
-    const themes = ['blue', 'neutral', 'red', 'yellow', 'green'] as const;
-    themes.forEach((theme) => {
-      const { unmount } = render(<Label theme={theme}>{theme}</Label>);
-      expect(screen.getByText(theme)).toHaveClass(`mondrian-label-${theme}`);
-      unmount();
-    });
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => <Label theme={theme}>Themed</Label>,
+    classFor: (theme) => `mondrian-label-${theme}`,
   });
 
   test('associates with a form control', () => {

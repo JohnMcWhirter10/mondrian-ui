@@ -1,6 +1,11 @@
-import React from 'react';
+import { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { DateField } from './index';
 
 describe('DateField', () => {
@@ -48,14 +53,20 @@ describe('DateField', () => {
     expect(handleChange.mock.calls[0][0].target.value).toBe('2026-01-15');
   });
 
-  test('forwards a ref to the input', () => {
-    const ref = React.createRef<HTMLInputElement>();
-    render(<DateField ref={ref} aria-label="Date" />);
+  itForwardsRef<HTMLInputElement>({
+    render: (ref) => <DateField ref={ref} aria-label="Date" />,
+    tagName: 'INPUT',
+    className: 'mondrian-date-field',
+  });
 
-    expect(ref.current).not.toBeNull();
-    expect(ref.current?.tagName).toBe('INPUT');
+  test('forwarded ref is a date input', () => {
+    const ref = createRef<HTMLInputElement>();
+    render(<DateField ref={ref} aria-label="Date" />);
     expect(ref.current).toHaveAttribute('type', 'date');
-    expect(ref.current).toHaveClass('mondrian-date-field');
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => <DateField {...props} />,
   });
 
   test('passes through id, name, min, max, and disabled', () => {
@@ -79,18 +90,11 @@ describe('DateField', () => {
     expect(field).toHaveAttribute('type', 'date');
   });
 
-  test('defaults to the blue theme and applies each plane theme class', () => {
-    const { rerender } = render(<DateField aria-label="Field" />);
-    expect(screen.getByLabelText('Field')).toHaveClass(
-      'mondrian-date-field-blue'
-    );
-
-    (['blue', 'neutral', 'red', 'yellow'] as const).forEach((theme) => {
-      rerender(<DateField theme={theme} aria-label="Field" />);
-      expect(screen.getByLabelText('Field')).toHaveClass(
-        `mondrian-date-field-${theme}`
-      );
-    });
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'blue',
+    render: (theme) => <DateField theme={theme} aria-label="Field" />,
+    classFor: (theme) => `mondrian-date-field-${theme}`,
   });
 
   test('exposes aria-invalid', () => {

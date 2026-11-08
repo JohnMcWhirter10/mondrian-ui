@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Progress } from './index';
 
 describe('Progress', () => {
@@ -48,22 +52,23 @@ describe('Progress', () => {
     expect(screen.getByRole('progressbar')).toHaveClass('mondrian-progress-lg');
   });
 
-  test('forwards a ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(<Progress ref={ref} value={10} />);
-
-    expect(ref.current).toHaveClass('mondrian-progress');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <Progress ref={ref} value={10} />,
+    tagName: 'DIV',
+    className: 'mondrian-progress',
   });
 
-  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      render(<Progress theme={theme} value={1} aria-label="P" />);
-      expect(screen.getByRole('progressbar')).toHaveClass(
-        `mondrian-progress-${theme}`
-      );
-    }
-  );
+  itPassesThroughAttributes({
+    render: (props) => <Progress value={1} {...props} />,
+    target: () => screen.getByRole('progressbar'),
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    render: (theme) => <Progress theme={theme} value={1} aria-label="P" />,
+    classFor: (theme) => `mondrian-progress-${theme}`,
+    target: () => screen.getByRole('progressbar'),
+  });
 
   test('shows percent text so progress is not color only', () => {
     render(<Progress value={40} max={80} aria-label="Upload" />);

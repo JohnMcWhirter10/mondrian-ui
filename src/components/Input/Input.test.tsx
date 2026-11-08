@@ -2,8 +2,13 @@
 /** @jsx React.createElement */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Input } from './Input';
 import { InputProps } from './Input.types';
 
@@ -17,44 +22,14 @@ describe('Input Component', () => {
     );
   };
 
-  test('renders the input with blue theme', () => {
-    renderInput({ id: 'blue-input', theme: 'blue' });
-
-    const input = screen.getByLabelText(/default label/i) as HTMLInputElement;
-    expect(input).not.toBeNull();
-    expect(input).toHaveClass('mondrian-input-blue');
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    render: (theme) => <Input theme={theme} aria-label="x" />,
+    classFor: (theme) => `mondrian-input-${theme}`,
   });
 
-  test('renders the input with neutral theme', () => {
-    renderInput({ id: 'neutral-input', theme: 'neutral' });
-
-    const input = screen.getByLabelText(/default label/i) as HTMLInputElement;
-    expect(input).not.toBeNull();
-    expect(input).toHaveClass('mondrian-input-neutral');
-  });
-
-  test('renders the input with red theme', () => {
-    renderInput({ id: 'red-input', theme: 'red' });
-
-    const input = screen.getByLabelText(/default label/i) as HTMLInputElement;
-    expect(input).not.toBeNull();
-    expect(input).toHaveClass('mondrian-input-red');
-  });
-
-  test('renders the input with green theme', () => {
-    renderInput({ id: 'green-input', theme: 'green' });
-
-    const input = screen.getByLabelText(/default label/i) as HTMLInputElement;
-    expect(input).not.toBeNull();
-    expect(input).toHaveClass('mondrian-input-green');
-  });
-
-  test('renders the input with yellow theme', () => {
-    renderInput({ id: 'yellow-input', theme: 'yellow' });
-
-    const input = screen.getByLabelText(/default label/i) as HTMLInputElement;
-    expect(input).not.toBeNull();
-    expect(input).toHaveClass('mondrian-input-yellow');
+  itPassesThroughAttributes({
+    render: (props) => <Input {...props} />,
   });
 
   test('handles input change', async () => {
@@ -80,11 +55,9 @@ describe('Input Component', () => {
     expect(screen.getByLabelText(/default label/i)).toBeDisabled();
   });
 
-  test('forwards a ref', () => {
-    const ref = React.createRef<HTMLInputElement>();
-    render(<Input ref={ref} aria-label="x" />);
-
-    expect(ref.current?.tagName).toBe('INPUT');
+  itForwardsRef<HTMLInputElement>({
+    render: (ref) => <Input ref={ref} aria-label="x" />,
+    tagName: 'INPUT',
   });
 
   test('does not expose className', () => {

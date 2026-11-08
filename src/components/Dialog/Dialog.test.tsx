@@ -1,9 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx React.createElement */
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ThemeProvider } from '../../themes';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  renderWithTheme,
+} from '../../test-utils';
 import {
   Dialog,
   DialogTrigger,
@@ -15,42 +19,24 @@ import {
 } from './Dialog';
 import { Button } from '../Button/Button';
 
-beforeAll(() => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: (query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: () => undefined,
-      removeListener: () => undefined,
-      addEventListener: () => undefined,
-      removeEventListener: () => undefined,
-      dispatchEvent: () => false,
-    }),
-  });
-});
-
 describe('Dialog Component', () => {
   const renderDialog = (contentProps = {}, children?: React.ReactNode) => {
-    render(
-      <ThemeProvider>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>Open Dialog</Button>
-          </DialogTrigger>
-          <DialogContent {...contentProps}>
-            <DialogHeader>
-              <DialogTitle>Test Dialog</DialogTitle>
-              <DialogDescription>Test Description</DialogDescription>
-            </DialogHeader>
-            {children}
-            <DialogFooter>
-              <Button>Confirm</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </ThemeProvider>
+    renderWithTheme(
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>Open Dialog</Button>
+        </DialogTrigger>
+        <DialogContent {...contentProps}>
+          <DialogHeader>
+            <DialogTitle>Test Dialog</DialogTitle>
+            <DialogDescription>Test Description</DialogDescription>
+          </DialogHeader>
+          {children}
+          <DialogFooter>
+            <Button>Confirm</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     );
   };
 
@@ -155,18 +141,16 @@ describe('Dialog Component', () => {
 
 describe('Dialog Mondrian a11y and themes', () => {
   const open = async (contentProps = {}, ref?: React.Ref<HTMLDivElement>) => {
-    render(
-      <ThemeProvider>
-        <Dialog>
-          <DialogTrigger>Open</DialogTrigger>
-          <DialogContent ref={ref} {...contentProps}>
-            <DialogHeader>
-              <DialogTitle>Title</DialogTitle>
-              <DialogDescription>Description</DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      </ThemeProvider>
+    renderWithTheme(
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent ref={ref} {...contentProps}>
+          <DialogHeader>
+            <DialogTitle>Title</DialogTitle>
+            <DialogDescription>Description</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     );
     userEvent.click(screen.getByRole('button', { name: 'Open' }));
     return screen.findByRole('dialog');
@@ -186,17 +170,16 @@ describe('Dialog Mondrian a11y and themes', () => {
     expect(dialog).toHaveClass('blue');
   });
 
-  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
-    'applies the %s theme class to the trigger',
-    (theme) => {
-      render(
-        <Dialog>
-          <DialogTrigger theme={theme}>Open</DialogTrigger>
-        </Dialog>
-      );
-      expect(screen.getByRole('button', { name: 'Open' })).toHaveClass(theme);
-    }
-  );
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    render: (theme) => (
+      <Dialog>
+        <DialogTrigger theme={theme}>Open</DialogTrigger>
+      </Dialog>
+    ),
+    classFor: (theme) => theme,
+    target: () => screen.getByRole('button', { name: 'Open' }),
+  });
 
   test('forwards the content ref', async () => {
     const ref = React.createRef<HTMLDivElement>();

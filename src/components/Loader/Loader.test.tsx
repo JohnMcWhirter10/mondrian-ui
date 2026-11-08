@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Loader } from './index';
 
 describe('Loader', () => {
@@ -42,26 +46,20 @@ describe('Loader', () => {
     ).toBeInTheDocument();
   });
 
-  test('forwards a ref and passes through attributes', () => {
-    const ref = React.createRef<HTMLSpanElement>();
-    render(<Loader ref={ref} id="loader" />);
-
-    expect(ref.current).toHaveClass('mondrian-loader');
-    expect(ref.current).toHaveAttribute('id', 'loader');
+  itForwardsRef<HTMLSpanElement>({
+    render: (ref) => <Loader ref={ref} />,
+    tagName: 'SPAN',
+    className: 'mondrian-loader',
   });
 
-  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      render(<Loader theme={theme} />);
-      expect(screen.getByRole('status')).toHaveClass(
-        `mondrian-loader-${theme}`
-      );
-    }
-  );
+  itPassesThroughAttributes({
+    render: (props) => <Loader {...props} />,
+  });
 
-  test('defaults to the blue theme', () => {
-    render(<Loader />);
-    expect(screen.getByRole('status')).toHaveClass('mondrian-loader-blue');
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'blue',
+    render: (theme) => <Loader theme={theme} />,
+    classFor: (theme) => `mondrian-loader-${theme}`,
   });
 });

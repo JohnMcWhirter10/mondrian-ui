@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Avatar, AvatarFallback, AvatarImage, type AvatarSize } from './index';
 
 describe('Avatar', () => {
@@ -36,27 +41,15 @@ describe('Avatar', () => {
     });
   });
 
-  test('forwards refs to root and fallback', () => {
-    const ref = React.createRef<HTMLSpanElement>();
+  test('forwards a ref to the fallback', () => {
     const fallbackRef = React.createRef<HTMLSpanElement>();
     render(
-      <Avatar ref={ref}>
+      <Avatar>
         <AvatarFallback ref={fallbackRef}>R</AvatarFallback>
       </Avatar>
     );
 
-    expect(ref.current).toHaveClass('mondrian-avatar');
     expect(fallbackRef.current).toHaveClass('mondrian-avatar-fallback');
-  });
-
-  test('passes through id and aria attributes', () => {
-    render(
-      <Avatar id="user" aria-label="User avatar">
-        <AvatarFallback>U</AvatarFallback>
-      </Avatar>
-    );
-
-    expect(screen.getByLabelText('User avatar')).toHaveAttribute('id', 'user');
   });
 
   test('exposes display names', () => {
@@ -65,20 +58,32 @@ describe('Avatar', () => {
     expect(AvatarFallback.displayName).toBe('AvatarFallback');
   });
 
-  test('defaults to blue and applies each theme class', () => {
-    const { rerender } = render(
-      <Avatar data-testid="a">
+  itForwardsRef<HTMLSpanElement>({
+    render: (ref) => (
+      <Avatar ref={ref}>
+        <AvatarFallback>R</AvatarFallback>
+      </Avatar>
+    ),
+    tagName: 'SPAN',
+    className: 'mondrian-avatar',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => (
+      <Avatar {...props}>
+        <AvatarFallback>U</AvatarFallback>
+      </Avatar>
+    ),
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'blue',
+    render: (theme) => (
+      <Avatar theme={theme}>
         <AvatarFallback>A</AvatarFallback>
       </Avatar>
-    );
-    expect(screen.getByTestId('a')).toHaveClass('mondrian-avatar-blue');
-    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
-      rerender(
-        <Avatar theme={theme} data-testid="a">
-          <AvatarFallback>A</AvatarFallback>
-        </Avatar>
-      );
-      expect(screen.getByTestId('a')).toHaveClass(`mondrian-avatar-${theme}`);
-    }
+    ),
+    classFor: (theme) => `mondrian-avatar-${theme}`,
   });
 });

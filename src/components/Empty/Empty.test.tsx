@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Empty, EmptyActions, EmptyDescription, EmptyTitle } from './index';
 
 describe('Empty', () => {
@@ -26,33 +31,32 @@ describe('Empty', () => {
     ).toHaveClass('mondrian-empty-actions');
   });
 
-  test('forwards refs on every part', () => {
-    const root = React.createRef<HTMLDivElement>();
+  test('forwards refs to the title, description and actions', () => {
     const title = React.createRef<HTMLHeadingElement>();
     const description = React.createRef<HTMLParagraphElement>();
     const actions = React.createRef<HTMLDivElement>();
 
     render(
-      <Empty ref={root}>
+      <Empty>
         <EmptyTitle ref={title}>T</EmptyTitle>
         <EmptyDescription ref={description}>D</EmptyDescription>
         <EmptyActions ref={actions}>A</EmptyActions>
       </Empty>
     );
 
-    expect(root.current).toHaveClass('mondrian-empty');
     expect(title.current?.tagName).toBe('H3');
     expect(description.current?.tagName).toBe('P');
     expect(actions.current).toHaveClass('mondrian-empty-actions');
   });
 
-  test('passes through attributes', () => {
-    render(
-      <Empty role="status" id="e">
-        Empty
-      </Empty>
-    );
-    expect(screen.getByRole('status')).toHaveAttribute('id', 'e');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <Empty ref={ref} />,
+    tagName: 'DIV',
+    className: 'mondrian-empty',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => <Empty role="status" {...props} />,
   });
 
   test('sets display names', () => {
@@ -62,16 +66,10 @@ describe('Empty', () => {
     expect(EmptyActions.displayName).toBe('EmptyActions');
   });
 
-  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      render(<Empty theme={theme} data-testid="e" />);
-      expect(screen.getByTestId('e')).toHaveClass(`mondrian-empty-${theme}`);
-    }
-  );
-
-  test('defaults to the blue theme', () => {
-    render(<Empty data-testid="e" />);
-    expect(screen.getByTestId('e')).toHaveClass('mondrian-empty-blue');
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'blue',
+    render: (theme) => <Empty theme={theme} />,
+    classFor: (theme) => `mondrian-empty-${theme}`,
   });
 });

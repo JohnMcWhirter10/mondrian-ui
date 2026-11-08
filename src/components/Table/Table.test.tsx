@@ -1,6 +1,9 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+} from '../../test-utils';
 import {
   Table,
   TableBody,
@@ -11,17 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from './index';
-
-beforeAll(() => {
-  if (!('ResizeObserver' in globalThis)) {
-    (globalThis as unknown as { ResizeObserver: unknown }).ResizeObserver =
-      class {
-        observe() {}
-        unobserve() {}
-        disconnect() {}
-      };
-  }
-});
 
 const renderTable = () =>
   render(
@@ -73,21 +65,32 @@ describe('Table', () => {
     expect(table.closest('.mondrian-scroll-area')).not.toBeNull();
   });
 
-  test('forwards refs', () => {
-    const ref = React.createRef<HTMLTableElement>();
-    const cellRef = React.createRef<HTMLTableCellElement>();
-    render(
+  itForwardsRef<HTMLTableElement>({
+    render: (ref) => (
       <Table ref={ref}>
         <TableBody>
           <TableRow>
-            <TableCell ref={cellRef}>x</TableCell>
+            <TableCell>x</TableCell>
           </TableRow>
         </TableBody>
       </Table>
-    );
+    ),
+    tagName: 'TABLE',
+    className: 'mondrian-table',
+  });
 
-    expect(ref.current?.tagName).toBe('TABLE');
-    expect(cellRef.current?.tagName).toBe('TD');
+  itForwardsRef<HTMLTableCellElement>({
+    render: (ref) => (
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell ref={ref}>x</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    ),
+    tagName: 'TD',
+    className: 'mondrian-table-cell',
   });
 
   test('passes through cell attributes', () => {
@@ -108,21 +111,20 @@ describe('Table', () => {
     expect(cell).toHaveAttribute('id', 'c');
   });
 
-  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      render(
-        <Table theme={theme} aria-label="T">
-          <TableBody>
-            <TableRow>
-              <TableCell>x</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      );
-      expect(screen.getByRole('table')).toHaveClass(`mondrian-table-${theme}`);
-    }
-  );
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    render: (theme) => (
+      <Table theme={theme} aria-label="T">
+        <TableBody>
+          <TableRow>
+            <TableCell>x</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    ),
+    classFor: (theme) => `mondrian-table-${theme}`,
+    target: () => screen.getByRole('table'),
+  });
 
   test('defaults to blue and keeps th scope and caption', () => {
     render(

@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Heading, Text } from './index';
 
 describe('Heading', () => {
@@ -28,10 +32,23 @@ describe('Heading', () => {
     expect(el).toHaveClass('mondrian-heading-1');
   });
 
-  test('forwards a ref', () => {
-    const ref = React.createRef<HTMLHeadingElement>();
-    render(<Heading ref={ref}>Title</Heading>);
-    expect(ref.current?.tagName).toBe('H2');
+  itForwardsRef<HTMLHeadingElement>({
+    render: (ref) => <Heading ref={ref}>Title</Heading>,
+    tagName: 'H2',
+    className: 'mondrian-heading',
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Heading theme={theme}>Title</Heading>,
+    classFor: (theme) => `mondrian-heading-${theme}`,
+  });
+
+  test('accent bar adds no content to the accessibility tree', () => {
+    render(<Heading theme="red">Title</Heading>);
+    expect(screen.getByRole('heading')).toHaveTextContent(/^Title$/);
+    expect(screen.getByRole('heading').children).toHaveLength(0);
   });
 });
 
@@ -55,31 +72,13 @@ describe('Text', () => {
     expect(el).toHaveClass('mondrian-text-large');
   });
 
-  test('forwards a ref and passes attributes', () => {
-    const ref = React.createRef<HTMLElement>();
-    render(
-      <Text ref={ref} id="t" aria-label="Copy">
-        Body
-      </Text>
-    );
-    expect(ref.current).toHaveAttribute('id', 't');
-    expect(screen.getByLabelText('Copy')).toBeInTheDocument();
+  itForwardsRef<HTMLElement>({
+    render: (ref) => <Text ref={ref}>Body</Text>,
+    tagName: 'P',
+    className: 'mondrian-text',
   });
 
-  test('Heading defaults to neutral bar and applies each theme class', () => {
-    const { rerender } = render(<Heading>Title</Heading>);
-    expect(screen.getByRole('heading')).toHaveClass('mondrian-heading-neutral');
-    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
-      rerender(<Heading theme={theme}>Title</Heading>);
-      expect(screen.getByRole('heading')).toHaveClass(
-        `mondrian-heading-${theme}`
-      );
-    }
-  });
-
-  test('Heading accent bar adds no content to the accessibility tree', () => {
-    render(<Heading theme="red">Title</Heading>);
-    expect(screen.getByRole('heading')).toHaveTextContent(/^Title$/);
-    expect(screen.getByRole('heading').children).toHaveLength(0);
+  itPassesThroughAttributes({
+    render: (props) => <Text {...props}>Body</Text>,
   });
 });

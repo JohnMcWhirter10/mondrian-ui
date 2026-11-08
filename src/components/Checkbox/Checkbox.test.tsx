@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Checkbox } from './Checkbox';
 
 describe('Checkbox', () => {
@@ -11,16 +15,6 @@ describe('Checkbox', () => {
     expect(box).toHaveClass('mondrian-checkbox-blue');
     expect(box).toHaveAttribute('aria-checked', 'false');
   });
-
-  test.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      render(<Checkbox theme={theme} aria-label="x" />);
-      expect(screen.getByRole('checkbox')).toHaveClass(
-        `mondrian-checkbox-${theme}`
-      );
-    }
-  );
 
   test('applies size classes', () => {
     render(
@@ -68,9 +62,20 @@ describe('Checkbox', () => {
     );
   });
 
-  test('forwards a ref to the button', () => {
-    const ref = React.createRef<HTMLButtonElement>();
-    render(<Checkbox ref={ref} aria-label="Ref" />);
-    expect(ref.current?.tagName).toBe('BUTTON');
+  itForwardsRef<HTMLButtonElement>({
+    render: (ref) => <Checkbox ref={ref} aria-label="Ref" />,
+    tagName: 'BUTTON',
+    className: 'mondrian-checkbox-root',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => <Checkbox {...props} />,
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => <Checkbox theme={theme} aria-label="x" />,
+    classFor: (theme) => `mondrian-checkbox-${theme}`,
   });
 });

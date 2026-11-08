@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Separator } from './index';
 
 describe('Separator', () => {
@@ -37,29 +41,25 @@ describe('Separator', () => {
     );
   });
 
-  test('forwards a ref to the element', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(<Separator ref={ref} />);
-
-    expect(ref.current).not.toBeNull();
-    expect(ref.current).toHaveClass('mondrian-separator');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <Separator ref={ref} />,
+    tagName: 'DIV',
+    className: 'mondrian-separator',
   });
 
-  test('passes through id and data attributes', () => {
-    render(<Separator id="rule" data-testid="rule" />);
-    expect(screen.getByTestId('rule')).toHaveAttribute('id', 'rule');
+  itPassesThroughAttributes({
+    render: (props) => <Separator {...props} />,
   });
 
-  test('defaults to neutral and applies each theme class', () => {
-    const { container, rerender } = render(<Separator />);
-    expect(container.firstElementChild).toHaveClass(
-      'mondrian-separator-neutral'
-    );
-    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
-      rerender(<Separator theme={theme} />);
-      expect(container.firstElementChild).toHaveClass(
-        `mondrian-separator-${theme}`
-      );
-    }
+  test('passes through data attributes', () => {
+    render(<Separator data-testid="rule" />);
+    expect(screen.getByTestId('rule')).toBeInTheDocument();
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Separator theme={theme} />,
+    classFor: (theme) => `mondrian-separator-${theme}`,
   });
 });

@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Grid, GridItem } from './index';
 
 describe('Grid', () => {
@@ -52,22 +56,20 @@ describe('Grid', () => {
     expect(screen.getByTestId('item').style.gridColumn).toBe('');
   });
 
-  test('forwards refs', () => {
-    const gridRef = React.createRef<HTMLDivElement>();
-    const itemRef = React.createRef<HTMLDivElement>();
-    render(
-      <Grid ref={gridRef}>
-        <GridItem ref={itemRef}>x</GridItem>
-      </Grid>
-    );
-
-    expect(gridRef.current).toHaveClass('mondrian-grid');
-    expect(itemRef.current).toHaveClass('mondrian-grid-item');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <Grid ref={ref} />,
+    tagName: 'DIV',
+    className: 'mondrian-grid',
   });
 
-  test('passes through id and aria attributes', () => {
-    render(<Grid id="g" aria-label="Layout" />);
-    expect(screen.getByLabelText('Layout')).toHaveAttribute('id', 'g');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <GridItem ref={ref}>x</GridItem>,
+    tagName: 'DIV',
+    className: 'mondrian-grid-item',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => <Grid {...props} />,
   });
 
   test('lines are off by default and theme defaults to neutral', () => {
@@ -82,11 +84,10 @@ describe('Grid', () => {
     expect(screen.getByTestId('grid')).toHaveClass('mondrian-grid-lines');
   });
 
-  test.each(['blue', 'neutral', 'red', 'yellow'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      render(<Grid data-testid="grid" theme={theme} />);
-      expect(screen.getByTestId('grid')).toHaveClass(`mondrian-grid-${theme}`);
-    }
-  );
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Grid theme={theme} />,
+    classFor: (theme) => `mondrian-grid-${theme}`,
+  });
 });

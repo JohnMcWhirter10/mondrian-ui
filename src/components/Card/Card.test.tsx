@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import {
   Card,
   CardHeader,
@@ -22,18 +26,6 @@ describe('Card', () => {
     expect(card).toBeInTheDocument();
     expect(card).toHaveClass('mondrian-card');
     expect(card).toHaveClass('blue');
-  });
-
-  test('applies the correct theme class', () => {
-    render(
-      <Card data-testid="card" theme="red">
-        <CardContent>Test Content</CardContent>
-      </Card>
-    );
-
-    const card = screen.getByTestId('card');
-    expect(card).toHaveClass('red');
-    expect(card).not.toHaveClass('blue');
   });
 
   test('applies the correct size class', () => {
@@ -70,71 +62,6 @@ describe('Card', () => {
     expect(screen.getByTestId('footer')).toHaveClass('mondrian-card-footer');
   });
 
-  test('renders card with different themes', () => {
-    const { rerender } = render(
-      <Card data-testid="card" theme="blue">
-        <CardContent>Test Content</CardContent>
-      </Card>
-    );
-    expect(screen.getByTestId('card')).toHaveClass('blue');
-
-    rerender(
-      <Card data-testid="card" theme="red">
-        <CardContent>Test Content</CardContent>
-      </Card>
-    );
-    expect(screen.getByTestId('card')).toHaveClass('red');
-
-    rerender(
-      <Card data-testid="card" theme="yellow">
-        <CardContent>Test Content</CardContent>
-      </Card>
-    );
-    expect(screen.getByTestId('card')).toHaveClass('yellow');
-
-    rerender(
-      <Card data-testid="card" theme="green">
-        <CardContent>Test Content</CardContent>
-      </Card>
-    );
-    expect(screen.getByTestId('card')).toHaveClass('green');
-
-    rerender(
-      <Card data-testid="card" theme="neutral">
-        <CardContent>Test Content</CardContent>
-      </Card>
-    );
-    expect(screen.getByTestId('card')).toHaveClass('neutral');
-  });
-
-  test('renders with forwarded ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(
-      <Card ref={ref}>
-        <CardContent>Test Content</CardContent>
-      </Card>
-    );
-
-    expect(ref.current).not.toBeNull();
-    expect(ref.current).toHaveClass('mondrian-card');
-  });
-
-  test.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
-    'applies the %s theme class and keeps only one theme',
-    (theme) => {
-      render(
-        <Card data-testid="card" theme={theme}>
-          <CardContent>Test Content</CardContent>
-        </Card>
-      );
-      const card = screen.getByTestId('card');
-      expect(card).toHaveClass(theme);
-      ['blue', 'neutral', 'red', 'yellow', 'green']
-        .filter((t) => t !== theme)
-        .forEach((t) => expect(card).not.toHaveClass(t));
-    }
-  );
-
   test('does not expose className and keeps decoration out of the DOM', () => {
     render(
       <Card data-testid="card">
@@ -147,5 +74,33 @@ describe('Card', () => {
     // Swatch and bar are CSS pseudo-elements, so only the header exists as a child.
     expect(card.children).toHaveLength(1);
     expect(screen.getByRole('heading', { name: 'Title' })).toBeInTheDocument();
+  });
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => (
+      <Card ref={ref}>
+        <CardContent>Test Content</CardContent>
+      </Card>
+    ),
+    tagName: 'DIV',
+    className: 'mondrian-card',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => (
+      <Card {...props}>
+        <CardContent>Test Content</CardContent>
+      </Card>
+    ),
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => (
+      <Card theme={theme}>
+        <CardContent>Test Content</CardContent>
+      </Card>
+    ),
+    classFor: (theme) => theme,
   });
 });

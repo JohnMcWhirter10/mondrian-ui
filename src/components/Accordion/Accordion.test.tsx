@@ -1,46 +1,41 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { screen, fireEvent } from '@testing-library/react';
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from './Accordion';
-import { ThemeProvider } from '../../themes';
-
-beforeAll(() => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: (query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: () => undefined,
-      removeListener: () => undefined,
-      addEventListener: () => undefined,
-      removeEventListener: () => undefined,
-      dispatchEvent: () => false,
-    }),
-  });
-});
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+  renderWithTheme,
+} from '../../test-utils';
 
 const renderAccordion = (props = {}) => {
-  return render(
-    <ThemeProvider>
-      <Accordion type="single" defaultValue="item-1" {...props}>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Trigger 1</AccordionTrigger>
-          <AccordionContent>Content 1</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Trigger 2</AccordionTrigger>
-          <AccordionContent>Content 2</AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </ThemeProvider>
+  return renderWithTheme(
+    <Accordion type="single" defaultValue="item-1" {...props}>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Trigger 1</AccordionTrigger>
+        <AccordionContent>Content 1</AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Trigger 2</AccordionTrigger>
+        <AccordionContent>Content 2</AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 };
+
+const accordionWith = (props: Record<string, unknown> = {}) => (
+  <Accordion type="single" {...props}>
+    <AccordionItem value="a">
+      <AccordionTrigger>T</AccordionTrigger>
+      <AccordionContent>C</AccordionContent>
+    </AccordionItem>
+  </Accordion>
+);
 
 describe('Accordion', () => {
   it('renders the accordion with default props', () => {
@@ -52,13 +47,6 @@ describe('Accordion', () => {
 
     // Content 2 should be hidden initially since we defaulted to item-1
     expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
-  });
-
-  it('applies the correct theme class', () => {
-    renderAccordion({ theme: 'red' });
-
-    const accordion = document.querySelector('.mondrian-accordion');
-    expect(accordion).toHaveClass('red');
   });
 
   it('applies the correct size class', () => {
@@ -114,30 +102,21 @@ describe('Accordion', () => {
     });
   });
 
-  it.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      renderAccordion({ theme });
-      expect(document.querySelector('.mondrian-accordion')).toHaveClass(theme);
-    }
-  );
-
-  it('defaults to the blue theme', () => {
-    renderAccordion();
-    expect(document.querySelector('.mondrian-accordion')).toHaveClass('blue');
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => accordionWith({ theme }),
+    classFor: (theme) => theme,
   });
 
-  it('forwards ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(
-      <Accordion type="single" ref={ref}>
-        <AccordionItem value="a">
-          <AccordionTrigger>T</AccordionTrigger>
-          <AccordionContent>C</AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    );
-    expect(ref.current).toHaveClass('mondrian-accordion');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => accordionWith({ ref }),
+    tagName: 'DIV',
+    className: 'mondrian-accordion',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => accordionWith(props),
   });
 
   it('updates aria-expanded and keeps the glyph decorative', () => {

@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+} from '../../test-utils';
 import userEvent from '@testing-library/user-event';
 import {
   DropdownMenu,
@@ -107,8 +111,22 @@ describe('DropdownMenu', () => {
     expect(content).not.toHaveClass('red');
   });
 
-  it.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
-    'applies the %s theme class to trigger and content',
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    render: (theme) => (
+      <DropdownMenu theme={theme}>
+        <DropdownMenuTrigger>Open Menu</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Item 1</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ),
+    classFor: (theme) => theme,
+    target: () => screen.getByRole('button', { name: 'Open Menu' }),
+  });
+
+  it.each(PLANE_THEMES_WITH_GREEN)(
+    'applies the %s theme class to content',
     async (theme) => {
       const user = userEvent.setup();
       render(
@@ -118,9 +136,6 @@ describe('DropdownMenu', () => {
             <DropdownMenuItem>Item 1</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      );
-      expect(screen.getByRole('button', { name: 'Open Menu' })).toHaveClass(
-        theme
       );
       await user.click(screen.getByText('Open Menu'));
       expect(screen.getByRole('menu')).toHaveClass(theme);

@@ -1,17 +1,11 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { ScrollArea } from './ScrollArea';
-
-beforeAll(() => {
-  // jsdom has no ResizeObserver, which Radix ScrollArea requires.
-  (globalThis as unknown as { ResizeObserver: unknown }).ResizeObserver =
-    class {
-      observe() {}
-      unobserve() {}
-      disconnect() {}
-    };
-});
 
 describe('ScrollArea Component', () => {
   it('renders correctly with children', () => {
@@ -74,22 +68,22 @@ describe('ScrollArea Component', () => {
     });
   });
 
-  it.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
-    'applies the %s theme to the root and thumbs',
-    (theme) => {
-      const { container } = render(
-        <ScrollArea theme={theme}>Content</ScrollArea>
-      );
-      expect(container.querySelector('.mondrian-scroll-area')).toHaveClass(
-        `mondrian-scroll-area-${theme}`
-      );
-    }
-  );
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    render: (theme) => <ScrollArea theme={theme}>Content</ScrollArea>,
+    classFor: (theme) => `mondrian-scroll-area-${theme}`,
+    target: ({ container }) =>
+      container.querySelector('.mondrian-scroll-area') as HTMLElement,
+  });
 
-  it('forwards a ref to the root', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(<ScrollArea ref={ref}>Content</ScrollArea>);
-    expect(ref.current).toHaveClass('mondrian-scroll-area');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <ScrollArea ref={ref}>Content</ScrollArea>,
+    tagName: 'DIV',
+    className: 'mondrian-scroll-area',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => <ScrollArea {...props}>Content</ScrollArea>,
   });
 
   describe('keyboard access', () => {

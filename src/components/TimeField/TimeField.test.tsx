@@ -1,6 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { TimeField } from './index';
 
 describe('TimeField', () => {
@@ -161,15 +166,28 @@ describe('TimeField', () => {
     expect(field.validity.valid).toBe(true);
   });
 
-  test('forwards a ref to the input', () => {
+  itForwardsRef<HTMLInputElement>({
+    render: (ref) => <TimeField ref={ref} aria-label="Time" />,
+    tagName: 'INPUT',
+    className: 'mondrian-time-field',
+  });
+
+  test('forwards a ref that points at the labelled time input', () => {
     const ref = React.createRef<HTMLInputElement>();
     render(<TimeField ref={ref} aria-label="Time" defaultValue="09:30" />);
 
     expect(ref.current).toBe(screen.getByLabelText('Time'));
-    expect(ref.current?.tagName).toBe('INPUT');
     expect(ref.current).toHaveAttribute('type', 'time');
-    expect(ref.current).toHaveClass('mondrian-time-field');
     expect(ref.current).toHaveValue('09:30');
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => <TimeField {...props} />,
+    attributes: {
+      id: 'contract-id',
+      'aria-label': 'contract label',
+      'aria-invalid': 'true',
+    },
   });
 
   test('passes through id, name, min, max, and disabled', () => {
@@ -193,18 +211,11 @@ describe('TimeField', () => {
     expect(field).toHaveAttribute('type', 'time');
   });
 
-  test('defaults to the blue theme and applies each plane theme class', () => {
-    const { rerender } = render(<TimeField aria-label="Field" />);
-    expect(screen.getByLabelText('Field')).toHaveClass(
-      'mondrian-time-field-blue'
-    );
-
-    (['blue', 'neutral', 'red', 'yellow'] as const).forEach((theme) => {
-      rerender(<TimeField theme={theme} aria-label="Field" />);
-      expect(screen.getByLabelText('Field')).toHaveClass(
-        `mondrian-time-field-${theme}`
-      );
-    });
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'blue',
+    render: (theme) => <TimeField theme={theme} aria-label="Field" />,
+    classFor: (theme) => `mondrian-time-field-${theme}`,
   });
 
   test('exposes aria-invalid', () => {

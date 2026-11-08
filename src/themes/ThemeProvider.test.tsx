@@ -1,18 +1,6 @@
 import { render, act } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { mockMatchMedia } from '../test-utils';
 import { ThemeProvider } from './ThemeProvider';
-
-const mockMatchMedia = (matches: boolean) => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: (query: string) => ({
-      matches,
-      media: query,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-    }),
-  });
-};
 
 const modeOnRoot = () => document.documentElement.getAttribute('data-theme');
 const cssVar = (name: string) => {

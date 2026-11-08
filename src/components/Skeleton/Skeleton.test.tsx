@@ -1,6 +1,10 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Skeleton } from './index';
 
 describe('Skeleton', () => {
@@ -22,32 +26,34 @@ describe('Skeleton', () => {
     });
   });
 
-  test('merges style and passes through attributes', () => {
+  test('merges style and passes through data attributes', () => {
     const { container } = render(
-      <Skeleton id="loading" style={{ marginTop: 8 }} data-testid="sk" />
+      <Skeleton style={{ marginTop: 8 }} data-testid="sk" />
     );
     const el = container.firstElementChild as HTMLElement;
-    expect(el).toHaveAttribute('id', 'loading');
+    expect(el).toHaveAttribute('data-testid', 'sk');
     expect(el).toHaveStyle({ marginTop: '8px' });
   });
 
-  test('forwards a ref to the div', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(<Skeleton ref={ref} />);
-    expect(ref.current?.tagName).toBe('DIV');
-    expect(ref.current).toHaveClass('mondrian-skeleton');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <Skeleton ref={ref} />,
+    tagName: 'DIV',
+    className: 'mondrian-skeleton',
   });
 
-  test('defaults to neutral, applies each theme, stays aria-hidden', () => {
-    const { container, rerender } = render(<Skeleton />);
-    expect(container.firstElementChild).toHaveClass(
-      'mondrian-skeleton-neutral'
-    );
-    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
-      rerender(<Skeleton theme={theme} />);
-      const el = container.firstElementChild as HTMLElement;
-      expect(el).toHaveClass(`mondrian-skeleton-${theme}`);
-      expect(el).toHaveAttribute('aria-hidden', 'true');
-    }
+  itPassesThroughAttributes({
+    render: (props) => <Skeleton {...props} />,
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Skeleton theme={theme} />,
+    classFor: (theme) => `mondrian-skeleton-${theme}`,
+  });
+
+  test.each(PLANE_THEMES)('stays aria-hidden with the %s theme', (theme) => {
+    const { container } = render(<Skeleton theme={theme} />);
+    expect(container.firstElementChild).toHaveAttribute('aria-hidden', 'true');
   });
 });

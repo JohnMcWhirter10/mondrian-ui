@@ -1,7 +1,11 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { Alert, AlertTitle, AlertDescription } from './Alert';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Dash, Plus, MondrianRightArrow } from '../icons';
 
 describe('Alert', () => {
@@ -54,18 +58,6 @@ describe('Alert', () => {
     expect(alert).toHaveAttribute('role', 'status');
   });
 
-  test('applies the correct theme class', () => {
-    render(
-      <Alert data-testid="alert" theme="red">
-        <AlertDescription>Test Alert</AlertDescription>
-      </Alert>
-    );
-
-    const alert = screen.getByTestId('alert');
-    expect(alert).toHaveClass('mondrian-alert-red');
-    expect(alert).not.toHaveClass('mondrian-alert-blue');
-  });
-
   test('applies the correct size class', () => {
     render(
       <Alert data-testid="alert" size="lg">
@@ -91,55 +83,6 @@ describe('Alert', () => {
     expect(screen.getByTestId('description')).toHaveClass(
       'mondrian-alert-description'
     );
-  });
-
-  test('renders alert with different themes', () => {
-    const { rerender } = render(
-      <Alert data-testid="alert" theme="neutral">
-        <AlertDescription>Test Alert</AlertDescription>
-      </Alert>
-    );
-    expect(screen.getByTestId('alert')).toHaveClass('mondrian-alert-neutral');
-
-    rerender(
-      <Alert data-testid="alert" theme="blue">
-        <AlertDescription>Test Alert</AlertDescription>
-      </Alert>
-    );
-    expect(screen.getByTestId('alert')).toHaveClass('mondrian-alert-blue');
-
-    rerender(
-      <Alert data-testid="alert" theme="yellow">
-        <AlertDescription>Test Alert</AlertDescription>
-      </Alert>
-    );
-    expect(screen.getByTestId('alert')).toHaveClass('mondrian-alert-yellow');
-
-    rerender(
-      <Alert data-testid="alert" theme="red">
-        <AlertDescription>Test Alert</AlertDescription>
-      </Alert>
-    );
-    expect(screen.getByTestId('alert')).toHaveClass('mondrian-alert-red');
-
-    rerender(
-      <Alert data-testid="alert" theme="green">
-        <AlertDescription>Test Alert</AlertDescription>
-      </Alert>
-    );
-    expect(screen.getByTestId('alert')).toHaveClass('mondrian-alert-green');
-  });
-
-  test('renders with forwarded ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(
-      <Alert ref={ref}>
-        <AlertDescription>Test Alert</AlertDescription>
-      </Alert>
-    );
-
-    expect(ref.current).not.toBeNull();
-    expect(ref.current).toHaveClass('mondrian-alert');
   });
 
   test('renders alert with title only', () => {
@@ -235,5 +178,34 @@ describe('Alert', () => {
     // Check that both elements have appropriate padding
     expect(window.getComputedStyle(title).paddingLeft).not.toBe('0px');
     expect(window.getComputedStyle(description).paddingLeft).not.toBe('0px');
+  });
+
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => (
+      <Alert ref={ref}>
+        <AlertDescription>Test Alert</AlertDescription>
+      </Alert>
+    ),
+    tagName: 'DIV',
+    className: 'mondrian-alert',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => (
+      <Alert {...props}>
+        <AlertDescription>Test Alert</AlertDescription>
+      </Alert>
+    ),
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => (
+      <Alert theme={theme}>
+        <AlertDescription>Test Alert</AlertDescription>
+      </Alert>
+    ),
+    classFor: (theme) => `mondrian-alert-${theme}`,
   });
 });

@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -77,21 +81,6 @@ describe('Breadcrumb', () => {
     expect(screen.queryByRole('link')).toBeNull();
   });
 
-  test('forwards refs', () => {
-    const navRef = React.createRef<HTMLElement>();
-    const linkRef = React.createRef<HTMLAnchorElement>();
-    render(
-      <Breadcrumb ref={navRef}>
-        <BreadcrumbLink ref={linkRef} href="/">
-          Home
-        </BreadcrumbLink>
-      </Breadcrumb>
-    );
-
-    expect(navRef.current?.tagName).toBe('NAV');
-    expect(linkRef.current?.tagName).toBe('A');
-  });
-
   test('current page is a non-link with aria-current and its own class', () => {
     renderTrail();
     const page = screen.getByText('Current');
@@ -100,29 +89,30 @@ describe('Breadcrumb', () => {
     expect(screen.queryByRole('link', { name: 'Current' })).toBeNull();
   });
 
-  test.each(['neutral', 'blue', 'red', 'yellow'] as const)(
-    'applies the %s theme class to the nav',
-    (theme) => {
-      render(
-        <Breadcrumb theme={theme} aria-label="Trail">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbPage>Here</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      );
-      expect(screen.getByRole('navigation')).toHaveClass(
-        `mondrian-breadcrumb-${theme}`
-      );
-      expect(screen.getByText('Here')).toHaveAttribute('aria-current', 'page');
-    }
-  );
+  itForwardsRef<HTMLElement>({
+    render: (ref) => <Breadcrumb ref={ref} />,
+    tagName: 'NAV',
+    className: 'mondrian-breadcrumb',
+  });
 
-  test('defaults to the neutral theme', () => {
-    renderTrail();
-    expect(screen.getByRole('navigation')).toHaveClass(
-      'mondrian-breadcrumb-neutral'
-    );
+  itForwardsRef<HTMLAnchorElement>({
+    render: (ref) => (
+      <BreadcrumbLink ref={ref} href="/">
+        Home
+      </BreadcrumbLink>
+    ),
+    tagName: 'A',
+    className: 'mondrian-breadcrumb-link',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => <Breadcrumb {...props} />,
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Breadcrumb theme={theme} />,
+    classFor: (theme) => `mondrian-breadcrumb-${theme}`,
   });
 });

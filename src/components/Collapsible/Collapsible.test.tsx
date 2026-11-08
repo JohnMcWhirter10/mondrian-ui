@@ -1,5 +1,10 @@
-import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  PLANE_THEMES_WITH_GREEN,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -59,18 +64,6 @@ describe('Collapsible', () => {
     expect(screen.getByText('Content')).toBeVisible();
   });
 
-  it('applies theme class correctly', () => {
-    const { container } = render(
-      <Collapsible theme="red">
-        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
-        <CollapsibleContent>Content</CollapsibleContent>
-      </Collapsible>
-    );
-
-    const collapsibleElement = container.querySelector('.mondrian-collapsible');
-    expect(collapsibleElement).toHaveClass('red');
-  });
-
   it('applies size class correctly', () => {
     const { container } = render(
       <Collapsible size="sm">
@@ -95,33 +88,6 @@ describe('Collapsible', () => {
     expect(triggerElement).toBeDisabled();
   });
 
-  it.each(['blue', 'neutral', 'red', 'yellow', 'green'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      const { container } = render(
-        <Collapsible theme={theme}>
-          <CollapsibleTrigger>Trigger</CollapsibleTrigger>
-          <CollapsibleContent>Content</CollapsibleContent>
-        </Collapsible>
-      );
-      expect(container.querySelector('.mondrian-collapsible')).toHaveClass(
-        theme
-      );
-    }
-  );
-
-  it('defaults to blue and forwards ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(
-      <Collapsible ref={ref}>
-        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
-        <CollapsibleContent>Content</CollapsibleContent>
-      </Collapsible>
-    );
-    expect(ref.current).toHaveClass('mondrian-collapsible');
-    expect(ref.current).toHaveClass('blue');
-  });
-
   it('exposes aria-expanded and a decorative glyph', () => {
     render(
       <Collapsible>
@@ -137,5 +103,36 @@ describe('Collapsible', () => {
       'aria-hidden',
       'true'
     );
+  });
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => (
+      <Collapsible ref={ref}>
+        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
+        <CollapsibleContent>Content</CollapsibleContent>
+      </Collapsible>
+    ),
+    tagName: 'DIV',
+    className: 'mondrian-collapsible',
+  });
+
+  itPassesThroughAttributes({
+    render: (props) => (
+      <Collapsible {...props}>
+        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
+        <CollapsibleContent>Content</CollapsibleContent>
+      </Collapsible>
+    ),
+  });
+
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES_WITH_GREEN,
+    defaultTheme: 'blue',
+    render: (theme) => (
+      <Collapsible theme={theme}>
+        <CollapsibleTrigger>Trigger</CollapsibleTrigger>
+        <CollapsibleContent>Content</CollapsibleContent>
+      </Collapsible>
+    ),
+    classFor: (theme) => theme,
   });
 });

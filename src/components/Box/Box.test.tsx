@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Box } from './Box';
 
 describe('Box', () => {
@@ -84,34 +88,20 @@ describe('Box', () => {
     expect(box.tagName).toBe('ARTICLE');
   });
 
-  it('passes additional props to the element', () => {
-    render(
-      <Box data-testid="test-box" aria-label="Box Label">
-        Content
-      </Box>
-    );
-    const box = screen.getByTestId('test-box');
-
-    expect(box).toHaveAttribute('aria-label', 'Box Label');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <Box ref={ref}>Content</Box>,
+    tagName: 'DIV',
+    className: 'mondrian-box',
   });
 
-  it.each(['neutral', 'blue', 'red', 'yellow'] as const)(
-    'applies the %s theme class',
-    (theme) => {
-      render(
-        <Box data-testid="test-box" theme={theme}>
-          Content
-        </Box>
-      );
-      expect(screen.getByTestId('test-box')).toHaveClass(
-        `mondrian-box-theme-${theme}`
-      );
-    }
-  );
+  itPassesThroughAttributes({
+    render: (props) => <Box {...props}>Content</Box>,
+  });
 
-  it('forwards a ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(<Box ref={ref}>Content</Box>);
-    expect(ref.current).toHaveClass('mondrian-box');
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Box theme={theme}>Content</Box>,
+    classFor: (theme) => `mondrian-box-theme-${theme}`,
   });
 });

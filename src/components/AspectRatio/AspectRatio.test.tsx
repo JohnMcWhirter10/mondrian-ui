@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { AspectRatio } from './index';
 
 describe('AspectRatio', () => {
@@ -33,35 +37,20 @@ describe('AspectRatio', () => {
     expect(wrapper).toHaveStyle({ paddingBottom: '50%' });
   });
 
-  test('forwards a ref to the content element', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(<AspectRatio ref={ref}>x</AspectRatio>);
-
-    expect(ref.current).not.toBeNull();
-    expect(ref.current?.tagName).toBe('DIV');
+  itForwardsRef<HTMLDivElement>({
+    render: (ref) => <AspectRatio ref={ref}>x</AspectRatio>,
+    tagName: 'DIV',
   });
 
-  test('passes through id and aria attributes', () => {
-    render(
-      <AspectRatio id="frame" aria-label="Image frame">
-        x
-      </AspectRatio>
-    );
-
-    const el = screen.getByLabelText('Image frame');
-    expect(el).toHaveAttribute('id', 'frame');
+  itPassesThroughAttributes({
+    render: (props) => <AspectRatio {...props}>x</AspectRatio>,
+    target: () => screen.getByLabelText('contract label'),
   });
 
-  test('defaults to neutral and applies each theme class', () => {
-    const { container, rerender } = render(<AspectRatio>x</AspectRatio>);
-    expect(container.firstElementChild).toHaveClass(
-      'mondrian-aspect-ratio-neutral'
-    );
-    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
-      rerender(<AspectRatio theme={theme}>x</AspectRatio>);
-      expect(container.firstElementChild).toHaveClass(
-        `mondrian-aspect-ratio-${theme}`
-      );
-    }
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <AspectRatio theme={theme}>x</AspectRatio>,
+    classFor: (theme) => `mondrian-aspect-ratio-${theme}`,
   });
 });

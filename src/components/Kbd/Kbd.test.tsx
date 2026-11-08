@@ -1,6 +1,10 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import {
+  PLANE_THEMES,
+  itAppliesThemeClasses,
+  itForwardsRef,
+  itPassesThroughAttributes,
+} from '../../test-utils';
 import { Kbd } from './index';
 
 describe('Kbd', () => {
@@ -21,28 +25,19 @@ describe('Kbd', () => {
     expect(document.querySelectorAll('kbd')).toHaveLength(2);
   });
 
-  test('forwards a ref to the kbd', () => {
-    const ref = React.createRef<HTMLElement>();
-    render(<Kbd ref={ref}>Esc</Kbd>);
-    expect(ref.current?.tagName).toBe('KBD');
+  itForwardsRef<HTMLElement>({
+    render: (ref) => <Kbd ref={ref}>Esc</Kbd>,
+    tagName: 'KBD',
   });
 
-  test('passes through id and aria attributes', () => {
-    render(
-      <Kbd id="k" aria-label="Escape key">
-        Esc
-      </Kbd>
-    );
-    const key = screen.getByLabelText('Escape key');
-    expect(key).toHaveAttribute('id', 'k');
+  itPassesThroughAttributes({
+    render: (props) => <Kbd {...props}>Esc</Kbd>,
   });
 
-  test('defaults to neutral and applies each theme class', () => {
-    const { rerender } = render(<Kbd>K</Kbd>);
-    expect(screen.getByText('K')).toHaveClass('mondrian-kbd-neutral');
-    for (const theme of ['blue', 'neutral', 'red', 'yellow'] as const) {
-      rerender(<Kbd theme={theme}>K</Kbd>);
-      expect(screen.getByText('K')).toHaveClass(`mondrian-kbd-${theme}`);
-    }
+  itAppliesThemeClasses({
+    themes: PLANE_THEMES,
+    defaultTheme: 'neutral',
+    render: (theme) => <Kbd theme={theme}>K</Kbd>,
+    classFor: (theme) => `mondrian-kbd-${theme}`,
   });
 });
