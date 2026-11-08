@@ -192,6 +192,11 @@
   color: var(--on-plane);
 }
 
+.mondrian-dialog-close:active {
+  background-color: var(--mondrian-text);
+  color: var(--mondrian-background);
+}
+
 /* Neutral plane has no hue, so invert instead */
 .mondrian-dialog-content.neutral .mondrian-dialog-close:hover {
   background-color: var(--mondrian-text);
