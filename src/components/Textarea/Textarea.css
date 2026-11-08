@@ -1,0 +1,67 @@
+.mondrian-textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-large) var(--mondrian-spacing-medium);
+  min-height: calc(var(--mondrian-spacing-large) * 6);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  line-height: 1.4;
+  outline: none;
+  resize: vertical;
+}
+
+.mondrian-textarea::placeholder {
+  color: var(--mondrian-black);
+}
+
+/* Size sets the plane. Writing starts in the upper left. */
+.mondrian-textarea-sm {
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-small);
+  min-height: calc(var(--mondrian-spacing-large) * 4);
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-textarea-lg {
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large)
+    calc(var(--mondrian-spacing-large) + var(--mondrian-spacing-medium))
+    var(--mondrian-spacing-medium);
+  min-height: calc(var(--mondrian-spacing-large) * 8);
+  font-size: var(--mondrian-font-size-large);
+}
+
+/*
+ * Every theme is the noncolor plane. The prop matches Input so a field
+ * and its Label share one name, and the grid stays one black weight.
+ */
+.mondrian-textarea-blue,
+.mondrian-textarea-neutral,
+.mondrian-textarea-red,
+.mondrian-textarea-green,
+.mondrian-textarea-yellow {
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+  border-color: var(--mondrian-black);
+}
+
+.mondrian-textarea:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-black);
+  outline: none;
+}
+
+.mondrian-textarea:disabled {
+  cursor: not-allowed;
+}
+
+.mondrian-textarea:disabled:focus-visible {
+  transform: none;
+  box-shadow: none;
+}
