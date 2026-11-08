@@ -8,6 +8,9 @@ export type { InputProps } from './Input/Input.types';
 export { Textarea } from './Textarea';
 export type { TextareaProps, TextareaTheme } from './Textarea/Textarea.types';
 
+export { DateField } from './DateField';
+export type { DateFieldProps } from './DateField/DateField.types';
+
 export { Checkbox } from './Checkbox/Checkbox';
 export type { CheckboxProps } from './Checkbox/Checkbox.types';
 
