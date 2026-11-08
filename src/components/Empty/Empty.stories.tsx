@@ -4,7 +4,7 @@ import { Empty, EmptyActions, EmptyDescription, EmptyTitle } from './Empty';
 import { Button } from '../Button';
 
 const meta: Meta<typeof Empty> = {
-  title: 'Components/Empty',
+  title: 'Feedback/Empty',
   component: Empty,
   parameters: {
     layout: 'padded',
@@ -68,19 +68,6 @@ export const Themes: Story = {
           <EmptyDescription>Nothing here yet.</EmptyDescription>
         </Empty>
       ))}
-    </div>
-  ),
-};
-
-export const DarkMode: Story = {
-  render: () => (
-    <div data-theme="dark">
-      <Empty>
-        <EmptyTitle>No projects yet</EmptyTitle>
-        <EmptyDescription>
-          Projects you create will appear here.
-        </EmptyDescription>
-      </Empty>
     </div>
   ),
 };

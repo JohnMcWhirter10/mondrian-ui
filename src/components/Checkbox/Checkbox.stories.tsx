@@ -6,7 +6,7 @@ import { Box } from '../Box/Box';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Checkbox> = {
-  title: 'Components/Checkbox',
+  title: 'Forms/Checkbox',
   component: Checkbox,
   parameters: {
     layout: 'centered',
@@ -127,29 +127,6 @@ export const Themes: StoryObj<typeof Checkbox> = {
             aria-label={`${theme} checked`}
           />
         </div>
-      ))}
-    </div>
-  ),
-};
-
-export const Dark: StoryObj<typeof Checkbox> = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        gap: '24px',
-        flexWrap: 'wrap',
-        padding: '24px',
-      }}
-    >
-      {allThemes.map((theme) => (
-        <Checkbox
-          key={theme}
-          theme={theme}
-          defaultChecked
-          aria-label={`${theme} checked`}
-        />
       ))}
     </div>
   ),

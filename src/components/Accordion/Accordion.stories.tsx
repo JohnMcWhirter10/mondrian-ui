@@ -9,7 +9,7 @@ import {
 import { ThemeProvider } from '../../themes';
 
 const meta: Meta<typeof Accordion> = {
-  title: 'Components/Accordion',
+  title: 'Disclosure/Accordion',
   component: Accordion,
   tags: ['autodocs'],
   decorators: [
@@ -199,12 +199,4 @@ const ThemedAccordions = () => (
 
 export const Themes: Story = {
   render: () => <ThemedAccordions />,
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark" style={{ padding: 24 }}>
-      <ThemedAccordions />
-    </div>
-  ),
 };

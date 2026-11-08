@@ -10,7 +10,7 @@ import {
 } from './Breadcrumb';
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: 'Components/Breadcrumb',
+  title: 'Navigation/Breadcrumb',
   component: Breadcrumb,
   parameters: {
     layout: 'padded',
@@ -74,16 +74,6 @@ export const AsChild: Story = {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark">
-      <Breadcrumb>
-        <Trail />
-      </Breadcrumb>
-    </div>
   ),
 };
 

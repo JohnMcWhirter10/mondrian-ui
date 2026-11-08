@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Loader } from './Loader';
 
 const meta: Meta<typeof Loader> = {
-  title: 'Components/Loader',
+  title: 'Feedback/Loader',
   component: Loader,
   parameters: {
     layout: 'padded',
@@ -71,14 +71,6 @@ export const Themes: Story = {
       {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
         <Loader key={theme} theme={theme} label={`Loading ${theme}`} />
       ))}
-    </div>
-  ),
-};
-
-export const DarkMode: Story = {
-  render: () => (
-    <div data-theme="dark">
-      <Loader />
     </div>
   ),
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollArea } from './ScrollArea';
 
 export default {
-  title: 'Components/ScrollArea',
+  title: 'Layout/ScrollArea',
   component: ScrollArea,
   parameters: {
     layout: 'centered',
@@ -155,23 +155,6 @@ export const Themes = {
           width={220}
           label={`${theme} scroll area`}
         >
-          <pre style={{ whiteSpace: 'pre-wrap', margin: 0, padding: 8 }}>
-            {longText}
-          </pre>
-        </ScrollArea>
-      ))}
-    </div>
-  ),
-};
-
-export const DarkMode = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{ display: 'flex', flexWrap: 'wrap', gap: '24px' }}
-    >
-      {themes.map((theme) => (
-        <ScrollArea key={theme} theme={theme} height={160} width={220}>
           <pre style={{ whiteSpace: 'pre-wrap', margin: 0, padding: 8 }}>
             {longText}
           </pre>

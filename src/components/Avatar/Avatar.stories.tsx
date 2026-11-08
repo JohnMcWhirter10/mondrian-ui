@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 
 const meta: Meta<typeof Avatar> = {
-  title: 'Components/Avatar',
+  title: 'Content/Avatar',
   component: Avatar,
   parameters: {
     layout: 'padded',
@@ -74,23 +74,6 @@ export const Themes: Story = {
           </Avatar>
         </div>
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        padding: '24px',
-        background: 'var(--mondrian-background)',
-        color: 'var(--mondrian-text)',
-      }}
-    >
-      <Avatar theme="neutral">
-        <AvatarFallback>PM</AvatarFallback>
-      </Avatar>
     </div>
   ),
 };

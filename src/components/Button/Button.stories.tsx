@@ -5,7 +5,7 @@ import { ThemeProvider } from '../../themes';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Forms/Button',
   component: Button,
   parameters: {
     layout: 'centered',
@@ -107,27 +107,6 @@ export const Pressed: Story = {
           {theme} pressed
         </Button>
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        gap: '24px',
-        flexWrap: 'wrap',
-        padding: '24px',
-      }}
-    >
-      {allThemes.map((theme) => (
-        <Button key={theme} theme={theme}>
-          {theme}
-        </Button>
-      ))}
-      <Button disabled>disabled</Button>
     </div>
   ),
 };

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Progress } from './Progress';
 
 const meta: Meta<typeof Progress> = {
-  title: 'Components/Progress',
+  title: 'Feedback/Progress',
   component: Progress,
   parameters: {
     layout: 'padded',
@@ -86,14 +86,6 @@ export const Themes: Story = {
           aria-label={`${theme} progress`}
         />
       ))}
-    </div>
-  ),
-};
-
-export const DarkMode: Story = {
-  render: () => (
-    <div data-theme="dark">
-      <Progress value={60} aria-label="Dark progress" />
     </div>
   ),
 };

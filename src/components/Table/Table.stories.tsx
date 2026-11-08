@@ -12,7 +12,7 @@ import {
 } from './Table';
 
 const meta: Meta<typeof Table> = {
-  title: 'Components/Table',
+  title: 'Content/Table',
   component: Table,
   parameters: {
     layout: 'padded',
@@ -77,14 +77,6 @@ const Example = (args: React.ComponentProps<typeof Table>) => (
 
 export const Default: Story = {
   render: (args) => <Example {...args} />,
-};
-
-export const Dark: Story = {
-  render: (args) => (
-    <div data-theme="dark">
-      <Example {...args} />
-    </div>
-  ),
 };
 
 export const Themes: Story = {

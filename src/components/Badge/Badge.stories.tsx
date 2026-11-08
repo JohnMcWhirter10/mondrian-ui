@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Badge } from './Badge';
 
 const meta: Meta<typeof Badge> = {
-  title: 'Components/Badge',
+  title: 'Content/Badge',
   component: Badge,
   parameters: {
     layout: 'padded',
@@ -125,27 +125,6 @@ export const BesideATitle: Story = {
 export const Themes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
-        <Badge key={theme} theme={theme}>
-          {theme}
-        </Badge>
-      ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        gap: '16px',
-        flexWrap: 'wrap',
-        padding: '24px',
-        background: 'var(--mondrian-background)',
-      }}
-    >
       {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
         <Badge key={theme} theme={theme}>
           {theme}

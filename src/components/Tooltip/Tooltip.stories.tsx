@@ -9,7 +9,7 @@ import {
 import { Button } from '../Button/Button';
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Components/Tooltip',
+  title: 'Overlays/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',
@@ -164,12 +164,4 @@ const ThemeTooltips = () => (
 
 export const Themes: Story = {
   render: () => <ThemeTooltips />,
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark" style={{ padding: 24 }}>
-      <ThemeTooltips />
-    </div>
-  ),
 };

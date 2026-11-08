@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AspectRatio } from './AspectRatio';
 
 const meta: Meta<typeof AspectRatio> = {
-  title: 'Components/AspectRatio',
+  title: 'Layout/AspectRatio',
   component: AspectRatio,
   parameters: {
     layout: 'padded',
@@ -94,25 +94,6 @@ export const Themes: Story = {
           </div>
         </div>
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        padding: '24px',
-        background: 'var(--mondrian-background)',
-        color: 'var(--mondrian-text)',
-      }}
-    >
-      <div style={{ width: '240px' }}>
-        <AspectRatio ratio={16 / 9} theme="red">
-          <Plane color="var(--mondrian-background)" />
-        </AspectRatio>
-      </div>
     </div>
   ),
 };

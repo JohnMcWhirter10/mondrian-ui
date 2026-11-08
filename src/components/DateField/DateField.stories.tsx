@@ -8,7 +8,7 @@ const frame = {
 };
 
 const meta: Meta<typeof DateField> = {
-  title: 'Components/DateField',
+  title: 'Forms/DateField',
   component: DateField,
   parameters: {
     layout: 'padded',
@@ -155,31 +155,6 @@ export const Invalid: Story = {
       <span id="invalid-date-error" role="alert">
         Error: enter a date.
       </span>
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-        padding: '16px',
-        width: '280px',
-      }}
-    >
-      {planes.map((theme) => (
-        <DateField
-          key={theme}
-          theme={theme}
-          aria-label={`${theme} date`}
-          defaultValue="2026-11-07"
-        />
-      ))}
-      <DateField aria-label="Invalid date" aria-invalid="true" />
     </div>
   ),
 };

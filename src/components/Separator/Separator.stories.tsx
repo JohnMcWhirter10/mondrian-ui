@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Separator } from './Separator';
 
 const meta: Meta<typeof Separator> = {
-  title: 'Components/Separator',
+  title: 'Layout/Separator',
   component: Separator,
   parameters: {
     layout: 'padded',
@@ -93,35 +93,6 @@ export const Themes: Story = {
           </div>
         </div>
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        padding: '24px',
-        background: 'var(--mondrian-background)',
-        color: 'var(--mondrian-text)',
-      }}
-    >
-      <div style={{ width: '240px' }}>
-        <Separator theme="red" />
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          height: '48px',
-          gap: '12px',
-          marginTop: '24px',
-        }}
-      >
-        <span>L</span>
-        <Separator orientation="vertical" theme="yellow" />
-        <span>R</span>
-      </div>
     </div>
   ),
 };

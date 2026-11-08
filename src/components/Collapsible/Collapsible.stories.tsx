@@ -8,7 +8,7 @@ import {
 import { ComponentTheme } from '../../themes';
 
 const meta: Meta<typeof Collapsible> = {
-  title: 'Components/Collapsible',
+  title: 'Disclosure/Collapsible',
   component: Collapsible,
   tags: ['autodocs'],
   argTypes: {
@@ -183,12 +183,4 @@ const ThemedCollapsibles = () => (
 
 export const Themes: Story = {
   render: () => <ThemedCollapsibles />,
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark" style={{ padding: 24 }}>
-      <ThemedCollapsibles />
-    </div>
-  ),
 };

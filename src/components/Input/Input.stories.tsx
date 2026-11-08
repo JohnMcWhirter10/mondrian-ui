@@ -7,7 +7,7 @@ const plane = ['blue', 'neutral', 'red', 'yellow'] as const;
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Input> = {
-  title: 'Components/Input',
+  title: 'Forms/Input',
   component: Input,
   parameters: {
     layout: 'centered',
@@ -142,32 +142,4 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, placeholder: 'Disabled input' },
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-        padding: '16px',
-      }}
-    >
-      {plane.map((theme) => (
-        <Input
-          key={theme}
-          theme={theme}
-          aria-label={`${theme} input`}
-          placeholder={`${theme} input`}
-        />
-      ))}
-      <Input
-        aria-label="Invalid input"
-        aria-invalid="true"
-        defaultValue="Bad"
-      />
-    </div>
-  ),
 };

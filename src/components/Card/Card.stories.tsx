@@ -13,7 +13,7 @@ import { Check, Cross } from '../icons';
 import { Box } from '../Box/Box';
 
 const meta: Meta<typeof Card> = {
-  title: 'Components/Card',
+  title: 'Content/Card',
   component: Card,
   parameters: {
     layout: 'centered',
@@ -449,25 +449,6 @@ export const Themes: Story = {
           <CardContent>
             Content sits on the ground, away from the swatch.
           </CardContent>
-        </Card>
-      ))}
-    </div>
-  ),
-};
-
-export const DarkMode: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{ display: 'grid', gap: '24px', padding: '16px 24px 24px 16px' }}
-    >
-      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
-        <Card key={theme} theme={theme} style={{ width: '350px' }}>
-          <CardHeader>
-            <CardTitle>{theme} card</CardTitle>
-            <CardDescription>Lines invert; planes stay.</CardDescription>
-          </CardHeader>
-          <CardContent>Content on the ground.</CardContent>
         </Card>
       ))}
     </div>

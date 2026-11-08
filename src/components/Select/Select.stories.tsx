@@ -11,7 +11,7 @@ import {
 } from './Select';
 
 const meta: Meta<typeof Select> = {
-  title: 'Components/Select',
+  title: 'Forms/Select',
   component: Select,
   tags: ['autodocs'],
   parameters: {
@@ -188,32 +188,6 @@ export const Invalid: Story = {
       <span id="select-error" role="alert">
         Error: choose an option.
       </span>
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-        padding: '16px',
-      }}
-    >
-      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
-        <Select key={theme}>
-          <SelectTrigger theme={theme}>
-            <SelectValue placeholder={`${theme} select`} />
-          </SelectTrigger>
-          <SelectContent theme={theme}>
-            <SelectItem value="option1">Option 1</SelectItem>
-            <SelectItem value="option2">Option 2</SelectItem>
-          </SelectContent>
-        </Select>
-      ))}
     </div>
   ),
 };

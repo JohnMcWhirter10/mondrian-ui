@@ -8,7 +8,7 @@ const frame = {
 };
 
 const meta: Meta<typeof Textarea> = {
-  title: 'Components/Textarea',
+  title: 'Forms/Textarea',
   component: Textarea,
   parameters: {
     layout: 'padded',
@@ -150,31 +150,6 @@ export const Invalid: Story = {
       <span id="invalid-message-error" role="alert">
         Error: write at least 20 characters.
       </span>
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-        padding: '16px',
-      }}
-    >
-      {planes.map((theme) => (
-        <Textarea
-          key={theme}
-          theme={theme}
-          rows={3}
-          aria-label={`${theme} textarea`}
-          placeholder={theme}
-        />
-      ))}
-      <Textarea rows={3} aria-label="Invalid" aria-invalid="true" />
     </div>
   ),
 };

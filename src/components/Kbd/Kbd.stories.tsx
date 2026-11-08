@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Kbd } from './Kbd';
 
 const meta: Meta<typeof Kbd> = {
-  title: 'Components/Kbd',
+  title: 'Content/Kbd',
   component: Kbd,
   parameters: {
     layout: 'padded',
@@ -56,21 +56,6 @@ export const Themes: Story = {
           <Kbd theme={theme}>Ctrl</Kbd>
         </div>
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        padding: '24px',
-        background: 'var(--mondrian-background)',
-        color: 'var(--mondrian-text)',
-      }}
-    >
-      <Kbd theme="neutral">Ctrl</Kbd>
     </div>
   ),
 };

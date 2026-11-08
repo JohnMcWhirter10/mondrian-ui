@@ -162,18 +162,3 @@ export const Themes: Story = {
     </div>
   ),
 };
-
-export const DarkMode: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{ display: 'grid', gap: '28px', padding: '16px 24px 24px 8px' }}
-    >
-      {(['neutral', 'blue', 'red', 'yellow'] as const).map((theme) => (
-        <Box key={theme} theme={theme} style={{ width: '280px' }}>
-          Cap theme: {theme}
-        </Box>
-      ))}
-    </div>
-  ),
-};

@@ -4,7 +4,7 @@ import { Label } from './Label';
 import { Input } from '../Input/Input';
 
 const meta: Meta<typeof Label> = {
-  title: 'Components/Label',
+  title: 'Forms/Label',
   component: Label,
   parameters: {
     layout: 'centered',
@@ -117,25 +117,5 @@ export const AsChild: Story = {
         Custom Element with Label Styling
       </button>
     </Label>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px',
-        padding: '24px',
-      }}
-    >
-      {(['blue', 'neutral', 'red', 'yellow', 'green'] as const).map((theme) => (
-        <Label key={theme} theme={theme} htmlFor={`${theme}-dark`}>
-          {theme} label
-        </Label>
-      ))}
-    </div>
   ),
 };

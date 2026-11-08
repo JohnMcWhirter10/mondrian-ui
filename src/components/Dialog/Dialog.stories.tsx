@@ -15,7 +15,7 @@ import {
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Dialog> = {
-  title: 'Components/Dialog',
+  title: 'Overlays/Dialog',
   component: Dialog,
   parameters: {
     layout: 'centered',
@@ -494,18 +494,6 @@ export const Themes: Story = {
       {planeThemes.map((theme) => (
         <ThemedDialog key={theme} theme={theme} />
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark" style={{ padding: 24 }}>
-      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-        {planeThemes.map((theme) => (
-          <ThemedDialog key={theme} theme={theme} />
-        ))}
-      </div>
     </div>
   ),
 };

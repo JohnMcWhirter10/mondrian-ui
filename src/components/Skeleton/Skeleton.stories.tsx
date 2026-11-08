@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Skeleton } from './Skeleton';
 
 const meta: Meta<typeof Skeleton> = {
-  title: 'Components/Skeleton',
+  title: 'Feedback/Skeleton',
   component: Skeleton,
   parameters: {
     layout: 'padded',
@@ -74,21 +74,6 @@ export const Themes: Story = {
           <Skeleton theme={theme} width={240} height={24} />
         </div>
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        padding: '24px',
-        background: 'var(--mondrian-background)',
-        color: 'var(--mondrian-text)',
-      }}
-    >
-      <Skeleton theme="yellow" width={240} height={24} />
     </div>
   ),
 };

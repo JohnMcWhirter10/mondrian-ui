@@ -165,7 +165,7 @@ const IconsDisplay = () => {
 };
 
 const meta: Meta = {
-  title: 'Icons',
+  title: 'Foundations/Icons',
   component: IconsDisplay,
   parameters: {
     layout: 'centered',

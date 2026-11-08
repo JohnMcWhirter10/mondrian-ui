@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Grid, GridItem } from './Grid';
 
 const meta: Meta<typeof Grid> = {
-  title: 'Components/Grid',
+  title: 'Layout/Grid',
   component: Grid,
   parameters: {
     layout: 'padded',
@@ -83,21 +83,6 @@ export const Composition: Story = {
         <div style={cell}>B</div>
       </GridItem>
     </Grid>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark">
-      <Grid columns={3}>
-        <GridItem span={2}>
-          <div style={cell}>Two</div>
-        </GridItem>
-        <GridItem>
-          <div style={cell}>One</div>
-        </GridItem>
-      </Grid>
-    </div>
   ),
 };
 

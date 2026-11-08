@@ -8,7 +8,7 @@ const frame = {
 };
 
 const meta: Meta<typeof TimeField> = {
-  title: 'Components/TimeField',
+  title: 'Forms/TimeField',
   component: TimeField,
   parameters: {
     layout: 'padded',
@@ -166,31 +166,6 @@ export const Invalid: Story = {
       <span id="invalid-time-error" role="alert">
         Error: enter a time.
       </span>
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-        padding: '16px',
-        width: '280px',
-      }}
-    >
-      {planes.map((theme) => (
-        <TimeField
-          key={theme}
-          theme={theme}
-          aria-label={`${theme} time`}
-          defaultValue="09:30"
-        />
-      ))}
-      <TimeField aria-label="Invalid time" aria-invalid="true" />
     </div>
   ),
 };

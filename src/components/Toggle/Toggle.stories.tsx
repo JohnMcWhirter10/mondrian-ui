@@ -6,7 +6,7 @@ import { ThemeProvider } from '../../themes';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Toggle> = {
-  title: 'Components/Toggle',
+  title: 'Forms/Toggle',
   component: Toggle,
   parameters: {
     layout: 'centered',
@@ -175,29 +175,6 @@ export const Themes: Story = {
           <Toggle theme={theme} aria-label={`${theme} off`} />
           <Toggle theme={theme} defaultChecked aria-label={`${theme} on`} />
         </div>
-      ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        display: 'flex',
-        gap: '24px',
-        flexWrap: 'wrap',
-        padding: '24px',
-      }}
-    >
-      {allThemes.map((theme) => (
-        <Toggle
-          key={theme}
-          theme={theme}
-          defaultChecked
-          aria-label={`${theme} on`}
-        />
       ))}
     </div>
   ),

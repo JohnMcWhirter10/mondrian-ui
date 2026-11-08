@@ -134,14 +134,3 @@ export const Disabled: Story = {
     </RadioGroup>
   ),
 };
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark" style={{ padding: '24px' }}>
-      <RadioGroup defaultValue="red" theme="red" aria-label="Dark options">
-        <RadioItem value="red" aria-label="Selected" />
-        <RadioItem value="blue" aria-label="Not selected" />
-      </RadioGroup>
-    </div>
-  ),
-};

@@ -4,7 +4,7 @@ import { Alert, AlertTitle, AlertDescription } from './Alert';
 import { SquareAlert, Plus, Dash, MondrianRightArrow } from '../icons';
 
 const meta: Meta<typeof Alert> = {
-  title: 'Components/Alert',
+  title: 'Feedback/Alert',
   component: Alert,
   parameters: {
     layout: 'centered',
@@ -340,22 +340,6 @@ export const Themes: Story = {
           <AlertDescription>
             Severity is carried by the label, glyph, and heavy bar.
           </AlertDescription>
-        </Alert>
-      ))}
-    </div>
-  ),
-};
-
-export const DarkMode: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{ width: '450px', padding: '16px 24px 16px 0' }}
-    >
-      {themeList.map((theme) => (
-        <Alert key={theme} theme={theme}>
-          <AlertTitle>{theme} alert</AlertTitle>
-          <AlertDescription>Lines invert; planes stay.</AlertDescription>
         </Alert>
       ))}
     </div>

@@ -4,7 +4,7 @@ import { Heading } from './Typography';
 import { Text } from './Typography';
 
 const meta: Meta<typeof Heading> = {
-  title: 'Components/Typography',
+  title: 'Content/Typography',
   component: Heading,
   parameters: {
     layout: 'padded',
@@ -102,22 +102,6 @@ export const Themes: Story = {
           <Heading theme={theme}>Composition ({theme})</Heading>
         </div>
       ))}
-    </div>
-  ),
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div
-      data-theme="dark"
-      style={{
-        padding: '24px',
-        background: 'var(--mondrian-background)',
-        color: 'var(--mondrian-text)',
-      }}
-    >
-      <Heading theme="neutral">Composition</Heading>
-      <Heading theme="yellow">Composition</Heading>
     </div>
   ),
 };

@@ -18,7 +18,7 @@ import {
 import { Button } from '../Button/Button';
 
 const meta: Meta<typeof DropdownMenu> = {
-  title: 'Components/DropdownMenu',
+  title: 'Navigation/DropdownMenu',
   component: DropdownMenu,
   tags: ['autodocs'],
   parameters: {
@@ -233,12 +233,4 @@ const ThemedMenus = () => (
 
 export const Themes: Story = {
   render: () => <ThemedMenus />,
-};
-
-export const Dark: Story = {
-  render: () => (
-    <div data-theme="dark" style={{ padding: 24 }}>
-      <ThemedMenus />
-    </div>
-  ),
 };
