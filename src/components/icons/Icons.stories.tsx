@@ -9,6 +9,9 @@ import {
   MondrianDownArrow,
   Plus,
   Dash,
+  Check,
+  Cross,
+  Menu,
 } from './index';
 
 // Create a wrapper component to display all icons
@@ -32,6 +35,9 @@ const IconsDisplay = () => {
     { name: 'MondrianDownArrow', component: MondrianDownArrow },
     { name: 'Plus', component: Plus },
     { name: 'Dash', component: Dash },
+    { name: 'Check', component: Check },
+    { name: 'Cross', component: Cross },
+    { name: 'Menu', component: Menu },
   ];
 
   return (
