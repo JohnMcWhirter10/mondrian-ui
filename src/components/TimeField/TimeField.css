@@ -1,0 +1,100 @@
+/*
+ * The grid, size scale, and focus shift live in Input.css.
+ * This file is the clock and the blue focus plane.
+ *
+ * Black clock glyph, drawn as rectangles so the picker stays a grid.
+ * The white twin is only for the blue focus plane. %23 keeps the hex out of
+ * the stylesheet so the color lives in the Mondrian variables below.
+ */
+.mondrian-time-field {
+  --mondrian-time-field-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='2' fill='%23000000'/%3E%3Crect y='14' width='16' height='2' fill='%23000000'/%3E%3Crect y='2' width='2' height='12' fill='%23000000'/%3E%3Crect x='14' y='2' width='2' height='12' fill='%23000000'/%3E%3Crect x='7' y='3' width='2' height='5' fill='%23000000'/%3E%3Crect x='7' y='7' width='6' height='2' fill='%23000000'/%3E%3C/svg%3E");
+  --mondrian-time-field-icon-on-blue: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='2' fill='%23FFFFFF'/%3E%3Crect y='14' width='16' height='2' fill='%23FFFFFF'/%3E%3Crect y='2' width='2' height='12' fill='%23FFFFFF'/%3E%3Crect x='14' y='2' width='2' height='12' fill='%23FFFFFF'/%3E%3Crect x='7' y='3' width='2' height='5' fill='%23FFFFFF'/%3E%3Crect x='7' y='7' width='6' height='2' fill='%23FFFFFF'/%3E%3C/svg%3E");
+  --mondrian-time-field-icon-size: 16px;
+  position: relative;
+  display: block;
+  min-width: calc(var(--mondrian-spacing-large) * 11);
+  margin: 0;
+  border-color: var(--mondrian-black);
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+  line-height: 1.2;
+  /* Light scheme keeps the native glyph dark and inside the rectangle in dark mode. */
+  color-scheme: light;
+}
+
+/* Room for the glyph, which is pinned to the right edge of every size. */
+.mondrian-time-field {
+  padding-right: calc(
+    var(--mondrian-time-field-icon-size) + var(--mondrian-spacing-medium) * 2
+  );
+}
+
+.mondrian-time-field::-webkit-datetime-edit,
+.mondrian-time-field::-webkit-datetime-edit-fields-wrapper,
+.mondrian-time-field::-webkit-datetime-edit-text,
+.mondrian-time-field::-webkit-datetime-edit-hour-field,
+.mondrian-time-field::-webkit-datetime-edit-minute-field,
+.mondrian-time-field::-webkit-datetime-edit-second-field,
+.mondrian-time-field::-webkit-datetime-edit-ampm-field {
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+}
+
+.mondrian-time-field::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: var(--mondrian-spacing-medium);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--mondrian-time-field-icon-size);
+  height: var(--mondrian-time-field-icon-size);
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  background-image: var(--mondrian-time-field-icon);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: var(--mondrian-time-field-icon-size)
+    var(--mondrian-time-field-icon-size);
+}
+
+/*
+ * Hover is not set here. The shared sheet shifts Input only.
+ * Chrome focuses a segment inside the control, so the field matches
+ * :focus-within and not :focus-visible. The blue plane follows that.
+ */
+.mondrian-time-field:focus-visible,
+.mondrian-time-field:focus-within {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-black);
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  outline: none;
+}
+
+.mondrian-time-field:focus-visible::-webkit-calendar-picker-indicator,
+.mondrian-time-field:focus-within::-webkit-calendar-picker-indicator {
+  background-image: var(--mondrian-time-field-icon-on-blue);
+}
+
+.mondrian-time-field:disabled {
+  cursor: not-allowed;
+}
+
+.mondrian-time-field:disabled::-webkit-calendar-picker-indicator {
+  cursor: not-allowed;
+}
+
+.mondrian-time-field:disabled:focus-visible,
+.mondrian-time-field:disabled:focus-within {
+  transform: none;
+  box-shadow: none;
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+}
+
+.mondrian-time-field:disabled:focus-visible::-webkit-calendar-picker-indicator,
+.mondrian-time-field:disabled:focus-within::-webkit-calendar-picker-indicator {
+  background-image: var(--mondrian-time-field-icon);
+}

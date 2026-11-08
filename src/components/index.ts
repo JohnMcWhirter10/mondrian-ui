@@ -11,6 +11,9 @@ export type { TextareaProps, TextareaTheme } from './Textarea/Textarea.types';
 export { DateField } from './DateField';
 export type { DateFieldProps } from './DateField/DateField.types';
 
+export { TimeField } from './TimeField';
+export type { TimeFieldProps } from './TimeField/TimeField.types';
+
 export { Checkbox } from './Checkbox/Checkbox';
 export type { CheckboxProps } from './Checkbox/Checkbox.types';
 
