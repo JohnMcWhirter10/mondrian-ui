@@ -1,0 +1,19 @@
+.mondrian-separator {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--mondrian-black);
+}
+
+.mondrian-separator-horizontal {
+  width: 100%;
+  height: var(--mondrian-grid-width);
+}
+
+.mondrian-separator-vertical {
+  align-self: stretch;
+  width: var(--mondrian-grid-width);
+  height: auto;
+  min-height: 100%;
+}

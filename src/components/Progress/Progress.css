@@ -1,0 +1,53 @@
+.mondrian-progress {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(var(--mondrian-spacing-large) * 1.5);
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  background-color: var(--mondrian-white);
+  overflow: hidden;
+}
+
+.mondrian-progress-sm {
+  height: var(--mondrian-spacing-large);
+}
+
+.mondrian-progress-lg {
+  height: calc(var(--mondrian-spacing-large) * 2);
+}
+
+/* The blue plane grows left to right. Its width is fixed; transform moves it. */
+.mondrian-progress-indicator {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background-color: var(--mondrian-blue);
+  transform: translateX(-100%);
+}
+
+/* Indeterminate: a block slides by transform only. */
+.mondrian-progress[data-state='indeterminate'] .mondrian-progress-indicator {
+  width: 30%;
+  transform: translateX(-100%);
+  animation: mondrian-progress-slide 1.4s steps(12, end) infinite;
+}
+
+@keyframes mondrian-progress-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(334%);
+  }
+}
+
+/* Reduced motion holds the block still at the left. */
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-progress[data-state='indeterminate'] .mondrian-progress-indicator {
+    animation: none;
+    transform: translateX(0);
+  }
+}

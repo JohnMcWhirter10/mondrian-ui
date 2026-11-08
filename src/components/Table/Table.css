@@ -1,0 +1,44 @@
+.mondrian-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-small);
+  color: var(--mondrian-black);
+}
+
+.mondrian-table-caption {
+  padding: var(--mondrian-spacing-medium);
+  text-align: left;
+  font-weight: 700;
+  caption-side: bottom;
+}
+
+/* Header row is a filled yellow plane. Rows are not striped. */
+.mondrian-table-header .mondrian-table-row {
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-table-head,
+.mondrian-table-cell {
+  box-sizing: border-box;
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  text-align: left;
+  vertical-align: top;
+  color: var(--mondrian-black);
+}
+
+.mondrian-table-head {
+  font-weight: 700;
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-table-cell {
+  background-color: var(--mondrian-white);
+}
+
+.mondrian-table-footer .mondrian-table-cell {
+  font-weight: 700;
+}

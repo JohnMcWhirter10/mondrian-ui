@@ -1,0 +1,55 @@
+.mondrian-avatar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: calc(var(--mondrian-spacing-large) * 4);
+  height: calc(var(--mondrian-spacing-large) * 4);
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  overflow: hidden;
+  vertical-align: middle;
+  background-color: var(--mondrian-white);
+  font-family: var(--mondrian-font-family);
+}
+
+.mondrian-avatar-sm {
+  width: calc(var(--mondrian-spacing-large) * 3);
+  height: calc(var(--mondrian-spacing-large) * 3);
+}
+
+.mondrian-avatar-lg {
+  width: calc(var(--mondrian-spacing-large) * 6);
+  height: calc(var(--mondrian-spacing-large) * 6);
+}
+
+.mondrian-avatar-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+/* One flat plane. Black text stays readable on yellow in both modes. */
+.mondrian-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+  font-size: var(--mondrian-font-size-small);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.mondrian-avatar-sm .mondrian-avatar-fallback {
+  font-size: var(--mondrian-font-size-tiny);
+}
+
+.mondrian-avatar-lg .mondrian-avatar-fallback {
+  font-size: var(--mondrian-font-size-medium);
+}

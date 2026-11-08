@@ -1,0 +1,17 @@
+.mondrian-aspect-ratio {
+  box-sizing: border-box;
+  width: 100%;
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  background-color: var(--mondrian-white);
+  overflow: hidden;
+}
+
+/* Children fill the frame. */
+.mondrian-aspect-ratio > * > img,
+.mondrian-aspect-ratio > * > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

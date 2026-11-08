@@ -1,0 +1,51 @@
+.mondrian-empty {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+  /* Asymmetric: tight top and right, deep left and bottom. */
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) * 2)
+    calc(var(--mondrian-spacing-large) * 2);
+  font-family: var(--mondrian-font-family);
+  text-align: left;
+}
+
+/* Yellow accent strip on the left edge. */
+.mondrian-empty::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--mondrian-spacing-large);
+  background-color: var(--mondrian-yellow);
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-black);
+}
+
+.mondrian-empty-title {
+  margin: 0;
+  font-size: var(--mondrian-font-size-large);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mondrian-empty-description {
+  margin: var(--mondrian-spacing-small) 0 0;
+  max-width: 40ch;
+  font-size: var(--mondrian-font-size-small);
+  line-height: 1.5;
+}
+
+.mondrian-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--mondrian-spacing-medium);
+  margin-top: var(--mondrian-spacing-large);
+}

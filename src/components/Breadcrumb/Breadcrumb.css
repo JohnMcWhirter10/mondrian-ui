@@ -1,0 +1,54 @@
+.mondrian-breadcrumb {
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-small);
+  color: var(--mondrian-black);
+}
+
+.mondrian-breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mondrian-spacing-small);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mondrian-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.mondrian-breadcrumb-link {
+  color: var(--mondrian-black);
+  text-decoration: underline;
+  text-decoration-thickness: var(--mondrian-grid-width);
+  text-underline-offset: var(--mondrian-spacing-small);
+  border-radius: 0;
+}
+
+.mondrian-breadcrumb-link:hover {
+  background-color: var(--mondrian-yellow);
+}
+
+.mondrian-breadcrumb-link:focus-visible {
+  outline: var(--mondrian-grid-width) solid var(--mondrian-black);
+  outline-offset: var(--mondrian-grid-width);
+}
+
+.mondrian-breadcrumb-page {
+  font-weight: 700;
+  color: var(--mondrian-black);
+}
+
+/* Separator is a short black rectangle, not a glyph. */
+.mondrian-breadcrumb-separator {
+  display: inline-block;
+  flex: none;
+  width: var(--mondrian-spacing-medium);
+  height: var(--mondrian-grid-width);
+  min-height: var(--mondrian-grid-width);
+  background-color: var(--mondrian-black);
+  border-radius: 0;
+  list-style: none;
+}

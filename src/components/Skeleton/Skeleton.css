@@ -1,0 +1,42 @@
+.mondrian-skeleton {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  background-color: var(--mondrian-white);
+}
+
+/* A black sweep plane travels across by transform only. */
+.mondrian-skeleton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0 75%,
+    var(--mondrian-black) 75% 100%
+  );
+  transform: translateX(-100%);
+  animation: mondrian-skeleton-sweep 1.6s linear infinite;
+}
+
+@keyframes mondrian-skeleton-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-skeleton::after {
+    animation: none;
+    transform: translateX(-100%);
+  }
+}

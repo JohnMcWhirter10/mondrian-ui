@@ -1,0 +1,69 @@
+.mondrian-loader {
+  --mondrian-loader-unit: var(--mondrian-spacing-large);
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  gap: var(--mondrian-grid-width);
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  background-color: var(--mondrian-black);
+  height: calc(var(--mondrian-loader-unit) * 1.5);
+  overflow: hidden;
+}
+
+.mondrian-loader-sm {
+  --mondrian-loader-unit: var(--mondrian-spacing-medium);
+}
+
+.mondrian-loader-lg {
+  --mondrian-loader-unit: calc(var(--mondrian-spacing-large) * 1.5);
+}
+
+/* Blocks differ in width so the motion reads as unequal. */
+.mondrian-loader-block {
+  display: block;
+  box-sizing: border-box;
+  background-color: var(--mondrian-white);
+  border-radius: 0;
+}
+
+.mondrian-loader-block-narrow {
+  width: var(--mondrian-loader-unit);
+}
+
+.mondrian-loader-block-medium {
+  width: calc(var(--mondrian-loader-unit) * 2);
+}
+
+.mondrian-loader-block-wide {
+  width: calc(var(--mondrian-loader-unit) * 3);
+}
+
+/* The red plane moves by transform only. */
+.mondrian-loader-mover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--mondrian-loader-unit);
+  border-radius: 0;
+  background-color: var(--mondrian-red);
+  animation: mondrian-loader-slide 1.2s steps(6, end) infinite alternate;
+}
+
+@keyframes mondrian-loader-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(500%);
+  }
+}
+
+/* Reduced motion holds the red plane still. */
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-loader-mover {
+    animation: none;
+  }
+}

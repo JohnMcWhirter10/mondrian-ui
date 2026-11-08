@@ -1,0 +1,24 @@
+.mondrian-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: calc(var(--mondrian-spacing-large) * 2);
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  padding: 0 var(--mondrian-spacing-small);
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+  box-shadow: var(--mondrian-spacing-small) var(--mondrian-spacing-small) 0
+    var(--mondrian-black);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-small);
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* Keys in a row sit apart by a spacing step, leaving room for the shadow. */
+.mondrian-kbd + .mondrian-kbd {
+  margin-left: var(--mondrian-spacing-medium);
+}

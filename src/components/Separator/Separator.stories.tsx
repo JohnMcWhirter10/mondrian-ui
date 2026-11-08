@@ -1,0 +1,77 @@
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { Separator } from './Separator';
+
+const meta: Meta<typeof Separator> = {
+  title: 'Components/Separator',
+  component: Separator,
+  parameters: {
+    layout: 'padded',
+    docs: {
+      description: {
+        component: `
+A solid black line of one grid weight, horizontal or vertical.
+
+The line is black and the same weight in light and dark. A decorative separator is purely visual and drops its role; set \`decorative={false}\` to expose it to assistive technology.
+        `,
+      },
+    },
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    orientation: {
+      control: 'select',
+      options: ['horizontal', 'vertical'],
+      description: 'Direction of the line',
+      table: { defaultValue: { summary: 'horizontal' } },
+    },
+    decorative: {
+      control: 'boolean',
+      description: 'Drops the separator role when true',
+      table: { defaultValue: { summary: 'true' } },
+    },
+  },
+  args: {
+    orientation: 'horizontal',
+    decorative: true,
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof Separator>;
+
+export const Default: Story = {
+  render: (args) => (
+    <div style={{ width: '240px' }}>
+      <Separator {...args} />
+    </div>
+  ),
+};
+
+export const Horizontal: Story = {
+  render: () => (
+    <div style={{ width: '240px', fontFamily: 'Helvetica, Arial, sans-serif' }}>
+      <div style={{ padding: '8px 0' }}>Above</div>
+      <Separator />
+      <div style={{ padding: '8px 0' }}>Below</div>
+    </div>
+  ),
+};
+
+export const Vertical: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        height: '32px',
+        alignItems: 'center',
+        gap: '12px',
+        fontFamily: 'Helvetica, Arial, sans-serif',
+      }}
+    >
+      <span>Left</span>
+      <Separator orientation="vertical" />
+      <span>Right</span>
+    </div>
+  ),
+};

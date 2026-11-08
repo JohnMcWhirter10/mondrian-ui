@@ -1,0 +1,57 @@
+.mondrian-heading,
+.mondrian-text {
+  margin: 0;
+  padding: 0;
+  color: var(--mondrian-black);
+  font-family: var(--mondrian-font-family);
+}
+
+.mondrian-heading {
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.mondrian-heading-1 {
+  font-size: calc(var(--mondrian-font-size-x-large) * 1.5);
+}
+
+.mondrian-heading-2 {
+  font-size: var(--mondrian-font-size-x-large);
+}
+
+.mondrian-heading-3 {
+  font-size: var(--mondrian-font-size-large);
+}
+
+.mondrian-heading-4 {
+  font-size: var(--mondrian-font-size-medium);
+}
+
+.mondrian-heading-5 {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-heading-6 {
+  font-size: var(--mondrian-font-size-tiny);
+}
+
+.mondrian-text {
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.mondrian-text-tiny {
+  font-size: var(--mondrian-font-size-tiny);
+}
+
+.mondrian-text-small {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-text-medium {
+  font-size: var(--mondrian-font-size-medium);
+}
+
+.mondrian-text-large {
+  font-size: var(--mondrian-font-size-large);
+}
