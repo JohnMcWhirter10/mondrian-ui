@@ -1,0 +1,98 @@
+/**
+ * ToggleButton Component
+ *
+ * A white button in a black frame. Pressed fills it with the theme plane
+ * (and keeps an underline, so it is not only a colour change).
+ */
+
+.mondrian-toggle-button-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-toggle-button-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-toggle-button-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-toggle-button-green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-toggle-button-neutral {
+  --plane: var(--mondrian-text);
+  --on-plane: var(--mondrian-background);
+}
+
+.mondrian-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large)
+    calc(var(--mondrian-spacing-medium) + var(--mondrian-spacing-small));
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.mondrian-toggle-button-sm {
+  min-height: 32px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
+    var(--mondrian-spacing-medium);
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-toggle-button-lg {
+  min-height: 52px;
+  padding: var(--mondrian-spacing-large) calc(var(--mondrian-spacing-large) * 2)
+    calc(var(--mondrian-spacing-large) + var(--mondrian-spacing-small));
+  font-size: var(--mondrian-font-size-large);
+}
+
+.mondrian-toggle-button:hover:not(:disabled) {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+.mondrian-toggle-button[data-state='on'] {
+  background-color: var(--plane);
+  color: var(--on-plane);
+  text-decoration: underline;
+  text-decoration-thickness: var(--mondrian-grid-width);
+  text-underline-offset: 4px;
+}
+
+.mondrian-toggle-button:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+.mondrian-toggle-button:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+  box-shadow: none;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+}
+
+@media (forced-colors: active) {
+  .mondrian-toggle-button {
+    border-color: ButtonText;
+  }
+  .mondrian-toggle-button[data-state='on'] {
+    background-color: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+}
