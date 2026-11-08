@@ -77,6 +77,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
     grid: {
       lineWidth: '2px',
+      lineWidthHeavy: '5px',
     },
 
     typography: {
@@ -147,6 +148,12 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         
         /* Grid System */
         --mondrian-grid-width: ${theme.grid.lineWidth};
+        --mondrian-grid-width-heavy: ${theme.grid.lineWidthHeavy};
+
+        /* Focus ring: 3px, blue on light (8.6:1 on white), yellow on dark (>15:1 on black) */
+        --mondrian-focus: ${theme.isDarkMode ? theme.colors.yellow : theme.colors.blue};
+        --mondrian-focus-width: 3px;
+        --mondrian-focus-offset: 2px;
         
         /* Typography */
         --mondrian-font-family: ${theme.typography.fontFamily};

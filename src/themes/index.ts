@@ -4,4 +4,5 @@ export type {
   MondrianTheme,
   ThemeContextType,
   ComponentTheme,
+  PlaneTheme,
 } from './Theme.types';
