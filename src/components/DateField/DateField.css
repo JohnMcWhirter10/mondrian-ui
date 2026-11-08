@@ -1,0 +1,104 @@
+/*
+ * Black calendar glyph, drawn as rectangles so the picker stays a grid.
+ * The white twin is only for the blue focus plane. %23 keeps the hex out of
+ * the stylesheet so the color lives in the Mondrian variables below.
+ */
+.mondrian-date-field {
+  --mondrian-date-field-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='3' fill='%23000000'/%3E%3Crect y='3' width='2' height='13' fill='%23000000'/%3E%3Crect x='14' y='3' width='2' height='13' fill='%23000000'/%3E%3Crect x='2' y='14' width='12' height='2' fill='%23000000'/%3E%3Crect x='4' y='7' width='3' height='3' fill='%23000000'/%3E%3Crect x='9' y='7' width='3' height='3' fill='%23000000'/%3E%3C/svg%3E");
+  --mondrian-date-field-icon-on-blue: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='3' fill='%23FFFFFF'/%3E%3Crect y='3' width='2' height='13' fill='%23FFFFFF'/%3E%3Crect x='14' y='3' width='2' height='13' fill='%23FFFFFF'/%3E%3Crect x='2' y='14' width='12' height='2' fill='%23FFFFFF'/%3E%3Crect x='4' y='7' width='3' height='3' fill='%23FFFFFF'/%3E%3Crect x='9' y='7' width='3' height='3' fill='%23FFFFFF'/%3E%3C/svg%3E");
+  --mondrian-date-field-icon-size: 16px;
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: calc(var(--mondrian-spacing-large) * 11);
+  box-sizing: border-box;
+  margin: 0;
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+  padding: var(--mondrian-spacing-medium);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  line-height: 1.2;
+  outline: none;
+  /* Light scheme keeps the native glyph dark and inside the rectangle in dark mode. */
+  color-scheme: light;
+}
+
+.mondrian-date-field-sm {
+  padding: var(--mondrian-spacing-small);
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-date-field-lg {
+  padding: var(--mondrian-spacing-large);
+  font-size: var(--mondrian-font-size-large);
+}
+
+/* Room for the glyph, which is pinned to the right edge of every size. */
+.mondrian-date-field {
+  padding-right: calc(
+    var(--mondrian-date-field-icon-size) + var(--mondrian-spacing-medium) * 2
+  );
+}
+
+.mondrian-date-field::-webkit-datetime-edit,
+.mondrian-date-field::-webkit-datetime-edit-fields-wrapper,
+.mondrian-date-field::-webkit-datetime-edit-text,
+.mondrian-date-field::-webkit-datetime-edit-month-field,
+.mondrian-date-field::-webkit-datetime-edit-day-field,
+.mondrian-date-field::-webkit-datetime-edit-year-field {
+  padding: 0;
+  color: inherit;
+}
+
+.mondrian-date-field::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: var(--mondrian-spacing-medium);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--mondrian-date-field-icon-size);
+  height: var(--mondrian-date-field-icon-size);
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  background-image: var(--mondrian-date-field-icon);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: var(--mondrian-date-field-icon-size)
+    var(--mondrian-date-field-icon-size);
+}
+
+/* Hover leaves the plane where it is. Focus is the only shift. */
+.mondrian-date-field:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--mondrian-black);
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  outline: none;
+}
+
+.mondrian-date-field:focus-visible::-webkit-calendar-picker-indicator {
+  background-image: var(--mondrian-date-field-icon-on-blue);
+}
+
+.mondrian-date-field:disabled {
+  cursor: not-allowed;
+}
+
+.mondrian-date-field:disabled::-webkit-calendar-picker-indicator {
+  cursor: not-allowed;
+}
+
+.mondrian-date-field:disabled:focus-visible {
+  transform: none;
+  box-shadow: none;
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+}
+
+.mondrian-date-field:disabled:focus-visible::-webkit-calendar-picker-indicator {
+  background-image: var(--mondrian-date-field-icon);
+}
