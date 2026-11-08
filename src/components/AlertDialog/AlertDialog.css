@@ -1,0 +1,10 @@
+/**
+ * AlertDialog Component
+ *
+ * Shares the Dialog overlay and frame (see Dialog.css). The only addition is
+ * that there is no close cell, so the top rule can run to the right edge.
+ */
+
+.mondrian-alert-dialog-content::before {
+  right: 0;
+}

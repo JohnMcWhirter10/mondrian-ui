@@ -1,0 +1,49 @@
+/**
+ * HoverCard Component
+ *
+ * A rectangle with a black frame and offset shadow. A blue strip runs across
+ * the top as a header. It opens after a short delay and appears with a hard
+ * cut: no fade, no motion.
+ */
+
+.mondrian-hover-card-content {
+  position: relative;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 2rem));
+  /* Top padding leaves room for the header strip */
+  padding: calc(var(--mondrian-spacing-medium) + var(--mondrian-spacing-small))
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  z-index: 50;
+}
+
+/* Blue header strip */
+.mondrian-hover-card-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--mondrian-spacing-small);
+  background-color: var(--mondrian-blue);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .mondrian-hover-card-content {
+    border-color: CanvasText;
+  }
+  .mondrian-hover-card-content::before {
+    background-color: CanvasText;
+    border-bottom-color: CanvasText;
+    forced-color-adjust: none;
+  }
+}
