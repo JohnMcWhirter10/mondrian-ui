@@ -66,6 +66,8 @@ export type {
   DialogCloseProps,
   DialogTitleProps,
   DialogDescriptionProps,
+  DialogHeaderProps,
+  DialogFooterProps,
 } from './Dialog/Dialog.types';
 
 export {

@@ -1,103 +1,74 @@
 # Mondrian UI Component Usage
 
-Mondrian UI is a React component library built with a distinctive style inspired by Piet Mondrian's work, characterized by primary colors, bold lines, and geometric shapes. The components are built using Radix UI primitives for enhanced accessibility and component composition.
+Mondrian UI is a React component library styled after Piet Mondrian's neoplasticism. Components are built on Radix UI primitives. See the README for installation and the full component list.
 
-## Installation
-
-```bash
-npm install mondrian-ui
-```
-
-Additionally, you need to install the peer dependencies:
+## Setup
 
 ```bash
-npm install react react-dom @radix-ui/react-slot @radix-ui/react-checkbox
+npm install mondrian-ui react react-dom
 ```
 
-## Button Component
+Wrap your app in `ThemeProvider`:
 
-The Button component has been enhanced with the asChild pattern from Radix UI, allowing you to compose it with other components.
+```jsx
+import { ThemeProvider } from 'mondrian-ui';
 
-### Basic Usage
+<ThemeProvider mode="system">
+  <App />
+</ThemeProvider>;
+```
+
+## Rules that apply to every component
+
+- No `className` prop. Use `theme` (`blue`, `neutral`, `red`, `green`, `yellow`) and `size` (`sm`, `default`, `lg`).
+- No built-in labels. Put a `Label` next to the control and connect them with `htmlFor` and `id`.
+- No generated ids. You supply every `id`.
+- All components forward refs.
+
+## Button
 
 ```jsx
 import { Button } from 'mondrian-ui';
 
-function App() {
-  return (
-    <Button theme="blue" onClick={() => console.log('Clicked!')}>
-      Click Me
-    </Button>
-  );
-}
+<Button theme="blue" onClick={() => console.log('Clicked')}>
+  Click me
+</Button>
+
+<Button size="sm">Small</Button>
+<Button size="lg" theme="red">Large red</Button>
 ```
 
-### Size Variants
+Render another element with `asChild`:
 
 ```jsx
-<Button size="default">Default Size</Button>
-<Button size="sm">Small Button</Button>
-<Button size="lg">Large Button</Button>
-```
-
-### Theme Variants
-
-```jsx
-<Button theme="blue">Blue</Button>
-<Button theme="neutral">Neutral</Button>
-<Button theme="red">Red</Button>
-<Button theme="green">Green</Button>
-<Button theme="yellow">Yellow</Button>
-```
-
-### Polymorphic Usage (asChild)
-
-```jsx
-import { Button } from 'mondrian-ui';
 import { Link } from 'react-router-dom';
 
-function App() {
-  return (
-    <Button asChild>
-      <Link to="/dashboard">Go to Dashboard</Link>
-    </Button>
-  );
-}
+<Button asChild>
+  <Link to="/dashboard">Go to dashboard</Link>
+</Button>;
 ```
 
-## Input Component
-
-The Input component supports labels and different themes.
-
-### Basic Usage
+## Input and Label
 
 ```jsx
-import { Input } from 'mondrian-ui';
+import { Input, Label } from 'mondrian-ui';
 
-function App() {
-  return (
-    <Input
-      label="Email"
-      placeholder="Enter your email"
-      type="email"
-      onChange={(e) => console.log(e.target.value)}
-    />
-  );
-}
+<Label htmlFor="email">Email</Label>
+<Input
+  id="email"
+  type="email"
+  placeholder="Enter your email"
+  onChange={(e) => console.log(e.target.value)}
+/>
+
+<Label htmlFor="small">Small</Label>
+<Input id="small" size="sm" />
 ```
 
-### Size Variants
+### With form libraries
 
 ```jsx
-<Input label="Default" size="default" />
-<Input label="Small" size="sm" />
-<Input label="Large" size="lg" />
-```
-
-### Using with Form Libraries
-
-```jsx
-import { Input } from 'mondrian-ui';
+import { Input, Label } from 'mondrian-ui';
 import { useForm } from 'react-hook-form';
 
 function MyForm() {
@@ -105,71 +76,45 @@ function MyForm() {
 
   return (
     <form>
-      <Input label="Username" {...register('username')} />
+      <Label htmlFor="username">Username</Label>
+      <Input id="username" {...register('username')} />
     </form>
   );
 }
 ```
 
-## Checkbox Component
+## Checkbox
 
-The Checkbox component is built on top of Radix UI's Checkbox primitive for enhanced accessibility.
-
-### Basic Usage
+Checkbox is built on Radix UI's Checkbox. It reports changes through `onCheckedChange`.
 
 ```jsx
-import { Checkbox } from 'mondrian-ui';
-
-function App() {
-  return (
-    <Checkbox
-      label="Accept terms and conditions"
-      onChange={(e) => console.log(e.target.checked)}
-    />
-  );
-}
-```
-
-### Controlled Usage
-
-```jsx
-import { Checkbox } from 'mondrian-ui';
+import { Checkbox, Label } from 'mondrian-ui';
 import { useState } from 'react';
 
 function App() {
   const [checked, setChecked] = useState(false);
 
   return (
-    <Checkbox
-      label="Remember me"
-      checked={checked}
-      onChange={(e) => setChecked(e.target.checked)}
-    />
+    <>
+      <Checkbox id="remember" checked={checked} onCheckedChange={setChecked} />
+      <Label htmlFor="remember">Remember me</Label>
+    </>
   );
 }
 ```
 
-### Indeterminate State
+Indeterminate state:
 
 ```jsx
-import { Checkbox } from 'mondrian-ui';
-
-function App() {
-  return <Checkbox checked="indeterminate" label="Select some options" />;
-}
+<Checkbox id="some" checked="indeterminate" />
+<Label htmlFor="some">Select some options</Label>
 ```
 
-## Styling
+## Dark mode
 
-All components come with Mondrian-inspired styling by default. The styling can be further customized with the `className` prop.
+`ThemeProvider` accepts `mode="light" | "dark" | "system"`. `useTheme()` reads the current mode inside the provider.
 
-```jsx
-<Button className="my-custom-button">Custom Button</Button>
-```
-
-## Using with Ref
-
-All components use React's forwardRef, allowing you to access the underlying DOM elements.
+## Refs
 
 ```jsx
 import { Button } from 'mondrian-ui';
@@ -180,7 +125,7 @@ function App() {
 
   return (
     <Button ref={buttonRef} onClick={() => buttonRef.current.focus()}>
-      Focus Me
+      Focus me
     </Button>
   );
 }

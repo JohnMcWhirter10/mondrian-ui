@@ -15,8 +15,6 @@
   "scripts": {
     "build": "vite build",
     "test": "jest",
-    "test:visual": "jest src/tests/visualRegression --runInBand",
-    "test:visual:update": "jest src/tests/visualRegression --runInBand --updateSnapshot",
     "storybook": "npx storybook dev -p 6006",
     "build-storybook": "npx storybook build",
     "lint": "eslint . --ext .ts,.tsx",
