@@ -1,7 +1,15 @@
 import * as React from 'react';
+import type { PlaneTheme } from '../../themes/Theme.types';
 
 export interface BreadcrumbProps
-  extends Omit<React.ComponentPropsWithoutRef<'nav'>, 'className'> {}
+  extends Omit<React.ComponentPropsWithoutRef<'nav'>, 'className'> {
+  /**
+   * Color of the small swatch pinned to the current page. The heavy black bar
+   * stays under the page, so the current page never relies on color alone.
+   * @default "neutral"
+   */
+  theme?: PlaneTheme;
+}
 
 export interface BreadcrumbListProps
   extends Omit<React.ComponentPropsWithoutRef<'ol'>, 'className'> {}

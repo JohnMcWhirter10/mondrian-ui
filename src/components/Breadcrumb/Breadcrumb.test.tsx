@@ -99,4 +99,30 @@ describe('Breadcrumb', () => {
     expect(page.tagName).toBe('SPAN');
     expect(screen.queryByRole('link', { name: 'Current' })).toBeNull();
   });
+
+  test.each(['neutral', 'blue', 'red', 'yellow'] as const)(
+    'applies the %s theme class to the nav',
+    (theme) => {
+      render(
+        <Breadcrumb theme={theme} aria-label="Trail">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Here</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      );
+      expect(screen.getByRole('navigation')).toHaveClass(
+        `mondrian-breadcrumb-${theme}`
+      );
+      expect(screen.getByText('Here')).toHaveAttribute('aria-current', 'page');
+    }
+  );
+
+  test('defaults to the neutral theme', () => {
+    renderTrail();
+    expect(screen.getByRole('navigation')).toHaveClass(
+      'mondrian-breadcrumb-neutral'
+    );
+  });
 });

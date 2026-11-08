@@ -12,7 +12,7 @@ const meta: Meta<typeof Badge> = {
         component: `
 A static status label drawn as one rectangular plane.
 
-The grid line is black and the same weight on every side, in light and dark. The word sits in the upper left of the plane, so a short label still occupies a proportion from the size scale. Red, blue, and yellow are the primary planes. Neutral is black text on a white plane. Text stays on the readable side of its plane: white on red and blue, black on yellow and white.
+The grid line is the base weight on three sides and heavy along the bottom, and flips between black and white with the mode. The word sits in the upper left of the plane, so a short label still occupies a proportion from the size scale. Red, blue, and yellow are the primary planes. Neutral follows the mode. Text stays on the readable side of its plane: white on red and blue, black on yellow and white.
         `,
       },
     },
@@ -118,6 +118,40 @@ export const BesideATitle: Story = {
       <Badge theme="yellow" size="sm">
         New
       </Badge>
+    </div>
+  ),
+};
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <Badge key={theme} theme={theme}>
+          {theme}
+        </Badge>
+      ))}
+    </div>
+  ),
+};
+
+export const Dark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => (
+    <div
+      data-theme="dark"
+      style={{
+        display: 'flex',
+        gap: '16px',
+        flexWrap: 'wrap',
+        padding: '24px',
+        background: 'var(--mondrian-background)',
+      }}
+    >
+      {(['blue', 'neutral', 'red', 'yellow'] as const).map((theme) => (
+        <Badge key={theme} theme={theme}>
+          {theme}
+        </Badge>
+      ))}
     </div>
   ),
 };

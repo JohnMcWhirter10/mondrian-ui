@@ -19,7 +19,7 @@ const meta: Meta<typeof Table> = {
     docs: {
       description: {
         component: `
-Native table primitives. Every cell is bounded by a black grid line of one weight, the header row is a filled yellow plane, and rows are not striped. The table scrolls horizontally on narrow screens through ScrollArea.
+Native table primitives composed like a Mondrian canvas. There is no outer box: heavy horizontal rules carry the structure, one thin vertical rule follows the first column and runs past the table, the first header cell is a small color plane, and the footer is the dominant plane. Rows are not striped. The table scrolls horizontally on narrow screens through ScrollArea.
         `,
       },
     },
@@ -29,7 +29,7 @@ Native table primitives. Every cell is bounded by a black grid line of one weigh
     theme: {
       control: 'select',
       options: ['blue', 'neutral', 'red', 'yellow'],
-      description: 'Corner swatch color',
+      description: 'Color of the header plane and footer plane',
       table: { defaultValue: { summary: 'blue' } },
     },
     scrollTheme: {

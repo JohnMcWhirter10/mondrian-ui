@@ -1,8 +1,23 @@
+/*
+ * Table after Composition II (1930) and the 1937-42 lines.
+ * - No box. Horizontal rules cross the whole table; the heavy ones carry the
+ *   structure, the thin ones separate rows.
+ * - One vertical rule after the first column, base weight, running past the
+ *   top and bottom of the table like the long vertical in the painting.
+ * - One small counterweight plane (first header cell) and, when present, one
+ *   dominant plane (the footer row). Everything else stays white (black in dark).
+ * Text on a plane is fixed to the readable pairing: white on red/blue,
+ * black on yellow, background color on the neutral plane.
+ */
 .mondrian-table {
   --plane: var(--mondrian-blue);
-  /* Room on the left so the header rule can run past the first column. */
-  width: calc(100% - var(--mondrian-spacing-small));
-  margin-left: var(--mondrian-spacing-small);
+  --on-plane: var(--mondrian-white);
+  --table-overshoot: var(--mondrian-spacing-medium);
+
+  /* Room so the rules can run past the table without being clipped by the
+     scroll area. */
+  width: calc(100% - var(--table-overshoot) * 2);
+  margin: var(--table-overshoot);
   border-collapse: collapse;
   border-spacing: 0;
   font-family: var(--mondrian-font-family);
@@ -12,22 +27,26 @@
 
 .mondrian-table-blue {
   --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
 }
 
 .mondrian-table-red {
   --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
 }
 
 .mondrian-table-yellow {
   --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
 }
 
 .mondrian-table-neutral {
   --plane: var(--mondrian-border);
+  --on-plane: var(--mondrian-background);
 }
 
 .mondrian-table-caption {
-  padding: var(--mondrian-spacing-medium);
+  padding: var(--mondrian-spacing-medium) 0 0;
   text-align: left;
   font-weight: 700;
   caption-side: bottom;
@@ -37,74 +56,123 @@
 .mondrian-table-cell {
   position: relative;
   box-sizing: border-box;
-  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border: 0;
   border-radius: 0;
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  /* Asymmetric: tight above, deeper below. */
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
   text-align: left;
   vertical-align: top;
   color: var(--mondrian-text);
   background-color: var(--mondrian-background);
 }
 
-/* Header: white plane on a heavy bottom rule. No filled row. */
+/* The one vertical rule: after the first column, base weight. */
+.mondrian-table-head:first-child,
+.mondrian-table-cell:first-child {
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/* Header: heavy rule below. The first header cell is the small plane. */
 .mondrian-table-head {
   font-weight: 700;
   border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
-/* Small swatch pinned to the first header cell's corner. Decorative only. */
-.mondrian-table-header .mondrian-table-head:first-child::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: var(--mondrian-spacing-medium);
-  height: var(--mondrian-spacing-medium);
+.mondrian-table-header .mondrian-table-head:first-child {
   background-color: var(--plane);
-  pointer-events: none;
+  color: var(--on-plane);
 }
 
-/* First column rule runs slightly past the table's left edge. */
-.mondrian-table-header .mondrian-table-head:first-child::after {
+/* Heavy rule runs past the left and right edges of the table. */
+.mondrian-table-header .mondrian-table-head:first-child::before,
+.mondrian-table-header .mondrian-table-head:last-child::before {
   content: '';
   position: absolute;
-  left: calc(var(--mondrian-spacing-small) * -1);
   bottom: calc(var(--mondrian-grid-width-heavy) * -1);
-  width: var(--mondrian-spacing-small);
+  width: var(--table-overshoot);
   height: var(--mondrian-grid-width-heavy);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }
 
-.mondrian-table-body .mondrian-table-cell:first-child::after,
-.mondrian-table-footer .mondrian-table-cell:first-child::after {
+.mondrian-table-header .mondrian-table-head:first-child::before {
+  left: calc(var(--table-overshoot) * -1);
+}
+
+.mondrian-table-header .mondrian-table-head:last-child::before {
+  right: calc(var(--table-overshoot) * -1);
+}
+
+/* The vertical rule overshoots the top of the table... */
+.mondrian-table-header .mondrian-table-head:first-child::after {
   content: '';
   position: absolute;
-  left: calc(var(--mondrian-spacing-small) * -1);
-  top: calc(var(--mondrian-grid-width) * -1);
-  width: var(--mondrian-spacing-small);
-  height: var(--mondrian-grid-width);
+  top: calc(var(--table-overshoot) * -1);
+  right: calc(var(--mondrian-grid-width) * -1);
+  width: var(--mondrian-grid-width);
+  height: var(--table-overshoot);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }
 
+/* ...and the bottom, from the last row (the footer when there is one). */
+.mondrian-table:not(:has(.mondrian-table-footer))
+  .mondrian-table-body
+  .mondrian-table-row:last-child
+  .mondrian-table-cell:first-child::after,
+.mondrian-table-footer
+  .mondrian-table-row:last-child
+  .mondrian-table-cell:first-child:not([colspan])::after {
+  content: '';
+  position: absolute;
+  bottom: calc(var(--table-overshoot) * -1);
+  right: calc(var(--mondrian-grid-width) * -1);
+  width: var(--mondrian-grid-width);
+  height: var(--table-overshoot);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
+}
+
+/* The scroll viewport's box would close the composition. Drop it for tables;
+   the scrollbar keeps its own frame. */
+.mondrian-scroll-area-viewport:has(.mondrian-table) {
+  border: 0;
+  background-color: transparent;
+}
+
+/* Footer: the dominant plane, under a heavy rule. */
 .mondrian-table-footer .mondrian-table-cell {
   font-weight: 700;
+  background-color: var(--plane);
+  color: var(--on-plane);
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  border-right: 0;
+  border-bottom: 0;
 }
 
 @media (forced-colors: active) {
   .mondrian-table-head,
   .mondrian-table-cell {
     border-color: CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
   }
 
-  .mondrian-table-header .mondrian-table-head:first-child::before {
-    background-color: Highlight;
+  /* Planes drop to Canvas in forced colors, so keep a visible bar instead. */
+  .mondrian-table-header .mondrian-table-head:first-child {
+    border-left: var(--mondrian-grid-width-heavy) solid Highlight;
   }
 
-  .mondrian-table-header .mondrian-table-head:first-child::after,
-  .mondrian-table-body .mondrian-table-cell:first-child::after,
-  .mondrian-table-footer .mondrian-table-cell:first-child::after {
+  .mondrian-table-footer .mondrian-table-cell {
+    border-top-color: Highlight;
+  }
+
+  .mondrian-table-header .mondrian-table-head::before,
+  .mondrian-table-header .mondrian-table-head::after,
+  .mondrian-table-body .mondrian-table-cell::after,
+  .mondrian-table-footer .mondrian-table-cell::after {
     background-color: CanvasText;
   }
 }

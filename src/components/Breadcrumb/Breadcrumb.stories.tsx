@@ -87,3 +87,23 @@ export const Dark: Story = {
     </div>
   ),
 };
+
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      {(['neutral', 'blue', 'red', 'yellow'] as const).map((theme) => (
+        <Breadcrumb key={theme} theme={theme}>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{theme}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      ))}
+    </div>
+  ),
+};

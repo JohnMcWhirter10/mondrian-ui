@@ -11,11 +11,14 @@ import {
 import './Breadcrumb.css';
 
 const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
-  ({ 'aria-label': ariaLabel = 'Breadcrumb', ...props }, ref) => (
+  (
+    { 'aria-label': ariaLabel = 'Breadcrumb', theme = 'neutral', ...props },
+    ref
+  ) => (
     <nav
       ref={ref}
       aria-label={ariaLabel}
-      className="mondrian-breadcrumb"
+      className={`mondrian-breadcrumb mondrian-breadcrumb-${theme}`}
       {...props}
     />
   )
