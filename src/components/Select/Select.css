@@ -114,7 +114,7 @@
 
 .mondrian-select-trigger[data-disabled] {
   border-style: dashed;
-  opacity: 0.6;
+  text-decoration: line-through;
   cursor: not-allowed;
 }
 
@@ -220,7 +220,6 @@
 }
 
 .mondrian-select-item[data-disabled] {
-  opacity: 0.6;
   text-decoration: line-through;
   cursor: not-allowed;
 }
@@ -272,7 +271,6 @@
   .mondrian-select-trigger[data-disabled] {
     border-color: GrayText;
     color: GrayText;
-    opacity: 1;
   }
 
   .mondrian-select-trigger:focus-visible {

@@ -4,7 +4,12 @@ import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import '../../styles/native-scroll.css';
 import './Dialog.css';
-import { DialogContentProps, DialogTriggerProps } from './Dialog.types';
+import {
+  DialogContentProps,
+  DialogFooterProps,
+  DialogHeaderProps,
+  DialogTriggerProps,
+} from './Dialog.types';
 
 // Root dialog component
 const Dialog = DialogPrimitive.Root;
@@ -97,15 +102,11 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 // Dialog header
-const DialogHeader = (
-  props: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>
-) => <div className="mondrian-dialog-header" {...props} />;
+const DialogHeader = (props: DialogHeaderProps) => <div className="mondrian-dialog-header" {...props} />;
 DialogHeader.displayName = 'DialogHeader';
 
 // Dialog footer
-const DialogFooter = (
-  props: Omit<React.HTMLAttributes<HTMLDivElement>, 'className'>
-) => <div className="mondrian-dialog-footer" {...props} />;
+const DialogFooter = (props: DialogFooterProps) => <div className="mondrian-dialog-footer" {...props} />;
 DialogFooter.displayName = 'DialogFooter';
 
 // Dialog title

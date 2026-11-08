@@ -199,7 +199,7 @@
 .mondrian-dropdown-checkbox-item[data-disabled],
 .mondrian-dropdown-radio-item[data-disabled],
 .mondrian-dropdown-sub-trigger[data-disabled] {
-  opacity: 0.5;
+  text-decoration: line-through;
   cursor: not-allowed;
   pointer-events: none;
 }

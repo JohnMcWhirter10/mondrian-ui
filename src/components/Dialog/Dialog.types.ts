@@ -100,3 +100,19 @@ export type DialogDescriptionProps = Omit<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>,
   'className'
 >;
+
+/**
+ * DialogHeader props (excluding className)
+ */
+export type DialogHeaderProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'className'
+>;
+
+/**
+ * DialogFooter props (excluding className)
+ */
+export type DialogFooterProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'className'
+>;

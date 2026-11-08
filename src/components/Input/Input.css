@@ -42,7 +42,7 @@
 }
 
 .mondrian-input::placeholder {
-  opacity: 0.7;
+  font-style: italic;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -137,7 +137,8 @@
 .mondrian-date-field:disabled,
 .mondrian-time-field:disabled {
   border-style: dashed;
-  opacity: 0.6;
+  color: var(--mondrian-text);
+  text-decoration: line-through;
   cursor: not-allowed;
 }
 
@@ -153,7 +154,6 @@
   .mondrian-time-field:disabled {
     border-color: GrayText;
     color: GrayText;
-    opacity: 1;
   }
 
   .mondrian-input:focus-visible,

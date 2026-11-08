@@ -21,10 +21,4 @@ export type InputProps = Omit<
    * @default "default"
    */
   size?: 'default' | 'sm' | 'lg';
-
-  /**
-   * When true, the component renders its children directly with props forwarded
-   * @default false
-   */
-  asChild?: boolean;
 };

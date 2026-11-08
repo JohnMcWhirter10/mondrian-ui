@@ -1,198 +1,129 @@
 # Mondrian UI
 
-A React component library with a style inspired by Piet Mondrian's neoplasticism, characterized by primary colors, bold lines, and geometric shapes. Built with Radix UI primitives for enhanced accessibility and composability.
-
-## Features
-
-- **Accessibility First**: Built on top of Radix UI primitives for excellent accessibility
-- **Composable Components**: Support for the `asChild` pattern for advanced component composition
-- **Mondrian-Inspired Design**: Distinctive visual style based on Piet Mondrian's art
-- **Fully Typed**: Written in TypeScript with comprehensive type definitions
-- **Customizable**: Easy to adapt to your project's needs
-- **Dark Mode Support**: Built-in theming system that works seamlessly in both light and dark modes
+A React component library styled after Piet Mondrian's neoplasticism: primary colors, black grid lines, and rectangular planes. Built on Radix UI primitives for accessibility.
 
 ## Installation
 
 ```bash
-npm install mondrian-ui
+npm install mondrian-ui react react-dom
 ```
 
-Additionally, you need to install the peer dependencies:
-
-```bash
-npm install react react-dom @radix-ui/react-slot @radix-ui/react-checkbox
-```
+`react` and `react-dom` (18+) are peer dependencies. The Radix UI packages the components use are regular dependencies of `mondrian-ui` and install with it.
 
 ## Quick Start
 
-```jsx
-import { Button, Input, Checkbox } from 'mondrian-ui';
-
-function App() {
-  return (
-    <div>
-      <h1>Mondrian UI Example</h1>
-
-      <Button theme="blue">Click Me</Button>
-
-      <Input label="Username" placeholder="Enter your username" />
-
-      <Checkbox label="Remember me" defaultChecked />
-    </div>
-  );
-}
-```
-
-## Components
-
-### Button
+Wrap your app in `ThemeProvider` once. Every component reads its colors from it.
 
 ```jsx
-<Button theme="blue" size="default">Blue Button</Button>
-<Button theme="neutral" size="sm">Small Neutral Button</Button>
-<Button theme="red">Red Button</Button>
-<Button theme="green">Green Button</Button>
-
-// Polymorphic usage with asChild
-<Button asChild>
-  <Link to="/dashboard">Navigate with Router</Link>
-</Button>
-```
-
-### Theme System
-
-Mondrian UI uses a semantic theme naming system that makes it easy to create consistent UI components:
-
-#### Color Theme Names
-
-| Theme Name | Description                 | Usage                          |
-| ---------- | --------------------------- | ------------------------------ |
-| `blue`     | Primary blue color          | Default theme, primary actions |
-| `neutral`  | Uses background/text colors | Secondary actions, forms       |
-| `red`      | Bright red                  | Warnings, destructive actions  |
-| `green`    | Success green               | Confirmations, success states  |
-| `yellow`   | Accent yellow               | Highlights, attention          |
-
-### Input
-
-```jsx
-<Input label="Email" placeholder="Enter your email" />
-<Input label="Password" type="password" size="sm" />
-<Input label="Search" size="lg" theme="neutral" />
-```
-
-### Checkbox
-
-```jsx
-<Checkbox label="Accept terms" />
-<Checkbox label="Subscribe to newsletter" defaultChecked />
-<Checkbox label="Indeterminate option" checked="indeterminate" />
-```
-
-### DarkModeToggle
-
-```jsx
-// Simple usage
-<DarkModeToggle />
-
-// With custom label
-<DarkModeToggle label="Switch Theme" />
-
-// Without label
-<DarkModeToggle label={undefined} />
-```
-
-## Dark Mode Support
-
-Mondrian UI includes built-in dark mode support that maintains neoplasticism principles:
-
-```jsx
-// Add the ThemeProvider to your app
-import { ThemeProvider } from 'mondrian-ui';
+import { ThemeProvider, Button, Input, Label, Checkbox } from 'mondrian-ui';
 
 function App() {
   return (
     <ThemeProvider>
-      <YourApp />
+      <Label htmlFor="username">Username</Label>
+      <Input id="username" placeholder="Enter your username" />
+
+      <Checkbox id="remember" defaultChecked />
+      <Label htmlFor="remember">Remember me</Label>
+
+      <Button theme="blue">Sign in</Button>
     </ThemeProvider>
   );
 }
-
-// Use the DarkModeToggle component anywhere within the ThemeProvider
-import { DarkModeToggle } from 'mondrian-ui';
-
-function Header() {
-  return (
-    <header>
-      <h1>My App</h1>
-      <DarkModeToggle />
-    </header>
-  );
-}
 ```
 
-Dark mode in Mondrian UI:
+Components never render their own labels. Put a `Label` beside the control and connect them with `htmlFor` and the control's `id`. Components do not generate ids.
 
-- Inverts background (white to black) and text (black to white)
-- Preserves primary colors (red, blue, yellow) in both modes
-- Maintains black grid lines and rectangular shapes
-- Ensures proper contrast and readability
+## Components
+
+Exported from `mondrian-ui`:
+
+- **Actions and inputs:** `Button`, `Input`, `Textarea`, `DateField`, `TimeField`, `Checkbox`, `Toggle`, `RadioGroup`, `RadioItem`, `Select` parts, `Label`
+- **Overlays and menus:** `Dialog` parts (including `DialogHeader`, `DialogFooter`), `DropdownMenu` parts, `Tooltip` parts
+- **Disclosure:** `Accordion` parts, `Collapsible` parts
+- **Layout and surfaces:** `Box`, `Card` parts, `Grid`, `GridItem`, `Separator`, `AspectRatio`, `ScrollArea`, `Empty` parts, `Table` parts
+- **Feedback:** `Alert` parts, `Badge`, `Loader`, `Progress`, `Skeleton`
+- **Content:** `Heading`, `Text`, `Kbd`, `Avatar` parts, `Breadcrumb` parts
+- **Icons:** `Square`, `SquareAlert`, `Plus`, `Dash`, and the four `Mondrian*Arrow` icons
+
+Each component's props are documented in Storybook (`npm run storybook`).
+
+### Button
+
+```jsx
+<Button theme="blue" size="default">Blue</Button>
+<Button theme="neutral" size="sm">Small neutral</Button>
+<Button theme="red">Red</Button>
+
+// Render your own element with asChild
+<Button asChild>
+  <a href="/dashboard">Dashboard</a>
+</Button>
+```
+
+### Input, Textarea, and Label
+
+```jsx
+<Label htmlFor="email">Email</Label>
+<Input id="email" type="email" placeholder="you@example.com" />
+
+<Label htmlFor="message">Message</Label>
+<Textarea id="message" rows={4} />
+```
+
+### Checkbox and RadioGroup
+
+```jsx
+<Checkbox id="terms" />
+<Label htmlFor="terms">Accept terms</Label>
+
+<Checkbox id="some" checked="indeterminate" />
+<Label htmlFor="some">Some options</Label>
+
+<RadioGroup defaultValue="a">
+  <RadioItem id="a" value="a" />
+  <Label htmlFor="a">Option A</Label>
+  <RadioItem id="b" value="b" />
+  <Label htmlFor="b">Option B</Label>
+</RadioGroup>
+```
+
+### Theme names
+
+| Theme     | Plane                      | Usage                         |
+| --------- | -------------------------- | ----------------------------- |
+| `blue`    | Primary blue               | Default, primary actions      |
+| `neutral` | Background and text colors | Secondary actions, forms      |
+| `red`     | Primary red                | Warnings, destructive actions |
+| `green`   | Success green              | Confirmations, success states |
+| `yellow`  | Primary yellow             | Highlights, attention         |
+
+## Dark Mode
+
+`ThemeProvider` takes a `mode` prop: `'system'` (default, follows the OS), `'light'`, or `'dark'`. Changing the prop switches modes at runtime.
+
+```jsx
+<ThemeProvider mode="dark">
+  <App />
+</ThemeProvider>
+```
+
+Use `useTheme()` inside the provider to read the current mode.
+
+There is no dark mode toggle component. Build one with your own control, and pass its value to `mode`.
 
 ## Styling
 
-All components come with Mondrian-inspired styles by default. You can customize further with the `className` prop:
+Components expose no `className` prop. Appearance is set only through the `theme` and `size` props, so the Mondrian rules hold everywhere. Read `src/docs/MONDRIAN_COMPONENT_GUIDELINES.md` for the rules.
 
-```jsx
-<Button className="my-custom-button">Custom Button</Button>
-```
+## Linter Tool
 
-## Mondrian UI Guidelines
-
-All components in this library adhere to strict Mondrian neoplasticism principles:
-
-1. **Limited Color Palette**
-
-   - Primary: Red, Blue, Yellow
-   - Structural: Black, White
-   - Semantic: Success (Green)
-
-2. **Strong Grid Structure**
-
-   - Rectangular shapes only (no rounded corners)
-   - Clear black grid lines
-   - Asymmetrical balance
-
-3. **Interactive States**
-   - Transforms for movement
-   - Box-shadows for depth
-   - No opacity changes or blurs
-
-For detailed guidelines, see the [Mondrian Component Guidelines](src/docs/MONDRIAN_COMPONENT_GUIDELINES.md).
-
-### Linter Tool
-
-This library includes a CSS linter to ensure all components adhere to Mondrian styling principles:
+A CSS linter checks the components against the Mondrian rules:
 
 ```bash
-# Run the linter tool on all CSS files
-node src/utils/mondrianLintCheck.js
-
-# Check a specific directory
-node src/utils/mondrianLintCheck.js src/components/Button
+npm run lint:mondrian
+npm run lint:mondrian:ci   # exits non-zero on violations
 ```
-
-## About Piet Mondrian
-
-Piet Mondrian (1872-1944) was a Dutch painter and art theoretician who is regarded as one of the greatest artists of the 20th century. He is known for being one of the pioneers of 20th-century abstract art and a leading member of the De Stijl movement.
-
-Mondrian's work evolved from figurative painting to an increasingly abstract style, until he reached a point where his artistic vocabulary was reduced to simple geometric elements:
-
-- Primary colors (red, blue, and yellow)
-- Black grid lines
-- White backgrounds
-- Rectangular shapes
-
-This library draws inspiration from Mondrian's neoplasticism style, applying these principles to UI components for a distinctive and harmonious visual design.
 
 ## License
 
