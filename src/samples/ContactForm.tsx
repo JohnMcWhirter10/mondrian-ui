@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Input,
+  Textarea,
   Label,
   Checkbox,
   Select,
@@ -139,9 +140,10 @@ export const ContactFormSample = () => {
 
             <div>
               <Label htmlFor="message">Message *</Label>
-              <Input
+              <Textarea
                 id="message"
                 name="message"
+                rows={5}
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Your message"
