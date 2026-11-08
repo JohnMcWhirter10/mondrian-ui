@@ -277,3 +277,48 @@ export type { DarkModeToggleProps } from './DarkModeToggle/DarkModeToggle.types'
 
 export { Form } from './Form';
 export type { FormProps } from './Form/Form.types';
+
+export {
+  Popover,
+  PopoverTrigger,
+  PopoverAnchor,
+  PopoverClose,
+  PopoverContent,
+} from './Popover';
+export type {
+  PopoverProps,
+  PopoverTriggerProps,
+  PopoverAnchorProps,
+  PopoverCloseProps,
+  PopoverContentProps,
+} from './Popover';
+
+export { HoverCard, HoverCardTrigger, HoverCardContent } from './HoverCard';
+export type {
+  HoverCardProps,
+  HoverCardTriggerProps,
+  HoverCardContentProps,
+} from './HoverCard';
+
+export {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from './AlertDialog';
+export type {
+  AlertDialogProps,
+  AlertDialogTriggerProps,
+  AlertDialogContentProps,
+  AlertDialogActionProps,
+  AlertDialogCancelProps,
+  AlertDialogTitleProps,
+  AlertDialogDescriptionProps,
+  AlertDialogHeaderProps,
+  AlertDialogFooterProps,
+} from './AlertDialog';

@@ -1,0 +1,32 @@
+/**
+ * Popover Component
+ *
+ * A rectangle with a black frame and a hard black offset shadow. Placement
+ * comes from Radix (`side`, `align`). It cuts in and out: no fades, no motion.
+ */
+
+.mondrian-popover-content {
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 2rem));
+  padding: var(--mondrian-spacing-medium);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  z-index: 50;
+}
+
+.mondrian-popover-content:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+@media (forced-colors: active) {
+  .mondrian-popover-content {
+    border-color: CanvasText;
+  }
+}
