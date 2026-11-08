@@ -1,0 +1,62 @@
+.mondrian-badge {
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  border: var(--mondrian-grid-width) solid var(--mondrian-black);
+  border-radius: 0;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
+    var(--mondrian-spacing-large) var(--mondrian-spacing-medium);
+  min-width: calc(var(--mondrian-spacing-large) * 9);
+  min-height: calc(
+    var(--mondrian-spacing-large) * 2 + var(--mondrian-spacing-small)
+  );
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-small);
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: default;
+}
+
+/* Size sets the plane. The label sits in its upper left. */
+.mondrian-badge-sm {
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
+    var(--mondrian-spacing-large) var(--mondrian-spacing-small);
+  min-width: calc(var(--mondrian-spacing-large) * 7);
+  min-height: calc(var(--mondrian-spacing-large) * 2);
+  font-size: var(--mondrian-font-size-tiny);
+}
+
+.mondrian-badge-lg {
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    calc(var(--mondrian-spacing-large) + var(--mondrian-spacing-medium))
+    var(--mondrian-spacing-medium);
+  min-width: calc(var(--mondrian-spacing-large) * 12);
+  min-height: calc(
+    var(--mondrian-spacing-large) * 3 + var(--mondrian-spacing-small)
+  );
+  font-size: var(--mondrian-font-size-medium);
+}
+
+/* Primary planes. Text stays on the readable side of each plane in both modes. */
+.mondrian-badge-red {
+  background-color: var(--mondrian-red);
+  color: var(--mondrian-white);
+}
+
+.mondrian-badge-blue {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+}
+
+.mondrian-badge-yellow {
+  background-color: var(--mondrian-yellow);
+  color: var(--mondrian-black);
+}
+
+/* Noncolor plane stays black on white. The grid line stays black in both modes. */
+.mondrian-badge-neutral {
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+}
