@@ -178,6 +178,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         --mondrian-focus-width: 3px;
         --mondrian-focus-offset: 2px;
         
+        /* Motion. One vocabulary, no easing curves: change is stepped, like a
+           cut from one plane to the next. Reduced-motion rules still apply. */
+        --mondrian-motion-state: 120ms steps(2, end);
+        --mondrian-motion-reveal: 200ms steps(4, end);
+        --mondrian-motion-loop: 1.2s steps(8, end) infinite;
+
         /* Typography */
         --mondrian-font-family: ${theme.typography.fontFamily};
         --mondrian-font-size-tiny: ${theme.typography.fontSize.tiny};

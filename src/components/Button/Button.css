@@ -49,7 +49,7 @@
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  transition: box-shadow 0.15s;
+  transition: box-shadow var(--mondrian-motion-state);
 }
 
 /* A heavy bar rests on the top edge and runs past the left side. Decorative only. */

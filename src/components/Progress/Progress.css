@@ -80,7 +80,7 @@
 .mondrian-progress[data-state='indeterminate'] .mondrian-progress-indicator {
   width: 30%;
   transform: translateX(-100%);
-  animation: mondrian-progress-slide 1.4s steps(12, end) infinite;
+  animation: mondrian-progress-slide var(--mondrian-motion-loop);
 }
 
 @keyframes mondrian-progress-slide {

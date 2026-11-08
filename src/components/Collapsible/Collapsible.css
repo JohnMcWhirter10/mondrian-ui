@@ -142,10 +142,10 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .mondrian-collapsible-content[data-state='open'] {
-    animation: mondrian-collapsible-down 200ms steps(4, end);
+    animation: mondrian-collapsible-down var(--mondrian-motion-reveal);
   }
   .mondrian-collapsible-content[data-state='closed'] {
-    animation: mondrian-collapsible-up 200ms steps(4, end);
+    animation: mondrian-collapsible-up var(--mondrian-motion-reveal);
   }
 }
 

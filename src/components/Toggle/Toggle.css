@@ -38,7 +38,7 @@
   border-radius: 0;
   background-color: var(--mondrian-background);
   cursor: pointer;
-  transition: box-shadow 0.15s;
+  transition: box-shadow var(--mondrian-motion-state);
 }
 
 /* Enlarges the hit area to about 44px tall. Decorative and invisible. */

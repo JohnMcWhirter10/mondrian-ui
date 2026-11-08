@@ -158,10 +158,10 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .mondrian-accordion-content[data-state='open'] {
-    animation: mondrian-accordion-down 200ms steps(4, end);
+    animation: mondrian-accordion-down var(--mondrian-motion-reveal);
   }
   .mondrian-accordion-content[data-state='closed'] {
-    animation: mondrian-accordion-up 200ms steps(4, end);
+    animation: mondrian-accordion-up var(--mondrian-motion-reveal);
   }
 }
 

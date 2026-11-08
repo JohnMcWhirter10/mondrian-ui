@@ -78,7 +78,7 @@
      readable color for its plane. */
   border-right: var(--mondrian-grid-width-heavy) solid var(--marker);
   box-sizing: border-box;
-  animation: mondrian-loader-slide 1.2s steps(6, end) infinite alternate;
+  animation: mondrian-loader-slide var(--mondrian-motion-loop);
 }
 
 @keyframes mondrian-loader-slide {
