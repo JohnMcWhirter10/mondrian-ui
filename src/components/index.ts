@@ -268,3 +268,12 @@ export type {
 
 export * from './icons';
 export type { IconProps } from './icons/icon.types';
+
+export { VisuallyHidden } from './VisuallyHidden';
+export type { VisuallyHiddenProps } from './VisuallyHidden/VisuallyHidden.types';
+
+export { DarkModeToggle } from './DarkModeToggle';
+export type { DarkModeToggleProps } from './DarkModeToggle/DarkModeToggle.types';
+
+export { Form } from './Form';
+export type { FormProps } from './Form/Form.types';

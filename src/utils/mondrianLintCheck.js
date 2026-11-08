@@ -7,7 +7,16 @@
 
 const fs = require('fs');
 const path = require('path');
-const chalk = require('chalk'); // You might need to install this: npm install chalk
+
+// Minimal ANSI colors, so the linter needs no dependency.
+const paint = (code) => (text) => `\x1b[${code}m${text}\x1b[0m`;
+const chalk = {
+  blue: paint(34),
+  yellow: paint(33),
+  red: paint(31),
+  green: paint(32),
+  gray: paint(90),
+};
 
 // Mondrian style guidelines
 const GUIDELINES = {
@@ -41,9 +50,12 @@ const GUIDELINES = {
 const PATTERNS = {
   HARDCODED_COLORS: /#[0-9A-Fa-f]{3,6}|rgb\(|rgba\(/g,
   CSS_VARS_WITHOUT_PREFIX: /var\(--(?!mondrian-)[a-zA-Z-]+\)/g,
-  CLASS_WITHOUT_PREFIX: /\.[a-zA-Z-]+(?!mondrian-)[a-zA-Z0-9-]+\s*\{/g,
-  BORDER_RADIUS: /border-radius:\s*[^0]/g,
-  OPACITY_BLUR: /opacity:|blur\(/g,
+  // A class selector that does not start with mondrian-. Modifier classes
+  // chained onto a mondrian- class (.mondrian-card.blue) are fine.
+  CLASS_WITHOUT_PREFIX:
+    /(?<![\w\]\)-])\.(?!mondrian-)[a-zA-Z_][\w-]*(?=[^{};]*\{)/g,
+  BORDER_RADIUS: /border-radius:\s*(?!0(?![\d.]))[^\s;]/g,
+  OPACITY_BLUR: /(?<![\w-])opacity\s*:|blur\(/g,
 };
 
 /**
@@ -64,7 +76,10 @@ function checkCSSCompliance(directory) {
   let totalIssues = 0;
 
   cssFiles.forEach((file) => {
-    const content = fs.readFileSync(file, 'utf8');
+    // Comments may mention forbidden things ("no opacity fade"); skip them.
+    const content = fs
+      .readFileSync(file, 'utf8')
+      .replace(/\/\*[\s\S]*?\*\//g, '');
     const issues = [];
 
     // Check for hardcoded colors
@@ -88,8 +103,17 @@ function checkCSSCompliance(directory) {
     }
 
     // Check for CSS variables without Mondrian prefix
-    const nonMondrianVars =
-      content.match(PATTERNS.CSS_VARS_WITHOUT_PREFIX) || [];
+    // Custom properties a file declares for itself (--plane, --pad) and
+    // Radix runtime variables (--radix-*) are not theme variables.
+    const localVars = new Set(
+      [...content.matchAll(/(--[\w-]+)\s*:/g)].map((m) => m[1])
+    );
+    const nonMondrianVars = (
+      content.match(PATTERNS.CSS_VARS_WITHOUT_PREFIX) || []
+    ).filter((v) => {
+      const name = v.slice(4, -1);
+      return !name.startsWith('--radix-') && !localVars.has(name);
+    });
     if (nonMondrianVars.length > 0) {
       issues.push({
         type: 'CSS variables without --mondrian- prefix',
@@ -188,7 +212,8 @@ function findCSSFiles(dir) {
 
 // If this script is run directly
 if (require.main === module) {
-  const directory = process.argv[2] || './src';
+  const directory =
+    process.argv.slice(2).find((arg) => !arg.startsWith('--')) || './src';
   const exitWithError = process.argv.includes('--exit-with-error');
 
   const issues = checkCSSCompliance(directory);

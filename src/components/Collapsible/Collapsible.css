@@ -94,6 +94,11 @@
   box-shadow: -4px 4px 0 var(--mondrian-shadow);
 }
 
+.mondrian-collapsible-trigger:active:not(:disabled) {
+  background-color: var(--mondrian-text);
+  color: var(--mondrian-background);
+}
+
 .mondrian-collapsible-trigger:focus-visible {
   outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
   outline-offset: var(--mondrian-focus-offset);

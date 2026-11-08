@@ -86,6 +86,12 @@
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
+/* Press-in: the button moves into its hover shadow, so the click is confirmed. */
+.mondrian-button:active:not(:disabled, [aria-disabled='true']) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--mondrian-shadow);
+}
+
 .mondrian-button:focus-visible {
   outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
   outline-offset: var(--mondrian-focus-offset);
@@ -117,6 +123,10 @@
 @media (prefers-reduced-motion: reduce) {
   .mondrian-button {
     transition: none;
+  }
+
+  .mondrian-button:active:not(:disabled, [aria-disabled='true']) {
+    transform: none;
   }
 }
 

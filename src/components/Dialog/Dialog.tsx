@@ -3,6 +3,7 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import '../../styles/native-scroll.css';
+import { VisuallyHidden } from '../VisuallyHidden';
 import './Dialog.css';
 import {
   DialogContentProps,
@@ -94,7 +95,7 @@ const DialogContent = React.forwardRef<
             fill="none"
           />
         </svg>
-        <span className="sr-only">Close</span>
+        <VisuallyHidden>Close</VisuallyHidden>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
@@ -102,11 +103,15 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 // Dialog header
-const DialogHeader = (props: DialogHeaderProps) => <div className="mondrian-dialog-header" {...props} />;
+const DialogHeader = (props: DialogHeaderProps) => (
+  <div className="mondrian-dialog-header" {...props} />
+);
 DialogHeader.displayName = 'DialogHeader';
 
 // Dialog footer
-const DialogFooter = (props: DialogFooterProps) => <div className="mondrian-dialog-footer" {...props} />;
+const DialogFooter = (props: DialogFooterProps) => (
+  <div className="mondrian-dialog-footer" {...props} />
+);
 DialogFooter.displayName = 'DialogFooter';
 
 // Dialog title

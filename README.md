@@ -12,9 +12,10 @@ npm install mondrian-ui react react-dom
 
 ## Quick Start
 
-Wrap your app in `ThemeProvider` once. Every component reads its colors from it.
+Import the stylesheet once, and wrap your app in `ThemeProvider`. Every component reads its colors from it.
 
 ```jsx
+import 'mondrian-ui/style.css';
 import { ThemeProvider, Button, Input, Label, Checkbox } from 'mondrian-ui';
 
 function App() {
@@ -44,7 +45,8 @@ Exported from `mondrian-ui`:
 - **Layout and surfaces:** `Box`, `Card` parts, `Grid`, `GridItem`, `Separator`, `AspectRatio`, `ScrollArea`, `Empty` parts, `Table` parts
 - **Feedback:** `Alert` parts, `Badge`, `Loader`, `Progress`, `Skeleton`
 - **Content:** `Heading`, `Text`, `Kbd`, `Avatar` parts, `Breadcrumb` parts
-- **Icons:** `Square`, `SquareAlert`, `Plus`, `Dash`, and the four `Mondrian*Arrow` icons
+- **Accessibility:** `VisuallyHidden`
+- **Icons:** `Square`, `SquareAlert`, `Plus`, `Dash`, `Check`, `Cross`, `Menu`, and the four `Mondrian*Arrow` icons
 
 Each component's props are documented in Storybook (`npm run storybook`).
 

@@ -74,6 +74,11 @@
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
+.mondrian-dropdown-trigger:active:not(:disabled, [data-disabled]) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--mondrian-shadow);
+}
+
 .mondrian-dropdown-trigger[data-state='open'] {
   text-decoration: underline;
 }
@@ -261,5 +266,11 @@
   .mondrian-dropdown-sub-trigger[data-highlighted] {
     outline: 2px solid Highlight;
     border-left-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-dropdown-trigger:active:not(:disabled, [data-disabled]) {
+    transform: none;
   }
 }

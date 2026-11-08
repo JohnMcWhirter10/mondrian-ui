@@ -71,6 +71,11 @@
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
+.mondrian-dialog-trigger:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--mondrian-shadow);
+}
+
 .mondrian-dialog-trigger[data-state='open'] {
   text-decoration: underline;
 }
@@ -187,6 +192,11 @@
   color: var(--on-plane);
 }
 
+.mondrian-dialog-close:active {
+  background-color: var(--mondrian-text);
+  color: var(--mondrian-background);
+}
+
 /* Neutral plane has no hue, so invert instead */
 .mondrian-dialog-content.neutral .mondrian-dialog-close:hover {
   background-color: var(--mondrian-text);
@@ -228,18 +238,6 @@
   color: var(--mondrian-text);
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
 @media (forced-colors: active) {
   .mondrian-dialog-trigger,
   .mondrian-dialog-content,
@@ -255,5 +253,11 @@
   }
   .mondrian-dialog-trigger[data-state='open'] {
     text-decoration: underline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-dialog-trigger:active:not(:disabled) {
+    transform: none;
   }
 }
