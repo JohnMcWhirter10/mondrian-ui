@@ -52,7 +52,7 @@ const IconsDisplay = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
           gap: '24px',
           marginBottom: '40px',
         }}
@@ -71,7 +71,16 @@ const IconsDisplay = () => {
             }}
           >
             <Icon size={iconSize} />
-            <div style={{ marginTop: '12px', fontSize: '14px' }}>{name}</div>
+            <div
+              style={{
+                marginTop: '12px',
+                fontSize: '14px',
+                overflowWrap: 'anywhere',
+                textAlign: 'center',
+              }}
+            >
+              {name}
+            </div>
           </div>
         ))}
       </div>
@@ -80,7 +89,7 @@ const IconsDisplay = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
           gap: '24px',
           marginBottom: '40px',
         }}
@@ -138,7 +147,7 @@ const IconsDisplay = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
           gap: '24px',
           marginBottom: '40px',
         }}
@@ -162,7 +171,16 @@ const IconsDisplay = () => {
             }}
           >
             <Icon size={iconSize} color={iconColors.blue} />
-            <div style={{ marginTop: '12px', fontSize: '14px' }}>{name}</div>
+            <div
+              style={{
+                marginTop: '12px',
+                fontSize: '14px',
+                overflowWrap: 'anywhere',
+                textAlign: 'center',
+              }}
+            >
+              {name}
+            </div>
           </div>
         ))}
       </div>
