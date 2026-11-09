@@ -80,19 +80,21 @@ export const Placement: Story = {
 export const WithAnchor: Story = {
   render: () => (
     <Popover>
-      <PopoverAnchor asChild>
-        <div
-          style={{
-            border: '3px solid var(--mondrian-border)',
-            padding: '1rem 2rem',
-          }}
-        >
-          Anchored here
-        </div>
-      </PopoverAnchor>
-      <PopoverTrigger asChild>
-        <Button size="sm">Toggle</Button>
-      </PopoverTrigger>
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <PopoverAnchor asChild>
+          <div
+            style={{
+              border: '3px solid var(--mondrian-border)',
+              padding: '1rem 2rem',
+            }}
+          >
+            Anchored here
+          </div>
+        </PopoverAnchor>
+        <PopoverTrigger asChild>
+          <Button size="sm">Toggle</Button>
+        </PopoverTrigger>
+      </div>
       <PopoverContent>
         Positioned against the anchor, not the trigger.
       </PopoverContent>

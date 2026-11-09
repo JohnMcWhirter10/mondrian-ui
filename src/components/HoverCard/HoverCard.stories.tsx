@@ -2,7 +2,8 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ThemeProvider } from '../../themes';
 import { Avatar, AvatarFallback } from '../Avatar';
-import { Card, CardContent, CardDescription, CardTitle } from '../Card';
+import { Button } from '../Button/Button';
+import { CardDescription, CardTitle } from '../Card';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './HoverCard';
 
 const meta: Meta<typeof HoverCard> = {
@@ -36,7 +37,11 @@ type Story = StoryObj<typeof HoverCard>;
 export const Default: Story = {
   render: (args) => (
     <HoverCard {...args}>
-      <HoverCardTrigger href="#mondrian">@mondrian</HoverCardTrigger>
+      <HoverCardTrigger asChild>
+        <Button asChild theme="neutral">
+          <a href="#mondrian">@mondrian</a>
+        </Button>
+      </HoverCardTrigger>
       <HoverCardContent>
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
           <Avatar>
@@ -55,16 +60,14 @@ export const Default: Story = {
 export const WithCard: Story = {
   render: () => (
     <HoverCard>
-      <HoverCardTrigger href="#broadway">
-        Broadway Boogie Woogie
+      <HoverCardTrigger asChild>
+        <Button asChild theme="neutral">
+          <a href="#broadway">Broadway Boogie Woogie</a>
+        </Button>
       </HoverCardTrigger>
       <HoverCardContent side="right">
-        <Card>
-          <CardContent>
-            <CardTitle>Broadway Boogie Woogie</CardTitle>
-            <CardDescription>1942–43, oil on canvas.</CardDescription>
-          </CardContent>
-        </Card>
+        <CardTitle>Broadway Boogie Woogie</CardTitle>
+        <CardDescription>1942–43, oil on canvas.</CardDescription>
       </HoverCardContent>
     </HoverCard>
   ),
@@ -74,7 +77,11 @@ export const SlowOpen: Story = {
   args: { openDelay: 800 },
   render: (args) => (
     <HoverCard {...args}>
-      <HoverCardTrigger href="#slow">Hover and wait</HoverCardTrigger>
+      <HoverCardTrigger asChild>
+        <Button asChild theme="neutral">
+          <a href="#slow">Hover and wait</a>
+        </Button>
+      </HoverCardTrigger>
       <HoverCardContent>Opened after 800ms.</HoverCardContent>
     </HoverCard>
   ),
