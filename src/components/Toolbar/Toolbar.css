@@ -1,0 +1,123 @@
+/**
+ * Toolbar Component
+ *
+ * One rectangle: a black frame around a row of items that share borders,
+ * black on white. Pressed items invert (white on black).
+ */
+
+.mondrian-toolbar {
+  display: inline-flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+}
+
+.mondrian-toolbar[data-orientation='vertical'] {
+  flex-direction: column;
+}
+
+.mondrian-toolbar-toggle-group {
+  display: inline-flex;
+}
+
+.mondrian-toolbar-toggle-group[data-orientation='vertical'] {
+  flex-direction: column;
+}
+
+.mondrian-toolbar-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Shared borders between neighbouring items */
+.mondrian-toolbar-item + .mondrian-toolbar-item,
+.mondrian-toolbar-toggle-group .mondrian-toolbar-item:not(:first-child),
+.mondrian-toolbar-toggle-group + .mondrian-toolbar-item,
+.mondrian-toolbar-item + .mondrian-toolbar-toggle-group {
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/* Vertical toolbars share horizontal borders instead */
+.mondrian-toolbar[data-orientation='vertical'] .mondrian-toolbar-item,
+.mondrian-toolbar[data-orientation='vertical'] .mondrian-toolbar-toggle-group {
+  border-left: 0;
+}
+.mondrian-toolbar[data-orientation='vertical']
+  .mondrian-toolbar-item
+  + .mondrian-toolbar-item,
+.mondrian-toolbar[data-orientation='vertical']
+  .mondrian-toolbar-toggle-group
+  .mondrian-toolbar-item:not(:first-child),
+.mondrian-toolbar[data-orientation='vertical']
+  .mondrian-toolbar-toggle-group
+  + .mondrian-toolbar-item,
+.mondrian-toolbar[data-orientation='vertical']
+  .mondrian-toolbar-item
+  + .mondrian-toolbar-toggle-group {
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-toolbar-item:hover:not(:disabled, [aria-disabled='true']) {
+  text-decoration: underline;
+}
+
+.mondrian-toolbar-item[data-state='on'] {
+  background-color: var(--mondrian-text);
+  color: var(--mondrian-background);
+}
+
+.mondrian-toolbar-item:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: calc(var(--mondrian-focus-width) * -1);
+}
+
+.mondrian-toolbar-item:disabled {
+  color: GrayText;
+  cursor: not-allowed;
+}
+
+.mondrian-toolbar-separator {
+  flex-shrink: 0;
+  background-color: var(--mondrian-border);
+}
+.mondrian-toolbar-separator[data-orientation='vertical'] {
+  width: var(--mondrian-grid-width-heavy);
+}
+.mondrian-toolbar-separator[data-orientation='horizontal'] {
+  height: var(--mondrian-grid-width-heavy);
+}
+
+@media (forced-colors: active) {
+  .mondrian-toolbar,
+  .mondrian-toolbar-item {
+    border-color: CanvasText;
+  }
+  .mondrian-toolbar-separator {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+  .mondrian-toolbar-item[data-state='on'] {
+    background-color: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+}

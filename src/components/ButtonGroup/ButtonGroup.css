@@ -1,0 +1,91 @@
+/**
+ * ButtonGroup Component
+ *
+ * A joined row of buttons sharing single black borders. The pressed item is
+ * a blue plane. Vertical orientation stacks the group; nothing else changes.
+ */
+
+.mondrian-button-group {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.mondrian-button-group[data-orientation='vertical'] {
+  flex-direction: column;
+}
+
+.mondrian-button-group-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mondrian-button-group-item-sm {
+  min-height: 32px;
+  padding: 2px var(--mondrian-spacing-medium);
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-button-group-item-lg {
+  min-height: 52px;
+  padding: var(--mondrian-spacing-medium) var(--mondrian-spacing-large);
+  font-size: var(--mondrian-font-size-large);
+}
+
+/* Share one border between neighbours */
+.mondrian-button-group:not([data-orientation='vertical'])
+  .mondrian-button-group-item:not(:first-child) {
+  margin-left: calc(var(--mondrian-grid-width) * -1);
+}
+
+.mondrian-button-group[data-orientation='vertical']
+  .mondrian-button-group-item:not(:first-child) {
+  margin-top: calc(var(--mondrian-grid-width) * -1);
+}
+
+.mondrian-button-group-item[data-state='on'] {
+  background-color: var(--mondrian-blue);
+  color: var(--mondrian-white);
+  text-decoration: underline;
+  text-decoration-thickness: var(--mondrian-grid-width);
+  text-underline-offset: 4px;
+}
+
+.mondrian-button-group-item:hover:not(:disabled) {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  position: relative;
+}
+
+.mondrian-button-group-item:focus-visible {
+  position: relative;
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+.mondrian-button-group-item:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  .mondrian-button-group-item {
+    border-color: ButtonText;
+  }
+  .mondrian-button-group-item[data-state='on'] {
+    background-color: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+}

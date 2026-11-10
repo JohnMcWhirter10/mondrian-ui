@@ -135,7 +135,9 @@ export const HorizontalScroll = {
         {Array(20)
           .fill(0)
           .map((_, i) => (
-            <span key={i}>Item {i + 1}</span>
+            <span key={i} style={{ marginRight: '16px' }}>
+              Item {i + 1}
+            </span>
           ))}
       </div>
     </ScrollArea>

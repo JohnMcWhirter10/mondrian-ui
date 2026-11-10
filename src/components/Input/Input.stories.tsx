@@ -61,7 +61,14 @@ export const Blue: Story = {
 // Input with Label example (render function needed to compose components)
 export const WithLabel: Story = {
   render: (args) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        width: '280px',
+      }}
+    >
       <Label htmlFor="input-with-label" theme={args.theme} position="top">
         Input Label
       </Label>

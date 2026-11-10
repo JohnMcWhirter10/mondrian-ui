@@ -147,6 +147,7 @@ export const OpenByDefault: Story = {
     theme: 'blue',
     size: 'default',
     disabled: false,
+    defaultOpen: true,
   },
 };
 

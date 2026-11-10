@@ -111,6 +111,7 @@ export const Blue: Story = {
   args: {
     theme: 'blue',
     id: 'blue-toggle',
+    defaultChecked: true,
   },
 };
 
@@ -118,6 +119,7 @@ export const Neutral: Story = {
   args: {
     theme: 'neutral',
     id: 'neutral-toggle',
+    defaultChecked: true,
   },
 };
 
@@ -125,6 +127,7 @@ export const Red: Story = {
   args: {
     theme: 'red',
     id: 'red-toggle',
+    defaultChecked: true,
   },
 };
 
@@ -132,6 +135,7 @@ export const Green: Story = {
   args: {
     theme: 'green',
     id: 'green-toggle',
+    defaultChecked: true,
   },
 };
 
@@ -139,6 +143,7 @@ export const Yellow: Story = {
   args: {
     theme: 'yellow',
     id: 'yellow-toggle',
+    defaultChecked: true,
   },
 };
 
