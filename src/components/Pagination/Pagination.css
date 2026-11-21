@@ -42,3 +42,14 @@
   min-width: 52px;
   font-size: var(--mondrian-font-size-large);
 }
+
+/* Compact: sits at the scale of table rows. Square page cells, tight padding. */
+.mondrian-pagination-sm .mondrian-button {
+  min-width: 32px;
+  min-height: 32px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+}
+
+.mondrian-pagination-sm .mondrian-button:disabled {
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+}
