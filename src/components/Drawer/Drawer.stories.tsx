@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
 import { Label } from '../Label/Label';
@@ -25,8 +24,8 @@ const meta: Meta<typeof DrawerContent> = {
         component: `
 A full-height panel anchored to the left or right edge. It is a thin layer over
 \`Dialog\`, so the overlay, focus trap, Escape and close behavior are identical.
-The header is the colour plane. Use the toolbar's light/dark switch to see it in
-dark mode. Wrap any button that should dismiss the drawer in \`DrawerClose\`.
+The header is the colour plane. The slide uses the library's stepped timing and is
+off under reduced motion. Wrap any button that should dismiss the drawer in \`DrawerClose\`.
         `,
       },
     },
@@ -39,13 +38,6 @@ dark mode. Wrap any button that should dismiss the drawer in \`DrawerClose\`.
       options: ['blue', 'red', 'yellow', 'green', 'neutral'],
     },
   },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -91,4 +83,9 @@ export const Yellow: Story = {
 export const Neutral: Story = {
   ...Default,
   args: { side: 'left', theme: 'neutral' },
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };
