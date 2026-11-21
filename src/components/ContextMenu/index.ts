@@ -1,0 +1,32 @@
+export {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuGroup,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+} from './ContextMenu';
+
+export type {
+  ContextMenuProps,
+  ContextMenuTheme,
+  ContextMenuTriggerProps,
+  ContextMenuContentProps,
+  ContextMenuItemProps,
+  ContextMenuCheckboxItemProps,
+  ContextMenuRadioGroupProps,
+  ContextMenuRadioItemProps,
+  ContextMenuLabelProps,
+  ContextMenuSeparatorProps,
+  ContextMenuGroupProps,
+  ContextMenuSubProps,
+  ContextMenuSubTriggerProps,
+  ContextMenuSubContentProps,
+} from './ContextMenu.types';

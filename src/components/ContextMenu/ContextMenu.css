@@ -1,0 +1,8 @@
+/*
+ * ContextMenu: frame, rows and separators are shared with DropdownMenu
+ * (imported in ContextMenu.tsx). Only the trigger region is its own.
+ */
+.mondrian-context-trigger:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}

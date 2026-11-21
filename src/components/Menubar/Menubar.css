@@ -1,0 +1,81 @@
+/*
+ * Menubar: triggers sit on one heavy black rule. The open trigger fills with
+ * the plane colour and is underlined, so state is never colour alone. Open
+ * menus share the DropdownMenu frame and rows (imported in Menubar.tsx).
+ */
+.mondrian-menubar {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  background-color: var(--mondrian-background);
+  /* Full frame, heavy bottom: same as Tabs and Toolbar */
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+}
+.mondrian-menubar.red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-menubar.yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-menubar.green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-menubar.neutral {
+  --plane: var(--mondrian-text);
+  --on-plane: var(--mondrian-background);
+}
+
+.mondrian-menubar-trigger {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--mondrian-text);
+  font-family: inherit;
+  font-size: var(--mondrian-font-size-medium);
+  cursor: pointer;
+  user-select: none;
+}
+
+.mondrian-menubar-trigger + .mondrian-menubar-trigger {
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-menubar-trigger[data-highlighted],
+.mondrian-menubar-trigger[data-state='open'] {
+  background-color: var(--plane);
+  color: var(--on-plane);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mondrian-menubar-trigger:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: calc(var(--mondrian-focus-width) * -1);
+}
+
+.mondrian-menubar-trigger[data-disabled] {
+  cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  .mondrian-menubar,
+  .mondrian-menubar-trigger {
+    border-color: CanvasText;
+  }
+  .mondrian-menubar-trigger[data-highlighted],
+  .mondrian-menubar-trigger[data-state='open'] {
+    outline: 2px solid Highlight;
+  }
+}

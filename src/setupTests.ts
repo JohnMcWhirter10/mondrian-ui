@@ -51,3 +51,35 @@ defineStub(
   'releasePointerCapture',
   () => undefined
 );
+
+// ContextMenu anchors to the pointer through a virtual DOMRect.
+defineStub(
+  globalThis,
+  'DOMRect',
+  class DOMRect {
+    constructor(
+      public x = 0,
+      public y = 0,
+      public width = 0,
+      public height = 0
+    ) {}
+    get top() {
+      return this.y;
+    }
+    get left() {
+      return this.x;
+    }
+    get right() {
+      return this.x + this.width;
+    }
+    get bottom() {
+      return this.y + this.height;
+    }
+    toJSON() {
+      return { ...this };
+    }
+    static fromRect(r: Partial<DOMRect> = {}) {
+      return new DOMRect(r.x, r.y, r.width, r.height);
+    }
+  }
+);

@@ -106,7 +106,13 @@
     var(--mondrian-spacing-medium);
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
   z-index: 50;
-  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+  transform-origin: var(
+    --radix-dropdown-menu-content-transform-origin,
+    var(
+      --radix-context-menu-content-transform-origin,
+      var(--radix-menubar-content-transform-origin)
+    )
+  );
 }
 
 .mondrian-dropdown-sub-content {
@@ -142,7 +148,14 @@
    itself are never clipped and the menu never leaves the screen. */
 .mondrian-dropdown-scroll {
   max-height: calc(
-    var(--radix-dropdown-menu-content-available-height, 100vh) - 3rem
+    var(
+        --radix-dropdown-menu-content-available-height,
+        var(
+          --radix-context-menu-content-available-height,
+          var(--radix-menubar-content-available-height, 100vh)
+        )
+      ) -
+      3rem
   );
   overflow-x: hidden;
   overflow-y: auto;
@@ -206,6 +219,8 @@
 .mondrian-dropdown-sub-trigger[data-disabled] {
   cursor: not-allowed;
   pointer-events: none;
+  /* Non-colour cue so disabled is never colour alone */
+  text-decoration: line-through;
 }
 
 /* Check / radio glyph */
