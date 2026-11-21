@@ -65,3 +65,8 @@
   min-width: 24px;
   font-size: var(--mondrian-font-size-small);
 }
+
+/* Arrow-only buttons: pad tightly around the icon so they match the page cells. */
+.mondrian-pagination-sm .mondrian-button:has(> svg) {
+  padding: 2px 6px;
+}

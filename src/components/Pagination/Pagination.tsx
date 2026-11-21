@@ -45,6 +45,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
     const isCompact = variant === 'compact';
     // Arrow icons instead of words wherever space is tight.
     const iconOnly = size === 'sm' || isCompact;
+    const iconSize = size === 'sm' ? 14 : 20;
     const total = Math.max(pageCount, 1);
     const current = Math.min(Math.max(page, 1), total);
 
@@ -56,7 +57,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
         disabled={current <= 1}
         onClick={() => onPageChange(current - 1)}
       >
-        {iconOnly ? <MondrianLeftArrow size={20} /> : 'Previous'}
+        {iconOnly ? <MondrianLeftArrow size={iconSize} /> : 'Previous'}
       </Button>
     );
     const next = (
@@ -67,7 +68,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
         disabled={current >= total}
         onClick={() => onPageChange(current + 1)}
       >
-        {iconOnly ? <MondrianRightArrow size={20} /> : 'Next'}
+        {iconOnly ? <MondrianRightArrow size={iconSize} /> : 'Next'}
       </Button>
     );
 
