@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ThemeProvider } from '../../themes';
 import { Pagination } from './Pagination';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../Table';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Navigation/Pagination',
@@ -69,4 +77,64 @@ export const Dark: Story = {
       <Controlled {...args} />
     </ThemeProvider>
   ),
+};
+
+const PLANES = ['Red', 'Blue', 'Yellow', 'Black', 'White'];
+const ROWS = Array.from({ length: 47 }, (_, i) => ({
+  id: i + 1,
+  name: `Composition ${i + 1}`,
+  plane: PLANES[i % PLANES.length],
+}));
+
+const PAGE_SIZE = 8;
+
+/**
+ * Pagination does not slice data. Keep `page` in state, slice the rows for
+ * that page, and derive `pageCount` from the total.
+ */
+const WithTableExample = () => {
+  const [page, setPage] = useState(1);
+  const pageCount = Math.ceil(ROWS.length / PAGE_SIZE);
+  const rows = ROWS.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  return (
+    <div style={{ display: 'grid', gap: 16, width: 480 }}>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>#</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Plane</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.plane}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Pagination
+        aria-label="Compositions"
+        page={page}
+        pageCount={pageCount}
+        onPageChange={setPage}
+      />
+    </div>
+  );
+};
+
+export const WithTable: Story = {
+  render: () => <WithTableExample />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
+      },
+    },
+  },
 };

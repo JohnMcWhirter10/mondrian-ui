@@ -45,12 +45,13 @@
   display: flex;
   flex-shrink: 0;
   box-sizing: border-box;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
   border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
 .mondrian-tabs-list[data-orientation='vertical'] {
   flex-direction: column;
-  border-bottom: 0;
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
   border-right: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
 }
 
