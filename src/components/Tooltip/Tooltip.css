@@ -45,11 +45,11 @@
   content: '';
   position: absolute;
   bottom: calc(
-    var(--mondrian-grid-width-heavy) * -1 - var(--mondrian-grid-width)
+    var(--mondrian-grid-width-accent) * -1 - var(--mondrian-grid-width)
   );
   left: 40%;
   right: 0;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }

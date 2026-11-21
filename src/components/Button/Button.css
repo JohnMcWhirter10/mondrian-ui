@@ -59,7 +59,7 @@
   top: calc(var(--mondrian-grid-width) * -1);
   left: 0;
   width: 40%;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }
@@ -105,14 +105,69 @@
   text-underline-offset: 4px;
 }
 
-/* Disabled: plane removed and line dashed, so it is not only a color change. */
+/*
+ * Disabled: plane removed, a double rule of two hairlines, and regular
+ * weight text, so it is not only a color change. The border gets thinner,
+ * so the padding grows by the same amount and the height stays the same.
+ */
 .mondrian-button:disabled,
 .mondrian-button[aria-disabled='true'] {
   background-color: var(--mondrian-background);
   color: var(--mondrian-text);
-  border-style: dashed;
+  border-width: 1px;
+  padding: calc(
+      var(--mondrian-spacing-medium) + calc(var(--mondrian-grid-width) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-large) * 1.5 +
+        calc(var(--mondrian-grid-width) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-medium) + var(--mondrian-spacing-small) +
+        calc(var(--mondrian-grid-width-heavy) - 1px)
+    )
+    calc(var(--mondrian-spacing-large) + calc(var(--mondrian-grid-width) - 1px));
+  font-weight: 400;
   cursor: not-allowed;
-  box-shadow: none;
+  box-shadow:
+    inset 0 0 0 1px var(--mondrian-background),
+    inset 0 0 0 2px var(--mondrian-border);
+}
+
+.mondrian-button-sm:disabled,
+.mondrian-button-sm[aria-disabled='true'] {
+  padding: calc(
+      var(--mondrian-spacing-small) + calc(var(--mondrian-grid-width) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-medium) * 1.5 +
+        calc(var(--mondrian-grid-width) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-medium) +
+        calc(var(--mondrian-grid-width-heavy) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-medium) + calc(var(--mondrian-grid-width) - 1px)
+    );
+}
+
+.mondrian-button-lg:disabled,
+.mondrian-button-lg[aria-disabled='true'] {
+  padding: calc(
+      var(--mondrian-spacing-large) + calc(var(--mondrian-grid-width) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-large) * 2 + calc(var(--mondrian-grid-width) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-large) + var(--mondrian-spacing-small) +
+        calc(var(--mondrian-grid-width-heavy) - 1px)
+    )
+    calc(
+      var(--mondrian-spacing-large) + var(--mondrian-spacing-small) +
+        calc(var(--mondrian-grid-width) - 1px)
+    );
 }
 
 .mondrian-button:disabled::before,
@@ -144,5 +199,7 @@
   .mondrian-button[aria-disabled='true'] {
     border-color: GrayText;
     color: GrayText;
+    outline: 1px solid GrayText;
+    outline-offset: -3px;
   }
 }

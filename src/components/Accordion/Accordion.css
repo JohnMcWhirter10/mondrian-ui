@@ -40,10 +40,10 @@
 .mondrian-accordion::before {
   content: '';
   position: absolute;
-  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  top: calc(var(--mondrian-grid-width-accent) * -1);
   left: 0;
   right: 48px;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }
@@ -52,7 +52,7 @@
 .mondrian-accordion::after {
   content: '';
   position: absolute;
-  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  top: calc(var(--mondrian-grid-width-accent) * -1);
   right: 0;
   width: 48px;
   height: calc(var(--mondrian-grid-width-heavy) * 3);
@@ -114,7 +114,6 @@
 
 .mondrian-accordion-trigger[data-disabled] {
   cursor: not-allowed;
-  text-decoration: line-through;
 }
 
 .mondrian-accordion-trigger[data-state='open'] {

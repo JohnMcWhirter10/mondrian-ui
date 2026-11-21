@@ -44,7 +44,7 @@
   bottom: calc(var(--mondrian-grid-width-heavy) * -2);
   left: 48px;
   right: 0;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }
@@ -106,7 +106,6 @@
 
 .mondrian-collapsible-trigger:disabled {
   cursor: not-allowed;
-  text-decoration: line-through;
 }
 
 .mondrian-collapsible-trigger[data-state='open'] {

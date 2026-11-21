@@ -144,10 +144,10 @@
 .mondrian-dialog-content::before {
   content: '';
   position: absolute;
-  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  top: calc(var(--mondrian-grid-width-accent) * -1);
   left: 0;
   right: 72px;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }

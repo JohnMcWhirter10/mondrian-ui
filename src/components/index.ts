@@ -14,6 +14,19 @@ export type { DateFieldProps } from './DateField/DateField.types';
 export { TimeField } from './TimeField';
 export type { TimeFieldProps } from './TimeField/TimeField.types';
 
+export { PasswordInput } from './PasswordInput';
+export type { PasswordInputProps } from './PasswordInput/PasswordInput.types';
+
+export { InputGroup, InputGroupSlot, InputGroupInput } from './InputGroup';
+export type {
+  InputGroupProps,
+  InputGroupSlotProps,
+  InputGroupInputProps,
+} from './InputGroup/InputGroup.types';
+
+export { InputOTP } from './InputOTP';
+export type { InputOTPProps } from './InputOTP/InputOTP.types';
+
 export { Checkbox } from './Checkbox/Checkbox';
 export type { CheckboxProps } from './Checkbox/Checkbox.types';
 

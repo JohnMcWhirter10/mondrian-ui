@@ -38,6 +38,16 @@ describe('Checkbox', () => {
     expect(box.querySelector('svg')).not.toBeNull();
   });
 
+  test('draws the stepped check when checked and a dash when indeterminate', () => {
+    const { rerender } = render(<Checkbox aria-label="Accept" checked />);
+    const check = screen.getByRole('checkbox').querySelectorAll('rect');
+    expect(check).toHaveLength(5);
+
+    rerender(<Checkbox aria-label="Accept" checked="indeterminate" />);
+    const dash = screen.getByRole('checkbox').querySelectorAll('rect');
+    expect(dash.length).not.toBe(5);
+  });
+
   test('calls onCheckedChange', () => {
     const onChange = jest.fn();
     render(<Checkbox aria-label="Accept" onCheckedChange={onChange} />);

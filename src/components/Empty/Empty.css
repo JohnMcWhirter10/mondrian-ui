@@ -52,10 +52,10 @@
 .mondrian-empty::after {
   content: '';
   position: absolute;
-  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
+  bottom: calc(var(--mondrian-grid-width-accent) * -1);
   left: 0;
   width: var(--mondrian-spacing-small);
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }

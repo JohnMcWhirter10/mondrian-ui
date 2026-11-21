@@ -178,6 +178,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         /* Grid System */
         --mondrian-grid-width: ${theme.grid.lineWidth};
         --mondrian-grid-width-heavy: ${theme.grid.lineWidthHeavy};
+        /* The thin accent bars (corner bars, rules) all share this thickness. */
+        --mondrian-grid-width-accent: calc(${theme.grid.lineWidth} * 1.5);
 
         /* Focus ring: 3px, blue on light (8.6:1 on white), yellow on dark (>15:1 on black) */
         --mondrian-focus: ${theme.isDarkMode ? theme.colors.yellow : theme.colors.blue};

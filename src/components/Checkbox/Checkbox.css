@@ -56,14 +56,14 @@
   content: '';
   position: absolute;
   left: calc(var(--mondrian-grid-width) * -1);
-  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
+  bottom: calc(var(--mondrian-grid-width-accent) * -1);
   width: calc(100% + var(--mondrian-grid-width) * 2);
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }
 
-/* Checked: the box becomes the plane and a dash glyph appears. */
+/* Checked: the box becomes the plane and the check glyph appears (a dash when indeterminate). */
 .mondrian-checkbox-root[data-state='checked'],
 .mondrian-checkbox-root[data-state='indeterminate'] {
   background-color: var(--plane);

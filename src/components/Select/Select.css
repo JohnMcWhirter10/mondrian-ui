@@ -112,9 +112,20 @@
   outline-offset: var(--mondrian-focus-offset);
 }
 
+/* Disabled: a double rule, a flat plane and regular weight text. Same space as enabled. */
 .mondrian-select-trigger[data-disabled] {
-  border-style: dashed;
-  text-decoration: line-through;
+  border-width: 1px;
+  padding: calc(var(--field-pad-top) + calc(var(--mondrian-grid-width) - 1px))
+    calc(
+      var(--mondrian-spacing-medium) + calc(var(--mondrian-grid-width) - 1px)
+    )
+    calc(var(--field-pad-bottom) + calc(var(--mondrian-grid-width-heavy) - 1px))
+    calc(var(--field-pad-left) + calc(var(--mondrian-grid-width) - 1px));
+  background-image: none;
+  box-shadow:
+    inset 0 0 0 1px var(--mondrian-background),
+    inset 0 0 0 2px var(--mondrian-border);
+  font-weight: 400;
   cursor: not-allowed;
 }
 
@@ -220,7 +231,6 @@
 }
 
 .mondrian-select-item[data-disabled] {
-  text-decoration: line-through;
   cursor: not-allowed;
 }
 
