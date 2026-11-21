@@ -1,0 +1,66 @@
+/**
+ * Drawer Component
+ *
+ * Dialog content re-anchored to a side, full height. The selectors repeat
+ * the Dialog class and add [data-side] so they win without !important.
+ * The edge facing the page gets the heavy rule; the header is the colour
+ * plane. No slide, no fade: hard cut like Dialog.
+ */
+
+.mondrian-dialog-content[data-side] {
+  inset: 0 auto 0 auto;
+  margin: 0;
+  width: min(100vw, 420px);
+  height: 100vh;
+  max-height: 100vh;
+  box-shadow: none;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  /* top padding clears the 44px close cell */
+  padding: calc(44px + var(--mondrian-spacing-medium))
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-large);
+}
+
+.mondrian-dialog-content[data-side='right'] {
+  right: 0;
+  border-left-width: var(--mondrian-grid-width-heavy);
+  border-right-width: 0;
+}
+
+.mondrian-dialog-content[data-side='left'] {
+  left: 0;
+  border-right-width: var(--mondrian-grid-width-heavy);
+  border-left-width: 0;
+}
+
+/* Body fills the column instead of capping at the dialog height */
+.mondrian-dialog-content[data-side] .mondrian-dialog-body {
+  max-height: calc(100vh - 44px - 2 * var(--mondrian-spacing-large));
+}
+
+/* No dialog top rule or corner swatch on a full-height panel */
+.mondrian-dialog-content[data-side]::before,
+.mondrian-dialog-content[data-side]::after {
+  content: none;
+}
+
+/* Header is the colour plane */
+.mondrian-dialog-content[data-side] .mondrian-dialog-header {
+  margin: 0 0 var(--mondrian-spacing-large);
+  padding: var(--mondrian-spacing-medium);
+  background-color: var(--plane);
+  color: var(--on-plane);
+}
+
+.mondrian-dialog-content[data-side]
+  .mondrian-dialog-header
+  .mondrian-dialog-description {
+  color: inherit;
+}
+
+@media (forced-colors: active) {
+  .mondrian-dialog-content[data-side] {
+    border-color: CanvasText;
+  }
+}
