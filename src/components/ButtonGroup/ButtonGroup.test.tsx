@@ -2,7 +2,7 @@
 /** @jsx React.createElement */
 /** @jsxFrag React.Fragment */
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { itForwardsRef, renderWithTheme } from '../../test-utils';
 import { ButtonGroup, ButtonGroupItem } from './ButtonGroup';
@@ -58,7 +58,7 @@ describe('ButtonGroup', () => {
 
   it('moves focus with the arrow keys', async () => {
     renderWithTheme(<ButtonGroup type="single">{items}</ButtonGroup>);
-    screen.getByRole('radio', { name: 'A' }).focus();
+    act(() => screen.getByRole('radio', { name: 'A' }).focus());
     await userEvent.keyboard('{ArrowRight}');
     expect(screen.getByRole('radio', { name: 'B' })).toHaveFocus();
     await userEvent.keyboard('{ArrowLeft}');
@@ -88,7 +88,7 @@ describe('ButtonGroup', () => {
         'data-orientation',
         'vertical'
       );
-      screen.getByRole('radio', { name: 'A' }).focus();
+      act(() => screen.getByRole('radio', { name: 'A' }).focus());
       await userEvent.keyboard('{ArrowDown}');
       expect(screen.getByRole('radio', { name: 'B' })).toHaveFocus();
     });
