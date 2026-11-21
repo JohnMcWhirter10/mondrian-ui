@@ -34,6 +34,12 @@ export interface ToastProps
   > {
   /** Plane color. Default `yellow`. */
   theme?: ToastTheme;
+  /**
+   * Show a bar along the bottom edge that drains in steps as the toast
+   * counts down to closing. Pauses with the timer. Default `false`. Nothing
+   * shows when `duration` is `Infinity`.
+   */
+  progress?: boolean;
 }
 
 export type ToastTitleProps = Omit<

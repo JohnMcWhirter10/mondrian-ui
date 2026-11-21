@@ -143,6 +143,40 @@
   overflow-wrap: anywhere;
 }
 
+/*
+ * Countdown bar. Its length is the time left, so its duration comes from the
+ * toast's own `duration` (--mondrian-toast-duration), not a motion token. It
+ * drains in 20 steps, scaling on X so layout never moves, and stops while
+ * Radix pauses the timer (data-paused).
+ */
+.mondrian-toast-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-black);
+  transform-origin: left center;
+  animation-name: mondrian-toast-drain;
+  animation-duration: var(--mondrian-toast-duration);
+  animation-timing-function: steps(20, end);
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+
+.mondrian-toast[data-paused] .mondrian-toast-progress {
+  animation-play-state: paused;
+}
+
+@keyframes mondrian-toast-drain {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
 .mondrian-toast-action {
   grid-area: action;
   justify-self: start;
@@ -191,6 +225,9 @@
   .mondrian-toast[data-state='open'],
   .mondrian-toast[data-state='closed'],
   .mondrian-toast[data-swipe='end'] {
+    animation: none;
+  }
+  .mondrian-toast-progress {
     animation: none;
   }
 }

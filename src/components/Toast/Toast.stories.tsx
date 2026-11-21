@@ -17,15 +17,21 @@ interface DemoProps {
   theme?: ToastProps['theme'];
   position?: ToastViewportPosition;
   duration?: number;
+  progress?: boolean;
 }
 
 /** A button that opens a toast. Radix restarts the toast when `open` flips. */
-const Demo = ({ theme, position, duration = 5000 }: DemoProps) => {
+const Demo = ({ theme, position, duration = 5000, progress }: DemoProps) => {
   const [open, setOpen] = React.useState(false);
   return (
     <ToastProvider duration={duration} swipeDirection="right">
       <Button onClick={() => setOpen(true)}>Show toast</Button>
-      <Toast open={open} onOpenChange={setOpen} theme={theme}>
+      <Toast
+        open={open}
+        onOpenChange={setOpen}
+        theme={theme}
+        progress={progress}
+      >
         <ToastTitle>Saved</ToastTitle>
         <ToastDescription>Your changes are stored.</ToastDescription>
         <ToastAction altText="Undo the save">Undo</ToastAction>
@@ -59,8 +65,14 @@ const meta: Meta<typeof Demo> = {
       options: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
     },
     duration: { control: 'number' },
+    progress: { control: 'boolean' },
   },
-  args: { theme: 'yellow', position: 'bottom-right', duration: 5000 },
+  args: {
+    theme: 'yellow',
+    position: 'bottom-right',
+    duration: 5000,
+    progress: false,
+  },
   decorators: [
     (Story) => (
       <ThemeProvider>
@@ -80,6 +92,8 @@ export const Default: Story = {};
 export const Blue: Story = { args: { theme: 'blue' } };
 export const Red: Story = { args: { theme: 'red' } };
 export const Neutral: Story = { args: { theme: 'neutral' } };
+
+export const WithProgress: Story = { args: { progress: true } };
 
 export const TopLeft: Story = { args: { position: 'top-left' } };
 

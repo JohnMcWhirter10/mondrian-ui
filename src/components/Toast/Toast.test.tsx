@@ -109,4 +109,63 @@ describe('Toast', () => {
     );
     expect(ref.current?.tagName).toBe('LI');
   });
+
+  describe('progress', () => {
+    const bar = () => screen.queryByTestId('toast-progress');
+    const renderProgress = (
+      toast: Partial<ToastProps> = {},
+      providerDuration?: number
+    ) =>
+      renderWithTheme(
+        <ToastProvider duration={providerDuration}>
+          <Toast open progress {...toast}>
+            <ToastTitle>Saved</ToastTitle>
+          </Toast>
+          <ToastViewport data-testid="vp" />
+        </ToastProvider>
+      );
+
+    it('is off by default', () => {
+      renderToast();
+      expect(bar()).not.toBeInTheDocument();
+    });
+
+    it('shows a bar sized to the toast duration', () => {
+      renderProgress({ duration: 8000 });
+      expect(bar()).toBeInTheDocument();
+      expect(bar()?.style.getPropertyValue('--mondrian-toast-duration')).toBe(
+        '8000ms'
+      );
+      expect(bar()).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('falls back to the provider duration, then 5000', () => {
+      const { unmount } = renderProgress({}, 3000);
+      expect(bar()?.style.getPropertyValue('--mondrian-toast-duration')).toBe(
+        '3000ms'
+      );
+      unmount();
+      renderProgress();
+      expect(bar()?.style.getPropertyValue('--mondrian-toast-duration')).toBe(
+        '5000ms'
+      );
+    });
+
+    it('shows no bar for a toast that never closes', () => {
+      renderProgress({ duration: Infinity });
+      expect(bar()).not.toBeInTheDocument();
+    });
+
+    it('marks the toast paused while the pointer is over the viewport', async () => {
+      const onPause = jest.fn();
+      const onResume = jest.fn();
+      renderProgress({ onPause, onResume, 'data-testid': 'toast' } as never);
+      await userEvent.hover(screen.getByTestId('vp'));
+      expect(onPause).toHaveBeenCalled();
+      expect(screen.getByTestId('toast')).toHaveAttribute('data-paused');
+      await userEvent.unhover(screen.getByTestId('vp'));
+      expect(onResume).toHaveBeenCalled();
+      expect(screen.getByTestId('toast')).not.toHaveAttribute('data-paused');
+    });
+  });
 });

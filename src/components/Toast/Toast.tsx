@@ -8,12 +8,26 @@ import {
   ToastCloseProps,
   ToastDescriptionProps,
   ToastProps,
+  ToastProviderProps,
   ToastTitleProps,
   ToastViewportProps,
 } from './Toast.types';
 import './Toast.css';
 
-export const ToastProvider = ToastPrimitive.Provider;
+const DEFAULT_DURATION = 5000;
+
+/** Radix does not expose the provider's duration, so we keep a copy. */
+const ToastDurationContext = React.createContext(DEFAULT_DURATION);
+
+export const ToastProvider = ({
+  duration = DEFAULT_DURATION,
+  ...props
+}: ToastProviderProps) => (
+  <ToastDurationContext.Provider value={duration}>
+    <ToastPrimitive.Provider duration={duration} {...props} />
+  </ToastDurationContext.Provider>
+);
+ToastProvider.displayName = 'ToastProvider';
 
 export const ToastViewport = React.forwardRef<
   React.ElementRef<typeof ToastPrimitive.Viewport>,
@@ -30,13 +44,58 @@ ToastViewport.displayName = 'ToastViewport';
 export const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitive.Root>,
   ToastProps
->(({ theme = 'yellow', ...props }, ref) => (
-  <ToastPrimitive.Root
-    ref={ref}
-    className={`mondrian-toast mondrian-toast-${theme}`}
-    {...props}
-  />
-));
+>(
+  (
+    {
+      theme = 'yellow',
+      progress = false,
+      duration,
+      onPause,
+      onResume,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const providerDuration = React.useContext(ToastDurationContext);
+    const resolved = duration ?? providerDuration;
+    const [paused, setPaused] = React.useState(false);
+    // A toast that never closes has nothing to count down.
+    const showBar = progress && Number.isFinite(resolved);
+
+    return (
+      <ToastPrimitive.Root
+        ref={ref}
+        className={`mondrian-toast mondrian-toast-${theme}`}
+        duration={duration}
+        data-paused={paused || undefined}
+        onPause={() => {
+          setPaused(true);
+          onPause?.();
+        }}
+        onResume={() => {
+          setPaused(false);
+          onResume?.();
+        }}
+        {...props}
+      >
+        {children}
+        {showBar && (
+          <span
+            className="mondrian-toast-progress"
+            style={
+              {
+                '--mondrian-toast-duration': `${resolved}ms`,
+              } as React.CSSProperties
+            }
+            aria-hidden="true"
+            data-testid="toast-progress"
+          />
+        )}
+      </ToastPrimitive.Root>
+    );
+  }
+);
 Toast.displayName = 'Toast';
 
 export const ToastTitle = React.forwardRef<
