@@ -65,10 +65,10 @@
 .mondrian-grid-lines::before {
   content: '';
   position: absolute;
-  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  top: calc(var(--mondrian-grid-width-accent) * -1);
   left: 0;
   width: 40%;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--plane);
   pointer-events: none;
 }

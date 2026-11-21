@@ -1,0 +1,281 @@
+/*
+ * One rectangle. The group owns the black grid, the heavy bottom bar, and
+ * the theme swatch. Slots and the field are cells inside it, divided by a
+ * single grid line. A nested Input is stripped of its own border so it
+ * reads as the same rectangle.
+ *
+ * Hover does not move the group. Focus draws the standard outline and
+ * moves nothing, matching Input.
+ */
+.mondrian-input-group {
+  --field-pad-top: var(--mondrian-spacing-small);
+  --field-pad-bottom: var(--mondrian-spacing-large);
+  --field-swatch: var(--mondrian-spacing-medium);
+  --plane: var(--mondrian-border);
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  background-image: linear-gradient(var(--plane), var(--plane));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 28% var(--field-swatch);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  line-height: 1.2;
+}
+
+.mondrian-input-group-input,
+.mondrian-input-group .mondrian-input {
+  order: 1;
+  flex: 1 1 auto;
+  align-self: stretch;
+  width: auto;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: var(--field-pad-top) var(--mondrian-spacing-medium)
+    var(--field-pad-bottom);
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  outline: none;
+}
+
+.mondrian-input-group-input::placeholder,
+.mondrian-input-group .mondrian-input::placeholder {
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mondrian-input-group-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  align-self: stretch;
+  box-sizing: border-box;
+  min-width: 44px;
+  padding: 0 var(--mondrian-spacing-small);
+  background: transparent;
+  color: inherit;
+  font-size: var(--mondrian-font-size-small);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mondrian-input-group-slot svg {
+  display: block;
+}
+
+.mondrian-input-group-slot-start {
+  order: 0;
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-input-group-slot-end {
+  order: 2;
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+/*
+ * A button in a slot is a cell of the rectangle, not a second button.
+ * It takes no border of its own. It sits above the field so its hover
+ * shadow is not clipped.
+ */
+.mondrian-input-group-slot .mondrian-button,
+.mondrian-input-group-slot button {
+  position: relative;
+  z-index: 1;
+  transition:
+    transform var(--mondrian-motion-state),
+    box-shadow var(--mondrian-motion-state);
+  align-self: stretch;
+  box-sizing: border-box;
+  height: auto;
+  min-width: 44px;
+  min-height: 100%;
+  margin: 0 calc(var(--mondrian-spacing-small) * -1);
+  border: 0;
+  border-radius: 0;
+  padding: 0 var(--mondrian-spacing-medium);
+  background-color: transparent;
+  color: var(--mondrian-text);
+  box-shadow: none;
+  transform: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mondrian-input-group-slot .mondrian-button::before {
+  content: none;
+}
+
+/* The cell sits inside the rectangle, so it cannot move down and right
+   without leaving the box. Hover lifts it up and to the left with a hard
+   shadow left at its resting spot, and the press drops it back onto that
+   spot. The group itself stays still and the color does not change. */
+.mondrian-input-group-slot
+  .mondrian-button:hover:not(:disabled, [aria-disabled='true']),
+.mondrian-input-group-slot button:hover:not(:disabled) {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  transform: translate(-4px, -4px);
+}
+
+.mondrian-input-group-slot
+  .mondrian-button:active:not(:disabled, [aria-disabled='true']),
+.mondrian-input-group-slot button:active:not(:disabled) {
+  box-shadow: 0 0 0 var(--mondrian-shadow);
+  transform: translate(0, 0);
+}
+
+.mondrian-input-group-slot .mondrian-button:focus-visible,
+.mondrian-input-group-slot button:focus-visible {
+  outline: none;
+}
+
+.mondrian-input-group-sm {
+  --field-pad-bottom: var(--mondrian-spacing-medium);
+  --field-swatch: var(--mondrian-spacing-small);
+  min-height: 32px;
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-input-group-lg {
+  --field-pad-top: var(--mondrian-spacing-medium);
+  --field-pad-bottom: calc(
+    var(--mondrian-spacing-large) + var(--mondrian-spacing-medium)
+  );
+  min-height: 52px;
+  font-size: var(--mondrian-font-size-large);
+}
+
+.mondrian-input-group-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-input-group-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-input-group-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-input-group-green {
+  --plane: var(--mondrian-success);
+}
+
+.mondrian-input-group-neutral {
+  --plane: var(--mondrian-border);
+}
+
+.mondrian-input-group:has([aria-invalid='true']) {
+  --plane: var(--mondrian-error);
+  border-left-width: calc(var(--mondrian-grid-width-heavy) * 2);
+  background-size: 100% var(--field-swatch);
+}
+
+.mondrian-input-group:has(:focus-visible) {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+/*
+ * Disabled: a double rule, a flat plane and regular weight text. The frame
+ * gets thinner, so the field gives its padding back and the group takes the
+ * same space as when it is enabled. Slot dividers still run edge to edge.
+ */
+.mondrian-input-group:has(input:disabled) {
+  border-width: 1px;
+  background-image: none;
+  box-shadow:
+    inset 0 0 0 1px var(--mondrian-background),
+    inset 0 0 0 2px var(--mondrian-border);
+}
+
+.mondrian-input-group:has(input:disabled) .mondrian-input-group-slot {
+  font-weight: 400;
+}
+
+.mondrian-input-group:has(input:disabled) .mondrian-input-group-slot-start {
+  border-right-width: 1px;
+}
+
+.mondrian-input-group:has(input:disabled) .mondrian-input-group-slot-end {
+  border-left-width: 1px;
+}
+
+.mondrian-input-group:has(input:disabled) .mondrian-input-group-input,
+.mondrian-input-group:has(input:disabled) .mondrian-input {
+  padding: calc(var(--field-pad-top) + calc(var(--mondrian-grid-width) - 1px))
+    var(--mondrian-spacing-medium)
+    calc(var(--field-pad-bottom) + calc(var(--mondrian-grid-width-heavy) - 1px));
+  border: 0;
+  background-image: none;
+  box-shadow: none;
+  color: var(--mondrian-text);
+  font-weight: 400;
+  cursor: not-allowed;
+}
+
+.mondrian-input-group-slot .mondrian-button:disabled,
+.mondrian-input-group-slot .mondrian-button[aria-disabled='true'],
+.mondrian-input-group-slot button:disabled {
+  border: 0;
+  background-color: transparent;
+  color: var(--mondrian-text);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-input-group-slot .mondrian-button,
+  .mondrian-input-group-slot button {
+    transition: none;
+  }
+
+  .mondrian-input-group-slot
+    .mondrian-button:hover:not(:disabled, [aria-disabled='true']),
+  .mondrian-input-group-slot button:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-input-group {
+    border-color: ButtonText;
+    background-image: none;
+  }
+
+  .mondrian-input-group:has(input:disabled) {
+    border-color: GrayText;
+    outline: 1px solid GrayText;
+    outline-offset: -3px;
+  }
+
+  .mondrian-input-group:has(:focus-visible) {
+    outline-color: Highlight;
+  }
+
+  .mondrian-input-group-slot
+    .mondrian-button:hover:not(:disabled, [aria-disabled='true']),
+  .mondrian-input-group-slot button:hover:not(:disabled) {
+    box-shadow: 4px 4px 0 ButtonText;
+  }
+}

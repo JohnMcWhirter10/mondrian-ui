@@ -118,10 +118,10 @@
 .mondrian-dropdown-sub-content::before {
   content: '';
   position: absolute;
-  top: calc(var(--mondrian-grid-width-heavy) * -1);
+  top: calc(var(--mondrian-grid-width-accent) * -1);
   left: calc(var(--mondrian-grid-width) * -1);
   width: 40px;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--plane);
   pointer-events: none;
 }
@@ -130,10 +130,10 @@
 .mondrian-dropdown-content::after {
   content: '';
   position: absolute;
-  bottom: calc(var(--mondrian-grid-width-heavy) * -1);
+  bottom: calc(var(--mondrian-grid-width-accent) * -1);
   left: 35%;
   right: 0;
-  height: var(--mondrian-grid-width-heavy);
+  height: var(--mondrian-grid-width-accent);
   background-color: var(--mondrian-border);
   pointer-events: none;
 }
@@ -204,7 +204,6 @@
 .mondrian-dropdown-checkbox-item[data-disabled],
 .mondrian-dropdown-radio-item[data-disabled],
 .mondrian-dropdown-sub-trigger[data-disabled] {
-  text-decoration: line-through;
   cursor: not-allowed;
   pointer-events: none;
 }
