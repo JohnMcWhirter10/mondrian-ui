@@ -9,24 +9,32 @@ type PageItem = number | 'start-ellipsis' | 'end-ellipsis';
 const range = (from: number, to: number) =>
   Array.from({ length: to - from + 1 }, (_, i) => from + i);
 
+const MAX_SHOWN = 7; // first, last, current, one neighbour each side, two ellipses
+const EDGE_RUN = 5; // pages shown next to the near edge before its ellipsis
+
 /** First and last page always show; the current page keeps one neighbour each side. */
-export function getPageItems(page: number, pageCount: number): PageItem[] {
-  const total = Math.max(0, Math.floor(pageCount));
-  const siblings = 1;
-  // first, last, current, two ellipses, and the siblings on both sides
-  const slots = siblings * 2 + 5;
-  if (total <= slots) return range(1, total);
+function getPageItems(page: number, pageCount: number): PageItem[] {
+  if (pageCount <= MAX_SHOWN) return range(1, pageCount);
 
-  const left = Math.max(page - siblings, 1);
-  const right = Math.min(page + siblings, total);
-  const showStart = left > 3;
-  const showEnd = right < total - 2;
-  const edge = siblings * 2 + 3;
+  const left = Math.max(page - 1, 1);
+  const right = Math.min(page + 1, pageCount);
+  const nearStart = left <= 3;
+  const nearEnd = right >= pageCount - 2;
 
-  if (!showStart) return [...range(1, edge), 'end-ellipsis', total];
-  if (!showEnd) return [1, 'start-ellipsis', ...range(total - edge + 1, total)];
-  return [1, 'start-ellipsis', ...range(left, right), 'end-ellipsis', total];
+  if (nearStart) return [...range(1, EDGE_RUN), 'end-ellipsis', pageCount];
+  if (nearEnd) {
+    return [1, 'start-ellipsis', ...range(pageCount - EDGE_RUN + 1, pageCount)];
+  }
+  return [
+    1,
+    'start-ellipsis',
+    ...range(left, right),
+    'end-ellipsis',
+    pageCount,
+  ];
 }
+
+export { getPageItems };
 
 const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
   (
@@ -43,32 +51,30 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
     ref
   ) => {
     const isCompact = variant === 'compact';
-    // Arrow icons instead of words wherever space is tight.
-    const iconOnly = size === 'sm' || isCompact;
     const iconSize = size === 'sm' ? 14 : 20;
-    const total = Math.max(pageCount, 1);
+    const total = Math.max(Math.floor(pageCount), 1);
     const current = Math.min(Math.max(page, 1), total);
 
     const previous = (
       <Button
         theme="neutral"
         size={size}
-        aria-label="Previous"
+        aria-label={isCompact ? 'Previous' : undefined}
         disabled={current <= 1}
         onClick={() => onPageChange(current - 1)}
       >
-        {iconOnly ? <MondrianLeftArrow size={iconSize} /> : 'Previous'}
+        {isCompact ? <MondrianLeftArrow size={iconSize} /> : 'Previous'}
       </Button>
     );
     const next = (
       <Button
         theme="neutral"
         size={size}
-        aria-label="Next"
+        aria-label={isCompact ? 'Next' : undefined}
         disabled={current >= total}
         onClick={() => onPageChange(current + 1)}
       >
-        {iconOnly ? <MondrianRightArrow size={iconSize} /> : 'Next'}
+        {isCompact ? <MondrianRightArrow size={iconSize} /> : 'Next'}
       </Button>
     );
 
@@ -87,11 +93,11 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
         <ul className="mondrian-pagination-list">
           <li>{previous}</li>
           {isCompact ? (
-            <li className="mondrian-pagination-status" aria-current="page">
+            <li className="mondrian-pagination-status">
               {current} of {total}
             </li>
           ) : (
-            getPageItems(current, pageCount).map((item) =>
+            getPageItems(current, total).map((item) =>
               typeof item === 'number' ? (
                 <li key={item}>
                   <Button

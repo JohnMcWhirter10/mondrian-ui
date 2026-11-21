@@ -86,16 +86,6 @@ export const Compact: Story = {
   ),
 };
 
-export const Blue: Story = {
-  args: { page: 3, pageCount: 8, theme: 'blue', onPageChange: () => {} },
-  render: (args) => <Controlled {...args} />,
-};
-
-export const LastPage: Story = {
-  args: { page: 5, pageCount: 5, onPageChange: () => {} },
-  render: (args) => <Controlled {...args} />,
-};
-
 export const Dark: Story = {
   args: { page: 10, pageCount: 20, onPageChange: () => {} },
   render: (args) => (
@@ -118,11 +108,7 @@ const PAGE_SIZE = 8;
  * Pagination does not slice data. Keep `page` in state, slice the rows for
  * that page, and derive `pageCount` from the total.
  */
-const WithTableExample = ({
-  variant = 'compact',
-}: {
-  variant?: 'pages' | 'compact';
-}) => {
+const WithTableExample = () => {
   const [page, setPage] = useState(1);
   const pageCount = Math.ceil(ROWS.length / PAGE_SIZE);
   const rows = ROWS.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -149,7 +135,7 @@ const WithTableExample = ({
       </Table>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Pagination
-          variant={variant}
+          variant="compact"
           size="sm"
           aria-label="Compositions"
           page={page}
@@ -168,18 +154,6 @@ export const WithTable: Story = {
       description: {
         story:
           'The usual table footer: `variant="compact"` `size="sm"` on the bottom right. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself, and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
-      },
-    },
-  },
-};
-
-export const WithTableNumbered: Story = {
-  render: () => <WithTableExample variant="pages" />,
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'The same footer with numbered pages (`variant="pages"`), for tables where users jump to a specific page.',
       },
     },
   },

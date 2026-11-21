@@ -17,7 +17,7 @@ export type PaginationProps = Omit<
   onPageChange: (page: number) => void;
   /**
    * `pages` shows numbered pages that collapse with ellipses.
-   * `compact` shows previous, "3 of 12" and next.
+   * `compact` shows arrow buttons around "3 of 12".
    * @default "pages"
    */
   variant?: PaginationVariant;
@@ -27,7 +27,7 @@ export type PaginationProps = Omit<
    */
   theme?: PaginationTheme;
   /**
-   * Size of the buttons. `sm` suits table footers and uses arrow icons.
+   * Size of the buttons. `sm` suits table footers.
    * @default "default"
    */
   size?: PaginationSize;

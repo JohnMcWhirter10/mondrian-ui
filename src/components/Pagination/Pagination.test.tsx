@@ -140,6 +140,21 @@ describe('Pagination', () => {
       .forEach((b) => expect(b).toHaveClass('mondrian-button-sm'));
   });
 
+  it('keeps words for Previous and Next at sm', () => {
+    render(
+      <Pagination page={2} pageCount={3} size="sm" onPageChange={() => {}} />
+    );
+    expect(screen.getByRole('button', { name: 'Previous' })).toHaveTextContent(
+      'Previous'
+    );
+  });
+
+  it('handles an empty page count without crashing', () => {
+    render(<Pagination page={1} pageCount={0} onPageChange={() => {}} />);
+    expect(screen.getByRole('button', { name: 'Previous' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+  });
+
   it('has no size class by default', () => {
     const { container } = render(
       <Pagination page={1} pageCount={3} onPageChange={() => {}} />
@@ -157,10 +172,7 @@ describe('Pagination', () => {
           onPageChange={() => {}}
         />
       );
-      expect(screen.getByText('3 of 12')).toHaveAttribute(
-        'aria-current',
-        'page'
-      );
+      expect(screen.getByText('3 of 12')).toBeInTheDocument();
       expect(screen.queryByRole('button', { name: 'Page 3' })).toBeNull();
     });
 
