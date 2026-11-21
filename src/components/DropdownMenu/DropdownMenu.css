@@ -219,6 +219,8 @@
 .mondrian-dropdown-sub-trigger[data-disabled] {
   cursor: not-allowed;
   pointer-events: none;
+  /* Non-colour cue so disabled is never colour alone */
+  text-decoration: line-through;
 }
 
 /* Check / radio glyph */

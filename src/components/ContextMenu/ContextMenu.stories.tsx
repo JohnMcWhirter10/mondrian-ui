@@ -131,17 +131,6 @@ export const Themes: Story = {
 };
 
 export const Dark: Story = {
-  parameters: { backgrounds: { default: 'dark' } },
-  decorators: [
-    (Story) => (
-      <div
-        className="dark"
-        data-theme="dark"
-        style={{ padding: 24, background: 'var(--mondrian-background)' }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
-  render: Basic.render,
+  ...Basic,
+  globals: { mode: 'dark' },
 };

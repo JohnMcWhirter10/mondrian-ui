@@ -11,7 +11,7 @@
   --on-plane: var(--mondrian-white);
   position: relative;
   z-index: 10;
-  display: flex;
+  display: block;
   box-sizing: border-box;
   width: 100%;
   font-family: var(--mondrian-font-family);
@@ -36,17 +36,21 @@
 
 .mondrian-navigation-menu-list {
   display: flex;
-  flex: 1;
   margin: 0;
   padding: 0;
   list-style: none;
   background-color: var(--mondrian-background);
-  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  /* Full frame, heavy bottom: same as Tabs and Toolbar */
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
 }
 
 .mondrian-navigation-menu-item {
   display: flex;
-  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+.mondrian-navigation-menu-item + .mondrian-navigation-menu-item {
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
 }
 
 .mondrian-navigation-menu-trigger,
@@ -70,9 +74,11 @@
   user-select: none;
 }
 
-.mondrian-navigation-menu-trigger[data-state='open'],
-.mondrian-navigation-menu-link[data-active],
-.mondrian-navigation-menu-link[aria-current='page'] {
+.mondrian-navigation-menu-list
+  .mondrian-navigation-menu-trigger[data-state='open'],
+.mondrian-navigation-menu-list .mondrian-navigation-menu-link[data-active],
+.mondrian-navigation-menu-list
+  .mondrian-navigation-menu-link[aria-current='page'] {
   background-color: var(--plane);
   color: var(--on-plane);
   text-decoration: underline;
@@ -93,8 +99,8 @@
 
 .mondrian-navigation-menu-caret {
   display: inline-flex;
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
 }
 .mondrian-navigation-menu-caret > * {
   width: 100%;
@@ -110,8 +116,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
   box-sizing: border-box;
+  /* Radix measures this box to size the viewport, so it needs its own width */
+  width: max-content;
+  min-width: 240px;
+  max-width: 100vw;
   padding: var(--mondrian-spacing-medium);
 }
 
@@ -182,11 +191,11 @@
   height: var(--radix-navigation-menu-viewport-height);
   background-color: var(--mondrian-background);
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
-  border-top-width: 0;
   border-bottom-width: var(--mondrian-grid-width-heavy);
   border-radius: 0;
   box-shadow: 4px 4px 0 var(--mondrian-shadow);
   pointer-events: auto;
+  margin-top: var(--mondrian-spacing-small);
 }
 .mondrian-navigation-menu-viewport[data-state='closed'] {
   display: none;

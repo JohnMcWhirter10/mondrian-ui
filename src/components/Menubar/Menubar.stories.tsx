@@ -88,16 +88,6 @@ export const Basic: Story = {
 export const Red: Story = { ...Basic, args: { theme: 'red' } };
 
 export const Dark: Story = {
-  decorators: [
-    (Story) => (
-      <div
-        className="dark"
-        data-theme="dark"
-        style={{ padding: 24, background: 'var(--mondrian-background)' }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
-  render: Basic.render,
+  ...Basic,
+  globals: { mode: 'dark' },
 };
