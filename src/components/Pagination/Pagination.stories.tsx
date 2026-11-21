@@ -125,9 +125,7 @@ const WithTableExample = ({
 }) => {
   const [page, setPage] = useState(1);
   const pageCount = Math.ceil(ROWS.length / PAGE_SIZE);
-  const first = (page - 1) * PAGE_SIZE + 1;
-  const last = Math.min(page * PAGE_SIZE, ROWS.length);
-  const rows = ROWS.slice(first - 1, last);
+  const rows = ROWS.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div style={{ display: 'grid', gap: 16, width: 480 }}>
@@ -149,17 +147,7 @@ const WithTableExample = ({
           ))}
         </TableBody>
       </Table>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 16,
-        }}
-      >
-        <span style={{ fontSize: 'var(--mondrian-font-size-small)' }}>
-          {first}&ndash;{last} of {ROWS.length}
-        </span>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Pagination
           variant={variant}
           size="sm"
@@ -179,7 +167,7 @@ export const WithTable: Story = {
     docs: {
       description: {
         story:
-          'The usual table footer: the item range on the left and `variant="compact"` `size="sm"` on the bottom right. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself, derive the range from `page`, and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
+          'The usual table footer: `variant="compact"` `size="sm"` on the bottom right. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself, and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
       },
     },
   },
