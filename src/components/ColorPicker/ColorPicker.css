@@ -76,10 +76,10 @@
   height: 100%;
 }
 
-/* Hover draws a heavy inset line; a drop shadow would be clipped by the grid. */
+/* Hover lifts the swatch above its neighbours with the library's 4px shadow. */
 .mondrian-color-picker-item:hover:not([data-disabled]) {
-  box-shadow: inset 0 0 0 var(--mondrian-grid-width-heavy)
-    var(--mondrian-shadow);
+  z-index: 1;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
 }
 
 .mondrian-color-picker-item:focus-visible {
@@ -92,15 +92,12 @@
   cursor: not-allowed;
 }
 
+/* Disabled: dashed line, the same cue as Checkbox, Radio and Toggle. */
 .mondrian-color-picker-item[data-disabled]::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0 6px,
-    var(--on-swatch) 6px 8px
-  );
+  inset: 4px;
+  border: var(--mondrian-grid-width) dashed var(--on-swatch);
 }
 
 @media (prefers-reduced-motion: reduce) {
