@@ -1,0 +1,170 @@
+.mondrian-slider-blue {
+  --plane: var(--mondrian-blue);
+}
+
+.mondrian-slider-red {
+  --plane: var(--mondrian-red);
+}
+
+.mondrian-slider-yellow {
+  --plane: var(--mondrian-yellow);
+}
+
+.mondrian-slider-green {
+  --plane: var(--mondrian-success);
+}
+
+.mondrian-slider-neutral {
+  --plane: var(--mondrian-text);
+}
+
+.mondrian-slider {
+  --slider-thumb: 24px;
+  --slider-track: var(--mondrian-spacing-medium);
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 120px;
+  /* 44px minimum hit height. */
+  height: 44px;
+  touch-action: none;
+  user-select: none;
+}
+
+.mondrian-slider[data-orientation='vertical'] {
+  flex-direction: column;
+  width: 44px;
+  height: 200px;
+  min-width: 0;
+}
+
+/* Flat track: thin line with a heavy line below. */
+.mondrian-slider-track {
+  position: relative;
+  flex-grow: 1;
+  /* content-box: the track size is the inside, borders sit outside it. */
+  box-sizing: content-box;
+  height: var(--slider-track);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  overflow: hidden;
+}
+
+.mondrian-slider[data-orientation='vertical'] .mondrian-slider-track {
+  width: var(--slider-track);
+  height: auto;
+  border-bottom-width: var(--mondrian-grid-width);
+  border-right-width: var(--mondrian-grid-width-heavy);
+}
+
+/* The plane is the value. Radix sets left/right (or top/bottom) inline. */
+.mondrian-slider-range {
+  position: absolute;
+  height: 100%;
+  background-color: var(--plane);
+}
+
+.mondrian-slider[data-orientation='vertical'] .mondrian-slider-range {
+  width: 100%;
+  height: auto;
+}
+
+/* Square thumb: black plane with a heavy edge on the side it faces down. */
+.mondrian-slider-thumb {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  width: var(--slider-thumb);
+  height: var(--slider-thumb);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  cursor: grab;
+  transition: box-shadow var(--mondrian-motion-state);
+}
+
+/* Enlarges the hit area toward 44px. Invisible and decorative. */
+.mondrian-slider-thumb::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+}
+
+/* A bar through the thumb, so the grip is not colour alone. */
+.mondrian-slider-thumb::after {
+  content: '';
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  left: 50%;
+  width: var(--mondrian-grid-width);
+  background-color: var(--mondrian-border);
+}
+
+.mondrian-slider[data-orientation='vertical'] .mondrian-slider-thumb::after {
+  top: 50%;
+  bottom: auto;
+  left: 25%;
+  right: 25%;
+  width: auto;
+  height: var(--mondrian-grid-width);
+}
+
+.mondrian-slider-thumb:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+.mondrian-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.mondrian-slider-thumb:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+/* Disabled: dashed line, no opacity fade. */
+.mondrian-slider[data-disabled] .mondrian-slider-track,
+.mondrian-slider[data-disabled] .mondrian-slider-thumb {
+  border-style: dashed;
+}
+
+.mondrian-slider[data-disabled] .mondrian-slider-thumb {
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-slider-thumb {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-slider-track,
+  .mondrian-slider-thumb {
+    border-color: ButtonText;
+  }
+
+  .mondrian-slider-range {
+    background-color: Highlight;
+  }
+
+  .mondrian-slider-thumb {
+    background-color: ButtonFace;
+  }
+
+  .mondrian-slider-thumb::after {
+    background-color: ButtonText;
+  }
+
+  .mondrian-slider[data-disabled] .mondrian-slider-track,
+  .mondrian-slider[data-disabled] .mondrian-slider-thumb {
+    border-color: GrayText;
+  }
+}

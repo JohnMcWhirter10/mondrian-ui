@@ -512,3 +512,12 @@ export type {
   NavigationMenuLinkProps,
   NavigationMenuViewportProps,
 } from './NavigationMenu';
+
+export { Slider } from './Slider';
+export type { SliderProps, SliderTheme } from './Slider/Slider.types';
+
+export { ColorPicker } from './ColorPicker';
+export type {
+  ColorPickerProps,
+  ColorPickerColor,
+} from './ColorPicker/ColorPicker.types';

@@ -13,6 +13,8 @@ const framed: Array<[string, string]> = [
   ['Toolbar', '.mondrian-toolbar'],
   ['Menubar', '.mondrian-menubar'],
   ['NavigationMenu', '.mondrian-navigation-menu-list'],
+  ['Slider', '.mondrian-slider-track'],
+  ['ColorPicker', '.mondrian-color-picker'],
 ];
 
 const ruleBody = (css: string, selector: string) => {
@@ -34,5 +36,15 @@ describe('shared frame', () => {
     expect(body).toMatch(
       /border-bottom(-width)?:\s*var\(--mondrian-grid-width-heavy\)/
     );
+  });
+});
+
+describe('no gradients', () => {
+  test.each(['Slider', 'ColorPicker'])('%s CSS has no gradients', (name) => {
+    const css = fs.readFileSync(
+      path.join(componentsDir, name, `${name}.css`),
+      'utf8'
+    );
+    expect(css).not.toMatch(/gradient\(/);
   });
 });
