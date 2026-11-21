@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Pagination } from './Pagination';
 import {
   Table,
@@ -34,13 +33,6 @@ const meta: Meta<typeof Pagination> = {
     page: { control: { type: 'number', min: 1 } },
     pageCount: { control: { type: 'number', min: 1 } },
   },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -88,11 +80,8 @@ export const Compact: Story = {
 
 export const Dark: Story = {
   args: { page: 10, pageCount: 20, onPageChange: () => {} },
-  render: (args) => (
-    <ThemeProvider mode="dark">
-      <Controlled {...args} />
-    </ThemeProvider>
-  ),
+  render: (args) => <Controlled {...args} />,
+  globals: { mode: 'dark' },
 };
 
 const PLANES = ['Red', 'Blue', 'Yellow', 'Black', 'White'];

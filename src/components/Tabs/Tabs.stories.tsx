@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 
 const meta: Meta<typeof Tabs> = {
@@ -28,11 +27,9 @@ const meta: Meta<typeof Tabs> = {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider>
-        <div style={{ width: 420 }}>
-          <Story />
-        </div>
-      </ThemeProvider>
+      <div style={{ width: 420 }}>
+        <Story />
+      </div>
     ),
   ],
 };
@@ -77,9 +74,6 @@ export const Disabled: Story = {
 };
 
 export const Dark: Story = {
-  render: () => (
-    <ThemeProvider mode="dark">
-      <Demo />
-    </ThemeProvider>
-  ),
+  render: () => <Demo />,
+  globals: { mode: 'dark' },
 };
