@@ -45,7 +45,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
     },
     ref
   ) => {
-    // Small pagination sits under dense tables: chevrons instead of words.
+    // Small pagination sits under dense tables: short words instead of glyphs (Mondrian has no diagonal marks).
     const compact = size === 'sm';
     const current = Math.min(Math.max(page, 1), Math.max(pageCount, 1));
 
@@ -70,7 +70,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
               disabled={current <= 1}
               onClick={() => onPageChange(current - 1)}
             >
-              {compact ? <span aria-hidden="true">&lsaquo;</span> : 'Previous'}
+              {compact ? 'Prev' : 'Previous'}
             </Button>
           </li>
           {getPageItems(current, pageCount, siblingCount).map((item) =>
@@ -100,7 +100,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
               disabled={current >= pageCount}
               onClick={() => onPageChange(current + 1)}
             >
-              {compact ? <span aria-hidden="true">&rsaquo;</span> : 'Next'}
+              Next
             </Button>
           </li>
         </ul>
