@@ -38,12 +38,7 @@
   font-size: var(--mondrian-font-size-small);
 }
 
-.mondrian-pagination-lg .mondrian-pagination-ellipsis {
-  min-width: 52px;
-  font-size: var(--mondrian-font-size-large);
-}
-
-/* Compact: table footer scale. Small square cells, Mondrian arrow icons for Previous/Next. */
+/* Small: table footer scale. Small square cells, Mondrian arrow icons for Previous/Next. */
 .mondrian-pagination-sm .mondrian-button {
   min-width: 24px;
   min-height: 24px;
@@ -53,4 +48,20 @@
 
 .mondrian-pagination-sm .mondrian-button:disabled {
   padding: 2px var(--mondrian-spacing-small);
+}
+
+/* Compact variant: "3 of 12" between the two arrows. */
+.mondrian-pagination-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 0 var(--mondrian-spacing-small);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mondrian-pagination-sm .mondrian-pagination-status {
+  min-width: 24px;
+  font-size: var(--mondrian-font-size-small);
 }

@@ -2,7 +2,8 @@ import * as React from 'react';
 import { ComponentTheme } from '../../themes';
 
 export type PaginationTheme = ComponentTheme;
-export type PaginationSize = 'default' | 'sm' | 'lg';
+export type PaginationSize = 'default' | 'sm';
+export type PaginationVariant = 'pages' | 'compact';
 
 export type PaginationProps = Omit<
   React.HTMLAttributes<HTMLElement>,
@@ -15,18 +16,18 @@ export type PaginationProps = Omit<
   /** Called with the requested page. */
   onPageChange: (page: number) => void;
   /**
-   * Pages shown on each side of the current page before collapsing to an
-   * ellipsis.
-   * @default 1
+   * `pages` shows numbered pages that collapse with ellipses.
+   * `compact` shows previous, "3 of 12" and next.
+   * @default "pages"
    */
-  siblingCount?: number;
+  variant?: PaginationVariant;
   /**
    * Colour of the current page
    * @default "red"
    */
   theme?: PaginationTheme;
   /**
-   * Size of the buttons
+   * Size of the buttons. `sm` suits table footers and uses arrow icons.
    * @default "default"
    */
   size?: PaginationSize;

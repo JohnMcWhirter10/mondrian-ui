@@ -29,10 +29,10 @@ const meta: Meta<typeof Pagination> = {
       control: 'select',
       options: ['red', 'blue', 'yellow', 'green', 'neutral'],
     },
-    size: { control: 'inline-radio', options: ['sm', 'default', 'lg'] },
+    variant: { control: 'inline-radio', options: ['pages', 'compact'] },
+    size: { control: 'inline-radio', options: ['default', 'sm'] },
     page: { control: { type: 'number', min: 1 } },
     pageCount: { control: { type: 'number', min: 1 } },
-    siblingCount: { control: { type: 'number', min: 0, max: 3 } },
   },
   decorators: [
     (Story) => (
@@ -67,7 +67,21 @@ export const Sizes: Story = {
     <div style={{ display: 'grid', gap: 16 }}>
       <Controlled {...args} size="sm" />
       <Controlled {...args} size="default" />
-      <Controlled {...args} size="lg" />
+    </div>
+  ),
+};
+
+export const Compact: Story = {
+  args: {
+    page: 3,
+    pageCount: 12,
+    variant: 'compact',
+    onPageChange: () => {},
+  },
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 16 }}>
+      <Controlled {...args} />
+      <Controlled {...args} size="sm" />
     </div>
   ),
 };

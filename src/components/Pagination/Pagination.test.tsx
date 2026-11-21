@@ -5,16 +5,16 @@ import { Pagination, getPageItems } from './Pagination';
 
 describe('getPageItems', () => {
   it('lists every page when the range is short', () => {
-    expect(getPageItems(1, 5, 1)).toEqual([1, 2, 3, 4, 5]);
-    expect(getPageItems(1, 7, 1)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    expect(getPageItems(1, 5)).toEqual([1, 2, 3, 4, 5]);
+    expect(getPageItems(1, 7)).toEqual([1, 2, 3, 4, 5, 6, 7]);
   });
 
   it('collapses the end when near the start', () => {
-    expect(getPageItems(1, 20, 1)).toEqual([1, 2, 3, 4, 5, 'end-ellipsis', 20]);
+    expect(getPageItems(1, 20)).toEqual([1, 2, 3, 4, 5, 'end-ellipsis', 20]);
   });
 
   it('collapses the start when near the end', () => {
-    expect(getPageItems(20, 20, 1)).toEqual([
+    expect(getPageItems(20, 20)).toEqual([
       1,
       'start-ellipsis',
       16,
@@ -26,7 +26,7 @@ describe('getPageItems', () => {
   });
 
   it('collapses both sides in the middle', () => {
-    expect(getPageItems(10, 20, 1)).toEqual([
+    expect(getPageItems(10, 20)).toEqual([
       1,
       'start-ellipsis',
       9,
@@ -38,7 +38,7 @@ describe('getPageItems', () => {
   });
 
   it('returns nothing for zero pages', () => {
-    expect(getPageItems(1, 0, 1)).toEqual([]);
+    expect(getPageItems(1, 0)).toEqual([]);
   });
 });
 
@@ -145,6 +145,49 @@ describe('Pagination', () => {
       <Pagination page={1} pageCount={3} onPageChange={() => {}} />
     );
     expect(container.firstElementChild?.className).toBe('mondrian-pagination');
+  });
+
+  describe('compact variant', () => {
+    it('shows the position instead of page buttons', () => {
+      render(
+        <Pagination
+          variant="compact"
+          page={3}
+          pageCount={12}
+          onPageChange={() => {}}
+        />
+      );
+      expect(screen.getByText('3 of 12')).toHaveAttribute(
+        'aria-current',
+        'page'
+      );
+      expect(screen.queryByRole('button', { name: 'Page 3' })).toBeNull();
+    });
+
+    it('still pages with previous and next and disables at the ends', async () => {
+      const user = userEvent.setup();
+      const onPageChange = jest.fn();
+      const { rerender } = render(
+        <Pagination
+          variant="compact"
+          page={1}
+          pageCount={3}
+          onPageChange={onPageChange}
+        />
+      );
+      expect(screen.getByRole('button', { name: 'Previous' })).toBeDisabled();
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      expect(onPageChange).toHaveBeenCalledWith(2);
+      rerender(
+        <Pagination
+          variant="compact"
+          page={3}
+          pageCount={3}
+          onPageChange={onPageChange}
+        />
+      );
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+    });
   });
 
   itForwardsRef<HTMLElement>({
