@@ -1,0 +1,225 @@
+/*
+ * NavigationMenu Component
+ *
+ * A horizontal bar of triggers on one heavy black rule. Panels open beneath
+ * it as rectangles and slide by transform, never fade. The open trigger and
+ * the current link fill with the plane colour AND are underlined, so state
+ * is never colour alone.
+ */
+.mondrian-navigation-menu {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+  position: relative;
+  z-index: 10;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  font-family: var(--mondrian-font-family);
+  color: var(--mondrian-text);
+}
+.mondrian-navigation-menu.red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-navigation-menu.yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-navigation-menu.green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-navigation-menu.neutral {
+  --plane: var(--mondrian-text);
+  --on-plane: var(--mondrian-background);
+}
+
+.mondrian-navigation-menu-list {
+  display: flex;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: var(--mondrian-background);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+}
+
+.mondrian-navigation-menu-item {
+  display: flex;
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-navigation-menu-trigger,
+.mondrian-navigation-menu-list
+  > .mondrian-navigation-menu-item
+  > .mondrian-navigation-menu-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mondrian-spacing-small);
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--mondrian-text);
+  font-family: inherit;
+  font-size: var(--mondrian-font-size-medium);
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mondrian-navigation-menu-trigger[data-state='open'],
+.mondrian-navigation-menu-link[data-active],
+.mondrian-navigation-menu-link[aria-current='page'] {
+  background-color: var(--plane);
+  color: var(--on-plane);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mondrian-navigation-menu-trigger:hover,
+.mondrian-navigation-menu-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mondrian-navigation-menu-trigger:focus-visible,
+.mondrian-navigation-menu-link:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: calc(var(--mondrian-focus-width) * -1);
+}
+
+.mondrian-navigation-menu-caret {
+  display: inline-flex;
+  width: 12px;
+  height: 12px;
+}
+.mondrian-navigation-menu-caret > * {
+  width: 100%;
+  height: 100%;
+}
+.mondrian-navigation-menu-trigger[data-state='open']
+  .mondrian-navigation-menu-caret {
+  transform: rotate(180deg);
+}
+
+/* Panels */
+.mondrian-navigation-menu-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--mondrian-spacing-medium);
+}
+
+/* Slide by transform only, no opacity */
+@media (prefers-reduced-motion: no-preference) {
+  .mondrian-navigation-menu-content[data-motion='from-start'] {
+    animation: mondrian-nav-from-start var(--mondrian-motion-reveal);
+  }
+  .mondrian-navigation-menu-content[data-motion='from-end'] {
+    animation: mondrian-nav-from-end var(--mondrian-motion-reveal);
+  }
+  .mondrian-navigation-menu-content[data-motion='to-start'] {
+    animation: mondrian-nav-to-start var(--mondrian-motion-reveal);
+  }
+  .mondrian-navigation-menu-content[data-motion='to-end'] {
+    animation: mondrian-nav-to-end var(--mondrian-motion-reveal);
+  }
+}
+
+@keyframes mondrian-nav-from-start {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes mondrian-nav-from-end {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes mondrian-nav-to-start {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes mondrian-nav-to-end {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.mondrian-navigation-menu-viewport-position {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  pointer-events: none;
+}
+
+.mondrian-navigation-menu-viewport {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  width: var(--radix-navigation-menu-viewport-width);
+  height: var(--radix-navigation-menu-viewport-height);
+  background-color: var(--mondrian-background);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top-width: 0;
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  pointer-events: auto;
+}
+.mondrian-navigation-menu-viewport[data-state='closed'] {
+  display: none;
+}
+
+/* Links inside panels */
+.mondrian-navigation-menu-content .mondrian-navigation-menu-link {
+  display: block;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium)
+    var(--mondrian-spacing-small) var(--mondrian-spacing-small);
+  border-left: var(--mondrian-grid-width-heavy) solid transparent;
+  color: var(--mondrian-text);
+  text-decoration: none;
+}
+.mondrian-navigation-menu-content .mondrian-navigation-menu-link:hover,
+.mondrian-navigation-menu-content .mondrian-navigation-menu-link:focus-visible {
+  background-color: var(--plane);
+  color: var(--on-plane);
+  border-left-color: var(--mondrian-border);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (forced-colors: active) {
+  .mondrian-navigation-menu-list,
+  .mondrian-navigation-menu-item,
+  .mondrian-navigation-menu-viewport {
+    border-color: CanvasText;
+  }
+  .mondrian-navigation-menu-trigger[data-state='open'],
+  .mondrian-navigation-menu-link[data-active] {
+    outline: 2px solid Highlight;
+  }
+}
