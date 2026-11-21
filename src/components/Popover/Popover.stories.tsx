@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Button } from '../Button/Button';
 import {
   Popover,
@@ -30,11 +29,9 @@ const meta: Meta<typeof PopoverContent> = {
   args: { side: 'bottom', align: 'center' },
   decorators: [
     (Story) => (
-      <ThemeProvider>
-        <div style={{ padding: '6rem 8rem' }}>
-          <Story />
-        </div>
-      </ThemeProvider>
+      <div style={{ padding: '6rem 8rem' }}>
+        <Story />
+      </div>
     ),
   ],
 };
@@ -100,4 +97,9 @@ export const WithAnchor: Story = {
       </PopoverContent>
     </Popover>
   ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };

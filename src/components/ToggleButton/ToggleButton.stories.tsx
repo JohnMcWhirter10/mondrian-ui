@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { ToggleButton } from './ToggleButton';
 
 const meta: Meta<typeof ToggleButton> = {
@@ -20,17 +19,11 @@ const meta: Meta<typeof ToggleButton> = {
     theme: {
       control: 'select',
       options: ['blue', 'red', 'yellow', 'green', 'neutral'],
+      description: 'Green is for success only (saved, completed).',
     },
     size: { control: 'select', options: ['default', 'sm', 'lg'] },
   },
   args: { children: 'Bold', theme: 'blue', size: 'default' },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -64,4 +57,9 @@ export const Sizes: Story = {
       ))}
     </div>
   ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };

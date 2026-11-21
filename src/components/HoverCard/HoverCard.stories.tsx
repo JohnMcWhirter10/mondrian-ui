@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Avatar, AvatarFallback } from '../Avatar';
 import { Button } from '../Button/Button';
 import { CardDescription, CardTitle } from '../Card';
@@ -22,11 +21,9 @@ const meta: Meta<typeof HoverCard> = {
   args: { openDelay: 200 },
   decorators: [
     (Story) => (
-      <ThemeProvider>
-        <div style={{ padding: '6rem 8rem' }}>
-          <Story />
-        </div>
-      </ThemeProvider>
+      <div style={{ padding: '6rem 8rem' }}>
+        <Story />
+      </div>
     ),
   ],
 };
@@ -85,4 +82,9 @@ export const SlowOpen: Story = {
       <HoverCardContent>Opened after 800ms.</HoverCardContent>
     </HoverCard>
   ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };

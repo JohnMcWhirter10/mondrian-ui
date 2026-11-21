@@ -2,7 +2,6 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Toggle } from './Toggle';
 import { Label } from '../Label/Label';
-import { ThemeProvider } from '../../themes';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Toggle> = {
@@ -25,7 +24,8 @@ const meta: Meta<typeof Toggle> = {
     theme: {
       control: 'select',
       options: ['blue', 'neutral', 'red', 'green', 'yellow'],
-      description: 'The theme color for the toggle',
+      description:
+        'The theme color for the toggle. Green is for success only (saved, completed).',
     },
     size: {
       control: 'select',
@@ -37,13 +37,6 @@ const meta: Meta<typeof Toggle> = {
       description: 'The ID for the toggle, used for accessibility with labels',
     },
   },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -132,6 +125,7 @@ export const Red: Story = {
 };
 
 export const Green: Story = {
+  name: 'Green (success)',
   args: {
     theme: 'green',
     id: 'green-toggle',
@@ -183,4 +177,9 @@ export const Themes: Story = {
       ))}
     </div>
   ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };

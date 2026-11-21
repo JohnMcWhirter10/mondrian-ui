@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Button } from '../Button/Button';
 import {
   Dialog,
@@ -36,13 +35,6 @@ const meta: Meta<typeof Dialog> = {
     },
   },
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -283,14 +275,14 @@ export const SuccessTheme: Story = {
   render: () => (
     <Dialog>
       <DialogTrigger asChild>
-        <Button theme="green">Green Dialog</Button>
+        <Button theme="green">Save changes</Button>
       </DialogTrigger>
       <DialogContent theme="green">
         <DialogHeader>
-          <DialogTitle>Green Theme</DialogTitle>
+          <DialogTitle>Changes saved</DialogTitle>
           <DialogDescription>
-            This dialog uses the green theme variant, suitable for success
-            messages.
+            Green is reserved for success. Use it to confirm something
+            completed, never as a decorative color.
           </DialogDescription>
         </DialogHeader>
         <p>Your changes have been saved successfully!</p>
@@ -496,4 +488,9 @@ export const Themes: Story = {
       ))}
     </div>
   ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };

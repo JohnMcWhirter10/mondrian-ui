@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './Button';
-import { ThemeProvider } from '../../themes';
 
 // Define the component metadata for Storybook
 const meta: Meta<typeof Button> = {
@@ -30,7 +29,8 @@ const meta: Meta<typeof Button> = {
     theme: {
       control: 'select',
       options: ['blue', 'neutral', 'red', 'green', 'yellow'],
-      description: 'The theme color for the button.',
+      description:
+        'The theme color for the button. Green is for success only (saved, completed).',
     },
     size: {
       control: 'select',
@@ -38,13 +38,6 @@ const meta: Meta<typeof Button> = {
       description: 'The size of the button',
     },
   },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -72,8 +65,9 @@ export const Red: Story = {
 };
 
 export const Green: Story = {
+  name: 'Green (success)',
   args: {
-    children: 'Green Button',
+    children: 'Saved',
     theme: 'green',
   },
 };
@@ -109,4 +103,9 @@ export const Pressed: Story = {
       ))}
     </div>
   ),
+};
+
+export const Dark: Story = {
+  ...Blue,
+  globals: { mode: 'dark' },
 };
