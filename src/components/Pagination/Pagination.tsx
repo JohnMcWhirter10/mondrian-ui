@@ -54,13 +54,14 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
   ) => {
     const isCompact = variant === 'compact';
     const iconSize = size === 'sm' ? 14 : 20;
+    const buttonSize = size === 'sm' ? 'xs' : 'default';
     const total = Math.max(Math.floor(pageCount), 1);
     const current = Math.min(Math.max(page, 1), total);
 
     const previous = (
       <Button
         theme="neutral"
-        size={size}
+        size={buttonSize}
         aria-label={isCompact ? 'Previous' : undefined}
         disabled={current <= 1}
         onClick={() => onPageChange(current - 1)}
@@ -71,7 +72,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
     const next = (
       <Button
         theme="neutral"
-        size={size}
+        size={buttonSize}
         aria-label={isCompact ? 'Next' : undefined}
         disabled={current >= total}
         onClick={() => onPageChange(current + 1)}
@@ -105,7 +106,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
                 <li key={item}>
                   <Button
                     theme={item === current ? theme : 'neutral'}
-                    size={size}
+                    size={buttonSize}
                     aria-current={item === current ? 'page' : undefined}
                     aria-label={`Page ${item}`}
                     onClick={() => onPageChange(item)}

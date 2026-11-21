@@ -137,7 +137,7 @@ describe('Pagination', () => {
     expect(container.firstElementChild).toHaveClass('mondrian-pagination-sm');
     screen
       .getAllByRole('button')
-      .forEach((b) => expect(b).toHaveClass('mondrian-button-sm'));
+      .forEach((b) => expect(b).toHaveClass('mondrian-button-xs'));
   });
 
   it('keeps words for Previous and Next at sm', () => {

@@ -38,21 +38,6 @@
   font-size: var(--mondrian-font-size-small);
 }
 
-/* Small: table footer scale.
-   These rules deliberately override Button's own size and disabled padding
-   (Button.css), which keeps disabled cells the same size as enabled ones.
-   If Button's padding changes, check this block. */
-.mondrian-pagination-sm .mondrian-button {
-  min-width: 24px;
-  min-height: 24px;
-  padding: 2px var(--mondrian-spacing-small);
-  font-size: var(--mondrian-font-size-small);
-}
-
-.mondrian-pagination-sm .mondrian-button:disabled {
-  padding: 2px var(--mondrian-spacing-small);
-}
-
 /* Compact variant: "3 of 12" between the two arrows. */
 .mondrian-pagination-status {
   display: inline-flex;
@@ -67,9 +52,4 @@
 .mondrian-pagination-sm .mondrian-pagination-status {
   min-width: 24px;
   font-size: var(--mondrian-font-size-small);
-}
-
-/* Arrow-only buttons (compact variant): pad tightly around the icon. */
-.mondrian-pagination-sm .mondrian-button:has(> svg) {
-  padding: 2px 6px;
 }
