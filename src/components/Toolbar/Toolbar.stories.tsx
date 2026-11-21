@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import {
   Toolbar,
   ToolbarButton,
@@ -23,13 +22,6 @@ const meta: Meta<typeof Toolbar> = {
     },
   },
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -67,4 +59,9 @@ export const Vertical: Story = {
       <ToolbarButton>Erase</ToolbarButton>
     </Toolbar>
   ),
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };

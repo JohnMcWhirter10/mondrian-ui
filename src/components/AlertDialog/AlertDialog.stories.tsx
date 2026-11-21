@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Button } from '../Button/Button';
 import {
   AlertDialog,
@@ -31,16 +30,10 @@ const meta: Meta<typeof AlertDialogContent> = {
     theme: {
       control: 'select',
       options: ['red', 'blue', 'yellow', 'green', 'neutral'],
+      description: 'Green is for success only (saved, completed).',
     },
   },
   args: { theme: 'red' },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -89,4 +82,9 @@ export const NonDestructive: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
+};
+
+export const Dark: Story = {
+  ...Destructive,
+  globals: { mode: 'dark' },
 };

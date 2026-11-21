@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Input } from './Input';
 import { Label } from '../Label/Label';
-import { ThemeProvider } from '../../themes';
 
 const plane = ['blue', 'neutral', 'red', 'yellow'] as const;
 
@@ -26,7 +25,8 @@ const meta: Meta<typeof Input> = {
     theme: {
       control: 'select',
       options: ['blue', 'neutral', 'red', 'green', 'yellow'],
-      description: 'The theme color for the input',
+      description:
+        'The theme color for the input. Green is for success only (saved, completed).',
     },
     id: {
       control: 'text',
@@ -37,13 +37,6 @@ const meta: Meta<typeof Input> = {
       description: 'Placeholder text for the input',
     },
   },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -98,8 +91,9 @@ export const Red: Story = {
 };
 
 export const Green: Story = {
+  name: 'Green (success)',
   args: {
-    placeholder: 'Green Input',
+    placeholder: 'Saved',
     theme: 'green',
     id: 'green-input',
   },
@@ -149,4 +143,9 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, placeholder: 'Disabled input' },
+};
+
+export const Dark: Story = {
+  ...Blue,
+  globals: { mode: 'dark' },
 };

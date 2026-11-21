@@ -1,0 +1,265 @@
+/**
+ * Dialog Component
+ *
+ * A white plane held by a black frame. Verticals use the base line weight,
+ * horizontals the heavy one. The top rule starts at the left edge and stops
+ * short of the close cell; one colour swatch is pinned to the bottom-left
+ * corner. Hard cut in and out: no fades, no motion.
+ */
+
+/* Plane theme tokens (inherited by trigger, content and close cell) */
+.mondrian-dialog-trigger.blue,
+.mondrian-dialog-content.blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dialog-trigger.red,
+.mondrian-dialog-content.red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dialog-trigger.yellow,
+.mondrian-dialog-content.yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-dialog-trigger.green,
+.mondrian-dialog-content.green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-dialog-trigger.neutral,
+.mondrian-dialog-content.neutral {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+}
+
+/* Trigger */
+.mondrian-dialog-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  box-sizing: border-box;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--plane);
+  color: var(--on-plane);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mondrian-dialog-trigger-sm {
+  padding: 4px 12px 8px 8px;
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-dialog-trigger-lg {
+  padding: 12px 32px 20px 20px;
+  font-size: var(--mondrian-font-size-large);
+}
+
+.mondrian-dialog-trigger:hover {
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+}
+
+.mondrian-dialog-trigger:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--mondrian-shadow);
+}
+
+.mondrian-dialog-trigger[data-state='open'] {
+  text-decoration: underline;
+}
+
+.mondrian-dialog-trigger:focus-visible,
+.mondrian-dialog-close:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+/* Overlay: a flat solid rgba plane, no fade */
+.mondrian-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--mondrian-overlay);
+  z-index: 49;
+}
+
+/* Content */
+.mondrian-dialog-content {
+  /* Size of the close cell; Drawer reads this to clear it */
+  --mondrian-dialog-close-size: 44px;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  box-sizing: border-box;
+  width: min(calc(100vw - 2rem), 520px);
+  height: fit-content;
+  max-height: calc(100vh - 2rem);
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top-width: var(--mondrian-grid-width-heavy);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  /* Asymmetric: more room below (for the swatch) and to the left of the close cell */
+  padding: var(--mondrian-spacing-large) var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) + 28px) var(--mondrian-spacing-large);
+  box-shadow: 6px 6px 0 var(--mondrian-shadow);
+  z-index: 50;
+}
+
+.mondrian-dialog-content-sm {
+  width: min(calc(100vw - 2rem), 420px);
+}
+
+.mondrian-dialog-content-lg {
+  width: min(calc(100vw - 2rem), 620px);
+}
+
+/* Scrolling lives inside the frame so the decorative rules are never clipped */
+.mondrian-dialog-body {
+  max-height: calc(100vh - 2rem - 8rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Room for focus rings and hover shadows of the controls inside, so the
+     scroll edge never clips them. The margin gives the space back. */
+  --scroll-room: calc(
+    var(--mondrian-focus-width) + var(--mondrian-focus-offset)
+  );
+  margin: calc(var(--scroll-room) * -1);
+  padding: var(--scroll-room)
+    calc(var(--scroll-room) + var(--mondrian-spacing-medium)) var(--scroll-room)
+    var(--scroll-room);
+}
+
+/* Top rule: starts at the left edge, stops short of the close cell */
+.mondrian-dialog-content::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--mondrian-grid-width-accent) * -1);
+  left: 0;
+  right: 72px;
+  height: var(--mondrian-grid-width-accent);
+  background-color: var(--mondrian-border);
+  pointer-events: none;
+}
+
+/* Colour swatch pinned to the bottom-left corner */
+.mondrian-dialog-content::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72px;
+  height: 20px;
+  background-color: var(--plane);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  pointer-events: none;
+}
+
+/* Close: a square grid cell in the top-right corner */
+.mondrian-dialog-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--mondrian-dialog-close-size);
+  height: var(--mondrian-dialog-close-size);
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  border: 0;
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
+}
+
+.mondrian-dialog-close:hover {
+  background-color: var(--plane);
+  color: var(--on-plane);
+}
+
+.mondrian-dialog-close:active {
+  background-color: var(--mondrian-text);
+  color: var(--mondrian-background);
+}
+
+/* Neutral plane has no hue, so invert instead */
+.mondrian-dialog-content.neutral .mondrian-dialog-close:hover {
+  background-color: var(--mondrian-text);
+  color: var(--mondrian-background);
+}
+
+/* Header, footer, title, description */
+.mondrian-dialog-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--mondrian-spacing-large);
+  padding-bottom: var(--mondrian-spacing-medium);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+}
+
+.mondrian-dialog-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--mondrian-spacing-medium);
+  margin-top: var(--mondrian-spacing-large);
+  padding-top: var(--mondrian-spacing-medium);
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-dialog-title {
+  margin: 0 0 var(--mondrian-spacing-small);
+  /* keep clear of the close cell */
+  padding-right: 36px;
+  font-size: var(--mondrian-font-size-large);
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.mondrian-dialog-description {
+  margin: 0;
+  font-size: var(--mondrian-font-size-medium);
+  line-height: 1.5;
+  color: var(--mondrian-text);
+}
+
+@media (forced-colors: active) {
+  .mondrian-dialog-trigger,
+  .mondrian-dialog-content,
+  .mondrian-dialog-close,
+  .mondrian-dialog-header,
+  .mondrian-dialog-footer {
+    border-color: CanvasText;
+  }
+  .mondrian-dialog-content::before,
+  .mondrian-dialog-content::after {
+    background-color: CanvasText;
+    forced-color-adjust: none;
+  }
+  .mondrian-dialog-trigger[data-state='open'] {
+    text-decoration: underline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-dialog-trigger:active:not(:disabled) {
+    transform: none;
+  }
+}

@@ -6,7 +6,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './Accordion';
-import { ThemeProvider } from '../../themes';
 
 const meta: Meta<typeof Accordion> = {
   title: 'Disclosure/Accordion',
@@ -14,18 +13,17 @@ const meta: Meta<typeof Accordion> = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <ThemeProvider>
-        <div style={{ maxWidth: '500px', margin: '0 auto' }}>
-          <Story />
-        </div>
-      </ThemeProvider>
+      <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+        <Story />
+      </div>
     ),
   ],
   argTypes: {
     theme: {
       control: 'select',
       options: ['blue', 'neutral', 'red', 'green', 'yellow'],
-      description: 'The visual theme of the accordion',
+      description:
+        'The visual theme of the accordion. Green is for success only (saved, completed).',
       defaultValue: 'blue',
     },
     size: {
@@ -114,6 +112,7 @@ export const Yellow: Story = {
 };
 
 export const Green: Story = {
+  name: 'Green (success)',
   args: {
     ...Default.args,
     theme: 'green',
@@ -199,4 +198,9 @@ const ThemedAccordions = () => (
 
 export const Themes: Story = {
   render: () => <ThemedAccordions />,
+};
+
+export const Dark: Story = {
+  ...Default,
+  globals: { mode: 'dark' },
 };

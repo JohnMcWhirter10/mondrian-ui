@@ -1,0 +1,109 @@
+/**
+ * Drawer Component
+ *
+ * Dialog content re-anchored to a side, full height. The selectors repeat
+ * the Dialog class and add [data-side] so they win without !important.
+ * The edge facing the page gets the heavy rule; the header is the colour
+ * plane. The panel slides in by transform in the library's stepped
+ * reveal timing; no fade. The overlay stays a hard cut like Dialog.
+ */
+
+.mondrian-dialog-content[data-side] {
+  inset: 0 auto 0 auto;
+  margin: 0;
+  width: min(100vw, 420px);
+  height: 100dvh;
+  max-height: 100dvh;
+  box-shadow: none;
+  border-top-width: 0;
+  border-bottom-width: 0;
+  /* top padding clears the close cell */
+  padding: calc(
+      var(--mondrian-dialog-close-size) + var(--mondrian-spacing-medium)
+    )
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-large);
+}
+
+.mondrian-dialog-content[data-side='right'] {
+  right: 0;
+  --slide-from: 100%;
+  border-left-width: var(--mondrian-grid-width-heavy);
+  border-right-width: 0;
+}
+
+.mondrian-dialog-content[data-side='left'] {
+  left: 0;
+  --slide-from: -100%;
+  border-right-width: var(--mondrian-grid-width-heavy);
+  border-left-width: 0;
+}
+
+/* Body fills the column and scrolls; no height math to keep in sync */
+.mondrian-dialog-content[data-side] {
+  display: flex;
+  flex-direction: column;
+}
+.mondrian-dialog-content[data-side] .mondrian-dialog-body {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+}
+
+/* No dialog top rule or corner swatch on a full-height panel */
+.mondrian-dialog-content[data-side]::before,
+.mondrian-dialog-content[data-side]::after {
+  content: none;
+}
+
+/* Header is the colour plane */
+.mondrian-dialog-content[data-side] .mondrian-dialog-header {
+  margin: 0 0 var(--mondrian-spacing-large);
+  padding: var(--mondrian-spacing-medium);
+  background-color: var(--plane);
+  color: var(--on-plane);
+}
+
+.mondrian-dialog-content[data-side]
+  .mondrian-dialog-header
+  .mondrian-dialog-description {
+  color: inherit;
+}
+
+/* Slide: Radix keeps the panel mounted until the exit animation ends */
+.mondrian-dialog-content[data-side][data-state='open'] {
+  animation: mondrian-drawer-in var(--mondrian-motion-reveal);
+}
+.mondrian-dialog-content[data-side][data-state='closed'] {
+  animation: mondrian-drawer-out var(--mondrian-motion-reveal) forwards;
+}
+
+@keyframes mondrian-drawer-in {
+  from {
+    transform: translateX(var(--slide-from));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes mondrian-drawer-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--slide-from));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-dialog-content[data-side][data-state='open'],
+  .mondrian-dialog-content[data-side][data-state='closed'] {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-dialog-content[data-side] {
+    border-color: CanvasText;
+  }
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { ButtonGroup, ButtonGroupItem } from './ButtonGroup';
 
 const meta: Meta<typeof ButtonGroup> = {
@@ -17,13 +16,6 @@ const meta: Meta<typeof ButtonGroup> = {
   },
   tags: ['autodocs'],
   argTypes: { size: { control: 'select', options: ['default', 'sm', 'lg'] } },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
 };
 
 export default meta;
@@ -70,4 +62,9 @@ export const Sizes: Story = {
       ))}
     </div>
   ),
+};
+
+export const Dark: Story = {
+  ...Single,
+  globals: { mode: 'dark' },
 };
