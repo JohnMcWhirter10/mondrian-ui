@@ -42,10 +42,12 @@ describe('Button Component', () => {
   test('size classes', () => {
     render(
       <>
+        <Button size="xs">XS</Button>
         <Button size="sm">S</Button>
         <Button size="lg">L</Button>
       </>
     );
+    expect(screen.getByText('XS')).toHaveClass('mondrian-button-xs');
     expect(screen.getByText('S')).toHaveClass('mondrian-button-sm');
     expect(screen.getByText('L')).toHaveClass('mondrian-button-lg');
   });

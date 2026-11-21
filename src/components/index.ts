@@ -366,3 +366,20 @@ export type {
   ToolbarToggleGroupProps,
   ToolbarToggleItemProps,
 } from './Toolbar';
+
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
+export type {
+  TabsProps,
+  TabsListProps,
+  TabsTriggerProps,
+  TabsContentProps,
+  TabsTheme,
+} from './Tabs';
+
+export { Pagination } from './Pagination';
+export type {
+  PaginationProps,
+  PaginationTheme,
+  PaginationSize,
+  PaginationVariant,
+} from './Pagination';

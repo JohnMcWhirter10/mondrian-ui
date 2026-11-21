@@ -1,0 +1,55 @@
+/**
+ * Pagination Component
+ *
+ * A row of Buttons. The current page is the one coloured plane; the rest are
+ * neutral. The ellipsis cell is a plain gap in the line, not a control.
+ */
+
+.mondrian-pagination {
+  font-family: var(--mondrian-font-family);
+  color: var(--mondrian-text);
+}
+
+.mondrian-pagination-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--mondrian-spacing-small);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mondrian-pagination-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.mondrian-pagination-sm .mondrian-pagination-list {
+  gap: calc(var(--mondrian-spacing-small) / 2);
+}
+
+.mondrian-pagination-sm .mondrian-pagination-ellipsis {
+  min-width: 24px;
+  font-size: var(--mondrian-font-size-small);
+}
+
+/* Compact variant: "3 of 12" between the two arrows. */
+.mondrian-pagination-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 0 var(--mondrian-spacing-small);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mondrian-pagination-sm .mondrian-pagination-status {
+  min-width: 24px;
+  font-size: var(--mondrian-font-size-small);
+}
