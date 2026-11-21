@@ -21,6 +21,8 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/ban-ts-comment': 'warn',
+    // Props aliases like `interface CardProps extends BoxProps {}` are deliberate public names.
+    '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'with-single-extends' }],
   },
   settings: {
     react: {
