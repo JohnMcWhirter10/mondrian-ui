@@ -63,7 +63,8 @@ describe('Tabs', () => {
   it('moves between tabs with the arrow keys and skips disabled ones', async () => {
     const user = userEvent.setup();
     renderTabs();
-    screen.getByRole('tab', { name: 'One' }).focus();
+    await user.tab();
+    expect(screen.getByRole('tab', { name: 'One' })).toHaveFocus();
     await user.keyboard('{ArrowRight}');
     expect(screen.getByRole('tab', { name: 'Two' })).toHaveFocus();
     await user.keyboard('{ArrowRight}');
