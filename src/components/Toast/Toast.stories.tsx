@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from '../../themes';
 import { Button } from '../Button/Button';
 import {
   Toast,
@@ -75,11 +74,9 @@ const meta: Meta<typeof Demo> = {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider>
-        <div style={{ padding: '4rem 8rem' }}>
-          <Story />
-        </div>
-      </ThemeProvider>
+      <div style={{ padding: '4rem 8rem' }}>
+        <Story />
+      </div>
     ),
   ],
 };
@@ -98,18 +95,5 @@ export const WithProgress: Story = { args: { progress: true } };
 export const TopLeft: Story = { args: { position: 'top-left' } };
 
 export const Dark: Story = {
-  decorators: [
-    (Story) => (
-      <ThemeProvider mode="dark">
-        <div
-          style={{
-            padding: '4rem 8rem',
-            background: 'var(--mondrian-background)',
-          }}
-        >
-          <Story />
-        </div>
-      </ThemeProvider>
-    ),
-  ],
+  globals: { mode: 'dark' },
 };

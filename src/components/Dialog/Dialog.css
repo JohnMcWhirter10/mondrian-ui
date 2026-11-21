@@ -10,28 +10,28 @@
 /* Plane theme tokens (inherited by trigger, content and close cell) */
 .mondrian-dialog-trigger.blue,
 .mondrian-dialog-content.blue {
-  --plane: var(--mondrian-blue);
-  --on-plane: var(--mondrian-white);
+  --mondrian-dialog-plane: var(--mondrian-blue);
+  --mondrian-dialog-on-plane: var(--mondrian-white);
 }
 .mondrian-dialog-trigger.red,
 .mondrian-dialog-content.red {
-  --plane: var(--mondrian-red);
-  --on-plane: var(--mondrian-white);
+  --mondrian-dialog-plane: var(--mondrian-red);
+  --mondrian-dialog-on-plane: var(--mondrian-white);
 }
 .mondrian-dialog-trigger.yellow,
 .mondrian-dialog-content.yellow {
-  --plane: var(--mondrian-yellow);
-  --on-plane: var(--mondrian-black);
+  --mondrian-dialog-plane: var(--mondrian-yellow);
+  --mondrian-dialog-on-plane: var(--mondrian-black);
 }
 .mondrian-dialog-trigger.green,
 .mondrian-dialog-content.green {
-  --plane: var(--mondrian-success);
-  --on-plane: var(--mondrian-white);
+  --mondrian-dialog-plane: var(--mondrian-success);
+  --mondrian-dialog-on-plane: var(--mondrian-white);
 }
 .mondrian-dialog-trigger.neutral,
 .mondrian-dialog-content.neutral {
-  --plane: var(--mondrian-background);
-  --on-plane: var(--mondrian-text);
+  --mondrian-dialog-plane: var(--mondrian-background);
+  --mondrian-dialog-on-plane: var(--mondrian-text);
 }
 
 /* Trigger */
@@ -48,8 +48,8 @@
   border: var(--mondrian-grid-width) solid var(--mondrian-border);
   border-bottom-width: var(--mondrian-grid-width-heavy);
   border-radius: 0;
-  background-color: var(--plane);
-  color: var(--on-plane);
+  background-color: var(--mondrian-dialog-plane);
+  color: var(--mondrian-dialog-on-plane);
   font-family: var(--mondrian-font-family);
   font-size: var(--mondrian-font-size-medium);
   font-weight: bold;
@@ -96,6 +96,8 @@
 
 /* Content */
 .mondrian-dialog-content {
+  /* Size of the close cell; Drawer reads this to clear it */
+  --mondrian-dialog-close-size: 44px;
   position: fixed;
   inset: 0;
   margin: auto;
@@ -160,13 +162,13 @@
   bottom: 0;
   width: 72px;
   height: 20px;
-  background-color: var(--plane);
+  background-color: var(--mondrian-dialog-plane);
   border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
   border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
   pointer-events: none;
 }
 
-/* Close: a 44px grid cell in the top-right corner */
+/* Close: a square grid cell in the top-right corner */
 .mondrian-dialog-close {
   position: absolute;
   top: 0;
@@ -174,8 +176,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: var(--mondrian-dialog-close-size);
+  height: var(--mondrian-dialog-close-size);
   padding: 0;
   box-sizing: border-box;
   cursor: pointer;
@@ -188,8 +190,8 @@
 }
 
 .mondrian-dialog-close:hover {
-  background-color: var(--plane);
-  color: var(--on-plane);
+  background-color: var(--mondrian-dialog-plane);
+  color: var(--mondrian-dialog-on-plane);
 }
 
 .mondrian-dialog-close:active {

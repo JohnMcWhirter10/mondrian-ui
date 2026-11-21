@@ -288,6 +288,28 @@ export type { VisuallyHiddenProps } from './VisuallyHidden/VisuallyHidden.types'
 export { DarkModeToggle } from './DarkModeToggle';
 export type { DarkModeToggleProps } from './DarkModeToggle/DarkModeToggle.types';
 
+export {
+  Drawer,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+} from './Drawer';
+export type {
+  DrawerProps,
+  DrawerSide,
+  DrawerTriggerProps,
+  DrawerCloseProps,
+  DrawerContentProps,
+  DrawerTitleProps,
+  DrawerDescriptionProps,
+  DrawerHeaderProps,
+  DrawerFooterProps,
+} from './Drawer';
+
 export { Form } from './Form';
 export type { FormProps } from './Form/Form.types';
 
