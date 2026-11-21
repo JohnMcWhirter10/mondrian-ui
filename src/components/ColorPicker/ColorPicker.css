@@ -1,0 +1,123 @@
+/* Uneven grid: one large cell on the left, four small cells beside it. */
+.mondrian-color-picker {
+  --swatch: 44px;
+  display: grid;
+  grid-template-columns: calc(var(--swatch) * 2) repeat(2, var(--swatch));
+  grid-template-rows: repeat(2, var(--swatch));
+  width: max-content;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-border);
+  gap: var(--mondrian-grid-width);
+}
+
+.mondrian-color-picker-item {
+  appearance: none;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  transition: box-shadow var(--mondrian-motion-state);
+}
+
+.mondrian-color-picker-item-primary {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 2;
+}
+
+.mondrian-color-picker-item-red {
+  --swatch-color: var(--mondrian-red);
+  --on-swatch: var(--mondrian-white);
+  background-color: var(--swatch-color);
+}
+
+.mondrian-color-picker-item-blue {
+  --swatch-color: var(--mondrian-blue);
+  --on-swatch: var(--mondrian-white);
+  background-color: var(--swatch-color);
+}
+
+.mondrian-color-picker-item-yellow {
+  --swatch-color: var(--mondrian-yellow);
+  --on-swatch: var(--mondrian-black);
+  background-color: var(--swatch-color);
+}
+
+.mondrian-color-picker-item-black {
+  --swatch-color: var(--mondrian-black);
+  --on-swatch: var(--mondrian-white);
+  background-color: var(--swatch-color);
+}
+
+.mondrian-color-picker-item-white {
+  --swatch-color: var(--mondrian-white);
+  --on-swatch: var(--mondrian-black);
+  background-color: var(--swatch-color);
+}
+
+/* Selected: an inner square glyph, so the choice is not colour alone. */
+.mondrian-color-picker-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 50%;
+  color: var(--on-swatch);
+}
+
+.mondrian-color-picker-indicator svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hover draws a heavy inset line; a drop shadow would be clipped by the grid. */
+.mondrian-color-picker-item:hover:not([data-disabled]) {
+  box-shadow: inset 0 0 0 var(--mondrian-grid-width-heavy)
+    var(--mondrian-shadow);
+}
+
+.mondrian-color-picker-item:focus-visible {
+  z-index: 1;
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+.mondrian-color-picker-item[data-disabled] {
+  cursor: not-allowed;
+}
+
+.mondrian-color-picker-item[data-disabled]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 4px,
+    var(--mondrian-border) 4px 5px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-color-picker-item {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-color-picker {
+    border-color: ButtonText;
+    background-color: ButtonText;
+    forced-color-adjust: none;
+  }
+
+  .mondrian-color-picker-indicator {
+    color: CanvasText;
+    background-color: Canvas;
+  }
+}
