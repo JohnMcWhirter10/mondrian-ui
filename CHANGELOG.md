@@ -17,6 +17,7 @@ First tagged version. Prepared for release; not yet published.
 - Icons: Check, Cross, Menu, Plus, Dash, Square, SquareAlert, and four arrows.
 - `VisuallyHidden`, `Form`, and `DarkModeToggle` (the choice is saved, and `ThemeProvider` in `system` mode restores it).
 - `DialogHeaderProps` and `DialogFooterProps` types.
+- Tabs and Pagination (`pages` and `compact` variants, `default` and `sm` sizes).
 - `package.json` `exports`, including `mondrian-ui/style.css`.
 - GitHub Actions workflow: lint, Mondrian lint, tests, build.
 

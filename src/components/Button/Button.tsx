@@ -18,7 +18,7 @@ const Button = React.forwardRef<
      * Determines the button's size
      * @default "default"
      */
-    size?: 'default' | 'sm' | 'lg';
+    size?: 'default' | 'xs' | 'sm' | 'lg';
 
     /**
      * When true, the component renders its children directly with props forwarded.
@@ -37,6 +37,7 @@ const Button = React.forwardRef<
     const buttonClassName = [
       'mondrian-button',
       `mondrian-button-${theme}`,
+      size === 'xs' ? 'mondrian-button-xs' : '',
       size === 'sm' ? 'mondrian-button-sm' : '',
       size === 'lg' ? 'mondrian-button-lg' : '',
     ]

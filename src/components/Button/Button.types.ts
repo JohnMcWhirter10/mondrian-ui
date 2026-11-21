@@ -21,7 +21,7 @@ export type ButtonProps = Omit<
    * Determines the button's size
    * @default "default"
    */
-  size?: 'default' | 'sm' | 'lg';
+  size?: 'default' | 'xs' | 'sm' | 'lg';
 
   /**
    * When true, the component renders its children directly with props forwarded.

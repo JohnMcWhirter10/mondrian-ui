@@ -1,0 +1,142 @@
+/**
+ * Tabs Component
+ *
+ * The list sits on a heavy black rule; the active trigger is the one filled
+ * plane. The content panel shares the same border as the list. Active state
+ * is the fill and aria-selected, never motion.
+ */
+
+.mondrian-tabs {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: var(--mondrian-font-family);
+  color: var(--mondrian-text);
+}
+
+.mondrian-tabs[data-orientation='vertical'] {
+  flex-direction: row;
+}
+
+.mondrian-tabs-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-tabs-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-tabs-yellow {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-tabs-green {
+  --plane: var(--mondrian-success);
+  --on-plane: var(--mondrian-black);
+}
+.mondrian-tabs-neutral {
+  --plane: var(--mondrian-text);
+  --on-plane: var(--mondrian-background);
+}
+
+.mondrian-tabs-list {
+  display: flex;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+}
+
+.mondrian-tabs-list[data-orientation='vertical'] {
+  flex-direction: column;
+  border-bottom: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-right: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+}
+
+.mondrian-tabs-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-large)
+    var(--mondrian-spacing-medium) var(--mondrian-spacing-medium);
+  border: 0;
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font: inherit;
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Triggers share vertical borders */
+.mondrian-tabs-trigger + .mondrian-tabs-trigger {
+  border-left: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-tabs-list[data-orientation='vertical']
+  .mondrian-tabs-trigger
+  + .mondrian-tabs-trigger {
+  border-left: 0;
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+}
+
+.mondrian-tabs-trigger:hover:not(:disabled):not([data-state='active']) {
+  box-shadow: -4px 4px 0 var(--mondrian-shadow);
+}
+
+.mondrian-tabs-trigger[data-state='active'] {
+  background-color: var(--plane);
+  color: var(--on-plane);
+}
+
+.mondrian-tabs-trigger:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: calc(var(--mondrian-focus-offset) * -1);
+}
+
+.mondrian-tabs-trigger:disabled {
+  cursor: not-allowed;
+  font-weight: 400;
+}
+
+/* Panel shares the border of the list */
+.mondrian-tabs-content {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  padding: var(--mondrian-spacing-medium)
+    calc(var(--mondrian-spacing-large) * 2)
+    calc(var(--mondrian-spacing-large) * 1.5) var(--mondrian-spacing-large);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: 0;
+  background-color: var(--mondrian-background);
+  overflow-wrap: anywhere;
+}
+
+.mondrian-tabs[data-orientation='vertical'] .mondrian-tabs-content {
+  border-top: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-left: 0;
+}
+
+.mondrian-tabs-content:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+@media (forced-colors: active) {
+  .mondrian-tabs-list,
+  .mondrian-tabs-content,
+  .mondrian-tabs-trigger + .mondrian-tabs-trigger {
+    border-color: CanvasText;
+  }
+  .mondrian-tabs-trigger[data-state='active'] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
