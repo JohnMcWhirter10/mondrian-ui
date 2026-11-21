@@ -172,7 +172,7 @@ describe('Pagination', () => {
           onPageChange={() => {}}
         />
       );
-      expect(screen.getByText('3 of 12')).toBeInTheDocument();
+      expect(screen.getByRole('navigation')).toHaveTextContent('Page 3 of 12');
       expect(screen.queryByRole('button', { name: 'Page 3' })).toBeNull();
     });
 

@@ -38,7 +38,10 @@
   font-size: var(--mondrian-font-size-small);
 }
 
-/* Small: table footer scale. */
+/* Small: table footer scale.
+   These rules deliberately override Button's own size and disabled padding
+   (Button.css), which keeps disabled cells the same size as enabled ones.
+   If Button's padding changes, check this block. */
 .mondrian-pagination-sm .mondrian-button {
   min-width: 24px;
   min-height: 24px;

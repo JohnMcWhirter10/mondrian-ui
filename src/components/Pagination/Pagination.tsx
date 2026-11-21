@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button } from '../Button';
+import { VisuallyHidden } from '../VisuallyHidden';
 import { MondrianLeftArrow, MondrianRightArrow } from '../icons';
 import { PaginationProps } from './Pagination.types';
 import './Pagination.css';
@@ -11,6 +12,7 @@ const range = (from: number, to: number) =>
 
 const MAX_SHOWN = 7; // first, last, current, one neighbour each side, two ellipses
 const EDGE_RUN = 5; // pages shown next to the near edge before its ellipsis
+const EDGE_GAP = 3; // an ellipsis must hide at least two pages, so stay this close to the edge
 
 /** First and last page always show; the current page keeps one neighbour each side. */
 function getPageItems(page: number, pageCount: number): PageItem[] {
@@ -18,8 +20,8 @@ function getPageItems(page: number, pageCount: number): PageItem[] {
 
   const left = Math.max(page - 1, 1);
   const right = Math.min(page + 1, pageCount);
-  const nearStart = left <= 3;
-  const nearEnd = right >= pageCount - 2;
+  const nearStart = left <= EDGE_GAP;
+  const nearEnd = right > pageCount - EDGE_GAP;
 
   if (nearStart) return [...range(1, EDGE_RUN), 'end-ellipsis', pageCount];
   if (nearEnd) {
@@ -94,6 +96,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
           <li>{previous}</li>
           {isCompact ? (
             <li className="mondrian-pagination-status">
+              <VisuallyHidden>Page </VisuallyHidden>
               {current} of {total}
             </li>
           ) : (
