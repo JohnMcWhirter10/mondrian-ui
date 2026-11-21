@@ -60,8 +60,8 @@
 .mondrian-dialog-content[data-side] .mondrian-dialog-header {
   margin: 0 0 var(--mondrian-spacing-large);
   padding: var(--mondrian-spacing-medium);
-  background-color: var(--plane);
-  color: var(--on-plane);
+  background-color: var(--mondrian-dialog-plane);
+  color: var(--mondrian-dialog-on-plane);
 }
 
 .mondrian-dialog-content[data-side]
