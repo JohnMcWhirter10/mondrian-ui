@@ -29,6 +29,7 @@ const meta: Meta<typeof Pagination> = {
       control: 'select',
       options: ['red', 'blue', 'yellow', 'green', 'neutral'],
     },
+    size: { control: 'inline-radio', options: ['sm', 'default', 'lg'] },
     page: { control: { type: 'number', min: 1 } },
     pageCount: { control: { type: 'number', min: 1 } },
     siblingCount: { control: { type: 'number', min: 0, max: 3 } },
@@ -58,6 +59,17 @@ export const Default: Story = {
 export const LongRange: Story = {
   args: { page: 10, pageCount: 20, onPageChange: () => {} },
   render: (args) => <Controlled {...args} />,
+};
+
+export const Sizes: Story = {
+  args: { page: 10, pageCount: 20, onPageChange: () => {} },
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 16 }}>
+      <Controlled {...args} size="sm" />
+      <Controlled {...args} size="default" />
+      <Controlled {...args} size="lg" />
+    </div>
+  ),
 };
 
 export const Blue: Story = {
@@ -118,6 +130,7 @@ const WithTableExample = () => {
         </TableBody>
       </Table>
       <Pagination
+        size="sm"
         aria-label="Compositions"
         page={page}
         pageCount={pageCount}
@@ -133,7 +146,7 @@ export const WithTable: Story = {
     docs: {
       description: {
         story:
-          'Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
+          'Small size suits the denser table. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
       },
     },
   },

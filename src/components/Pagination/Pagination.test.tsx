@@ -130,6 +130,23 @@ describe('Pagination', () => {
     );
   });
 
+  it('passes size to the buttons and the nav', () => {
+    const { container } = render(
+      <Pagination page={1} pageCount={3} size="sm" onPageChange={() => {}} />
+    );
+    expect(container.firstElementChild).toHaveClass('mondrian-pagination-sm');
+    screen
+      .getAllByRole('button')
+      .forEach((b) => expect(b).toHaveClass('mondrian-button-sm'));
+  });
+
+  it('has no size class by default', () => {
+    const { container } = render(
+      <Pagination page={1} pageCount={3} onPageChange={() => {}} />
+    );
+    expect(container.firstElementChild?.className).toBe('mondrian-pagination');
+  });
+
   itForwardsRef<HTMLElement>({
     render: (ref) => (
       <Pagination ref={ref} page={1} pageCount={2} onPageChange={() => {}} />

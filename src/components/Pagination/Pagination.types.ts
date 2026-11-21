@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ComponentTheme } from '../../themes';
 
 export type PaginationTheme = ComponentTheme;
+export type PaginationSize = 'default' | 'sm' | 'lg';
 
 export type PaginationProps = Omit<
   React.HTMLAttributes<HTMLElement>,
@@ -24,4 +25,9 @@ export type PaginationProps = Omit<
    * @default "red"
    */
   theme?: PaginationTheme;
+  /**
+   * Size of the buttons
+   * @default "default"
+   */
+  size?: PaginationSize;
 };

@@ -39,6 +39,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
       onPageChange,
       siblingCount = 1,
       theme = 'red',
+      size = 'default',
       'aria-label': ariaLabel = 'Pagination',
       ...props
     },
@@ -50,12 +51,18 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
       <nav
         ref={ref}
         aria-label={ariaLabel}
-        className="mondrian-pagination"
+        className={[
+          'mondrian-pagination',
+          size !== 'default' ? `mondrian-pagination-${size}` : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
         {...props}
       >
         <ul className="mondrian-pagination-list">
           <li>
             <Button
+              size={size}
               theme="neutral"
               disabled={current <= 1}
               onClick={() => onPageChange(current - 1)}
@@ -67,6 +74,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
             typeof item === 'number' ? (
               <li key={item}>
                 <Button
+                  size={size}
                   theme={item === current ? theme : 'neutral'}
                   aria-current={item === current ? 'page' : undefined}
                   aria-label={`Page ${item}`}
@@ -83,6 +91,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
           )}
           <li>
             <Button
+              size={size}
               theme="neutral"
               disabled={current >= pageCount}
               onClick={() => onPageChange(current + 1)}

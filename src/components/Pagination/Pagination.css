@@ -28,3 +28,17 @@
   font-weight: 700;
   user-select: none;
 }
+
+.mondrian-pagination-sm .mondrian-pagination-list {
+  gap: calc(var(--mondrian-spacing-small) / 2);
+}
+
+.mondrian-pagination-sm .mondrian-pagination-ellipsis {
+  min-width: 32px;
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-pagination-lg .mondrian-pagination-ellipsis {
+  min-width: 52px;
+  font-size: var(--mondrian-font-size-large);
+}
