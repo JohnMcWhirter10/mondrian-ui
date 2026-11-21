@@ -53,6 +53,13 @@ export const Stepped: Story = {
 
 export const Vertical: Story = {
   args: { orientation: 'vertical' },
+  decorators: [
+    (Story) => (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const Disabled: Story = {

@@ -18,6 +18,11 @@ describe('Slider', () => {
     expect(thumb).toHaveClass('mondrian-slider-thumb');
   });
 
+  test('a single thumb takes the accessible name', () => {
+    render(<Slider defaultValue={[30]} aria-label="Volume" />);
+    expect(screen.getByRole('slider', { name: 'Volume' })).toBeInTheDocument();
+  });
+
   test('renders two thumbs for a range', () => {
     render(<Slider defaultValue={[20, 60]} />);
     expect(screen.getAllByRole('slider')).toHaveLength(2);

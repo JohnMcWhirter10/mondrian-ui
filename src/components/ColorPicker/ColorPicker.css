@@ -98,8 +98,8 @@
   inset: 0;
   background: repeating-linear-gradient(
     90deg,
-    transparent 0 4px,
-    var(--mondrian-border) 4px 5px
+    transparent 0 6px,
+    var(--on-swatch) 6px 8px
   );
 }
 

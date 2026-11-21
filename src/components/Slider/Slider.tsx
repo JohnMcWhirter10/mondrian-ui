@@ -12,6 +12,14 @@ const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   SliderProps
 >(({ theme = 'red', defaultValue, value, min = 0, ...props }, ref) => {
+  // The root is a plain span, so a lone thumb needs the name itself.
+  const single = (value ?? defaultValue ?? [min]).length === 1;
+  const name = single
+    ? {
+        'aria-label': props['aria-label'],
+        'aria-labelledby': props['aria-labelledby'],
+      }
+    : {};
   const thumbs = (value ?? defaultValue ?? [min]).length;
 
   return (
@@ -27,7 +35,11 @@ const Slider = React.forwardRef<
         <SliderPrimitive.Range className="mondrian-slider-range" />
       </SliderPrimitive.Track>
       {Array.from({ length: thumbs }, (_, index) => (
-        <SliderPrimitive.Thumb key={index} className="mondrian-slider-thumb" />
+        <SliderPrimitive.Thumb
+          key={index}
+          className="mondrian-slider-thumb"
+          {...name}
+        />
       ))}
     </SliderPrimitive.Root>
   );
