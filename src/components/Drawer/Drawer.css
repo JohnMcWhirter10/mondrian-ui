@@ -17,8 +17,10 @@
   box-shadow: none;
   border-top-width: 0;
   border-bottom-width: 0;
-  /* top padding clears the 44px close cell */
-  padding: calc(44px + var(--mondrian-spacing-medium))
+  /* top padding clears the close cell */
+  padding: calc(
+      var(--mondrian-dialog-close-size) + var(--mondrian-spacing-medium)
+    )
     var(--mondrian-spacing-medium) var(--mondrian-spacing-large)
     var(--mondrian-spacing-large);
 }
@@ -37,7 +39,10 @@
 
 /* Body fills the column instead of capping at the dialog height */
 .mondrian-dialog-content[data-side] .mondrian-dialog-body {
-  max-height: calc(100vh - 44px - 2 * var(--mondrian-spacing-large));
+  max-height: calc(
+    100vh - var(--mondrian-dialog-close-size) - 2 *
+      var(--mondrian-spacing-large)
+  );
 }
 
 /* No dialog top rule or corner swatch on a full-height panel */

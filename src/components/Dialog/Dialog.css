@@ -96,6 +96,8 @@
 
 /* Content */
 .mondrian-dialog-content {
+  /* Size of the close cell; Drawer reads this to clear it */
+  --mondrian-dialog-close-size: 44px;
   position: fixed;
   inset: 0;
   margin: auto;
@@ -166,7 +168,7 @@
   pointer-events: none;
 }
 
-/* Close: a 44px grid cell in the top-right corner */
+/* Close: a square grid cell in the top-right corner */
 .mondrian-dialog-close {
   position: absolute;
   top: 0;
@@ -174,8 +176,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: var(--mondrian-dialog-close-size);
+  height: var(--mondrian-dialog-close-size);
   padding: 0;
   box-sizing: border-box;
   cursor: pointer;
