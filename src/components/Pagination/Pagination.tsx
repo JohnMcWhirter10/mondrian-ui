@@ -45,6 +45,8 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
     },
     ref
   ) => {
+    // Small pagination sits under dense tables: chevrons instead of words.
+    const compact = size === 'sm';
     const current = Math.min(Math.max(page, 1), Math.max(pageCount, 1));
 
     return (
@@ -64,10 +66,11 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
             <Button
               size={size}
               theme="neutral"
+              aria-label="Previous"
               disabled={current <= 1}
               onClick={() => onPageChange(current - 1)}
             >
-              Previous
+              {compact ? <span aria-hidden="true">&lsaquo;</span> : 'Previous'}
             </Button>
           </li>
           {getPageItems(current, pageCount, siblingCount).map((item) =>
@@ -93,10 +96,11 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
             <Button
               size={size}
               theme="neutral"
+              aria-label="Next"
               disabled={current >= pageCount}
               onClick={() => onPageChange(current + 1)}
             >
-              Next
+              {compact ? <span aria-hidden="true">&rsaquo;</span> : 'Next'}
             </Button>
           </li>
         </ul>

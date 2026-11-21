@@ -129,13 +129,15 @@ const WithTableExample = () => {
           ))}
         </TableBody>
       </Table>
-      <Pagination
-        size="sm"
-        aria-label="Compositions"
-        page={page}
-        pageCount={pageCount}
-        onPageChange={setPage}
-      />
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Pagination
+          size="sm"
+          aria-label="Compositions"
+          page={page}
+          pageCount={pageCount}
+          onPageChange={setPage}
+        />
+      </div>
     </div>
   );
 };
@@ -146,7 +148,7 @@ export const WithTable: Story = {
     docs: {
       description: {
         story:
-          'Small size suits the denser table. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
+          'Under a table, use `size="sm"` and align it to the bottom right: it swaps Previous and Next for chevrons and shrinks the cells to table-footer scale. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
       },
     },
   },

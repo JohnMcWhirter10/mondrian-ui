@@ -34,7 +34,7 @@
 }
 
 .mondrian-pagination-sm .mondrian-pagination-ellipsis {
-  min-width: 32px;
+  min-width: 24px;
   font-size: var(--mondrian-font-size-small);
 }
 
@@ -43,13 +43,19 @@
   font-size: var(--mondrian-font-size-large);
 }
 
-/* Compact: sits at the scale of table rows. Square page cells, tight padding. */
+/* Compact: table footer scale. Small square cells, chevrons for Previous/Next. */
 .mondrian-pagination-sm .mondrian-button {
-  min-width: 32px;
-  min-height: 32px;
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  min-width: 24px;
+  min-height: 24px;
+  padding: 2px var(--mondrian-spacing-small);
+  font-size: var(--mondrian-font-size-small);
 }
 
 .mondrian-pagination-sm .mondrian-button:disabled {
-  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  padding: 2px var(--mondrian-spacing-small);
+}
+
+.mondrian-pagination-sm .mondrian-button > span[aria-hidden='true'] {
+  font-size: 1.5em;
+  line-height: 0.8;
 }
