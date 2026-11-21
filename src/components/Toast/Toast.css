@@ -1,0 +1,239 @@
+/**
+ * Toast Component
+ *
+ * A rectangle with a black frame, a heavy bar on top and a hard offset shadow,
+ * stacked against one screen edge. A toast slides in along one axis; it never
+ * fades. The plane color is the toast's background, and the title carries the
+ * meaning, so color is never the only signal.
+ *
+ * Trap: the viewport is `pointer-events: none` between toasts so the stack
+ * never blocks the page; each toast turns pointer events back on.
+ */
+
+.mondrian-toast-viewport {
+  position: fixed;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mondrian-spacing-medium);
+  box-sizing: border-box;
+  width: 360px;
+  max-width: 100vw;
+  margin: 0;
+  padding: var(--mondrian-spacing-large);
+  list-style: none;
+  outline: none;
+  pointer-events: none;
+}
+
+.mondrian-toast-viewport > * {
+  pointer-events: auto;
+}
+
+.mondrian-toast-viewport-top-left {
+  top: 0;
+  left: 0;
+}
+.mondrian-toast-viewport-top-right {
+  top: 0;
+  right: 0;
+}
+.mondrian-toast-viewport-bottom-left {
+  bottom: 0;
+  left: 0;
+  flex-direction: column-reverse;
+}
+.mondrian-toast-viewport-bottom-right {
+  bottom: 0;
+  right: 0;
+  flex-direction: column-reverse;
+}
+
+.mondrian-toast {
+  --plane: var(--mondrian-yellow);
+  --on-plane: var(--mondrian-black);
+  --slide-from: 100%;
+
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'title close'
+    'description description'
+    'action action';
+  align-items: start;
+  column-gap: var(--mondrian-spacing-medium);
+  row-gap: var(--mondrian-spacing-small);
+  box-sizing: border-box;
+  padding: var(--mondrian-spacing-medium);
+  background-color: var(--plane);
+  color: var(--on-plane);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-top: var(--mondrian-grid-width-heavy) solid var(--mondrian-border);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--mondrian-shadow);
+  font-family: var(--mondrian-font-family);
+  font-size: var(--mondrian-font-size-medium);
+}
+
+.mondrian-toast-blue {
+  --plane: var(--mondrian-blue);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-toast-red {
+  --plane: var(--mondrian-red);
+  --on-plane: var(--mondrian-white);
+}
+.mondrian-toast-neutral {
+  --plane: var(--mondrian-background);
+  --on-plane: var(--mondrian-text);
+}
+
+/* Slide in from the screen edge the stack sits against; slide back out. */
+.mondrian-toast-viewport-top-left .mondrian-toast,
+.mondrian-toast-viewport-bottom-left .mondrian-toast {
+  --slide-from: -100%;
+}
+
+.mondrian-toast[data-state='open'] {
+  animation: mondrian-toast-in var(--mondrian-motion-reveal);
+}
+.mondrian-toast[data-state='closed'] {
+  animation: mondrian-toast-out var(--mondrian-motion-reveal) forwards;
+}
+.mondrian-toast[data-swipe='move'] {
+  transform: translateX(var(--radix-toast-swipe-move-x));
+}
+.mondrian-toast[data-swipe='cancel'] {
+  transform: translateX(0);
+}
+.mondrian-toast[data-swipe='end'] {
+  animation: mondrian-toast-out var(--mondrian-motion-reveal) forwards;
+}
+
+@keyframes mondrian-toast-in {
+  from {
+    transform: translateX(var(--slide-from));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes mondrian-toast-out {
+  from {
+    transform: translateX(var(--radix-toast-swipe-end-x, 0));
+  }
+  to {
+    transform: translateX(var(--slide-from));
+  }
+}
+
+.mondrian-toast-title {
+  grid-area: title;
+  margin: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-toast-description {
+  grid-area: description;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/*
+ * Countdown bar. Its length is the time left, so its duration comes from the
+ * toast's own `duration` (--mondrian-toast-duration), not a motion token. It
+ * drains in 20 steps, scaling on X so layout never moves, and stops while
+ * Radix pauses the timer (data-paused).
+ */
+.mondrian-toast-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--mondrian-grid-width-heavy);
+  background-color: var(--mondrian-black);
+  transform-origin: left center;
+  animation-name: mondrian-toast-drain;
+  animation-duration: var(--mondrian-toast-duration);
+  animation-timing-function: steps(20, end);
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+
+.mondrian-toast[data-paused] .mondrian-toast-progress {
+  animation-play-state: paused;
+}
+
+@keyframes mondrian-toast-drain {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.mondrian-toast-action {
+  grid-area: action;
+  justify-self: start;
+  box-sizing: border-box;
+  min-height: 32px;
+  padding: var(--mondrian-spacing-small) var(--mondrian-spacing-medium);
+  background-color: var(--mondrian-white);
+  color: var(--mondrian-black);
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
+  font-family: inherit;
+  font-size: var(--mondrian-font-size-small);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mondrian-toast-close {
+  grid-area: close;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.mondrian-toast-action:hover,
+.mondrian-toast-close:hover {
+  background-color: var(--mondrian-black);
+  color: var(--mondrian-white);
+}
+
+.mondrian-toast-action:focus-visible,
+.mondrian-toast-close:focus-visible {
+  outline: var(--mondrian-focus-width) solid var(--mondrian-focus);
+  outline-offset: var(--mondrian-focus-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-toast[data-state='open'],
+  .mondrian-toast[data-state='closed'],
+  .mondrian-toast[data-swipe='end'] {
+    animation: none;
+  }
+  .mondrian-toast-progress {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mondrian-toast {
+    border-color: CanvasText;
+  }
+}
