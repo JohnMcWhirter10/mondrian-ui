@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { CheckboxProps } from './Checkbox.types';
-import { Dash } from '../icons';
+import { Check, Dash } from '../icons';
 import './Checkbox.css';
 
 const Checkbox = React.forwardRef<
@@ -23,7 +23,7 @@ const Checkbox = React.forwardRef<
   return (
     <CheckboxPrimitive.Root ref={ref} className={rootClassName} {...props}>
       <CheckboxPrimitive.Indicator className={indicatorClassName}>
-        <Dash />
+        {props.checked === 'indeterminate' ? <Dash /> : <Check />}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

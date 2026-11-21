@@ -14,7 +14,7 @@ const meta: Meta<typeof Checkbox> = {
       description: {
         component: `
           The Checkbox component follows Mondrian's neoplasticism principles with rectangular shapes and primary colors.
-          This version uses a dash symbol as the indicator when checked, maintaining the geometric consistency of the design.
+          This version uses the stepped Mondrian check as the indicator when checked (a dash when indeterminate), maintaining the geometric consistency of the design.
           Note: To maintain single responsibility, Labels should be added separately using the Label component.
         `,
       },

@@ -104,10 +104,19 @@
   outline-offset: var(--mondrian-focus-offset);
 }
 
+/* Disabled: a double rule, a flat plane and regular weight text. Same space as enabled. */
 .mondrian-textarea:disabled {
-  border-style: dashed;
+  border-width: 1px;
+  padding: calc(var(--field-pad-top) + calc(var(--mondrian-grid-width) - 1px))
+    calc(var(--field-pad-right) + calc(var(--mondrian-grid-width) - 1px))
+    calc(var(--field-pad-bottom) + calc(var(--mondrian-grid-width-heavy) - 1px))
+    calc(var(--field-pad-left) + calc(var(--mondrian-grid-width) - 1px));
+  background-image: none;
+  box-shadow:
+    inset 0 0 0 1px var(--mondrian-background),
+    inset 0 0 0 2px var(--mondrian-border);
   color: var(--mondrian-text);
-  text-decoration: line-through;
+  font-weight: 400;
   cursor: not-allowed;
 }
 
@@ -119,6 +128,8 @@
   .mondrian-textarea:disabled {
     border-color: GrayText;
     color: GrayText;
+    outline: 1px solid GrayText;
+    outline-offset: -3px;
   }
 
   .mondrian-textarea:focus-visible {

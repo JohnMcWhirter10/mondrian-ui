@@ -1,0 +1,148 @@
+/*
+ * One row of squares sharing a black grid. The frame adds 7px of border
+ * (2 above, 5 below), so the cells are 7px shorter than the Input scale and
+ * the whole row is 32, 44 or 52px tall like Input. The cells never change color.
+ * Hover and focus thicken the cell's own border inward, using an inset
+ * line that grows toward the center, so the row never gets bigger and
+ * nothing is drawn outside it. Focus is the thicker of the two, which is
+ * the cue that is not color.
+ */
+.mondrian-input-otp {
+  --otp-cell: 37px;
+  display: inline-flex;
+  align-self: flex-start;
+  width: fit-content;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  border: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-bottom-width: var(--mondrian-grid-width-heavy);
+  border-radius: 0;
+  background-color: var(--mondrian-background);
+  color: var(--mondrian-text);
+  font-family: var(--mondrian-font-family);
+}
+
+.mondrian-input-otp-cell {
+  box-sizing: border-box;
+  width: var(--otp-cell);
+  height: var(--otp-cell);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-right: var(--mondrian-grid-width) solid var(--mondrian-border);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--mondrian-font-size-medium);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  caret-color: var(--mondrian-text);
+  outline: none;
+  box-shadow: inset 0 0 0 0 var(--mondrian-border);
+  transition: box-shadow var(--mondrian-motion-state);
+}
+
+.mondrian-input-otp-cell:last-child {
+  border-right: 0;
+}
+
+.mondrian-input-otp-sm {
+  --otp-cell: 25px;
+}
+
+.mondrian-input-otp-lg {
+  --otp-cell: 45px;
+}
+
+.mondrian-input-otp-sm .mondrian-input-otp-cell {
+  font-size: var(--mondrian-font-size-small);
+}
+
+.mondrian-input-otp-lg .mondrian-input-otp-cell {
+  font-size: var(--mondrian-font-size-large);
+}
+
+.mondrian-input-otp-cell:hover:not(:disabled) {
+  box-shadow: inset 0 0 0 var(--mondrian-grid-width) var(--mondrian-border);
+}
+
+.mondrian-input-otp-cell:focus {
+  box-shadow: inset 0 0 0 calc(var(--mondrian-grid-width) * 1.5)
+    var(--mondrian-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-input-otp-cell {
+    transition: none;
+  }
+}
+
+/*
+ * Disabled: a double rule, a flat plane and regular weight text. The frame
+ * gets thinner, so the cells grow into the space it gave back: the row is
+ * the same size as when it is enabled and the dividers still meet the
+ * frame at the top and bottom.
+ */
+.mondrian-input-otp:has(:disabled) {
+  border-width: 1px;
+  box-shadow:
+    inset 0 0 0 1px var(--mondrian-background),
+    inset 0 0 0 2px var(--mondrian-border);
+}
+
+.mondrian-input-otp:has(:disabled) .mondrian-input-otp-cell {
+  height: calc(
+    var(--otp-cell) + calc(var(--mondrian-grid-width) - 1px) +
+      calc(var(--mondrian-grid-width-heavy) - 1px)
+  );
+  /* The digit stays where it was, centered in the original square. */
+  padding-bottom: calc(
+    calc(var(--mondrian-grid-width) - 1px) +
+      calc(var(--mondrian-grid-width-heavy) - 1px)
+  );
+  border-right-width: 1px;
+  color: var(--mondrian-text);
+  font-weight: 400;
+  cursor: not-allowed;
+}
+
+.mondrian-input-otp:has(:disabled) .mondrian-input-otp-cell:first-child,
+.mondrian-input-otp:has(:disabled) .mondrian-input-otp-cell:last-child {
+  width: calc(var(--otp-cell) + calc(var(--mondrian-grid-width) - 1px));
+}
+
+.mondrian-input-otp[aria-invalid='true'] {
+  border-left-width: calc(var(--mondrian-grid-width-heavy) * 2);
+}
+
+@media (forced-colors: active) {
+  .mondrian-input-otp {
+    border-color: ButtonText;
+  }
+
+  .mondrian-input-otp-cell {
+    border-right-color: ButtonText;
+  }
+
+  .mondrian-input-otp:has(:disabled) {
+    border-color: GrayText;
+    outline: 1px solid GrayText;
+    outline-offset: -3px;
+  }
+
+  .mondrian-input-otp:has(:disabled) .mondrian-input-otp-cell {
+    color: GrayText;
+    border-right-color: GrayText;
+  }
+
+  .mondrian-input-otp-cell:hover:not(:disabled) {
+    box-shadow: inset 0 0 0 var(--mondrian-grid-width) ButtonText;
+  }
+
+  .mondrian-input-otp-cell:focus {
+    box-shadow: inset 0 0 0 calc(var(--mondrian-grid-width) * 1.5) Highlight;
+  }
+}
