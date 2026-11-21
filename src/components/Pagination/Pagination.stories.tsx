@@ -118,10 +118,16 @@ const PAGE_SIZE = 8;
  * Pagination does not slice data. Keep `page` in state, slice the rows for
  * that page, and derive `pageCount` from the total.
  */
-const WithTableExample = () => {
+const WithTableExample = ({
+  variant = 'compact',
+}: {
+  variant?: 'pages' | 'compact';
+}) => {
   const [page, setPage] = useState(1);
   const pageCount = Math.ceil(ROWS.length / PAGE_SIZE);
-  const rows = ROWS.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const first = (page - 1) * PAGE_SIZE + 1;
+  const last = Math.min(page * PAGE_SIZE, ROWS.length);
+  const rows = ROWS.slice(first - 1, last);
 
   return (
     <div style={{ display: 'grid', gap: 16, width: 480 }}>
@@ -143,8 +149,19 @@ const WithTableExample = () => {
           ))}
         </TableBody>
       </Table>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 16,
+        }}
+      >
+        <span style={{ fontSize: 'var(--mondrian-font-size-small)' }}>
+          {first}&ndash;{last} of {ROWS.length}
+        </span>
         <Pagination
+          variant={variant}
           size="sm"
           aria-label="Compositions"
           page={page}
@@ -162,7 +179,19 @@ export const WithTable: Story = {
     docs: {
       description: {
         story:
-          'Under a table, use `size="sm"` and align it to the bottom right: it swaps Previous and Next for the Mondrian arrow icons and shrinks the cells to table-footer scale. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
+          'The usual table footer: the item range on the left and `variant="compact"` `size="sm"` on the bottom right. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself, derive the range from `page`, and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
+      },
+    },
+  },
+};
+
+export const WithTableNumbered: Story = {
+  render: () => <WithTableExample variant="pages" />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The same footer with numbered pages (`variant="pages"`), for tables where users jump to a specific page.',
       },
     },
   },
