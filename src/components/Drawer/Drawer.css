@@ -12,8 +12,8 @@
   inset: 0 auto 0 auto;
   margin: 0;
   width: min(100vw, 420px);
-  height: 100vh;
-  max-height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
   box-shadow: none;
   border-top-width: 0;
   border-bottom-width: 0;
@@ -27,22 +27,27 @@
 
 .mondrian-dialog-content[data-side='right'] {
   right: 0;
+  --slide-from: 100%;
   border-left-width: var(--mondrian-grid-width-heavy);
   border-right-width: 0;
 }
 
 .mondrian-dialog-content[data-side='left'] {
   left: 0;
+  --slide-from: -100%;
   border-right-width: var(--mondrian-grid-width-heavy);
   border-left-width: 0;
 }
 
-/* Body fills the column instead of capping at the dialog height */
+/* Body fills the column and scrolls; no height math to keep in sync */
+.mondrian-dialog-content[data-side] {
+  display: flex;
+  flex-direction: column;
+}
 .mondrian-dialog-content[data-side] .mondrian-dialog-body {
-  max-height: calc(
-    100vh - var(--mondrian-dialog-close-size) - 2 *
-      var(--mondrian-spacing-large)
-  );
+  flex: 1;
+  min-height: 0;
+  max-height: none;
 }
 
 /* No dialog top rule or corner swatch on a full-height panel */
@@ -66,12 +71,6 @@
 }
 
 /* Slide: Radix keeps the panel mounted until the exit animation ends */
-.mondrian-dialog-content[data-side='right'] {
-  --slide-from: 100%;
-}
-.mondrian-dialog-content[data-side='left'] {
-  --slide-from: -100%;
-}
 .mondrian-dialog-content[data-side][data-state='open'] {
   animation: mondrian-drawer-in var(--mondrian-motion-reveal);
 }
