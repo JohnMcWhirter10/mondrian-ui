@@ -4,7 +4,8 @@
  * Dialog content re-anchored to a side, full height. The selectors repeat
  * the Dialog class and add [data-side] so they win without !important.
  * The edge facing the page gets the heavy rule; the header is the colour
- * plane. No slide, no fade: hard cut like Dialog.
+ * plane. The panel slides in by transform in the library's stepped
+ * reveal timing; no fade. The overlay stays a hard cut like Dialog.
  */
 
 .mondrian-dialog-content[data-side] {
@@ -57,6 +58,44 @@
   .mondrian-dialog-header
   .mondrian-dialog-description {
   color: inherit;
+}
+
+/* Slide: Radix keeps the panel mounted until the exit animation ends */
+.mondrian-dialog-content[data-side='right'] {
+  --slide-from: 100%;
+}
+.mondrian-dialog-content[data-side='left'] {
+  --slide-from: -100%;
+}
+.mondrian-dialog-content[data-side][data-state='open'] {
+  animation: mondrian-drawer-in var(--mondrian-motion-reveal);
+}
+.mondrian-dialog-content[data-side][data-state='closed'] {
+  animation: mondrian-drawer-out var(--mondrian-motion-reveal) forwards;
+}
+
+@keyframes mondrian-drawer-in {
+  from {
+    transform: translateX(var(--slide-from));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes mondrian-drawer-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--slide-from));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mondrian-dialog-content[data-side][data-state='open'],
+  .mondrian-dialog-content[data-side][data-state='closed'] {
+    animation: none;
+  }
 }
 
 @media (forced-colors: active) {
