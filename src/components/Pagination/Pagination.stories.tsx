@@ -148,7 +148,7 @@ export const WithTable: Story = {
     docs: {
       description: {
         story:
-          'Under a table, use `size="sm"` and align it to the bottom right: it shortens Previous to Prev and shrinks the cells to table-footer scale. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
+          'Under a table, use `size="sm"` and align it to the bottom right: it swaps Previous and Next for the Mondrian arrow icons and shrinks the cells to table-footer scale. Pagination is controlled and knows nothing about data. Slice the rows for the current page yourself and pass `pageCount` from the total. If a filter shrinks the list, reset `page` to 1.',
       },
     },
   },

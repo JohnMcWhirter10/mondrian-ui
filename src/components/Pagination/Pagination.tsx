@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button } from '../Button';
+import { MondrianLeftArrow, MondrianRightArrow } from '../icons';
 import { PaginationProps } from './Pagination.types';
 import './Pagination.css';
 
@@ -45,7 +46,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
     },
     ref
   ) => {
-    // Small pagination sits under dense tables: short words instead of glyphs (Mondrian has no diagonal marks).
+    // Small pagination sits under dense tables: the Mondrian arrow icons instead of words.
     const compact = size === 'sm';
     const current = Math.min(Math.max(page, 1), Math.max(pageCount, 1));
 
@@ -70,7 +71,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
               disabled={current <= 1}
               onClick={() => onPageChange(current - 1)}
             >
-              {compact ? 'Prev' : 'Previous'}
+              {compact ? <MondrianLeftArrow size={20} /> : 'Previous'}
             </Button>
           </li>
           {getPageItems(current, pageCount, siblingCount).map((item) =>
@@ -100,7 +101,7 @@ const Pagination = React.forwardRef<HTMLElement, PaginationProps>(
               disabled={current >= pageCount}
               onClick={() => onPageChange(current + 1)}
             >
-              Next
+              {compact ? <MondrianRightArrow size={20} /> : 'Next'}
             </Button>
           </li>
         </ul>

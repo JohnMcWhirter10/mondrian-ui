@@ -43,7 +43,7 @@
   font-size: var(--mondrian-font-size-large);
 }
 
-/* Compact: table footer scale. Small square cells, short Prev/Next labels. */
+/* Compact: table footer scale. Small square cells, Mondrian arrow icons for Previous/Next. */
 .mondrian-pagination-sm .mondrian-button {
   min-width: 24px;
   min-height: 24px;
